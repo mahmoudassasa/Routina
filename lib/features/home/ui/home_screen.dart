@@ -53,7 +53,6 @@ class HomeScreen extends StatelessWidget {
                       icon: Icons.analytics,
                       color: AppColors.indigo500,
                       onTap: () {
-                        //TODO:fake Push
                         },
                     ),
                   ),

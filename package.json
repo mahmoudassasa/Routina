@@ -1,0 +1,15 @@
+{
+  "name": "habit-tracker-flutter",
+  "version": "1.0.0",
+  "description": "Habit Tracker - Converted to Flutter Mobile App",
+  "scripts": {
+    "flutter": "flutter run",
+    "flutter-web": "flutter run -d web",
+    "build-android": "flutter build apk",
+    "build-ios": "flutter build ios"
+  },
+  "keywords": ["flutter", "mobile", "habit-tracker", "dart"],
+  "author": "Flutter Developer",
+  "license": "MIT",
+  "note": "This project has been converted to Flutter. React files are deprecated. Use 'npm run flutter' or 'flutter run' to start the app."
+}

@@ -1,0 +1,35 @@
+name: habit_tracker
+description: A beautiful habit tracking app with clean, minimal design and 4 main sections.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.2.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+  flutter_screenutil: ^5.9.3
+  flutter_bloc: ^9.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  
+  # Enable generation of localized Strings from arb files.
+  generate: false
+
+  # Assets
+  # assets:
+  #   - images/
+
+  # Fonts
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf

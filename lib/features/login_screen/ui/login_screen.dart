@@ -62,39 +62,42 @@ class _LoginScreenState extends State<LoginScreen> {
             },
             child: Padding(
               padding: const EdgeInsets.all(32.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    LoginHeader(),
-                    const SizedBox(height: 48),
-                    // Email Field
-                    EmailField(emailController: _emailController),
-                    const SizedBox(height: 16),
-                    // Password Field
-                    PasswordField(
-                      passwordController: _passwordController,
-                      isPasswordVisible: _isPasswordVisible,
-                      togglePasswordVisibility: () {
-                        setState(() {
-                          _isPasswordVisible = !_isPasswordVisible;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 24),
-                    // Login Button
-                    LoginButton(
-                      emailController: _emailController,
-                      passwordController: _passwordController,
-                    ),
-                    const SizedBox(height: 16),
-                    // Forgot Password
-                    ForgotPassword(),
-                    const SizedBox(height: 32),
-                    // Sign Up Link
-                    AlreadyHaveAnAccount(),
-                  ],
+              child: Align(
+                alignment: Alignment.center,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      LoginHeader(),
+                      const SizedBox(height: 48),
+                      // Email Field
+                      EmailField(emailController: _emailController),
+                      const SizedBox(height: 16),
+                      // Password Field
+                      PasswordField(
+                        passwordController: _passwordController,
+                        isPasswordVisible: _isPasswordVisible,
+                        togglePasswordVisibility: () {
+                          setState(() {
+                            _isPasswordVisible = !_isPasswordVisible;
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 24),
+                      // Login Button
+                      LoginButton(
+                        emailController: _emailController,
+                        passwordController: _passwordController,
+                      ),
+                      const SizedBox(height: 16),
+                      // Forgot Password
+                      ForgotPassword(),
+                      const SizedBox(height: 32),
+                      // Sign Up Link
+                      AlreadyHaveAnAccount(),
+                    ],
+                  ),
                 ),
               ),
             ),

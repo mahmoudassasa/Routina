@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:routina/features/home_screen/logic/cubit/home_cubit.dart';
+import 'package:routina/features/home_screen/ui/home_screen.dart';
 import 'package:routina/features/login_screen/logic/cubit/login_cubit.dart';
 import 'package:routina/features/login_screen/ui/login_screen.dart';
 
@@ -74,6 +76,12 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => BlocProvider(
             create: (context) => LoginCubit(),
             child: const LoginScreen(),
+          ),
+        );
+            case Routes.homeScreen:
+        return MaterialPageRoute(builder: (_) => BlocProvider(
+            create: (context) => HomeCubit()..loadHabits(),
+            child: const HomeScreen(),
           ),
         );
       default:

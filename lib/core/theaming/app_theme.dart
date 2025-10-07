@@ -20,7 +20,8 @@ class AppTheme {
       
       // AppBar Theme
       appBarTheme: const AppBarTheme(
-        backgroundColor: AppColors.background,
+        //TODO: Change to transparent if needed
+         backgroundColor: AppColors.background,
         foregroundColor: AppColors.textPrimary,
         elevation: 0,
         titleTextStyle: AppTextStyles.headlineMedium,

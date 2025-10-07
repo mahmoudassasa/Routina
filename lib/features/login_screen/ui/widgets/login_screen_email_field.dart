@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class EmailField extends StatefulWidget {
+class LoginScreenEmailField extends StatefulWidget {
 final TextEditingController _emailController ;
-  const EmailField({super.key, required TextEditingController emailController }): _emailController = emailController;
+  const LoginScreenEmailField({super.key, required TextEditingController emailController }): _emailController = emailController;
 
   @override
-  State<EmailField> createState() => _EmailFieldState();
+  State<LoginScreenEmailField> createState() => _LoginScreenEmailFieldState();
 }
 
-class _EmailFieldState extends State<EmailField> {
+class _LoginScreenEmailFieldState extends State<LoginScreenEmailField> {
   
 
 

@@ -5,11 +5,12 @@ import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/features/login_screen/logic/cubit/login_cubit.dart';
 import 'package:routina/features/login_screen/logic/cubit/login_state.dart';
 import 'package:routina/features/login_screen/ui/widgets/already_have_an_account.dart';
-import 'package:routina/features/login_screen/ui/widgets/email_field.dart';
+import 'package:routina/features/login_screen/ui/widgets/login_screen_email_field.dart';
 import 'package:routina/features/login_screen/ui/widgets/forgot_password.dart';
 import 'package:routina/features/login_screen/ui/widgets/login_button.dart';
-import 'package:routina/features/login_screen/ui/widgets/login_header.dart';
-import 'package:routina/features/login_screen/ui/widgets/password_field.dart';
+import 'package:routina/features/login_screen/ui/widgets/login_screen_texts.dart';
+import 'package:routina/features/login_screen/ui/widgets/login_screen_logo.dart';
+import 'package:routina/features/login_screen/ui/widgets/login_screen_password_field.dart';
 
 import '../../../core/routing/routes.dart';
 
@@ -69,13 +70,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      LoginHeader(),
+                      // Logo
+                      LoginScreenLogo(),
+                      const SizedBox(height: 32),
+                      // Texts
+                      LoginScreenTexts(),
                       const SizedBox(height: 48),
                       // Email Field
-                      EmailField(emailController: _emailController),
+                      LoginScreenEmailField(emailController: _emailController),
                       const SizedBox(height: 16),
                       // Password Field
-                      PasswordField(
+                      LoginScreenPasswordField(
                         passwordController: _passwordController,
                         isPasswordVisible: _isPasswordVisible,
                         togglePasswordVisibility: () {
@@ -93,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 16),
                       // Forgot Password
                       ForgotPassword(),
-                      const SizedBox(height: 32),
+                      const SizedBox(height: 16),
                       // Sign Up Link
                       AlreadyHaveAnAccount(),
                     ],

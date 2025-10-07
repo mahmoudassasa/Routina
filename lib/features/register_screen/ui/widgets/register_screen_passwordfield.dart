@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 
-class PasswordField extends StatefulWidget {
-  const PasswordField({
+class RegisterScreenPasswordfield extends StatefulWidget {
+  const RegisterScreenPasswordfield({
     super.key,
     required TextEditingController passwordController,
     required bool isPasswordVisible,
-    required VoidCallback togglePasswordVisibility,
   }) : _passwordController = passwordController;
 
   final TextEditingController _passwordController;
-
-
   @override
-  State<PasswordField> createState() => _PasswordFieldState();
+  State<RegisterScreenPasswordfield> createState() =>
+      _RegisterScreenPasswordfieldState();
 }
 
-class _PasswordFieldState extends State<PasswordField> {
-  bool _isPasswordVisible = false; // add this line
+class _RegisterScreenPasswordfieldState
+    extends State<RegisterScreenPasswordfield> {
+  bool _isPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +31,7 @@ class _PasswordFieldState extends State<PasswordField> {
           ),
           onPressed: () {
             setState(() {
-              _isPasswordVisible = !_isPasswordVisible; // update the state
+              _isPasswordVisible = !_isPasswordVisible;
             });
           },
         ),

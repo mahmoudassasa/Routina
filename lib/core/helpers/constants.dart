@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 bool isLoggedInUser = true;
 
-class PagesButtonBar extends StatefulWidget {
-  const PagesButtonBar({super.key});
+class BottomBarNavigation extends StatefulWidget {
+  const BottomBarNavigation({super.key});
 
   @override
-  State<PagesButtonBar> createState() => _PagesButtonBarState();
+  State<BottomBarNavigation> createState() => _BottomBarNavigationState();
 }
 
-class _PagesButtonBarState extends State<PagesButtonBar> {
+class _BottomBarNavigationState extends State<BottomBarNavigation> {
   int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {

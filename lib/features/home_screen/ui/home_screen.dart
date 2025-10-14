@@ -17,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
+
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -27,20 +28,18 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      child: SafeArea(
-        child: Scaffold(
-          body: Column(
-            children: [
-              // Header
-              HomeHeader(),
-              // Habits List
-              HabitsList(),
-              // AI Analyze Button
-              AiAnalyzeButton(),
-            ],
-          ),
-          bottomNavigationBar: PagesButtonBar(),
+      child: Scaffold(
+        body: Column(
+          children: [
+            // Header
+            HomeHeader(),
+            // Habits List
+            HabitsList(),
+            // AI Analyze Button
+            AiAnalyzeButton(),
+          ],
         ),
+        bottomNavigationBar: BottomBarNavigation(),
       ),
     );
   }

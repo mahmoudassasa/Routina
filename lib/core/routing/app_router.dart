@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:routina/features/forgot_password/ui/forgot_password.dart';
 import 'package:routina/features/home_screen/logic/cubit/home_cubit.dart';
 import 'package:routina/features/home_screen/ui/home_screen.dart';
 import 'package:routina/features/login_screen/logic/cubit/login_cubit.dart';
@@ -92,6 +93,8 @@ class AppRouter {
             child: const RegisterScreen(),
           ),
         );
+        case Routes.forgetPasswordScreen:
+         return MaterialPageRoute(builder: (__) => const ForgotPasswordScreen());
       default:
         return null;
 

@@ -14,8 +14,7 @@ class _AiAnalyzeButtonState extends State<AiAnalyzeButton> {
       padding: const EdgeInsets.all(20.0),
       child: Container(
         width: 80,
-        height: 80,
-        decoration: BoxDecoration(
+        height: 80,        decoration: BoxDecoration(
           gradient: const LinearGradient(
             colors: [Color(0xFF3B82F6), Color(0xFF60A5FA)],
           ),

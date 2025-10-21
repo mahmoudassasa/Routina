@@ -6,6 +6,7 @@ import 'routina_app.dart';
 
 
 void main() {
+  
   runApp(RoutinaApp(appRouter: AppRouter()));
 }
 

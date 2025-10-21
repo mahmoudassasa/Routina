@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:routina/core/routing/routes.dart';
 
 bool isLoggedInUser = true;
 
@@ -20,6 +21,20 @@ class _BottomBarNavigationState extends State<BottomBarNavigation> {
         setState(() {
           _currentIndex = index;
         });
+        switch (index) {
+    case 0:
+      Navigator.pushNamed(context, Routes.homeScreen);
+      break;
+    case 1:
+      Navigator.pushNamed(context, Routes.habitTrackerScreen);
+      break;
+    case 2:
+      Navigator.pushNamed(context, Routes.analyzeScreen);
+      break;
+    case 3:
+      Navigator.pushNamed(context, Routes.profileScreen);
+      break;
+  }
       },
       selectedItemColor: const Color(0xFF3B82F6),
       unselectedItemColor: Colors.grey,

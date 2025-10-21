@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:routina/core/routing/routes.dart';
 
 bool isLoggedInUser = true;
 
-class PagesButtonBar extends StatefulWidget {
-  const PagesButtonBar({super.key});
+class BottomBarNavigation extends StatefulWidget {
+  const BottomBarNavigation({super.key});
 
   @override
-  State<PagesButtonBar> createState() => _PagesButtonBarState();
+  State<BottomBarNavigation> createState() => _BottomBarNavigationState();
 }
 
-class _PagesButtonBarState extends State<PagesButtonBar> {
+class _BottomBarNavigationState extends State<BottomBarNavigation> {
   int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -20,6 +21,20 @@ class _PagesButtonBarState extends State<PagesButtonBar> {
         setState(() {
           _currentIndex = index;
         });
+        switch (index) {
+    case 0:
+      Navigator.pushNamed(context, Routes.homeScreen);
+      break;
+    case 1:
+      Navigator.pushNamed(context, Routes.habitTrackerScreen);
+      break;
+    case 2:
+      Navigator.pushNamed(context, Routes.analyzeScreen);
+      break;
+    case 3:
+      Navigator.pushNamed(context, Routes.profileScreen);
+      break;
+  }
       },
       selectedItemColor: const Color(0xFF3B82F6),
       unselectedItemColor: Colors.grey,

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:routina/features/forgot_password/ui/forgot_password.dart';
 import 'package:routina/features/home_screen/logic/cubit/home_cubit.dart';
 import 'package:routina/features/home_screen/ui/home_screen.dart';
 import 'package:routina/features/login_screen/logic/cubit/login_cubit.dart';
 import 'package:routina/features/login_screen/ui/login_screen.dart';
+import 'package:routina/features/profile_screen/ui/profile_screen.dart';
 import 'package:routina/features/register_screen/logic/cubit/register_cubit.dart';
 import 'package:routina/features/register_screen/ui/register_screen.dart';
 
@@ -92,6 +94,10 @@ class AppRouter {
             child: const RegisterScreen(),
           ),
         );
+        case Routes.forgetPasswordScreen:
+         return MaterialPageRoute(builder: (__) => const ForgotPasswordScreen());
+      case Routes.profileScreen:
+        return MaterialPageRoute(builder: (__) => const ProfileScreen());
       default:
         return null;
 

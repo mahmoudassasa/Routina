@@ -4,8 +4,6 @@ import 'package:routina/core/routing/app_router.dart';
 import 'package:routina/core/routing/routes.dart';
 import 'package:routina/core/theaming/app_theme.dart';
 
-
-
 class RoutinaApp extends StatelessWidget {
   final AppRouter appRouter;
 
@@ -15,14 +13,9 @@ class RoutinaApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(375, 812),
-  child: MaterialApp(
-  
+      child: MaterialApp(
         title: 'Routina',
         debugShowCheckedModeBanner: false,
-
-        // Make sure the semantics debugger overlay is disabled so it doesn't
-        // paint yellow highlights on the UI while developing.
-        showSemanticsDebugger: false,
         theme: AppTheme.lightTheme,
         initialRoute: Routes.onBoardingScreen,
         onGenerateRoute: appRouter.generateRoute,

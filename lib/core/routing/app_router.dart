@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:routina/features/forgot_password/ui/forgot_password.dart';
+import 'package:routina/features/habit_tracker_screen/ui/habit_tracker_screen.dart';
 import 'package:routina/features/home_screen/logic/cubit/home_cubit.dart';
 import 'package:routina/features/home_screen/ui/home_screen.dart';
 import 'package:routina/features/login_screen/logic/cubit/login_cubit.dart';
@@ -98,6 +99,8 @@ class AppRouter {
          return MaterialPageRoute(builder: (__) => const ForgotPasswordScreen());
       case Routes.profileScreen:
         return MaterialPageRoute(builder: (__) => const ProfileScreen());
+         case Routes.habitTrackerScreen:
+         return MaterialPageRoute(builder: (__) => const HabitTrackerScreen());
       default:
         return null;
 

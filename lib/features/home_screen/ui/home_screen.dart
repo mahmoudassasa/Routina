@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:routina/core/helpers/constants.dart';
 
-
 import 'package:routina/features/home_screen/ui/widgets/ai_analyze_button.dart';
 import 'package:routina/features/home_screen/ui/widgets/habits_list.dart';
 import 'package:routina/features/home_screen/ui/widgets/home_header.dart';
@@ -17,7 +16,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -44,4 +42,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-

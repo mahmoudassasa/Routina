@@ -57,6 +57,7 @@ class DefaultFirebaseOptions {
     storageBucket: 'my-routina-app.firebasestorage.app',
   );
 
+
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyC17ba45gNMJPIHRtwbCJidEZw5zx-KzMc',
     appId: '1:370947315001:ios:a5e8e2627f1b02de2804e8',

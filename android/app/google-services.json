@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "370947315001",
+    "project_id": "my-routina-app",
+    "storage_bucket": "my-routina-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:370947315001:android:3d3798113ba9b8ce2804e8",
+        "android_client_info": {
+          "package_name": "com.example.routina"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9O5VU8fTPeTlOeyotcOlJ03x_gtAC03w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

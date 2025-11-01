@@ -62,7 +62,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: BlocListener<RegisterCubit, RegisterState>(
             listener: (context, state) {
               if (state.status == RegisterStatus.success) {
-                context.pushReplacementNamed(Routes.homeScreen);
+                context.pushReplacementNamed(Routes.mainLayout);
               } else if (state.status == RegisterStatus.error) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(

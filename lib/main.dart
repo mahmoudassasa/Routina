@@ -4,8 +4,7 @@ import 'routina_app.dart';
 
 
 
-void main() {
-  
+void main() {  
   runApp(RoutinaApp(appRouter: AppRouter()));
 }
 

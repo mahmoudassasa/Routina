@@ -3,18 +3,17 @@ import 'package:routina/features/analyze_screen/ui/widgets/analyze_screen_ai_ana
 import 'package:routina/features/analyze_screen/ui/widgets/analyze_screen_mock_ai_features.dart';
 import 'package:routina/features/analyze_screen/ui/widgets/analyze_screen_texts.dart';
 
-class AnalyzeScreen extends StatelessWidget {
+class AnalyzeScreen extends StatefulWidget {
   const AnalyzeScreen({super.key});
 
   @override
+  State<AnalyzeScreen> createState() => _AnalyzeScreenState();
+}
+
+class _AnalyzeScreenState extends State<AnalyzeScreen> {
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // backgroundColor: AppColors.backgroundGradientStart,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      body: Container(
+    return Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
@@ -42,7 +41,6 @@ class AnalyzeScreen extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }

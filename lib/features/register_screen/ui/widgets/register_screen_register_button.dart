@@ -1,50 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/features/register_screen/logic/cubit/register_cubit.dart';
 import 'package:routina/features/register_screen/logic/cubit/register_state.dart';
 
-class RegisterScreenRegisterButton extends StatefulWidget {
+class RegisterScreenRegisterButton extends StatelessWidget {
   const RegisterScreenRegisterButton({
     super.key,
-    required TextEditingController nameController,
-    required TextEditingController emailController,
-    required TextEditingController passwordController,
-  }) : _nameController = nameController,
-       _emailController = emailController,
-       _passwordController = passwordController;
+    required this.nameController,
+    required this.emailController,
+    required this.passwordController,
+  });
 
-  final TextEditingController _nameController;
-  final TextEditingController _emailController;
-  final TextEditingController _passwordController;
+  final TextEditingController nameController;
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
 
-  @override
-  State<RegisterScreenRegisterButton> createState() =>
-      _RegisterScreenRegisterButtonState();
-}
-
-class _RegisterScreenRegisterButtonState
-    extends State<RegisterScreenRegisterButton> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<RegisterCubit, RegisterState>(
       builder: (context, state) {
+        final isLoading = state.status == RegisterStatus.loading;
+
         return ElevatedButton(
-          onPressed: state.status == RegisterStatus.loading
+          onPressed: isLoading
               ? null
               : () {
                   context.read<RegisterCubit>().signUp(
-                    widget._nameController.text,
-                    widget._emailController.text,
-                    widget._passwordController.text,
-                  );
+                        nameController.text.trim(),
+                        emailController.text.trim(),
+                        passwordController.text.trim(),
+                      );
                 },
-          child: state.status == RegisterStatus.loading
-              ? const SizedBox(
-                  width: 20,
-                  height: 20,
+          child: isLoading
+              ?  SizedBox(
+                  width: 20.w,
+                  height: 20.h,
                   child: CircularProgressIndicator(
-                    strokeWidth: 2,
+                    strokeWidth: 2   ,
                     valueColor: AlwaysStoppedAnimation<Color>(
                       AppColors.textWhite,
                     ),

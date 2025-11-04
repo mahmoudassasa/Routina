@@ -1,27 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:routina/core/helpers/app_regex.dart';
 
-class RegisterScreenEmailField extends StatefulWidget {
-  const RegisterScreenEmailField({
-    super.key,
-    required TextEditingController emailController,
-  }) : _emailController = emailController;
+class RegisterScreenEmailField extends StatelessWidget {
+  const RegisterScreenEmailField({super.key, required this.emailController});
 
-  final TextEditingController _emailController;
-  @override
-  State<RegisterScreenEmailField> createState() =>
-      _RegisterScreenEmailFieldState();
-}
+  final TextEditingController emailController;
 
-class _RegisterScreenEmailFieldState extends State<RegisterScreenEmailField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: widget._emailController,
+      controller: emailController,
       keyboardType: TextInputType.emailAddress,
-      decoration: const InputDecoration(
-        labelText: 'Email',
-        prefixIcon: Icon(Icons.email_outlined),
-      ),
+      decoration: const InputDecoration(hintText: 'Email'),
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return 'Please enter your email';
+        } else if (!AppRegex.isEmailValid(value.trim())) {
+          return 'Please enter a valid email';
+        }
+        return null;
+      },
     );
   }
 }

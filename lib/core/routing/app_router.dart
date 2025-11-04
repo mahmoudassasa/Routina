@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:routina/core/helpers/widgets/bottom_navigation_bar_main_layout.dart';
+import 'package:routina/core/widgets/bottom_navigation_bar_main_layout.dart';
 import 'package:routina/features/analyze_screen/ui/analyze_screen.dart';
 import 'package:routina/features/forgot_password/ui/forgot_password.dart';
 import 'package:routina/features/habit_tracker_screen/ui/habit_tracker_screen.dart';

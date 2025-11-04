@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
 
-class RegisterScreenNameField extends StatefulWidget {
-  const RegisterScreenNameField({
-    super.key,
-    required TextEditingController nameController,
-  }) : _nameController = nameController;
-  final TextEditingController _nameController;
-  @override
-  State<RegisterScreenNameField> createState() =>
-      _RegisterScreenNameFieldState();
-}
+class RegisterScreenNameField extends StatelessWidget {
+  const RegisterScreenNameField({super.key, required this.nameController});
 
-class _RegisterScreenNameFieldState extends State<RegisterScreenNameField> {
+  final TextEditingController nameController;
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: widget._nameController,
-      decoration: const InputDecoration(
-        labelText: 'Full Name',
-        prefixIcon: Icon(Icons.person_outline),
-      ),
+      controller: nameController,
+      decoration: const InputDecoration(hintText: 'Full Name'),
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return 'Please enter your name';
+        } else if (value.trim().length < 3) {
+          return 'Name must be at least 3 characters';
+        }
+        return null;
+      },
     );
   }
 }

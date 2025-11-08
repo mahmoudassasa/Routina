@@ -27,7 +27,7 @@ class RegisterScreenRegisterButton extends StatelessWidget {
           onPressed: isLoading
               ? null
               : () {
-                  context.read<RegisterCubit>().signUp(
+                  context.read<RegisterCubit>().register(
                         nameController.text.trim(),
                         emailController.text.trim(),
                         passwordController.text.trim(),

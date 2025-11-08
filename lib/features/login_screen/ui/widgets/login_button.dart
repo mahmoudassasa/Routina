@@ -27,11 +27,19 @@ class _LoginButtonState extends State<LoginButton> {
           onPressed: state.status == LoginStatus.loading
               ? null
               : () {
-                  context.read<LoginCubit>().login(
-                    widget._emailController.text,
-                    widget._passwordController.text,
-                  );
+                  final email = widget._emailController.text.trim();
+                  final password = widget._passwordController.text.trim();
+
+                  if (email.isEmpty || password.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Please enter email & password')),
+                    );
+                    return;
+                  }
+
+                  context.read<LoginCubit>().login(email, password);
                 },
+
           child: state.status == LoginStatus.loading
               ? const SizedBox(
                   width: 20,
@@ -43,7 +51,7 @@ class _LoginButtonState extends State<LoginButton> {
                     ),
                   ),
                 )
-              : const Text('Sign In'),
+              : const Text('Login'),
         );
       },
     );

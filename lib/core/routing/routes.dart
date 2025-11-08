@@ -6,7 +6,7 @@ class Routes {
   static const String habitTrackerScreen = '/habitTrackerScreen';
   static const String analyzeScreen = '/analyzeScreen';
   static const String profileScreen = '/profileScreen';
-  static const String mainNavigationScreen = '/mainNavigationScreen';
+  // static const String mainNavigationBar = '/mainNavigationBar';
   static const String forgetPasswordScreen = '/forgetPasswordScreen';
-   static const mainLayout = '/mainLayout'; 
+  static const String mainNavigationBar = '/mainNavigationBar';
 }

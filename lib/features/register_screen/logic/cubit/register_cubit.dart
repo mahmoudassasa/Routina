@@ -1,51 +1,38 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:routina/features/register_screen/logic/cubit/register_state.dart';
+import 'register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit() : super(const RegisterState());
 
-  Future<void> signUp(String name, String email, String password) async {
+  Future<void> register(String name, String email, String password) async {
     emit(state.copyWith(status: RegisterStatus.loading));
 
     try {
-      FirebaseAuth auth = FirebaseAuth.instance;
-
-      // Create the user with email and password
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+      // 1) Create account in Firebase Auth
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      // Update the display name
-      await userCredential.user!.updateDisplayName(name);
-      await userCredential.user!.reload();
+      final String uid = userCredential.user!.uid;
+
+      // 2) Create Firestore document
+      await FirebaseFirestore.instance.collection('users').doc(uid).set({
+        'uid': uid,
+        'name': name,
+        'email': email,
+        'createdAt': DateTime.now(),
+      });
 
       emit(state.copyWith(status: RegisterStatus.success));
-    } on FirebaseAuthException catch (e) {
-      String message = '';
-
-      switch (e.code) {
-        case 'weak-password':
-          message = 'The password provided is too weak 🔒';
-          break;
-        case 'email-already-in-use':
-          message = 'Email-already-in-use 📧';
-          break;
-        default:
-          message = 'An error occurred, please try again.';
-      }
-
-      emit(state.copyWith(status: RegisterStatus.error, errorMessage: message));
     } catch (e) {
       emit(state.copyWith(
         status: RegisterStatus.error,
-        errorMessage: 'An unexpected error occurred: $e',
+        errorMessage: e.toString(),
       ));
     }
-  }
-
-  void reset() {
-    emit(const RegisterState());
   }
 }

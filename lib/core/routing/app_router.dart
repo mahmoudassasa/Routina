@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:routina/core/widgets/bottom_navigation_bar_main_layout.dart';
+import 'package:routina/core/widgets/main_navigation_bar.dart';
 import 'package:routina/features/analyze_screen/ui/analyze_screen.dart';
 import 'package:routina/features/forgot_password/ui/forgot_password.dart';
 import 'package:routina/features/habit_tracker_screen/ui/habit_tracker_screen.dart';
@@ -26,13 +26,6 @@ class AppRouter {
             child: const LoginScreen(),
           ),
         );
-      // case Routes.homeScreen:
-      //   return MaterialPageRoute(
-      //     builder: (_) => BlocProvider(
-      //       create: (context) => HomeCubit()..loadHabits(),
-      //       child: const HomeScreen(),
-      //     ),
-      //   );
       case Routes.registerScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
@@ -48,11 +41,11 @@ class AppRouter {
         return MaterialPageRoute(builder: (__) => const HabitTrackerScreen());
       case Routes.analyzeScreen:
         return MaterialPageRoute(builder: (__) => const AnalyzeScreen());
-      case Routes.mainLayout:
+      case Routes.mainNavigationBar:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => HomeCubit()..loadHabits(),
-            child: const BottomNavigationBarMainLayout(),
+            child: const MainNavigationBar(),
           ),
         );
 

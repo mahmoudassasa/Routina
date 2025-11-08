@@ -24,7 +24,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  bool _isPasswordVisible = false;
 
   @override
   void dispose() {
@@ -51,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: BlocListener<LoginCubit, LoginState>(
             listener: (context, state) {
               if (state.status == LoginStatus.success) {
-                context.pushReplacementNamed(Routes.mainLayout);
+                context.pushReplacementNamed(Routes.mainNavigationBar);
               } else if (state.status == LoginStatus.error) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
@@ -82,12 +81,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       // Password Field
                       LoginScreenPasswordField(
                         passwordController: _passwordController,
-                        isPasswordVisible: _isPasswordVisible,
-                        togglePasswordVisibility: () {
-                          setState(() {
-                            _isPasswordVisible = !_isPasswordVisible;
-                          });
-                        },
                       ),
                       const SizedBox(height: 24),
                       // Login Button

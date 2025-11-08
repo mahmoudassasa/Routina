@@ -7,14 +7,14 @@ import 'package:routina/features/habit_tracker_screen/ui/habit_tracker_screen.da
 import 'package:routina/features/analyze_screen/ui/analyze_screen.dart';
 import 'package:routina/features/profile_screen/ui/profile_screen.dart';
 
-class BottomNavigationBarMainLayout extends StatefulWidget {
-  const BottomNavigationBarMainLayout({super.key});
+class MainNavigationBar extends StatefulWidget {
+  const MainNavigationBar({super.key});
 
   @override
-  State<BottomNavigationBarMainLayout> createState() => _BottomNavigationBarMainLayoutState();
+  State<MainNavigationBar> createState() => _MainNavigationBarState();
 }
 
-class _BottomNavigationBarMainLayoutState extends State<BottomNavigationBarMainLayout> {
+class _MainNavigationBarState extends State<MainNavigationBar> {
   int _currentIndex = 0;
 
   final screens = [

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'register_state.dart';
+import 'package:routina/features/register_screen/logic/cubit/register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit() : super(const RegisterState());
@@ -10,16 +10,20 @@ class RegisterCubit extends Cubit<RegisterState> {
     emit(state.copyWith(status: RegisterStatus.loading));
 
     try {
-      // 1) Create account in Firebase Auth
+      // 1) Create account
       UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      final String uid = userCredential.user!.uid;
+      final user = userCredential.user!;
+      final uid = user.uid;
 
-      // 2) Create Firestore document
+      // 2) Send Email Verification
+      await user.sendEmailVerification();
+
+      // 3) Save User in Firestore
       await FirebaseFirestore.instance.collection('users').doc(uid).set({
         'uid': uid,
         'name': name,
@@ -27,7 +31,11 @@ class RegisterCubit extends Cubit<RegisterState> {
         'createdAt': DateTime.now(),
       });
 
+      // ❌ Remove this! (Important)
+      // await FirebaseAuth.instance.signOut();
+
       emit(state.copyWith(status: RegisterStatus.success));
+      
     } catch (e) {
       emit(state.copyWith(
         status: RegisterStatus.error,

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:routina/core/widgets/main_navigation_bar.dart';
 import 'package:routina/features/analyze_screen/ui/analyze_screen.dart';
+import 'package:routina/features/email_confirmation_screen/logic/cubit/email_verification_cubit.dart';
+import 'package:routina/features/email_confirmation_screen/ui/email_confirmation_screen.dart';
 import 'package:routina/features/forgot_password/ui/forgot_password.dart';
 import 'package:routina/features/habit_tracker_screen/ui/habit_tracker_screen.dart';
 import 'package:routina/features/home_screen/logic/cubit/home_cubit.dart';
@@ -46,6 +48,13 @@ class AppRouter {
           builder: (_) => BlocProvider(
             create: (context) => HomeCubit()..loadHabits(),
             child: const MainNavigationBar(),
+          ),
+        );
+      case Routes.emailConfirmationScreen:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => EmailVerificationCubit(),
+            child: const EmailConfirmationScreen(),
           ),
         );
 

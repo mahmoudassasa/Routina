@@ -19,6 +19,7 @@ class RoutinaApp extends StatelessWidget {
         theme: AppTheme.lightTheme,
         initialRoute: Routes.onBoardingScreen,
         onGenerateRoute: appRouter.generateRoute,
+        
       ),
     );
   }

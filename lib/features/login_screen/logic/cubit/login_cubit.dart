@@ -9,12 +9,29 @@ class LoginCubit extends Cubit<LoginState> {
     emit(state.copyWith(status: LoginStatus.loading));
 
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      // Try signing in
+      UserCredential credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email.trim(),
         password: password.trim(),
       );
 
+      User? user = credential.user;
+
+      // ✅ Check if email is verified
+      if (user != null && !user.emailVerified) {
+        // Sign out because email is not verified
+        await FirebaseAuth.instance.signOut();
+
+        emit(state.copyWith(
+          status: LoginStatus.error,
+          errorMessage: 'Please verify your email before logging in 🔒',
+        ));
+        return;
+      }
+
+      // ✅ If email is verified → success
       emit(state.copyWith(status: LoginStatus.success));
+
     } on FirebaseAuthException catch (e) {
       String message = '';
 
@@ -33,6 +50,7 @@ class LoginCubit extends Cubit<LoginState> {
       }
 
       emit(state.copyWith(status: LoginStatus.error, errorMessage: message));
+
     } catch (e) {
       emit(state.copyWith(
         status: LoginStatus.error,

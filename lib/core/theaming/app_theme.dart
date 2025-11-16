@@ -5,6 +5,20 @@ import 'app_text_styles.dart';
 class AppTheme {
   static ThemeData get lightTheme {
     return ThemeData(
+      dialogTheme: DialogThemeData(
+        backgroundColor: AppColors.surface,
+        elevation: 8,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        titleTextStyle: const TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: AppColors.textPrimary,
+        ),
+        contentTextStyle: const TextStyle(
+          fontSize: 16,
+          color: AppColors.textSecondary,
+        ),
+      ),
       useMaterial3: true,
       fontFamily: 'Inter',
       colorScheme: const ColorScheme.light(
@@ -17,27 +31,25 @@ class AppTheme {
         error: AppColors.error,
         onError: AppColors.textWhite,
       ),
-      
+
       // AppBar Theme
       appBarTheme: const AppBarTheme(
         //TODO: Change to transparent if needed
-         backgroundColor: AppColors.background,
+        backgroundColor: AppColors.background,
         foregroundColor: AppColors.textPrimary,
         elevation: 0,
         titleTextStyle: AppTextStyles.headlineMedium,
         centerTitle: true,
       ),
-      
+
       // Card Theme
       cardTheme: CardThemeData(
         color: AppColors.surface,
         shadowColor: AppColors.textLight.withValues(alpha: 0.1),
         elevation: 2,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
-      
+
       // Elevated Button Theme
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -45,12 +57,10 @@ class AppTheme {
           foregroundColor: AppColors.textWhite,
           textStyle: AppTextStyles.buttonMedium,
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
       ),
-      
+
       // Input Decoration Theme
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
@@ -71,7 +81,10 @@ class AppTheme {
         ),
         filled: true,
         fillColor: AppColors.backgroundLight,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 12,
+        ),
       ),
     );
   }

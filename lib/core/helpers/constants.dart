@@ -1,4 +1,7 @@
+bool isLoggedInUser = false;
+bool isFirstTime = true;
 
-
-bool isLoggedInUser = true;
-
+class SharedPrefKeys {
+  static const String userToken = 'userToken';
+  static const String firstTime = 'firstTime';
+}

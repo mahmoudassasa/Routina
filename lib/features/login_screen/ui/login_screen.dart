@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/theaming/app_colors.dart';
+import 'package:routina/core/widgets/main_alert_dialog.dart';
 import 'package:routina/features/login_screen/logic/cubit/login_cubit.dart';
 import 'package:routina/features/login_screen/logic/cubit/login_state.dart';
 import 'package:routina/features/login_screen/ui/widgets/already_have_an_account.dart';
@@ -36,13 +37,20 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
-        if (state.status == LoginStatus.success) {
+      if (state.status == LoginStatus.success) {
           context.pushReplacementNamed(Routes.mainNavigationBar);
         } else if (state.status == LoginStatus.error) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.errorMessage ?? 'Login failed'),
-              backgroundColor: AppColors.error,
+          showDialog(
+            context: context,
+            builder: (_) => MainAlertDialog(
+              dialogTitle: const Text("Login Error"),
+              dialogContent: Text(state.errorMessage ?? "Login failed"),
+              dialogActions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text("OK"),
+                ),
+              ],
             ),
           );
         }

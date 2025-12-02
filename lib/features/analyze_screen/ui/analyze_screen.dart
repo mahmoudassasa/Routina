@@ -26,18 +26,21 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
         ),
         child: Material(
           child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // AI Analysis Icon
-                AnalyzeScreenAiAnalysisLogo(),
-                const SizedBox(height: 32),
-                // Texts
-                const AnalyzeScreenTexts(),
-                const SizedBox(height: 40),
-                // Mock AI Features
-                const AnalyzeScreenMockAiFeatures(),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // AI Analysis Icon
+                  AnalyzeScreenAiAnalysisLogo(),
+                  const SizedBox(height: 32),
+                  // Texts
+                  const AnalyzeScreenTexts(),
+                  const SizedBox(height: 40),
+                  // Mock AI Features
+                  const AnalyzeScreenMockAiFeatures(),
+                  const SizedBox(height: 40),
+                ],
+              ),
             ),
           ),
         ),

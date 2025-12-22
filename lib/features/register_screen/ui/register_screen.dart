@@ -12,6 +12,7 @@ import 'package:routina/features/register_screen/ui/widgets/register_screen_pass
 import 'package:routina/features/register_screen/ui/widgets/register_screen_register_button.dart';
 import 'package:routina/features/register_screen/ui/widgets/register_screen_texts.dart';
 import 'package:routina/features/register_screen/ui/widgets/register_screen_logo.dart';
+import 'package:routina/features/register_screen/ui/widgets/register_screen_user_picture.dart';
 
 import '../../../core/routing/routes.dart';
 
@@ -85,12 +86,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     children: [
                       // Logo
                       RegisterScreenLogo(),
-                      const SizedBox(height: 32),
+                      verticalSpace( 32),
                       RegisterScreenTexts(),
-                      const SizedBox(height: 48),
+                      verticalSpace( 48),
+                      RegisterScreenUserPicture(),
+                      verticalSpace( 25),
                       // Name Field
                       RegisterScreenNameField(nameController: _nameController),
-                      const SizedBox(height: 16),
+                      verticalSpace( 16),
                       // Email Field
                       RegisterScreenEmailField(
                         emailController: _emailController,
@@ -99,17 +102,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       // Password Field
                       RegisterScreenPasswordfield(
                         passwordController: _passwordController,
-                        //  passwordController: _passwordController,
-                        //isPasswordVisible: _isPasswordVisible,
+                        
                       ),
-                      const SizedBox(height: 24),
+                       verticalSpace(24),
                       // Register Button
                       RegisterScreenRegisterButton(
                         nameController: _nameController,
                         emailController: _emailController,
                         passwordController: _passwordController,
                       ),
-                      const SizedBox(height: 32),
+                       verticalSpace(32),
                       // Login In Link
                       RegisterScreenLoginLink(),
                     ],

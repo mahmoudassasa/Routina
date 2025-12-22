@@ -1,36 +1,50 @@
+  import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
+  extension Navigation on BuildContext {
+    Future<dynamic> pushNamed(String routeName, {Object? arguments}) {
+      return Navigator.of(this).pushNamed(routeName, arguments: arguments);
+    }
 
-extension Navigation on BuildContext {
-  Future<dynamic> pushNamed(String routeName, {Object? arguments}) {
-    return Navigator.of(this).pushNamed(routeName, arguments: arguments);
-  }
-
-  Future<dynamic> pushReplacementNamed(String routeName, {Object? arguments}) {
-    return Navigator.of(this)
-        .pushReplacementNamed(routeName, arguments: arguments);
-  }
+    Future<dynamic> pushReplacementNamed(String routeName, {Object? arguments}) {
+      return Navigator.of(
+        this,
+      ).pushReplacementNamed(routeName, arguments: arguments);
+    }
 
   Future<dynamic> pushNamedAndRemoveUntil(
-    String routeName, {
-    Object? arguments,
-    required RoutePredicate predicate,
-  }) {
-    return Navigator.of(this)
-        .pushNamedAndRemoveUntil(routeName, predicate, arguments: arguments);
+      String routeName, {
+      Object? arguments,
+      RoutePredicate? predicate,
+    }) {
+      return Navigator.of(this).pushNamedAndRemoveUntil(
+        routeName,
+        predicate ?? (_) => false,
+        arguments: arguments,
+      );
+    }
+    // Future<dynamic> pushNamedAndRemoveUntil(
+    //   String routeName,
+    //   bool Function(dynamic route) param1, {
+    //   Object? arguments,
+    //   required RoutePredicate predicate,
+    // }) {
+    //   return Navigator.of(
+    //     this,
+    //   ).pushNamedAndRemoveUntil(routeName, predicate, arguments: arguments);
+    // }
+
+    // UPDATED: Added [Object? result] to allow returning data when popping
+    void pop([Object? result]) => Navigator.of(this).pop(result);
   }
 
-  void pop() => Navigator.of(this).pop();
-}
+  extension StringExtension on String? {
+    bool isNullOrEmpty() => this == null || this == "";
+  }
 
-extension StringExtension on String? {
-  bool isNullOrEmpty() => this == null || this == "";
-}
+  extension ListExtension<T> on List<T>? {
+    bool isNullOrEmpty() => this == null || this!.isEmpty;
+  }
 
-extension ListExtension<T> on List<T>? {
-  bool isNullOrEmpty() => this == null || this!.isEmpty;
-}
-
-extension MapExtension<K, V> on Map<K, V>? {
-  bool isNullOrEmpty() => this == null || this!.isEmpty;
-} 
+  extension MapExtension<K, V> on Map<K, V>? {
+    bool isNullOrEmpty() => this == null || this!.isEmpty;
+  }

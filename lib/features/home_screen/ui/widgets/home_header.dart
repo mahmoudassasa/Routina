@@ -1,6 +1,6 @@
+
 import 'package:flutter/material.dart';
-import 'package:routina/core/helpers/extension.dart';
-import 'package:routina/core/routing/routes.dart';
+
 
 class HomeHeader extends StatefulWidget {
   const HomeHeader({super.key});
@@ -34,11 +34,7 @@ class _HomeHeaderState extends State<HomeHeader> {
               ),
             ],
           ),
-          IconButton(
-            onPressed: () => context.pushReplacementNamed(Routes.loginScreen),
-            icon: const Icon(Icons.logout),
-            color: Colors.grey[600],
-          ),
+
         ],
       ),
     );

@@ -114,7 +114,7 @@ class EmailConfirmationScreen extends StatelessWidget {
                     // Navigation after 2 seconds
                     Future.delayed(const Duration(seconds: 2), () {
                       if (context.mounted) {
-                        Navigator.of(context).pop(); // close dialog
+                        context.pop(); // close dialog
                         context.pushReplacementNamed(Routes.loginScreen);
                       }
                     });

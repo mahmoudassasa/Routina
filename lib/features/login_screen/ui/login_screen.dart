@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
               dialogContent: Text(state.errorMessage ?? "Login failed"),
               dialogActions: [
                 TextButton(
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () => context.pop(),
                   child: const Text("OK"),
                 ),
               ],

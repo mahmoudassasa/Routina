@@ -1,42 +1,47 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  // Primary Colors
-  static const Color primary = Color(0xFF3B82F6); // Blue 500
+  // Primary Colors (تغيير لأزرق ملكي أكثر عصرية)
+  static const Color primary = Color(0xFF2563EB); // Blue 600 (أقوى من السابق)
   static const Color primaryLight = Color(0xFF60A5FA); // Blue 400
-  static const Color primaryDark = Color(0xFF1D4ED8); // Blue 700
+  static const Color primaryDark = Color(0xFF1E40AF); // Blue 800
+  static const Color primaryLighter = Color(0xFFDBEAFE); // Blue 100 (للخلفيات الخفيفة)
+
+  // Accent Colors (جديد: لون برتقالي مرجاني لكسر الملل وجذب الانتباه)
+  static const Color accent = Color(0xFFFF7D54); 
+  static const Color accentLight = Color(0xFFFFDBC8);
 
   // Background Colors
-  static const Color background = Color(0xFFFFFFFF); // White
-  static const Color backgroundLight = Color(0xFFF9FAFB); // Gray 50
-  static const Color backgroundGradientStart = Color(0xFFEFF6FF); // Blue 50
-  static const Color backgroundGradientEnd = Color(0xFFE0E7FF); // Indigo 100
+  static const Color background = Color(0xFFFFFFFF); 
+  static const Color backgroundLight = Color(0xFFF8FAFC); // Slate 50 (أهدأ من السابق)
+  
+  // Gradients (تعديل طفيف ليكون ناعماً)
+  static const Color backgroundGradientStart = Color(0xFFF0F9FF); 
+  static const Color backgroundGradientEnd = Color(0xFFE0F2FE); 
 
-  // Text Colors
-  static const Color textPrimary = Color(0xFF111827); // Gray 900
-  static const Color textSecondary = Color(0xFF4B5563); // Gray 600
-  static const Color textLight = Color(0xFF9CA3AF); // Gray 400
-  static const Color textWhite = Color(0xFFFFFFFF); // White
+  // Text Colors (تحسين التباين للقراءة)
+  static const Color textPrimary = Color(0xFF0F172A); // Slate 900 (أسود مائل للكحلي)
+  static const Color textSecondary = Color(0xFF475569); // Slate 600
+  static const Color textLight = Color(0xFF94A3B8); // Slate 400
+  static const Color textWhite = Color(0xFFFFFFFF); 
 
   // Surface Colors
-  static const Color surface = Color(0xFFFFFFFF); // White
-  static const Color surfaceLight = Color(0xFFF3F4F6); // Gray 100
+  static const Color surface = Color(0xFFFFFFFF);
+  static const Color surfaceLight = Color(0xFFF1F5F9); // Slate 100
 
   // Error Colors
-  static const Color error = Color(0xFFEF4444); // Red 500
-  static const Color errorLight = Color(0xFFFEF2F2); // Red 50
-  static const Color dialogErrorLight = Color(0xFFE57373);
+  static const Color error = Color(0xFFDC2626); // Red 600
+  static const Color errorLight = Color(0xFFFEF2F2); 
+  
+  // Success Colors
+  static const Color success = Color(0xFF059669); // Emerald 600
+  static const Color successLight = Color(0xFFECFDF5); 
 
   // Warning Colors
-  static const Color dialogWarning = Color(0xFFFFA000);
-
-  // Success Colors
-  static const Color success = Color(0xFF10B981); // Green 500
-  static const Color successLight = Color(0xFFF0FDF4); // Green 50
-  static const Color dialogSuccess = Color(0xFF4CAF50);
-  static const Color dialogSuccessLight = Color(0xFF81C784);
+  static const Color warning = Color(0xFFD97706); // Amber 600
+  static const Color warningLight = Color(0xFFFFFBEB);
 
   // Border Colors
-  static const Color border = Color(0xFFE5E7EB); // Gray 200
-  static const Color borderLight = Color(0xFFF3F4F6); // Gray 100
+  static const Color border = Color(0xFFE2E8F0); // Slate 200
+  static const Color borderFocus = Color(0xFF2563EB); // نفس لون الـ Primary
 }

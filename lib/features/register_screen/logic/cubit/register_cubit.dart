@@ -1,41 +1,98 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:routina/features/register_screen/logic/cubit/register_state.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit() : super(const RegisterState());
 
+  final ImagePicker _picker = ImagePicker();
+  final supabase = Supabase.instance.client;
+
+  /// Pick image from gallery
+  Future<void> pickImage() async {
+    emit(state.copyWith(imageStatus: ImageUploadStatus.picking));
+
+    final picked = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (picked != null) {
+      emit(state.copyWith(
+        localImage: File(picked.path),
+        imageStatus: ImageUploadStatus.success,
+      ));
+    } else {
+      emit(state.copyWith(imageStatus: ImageUploadStatus.initial));
+    }
+  }
+
+  /// Upload image to Supabase
+  Future<String?> uploadImage(String uid) async {
+    if (state.localImage == null) return null;
+
+    try {
+      emit(state.copyWith(imageStatus: ImageUploadStatus.uploading));
+
+      final fileName =
+          "$uid-profile-${DateTime.now().millisecondsSinceEpoch}.jpg";
+
+      await supabase.storage.from('users').upload(
+            fileName,
+            state.localImage!,
+            fileOptions: const FileOptions(contentType: 'image/jpeg'),
+          );
+
+      final imageUrl = supabase.storage.from('users').getPublicUrl(fileName);
+
+      emit(state.copyWith(
+        imageStatus: ImageUploadStatus.success,
+        imageUrl: imageUrl,
+      ));
+
+      return imageUrl;
+    } catch (e) {
+      emit(state.copyWith(
+        imageStatus: ImageUploadStatus.error,
+        errorMessage: e.toString(),
+      ));
+      return null;
+    }
+  }
+
+  /// Full register process
   Future<void> register(String name, String email, String password) async {
     emit(state.copyWith(status: RegisterStatus.loading));
 
     try {
-      // 1) Create account
+      // 1) Create Firebase Account
       UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      final user = userCredential.user!;
-      final uid = user.uid;
+      final uid = userCredential.user!.uid;
+      await userCredential.user!.sendEmailVerification();
 
-      // 2) Send Email Verification
-      await user.sendEmailVerification();
+      // 2) Upload profile image (if exists)
+      String? imageUrl = await uploadImage(uid);
 
-      // 3) Save User in Firestore
+      // If no image → use default
+      imageUrl ??= "https://gvqgliulacfmhscswyid.supabase.co/storage/v1/object/public/users/unknown.png";
+
+      // 3) Save user data in Firestore
       await FirebaseFirestore.instance.collection('users').doc(uid).set({
         'uid': uid,
         'name': name,
         'email': email,
+        'imageUrl': imageUrl,
         'createdAt': DateTime.now(),
       });
 
-      // ❌ Remove this! (Important)
-      // await FirebaseAuth.instance.signOut();
-
       emit(state.copyWith(status: RegisterStatus.success));
-      
     } catch (e) {
       emit(state.copyWith(
         status: RegisterStatus.error,

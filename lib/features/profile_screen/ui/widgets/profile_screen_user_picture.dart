@@ -1,34 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/features/profile_screen/logic/cubit/profile_cubit.dart';
+import 'package:routina/features/profile_screen/logic/cubit/profile_state.dart';
 
-class ProfileScreenUserPicture extends StatefulWidget {
+class ProfileScreenUserPicture extends StatelessWidget {
   const ProfileScreenUserPicture({super.key});
 
   @override
-  State<ProfileScreenUserPicture> createState() =>
-      _ProfileScreenUserPictureState();
-}
-
-class _ProfileScreenUserPictureState extends State<ProfileScreenUserPicture> {
-  @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: Container(
-        width: 120,
-        height: 120,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(60),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFF3B82F6).withValues(alpha: 0.1),
-              blurRadius: 20,
-              offset: const Offset(0, 8),
-            ),
-          ],
-        ),
-        child: const Center(child: Text('👤', style: TextStyle(fontSize: 48))),
-      ),
+    return BlocBuilder<ProfileCubit, ProfileState>(
+      builder: (context, state) {
+        // 1) Loading
+        if (state.loading) {
+          return Container(
+            width: 120.w,
+            height: 120.w,
+            alignment: Alignment.center,
+            child: const CircularProgressIndicator(),
+          );
+        }
+
+        // 2) Image URL exists
+        if (state.imageUrl != null && state.imageUrl!.isNotEmpty) {
+          return _buildImage(state.imageUrl!);
+        }
+
+        // 3) fallback unknown
+        return _buildImage('assets/images/unknown.png', isLocal: true);
+      },
     );
   }
+
+Widget _buildImage(String source, {bool isLocal = false}) {
+  return Container(
+    width: 120.w,
+    height: 120.w,
+    decoration: BoxDecoration(
+      shape: BoxShape.circle,
+      color: Colors.white,
+      boxShadow: [
+        BoxShadow(
+          color: const Color(0xFF3B82F6).withValues(alpha: 0.12),
+          blurRadius: 25.w,
+          offset: Offset(0, 8.h),
+        ),
+      ],
+    ),
+    child: ClipOval(
+      child: isLocal
+          ? Image.asset(source, fit: BoxFit.cover)
+          : Image.network(source, fit: BoxFit.cover),
+    ),
+  );
+}
+
 }

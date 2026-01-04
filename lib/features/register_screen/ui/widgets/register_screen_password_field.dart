@@ -18,22 +18,34 @@ class _RegisterScreenPasswordfieldState extends State<RegisterScreenPasswordfiel
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final password = widget.passwordController.text;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-
         TextFormField(
           controller: widget.passwordController,
           obscureText: isObscure,
-          onChanged: (_) => setState(() {}), 
+          onChanged: (_) => setState(() {}),
+          style: TextStyle(color: isDark ? Colors.white : AppColors.textPrimary),
           decoration: InputDecoration(
+            labelText: 'Password',
+            labelStyle: TextStyle(
+              color: isDark ? Colors.white60 : AppColors.textSecondary,
+            ),
             hintText: "Enter your password",
+            hintStyle: TextStyle(
+              color: isDark ? Colors.white30 : Colors.grey[400],
+            ),
+            prefixIcon: Icon(
+              Icons.lock_outline_rounded,
+              color: isDark ? AppColors.primaryLight : AppColors.primary,
+            ),
             suffixIcon: IconButton(
               icon: Icon(
-                isObscure ? Icons.visibility_off : Icons.visibility,
-                color: AppColors.textLight,
+                isObscure ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                color: isDark ? Colors.white60 : AppColors.textLight,
               ),
               onPressed: () => setState(() => isObscure = !isObscure),
             ),
@@ -49,9 +61,9 @@ class _RegisterScreenPasswordfieldState extends State<RegisterScreenPasswordfiel
           },
         ),
 
-        verticalSpace(12),
+        verticalSpace(16),
 
-        // ✅ Validation UI
+        // Validation UI with current password state
         PasswordValidations(
           hasUpperCase: AppRegex.hasUpperCase(password),
           hasLowerCase: AppRegex.hasLowerCase(password),

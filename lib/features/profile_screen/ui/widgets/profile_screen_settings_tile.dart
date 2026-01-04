@@ -1,7 +1,5 @@
-
-
-
 import 'package:flutter/material.dart';
+import 'package:routina/core/theaming/app_colors.dart';
 
 class SettingsTile extends StatelessWidget {
   final String icon;
@@ -9,7 +7,8 @@ class SettingsTile extends StatelessWidget {
   final String subtitle;
   final VoidCallback onTap;
 
-  const SettingsTile({super.key, 
+  const SettingsTile({
+    super.key,
     required this.icon,
     required this.title,
     required this.subtitle,
@@ -18,6 +17,8 @@ class SettingsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       child: ListTile(
@@ -25,29 +26,41 @@ class SettingsTile extends StatelessWidget {
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: const Color(0xFF3B82F6).withValues(alpha: 0.1),
+            color: AppColors.primary.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Center(
-            child: Text(icon, style: const TextStyle(fontSize: 20)),
+            child: Text(
+              icon,
+              style: const TextStyle(fontSize: 20),
+            ),
           ),
         ),
         title: Text(
           title,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF1F2937),
+            color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
           ),
         ),
         subtitle: Text(
           subtitle,
-          style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+          style: TextStyle(
+            fontSize: 14,
+            color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+          ),
         ),
-        trailing: Icon(Icons.chevron_right, color: Colors.grey[400]),
+        trailing: Icon(
+          Icons.chevron_right,
+          color: isDark ? Colors.grey[600] : Colors.grey[400],
+        ),
         onTap: onTap,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        tileColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        // Switch tile color based on theme
+        tileColor: isDark ? AppColors.darkSurface : AppColors.surface,
       ),
     );
   }

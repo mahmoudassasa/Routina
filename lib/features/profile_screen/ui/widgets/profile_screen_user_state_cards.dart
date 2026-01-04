@@ -1,71 +1,76 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/features/profile_screen/logic/cubit/profile_cubit.dart';
+import 'package:routina/features/profile_screen/logic/cubit/profile_state.dart';
 import 'package:routina/features/profile_screen/ui/widgets/profile_screen_state_card.dart';
 
-class ProfileScreenUserStateCards extends StatefulWidget {
+class ProfileScreenUserStateCards extends StatelessWidget {
   const ProfileScreenUserStateCards({super.key});
 
   @override
-  State<ProfileScreenUserStateCards> createState() =>
-      _ProfileScreenUserStateCardsState();
-}
-
-class _ProfileScreenUserStateCardsState
-    extends State<ProfileScreenUserStateCards> {
-  @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Row(
-              children: [
-                Expanded(
-                  child: StatCard(
-                    icon: '🔥',
-                    title: 'Current Streak',
-                    value: '12 days',
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: StatCard(
-                    icon: '🎯',
-                    title: 'Total Habits',
-                    value: '5 active',
-                  ),
-                ),
-              ],
-            ),
-          ),
+    return BlocBuilder<ProfileCubit, ProfileState>(
+      builder: (context, state) {
+        // We can show dummy data while loading or use specific values from state
+        // Assuming your ProfileState will eventually have these fields
+        final currentStreak = state.currentStreak ?? "0 days";
+        final totalHabits = state.totalHabits ?? "0 active";
+        final completionRate = state.completionRate ?? "0%";
+        final bestStreak = state.bestStreak ?? "0 days";
 
-          const SizedBox(height: 16),
-
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Row(
-              children: [
-                Expanded(
-                  child: StatCard(
-                    icon: '📊',
-                    title: 'Completion Rate',
-                    value: '78%',
+        return Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: StatCard(
+                      icon: '🔥',
+                      title: 'Current Streak',
+                      value: currentStreak,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: StatCard(
-                    icon: '🏆',
-                    title: 'Best Streak',
-                    value: '21 days',
+                  SizedBox(width: 16.w),
+                  Expanded(
+                    child: StatCard(
+                      icon: '🎯',
+                      title: 'Total Habits',
+                      value: totalHabits,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
+            
+            SizedBox(height: 16.h),
+            
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: StatCard(
+                      icon: '📊',
+                      title: 'Completion Rate',
+                      value: completionRate,
+                    ),
+                  ),
+                  SizedBox(width: 16.w),
+                  Expanded(
+                    child: StatCard(
+                      icon: '🏆',
+                      title: 'Best Streak',
+                      value: bestStreak,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

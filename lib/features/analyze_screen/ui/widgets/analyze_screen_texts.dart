@@ -1,28 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:routina/core/theaming/app_colors.dart';
 
 class AnalyzeScreenTexts extends StatelessWidget {
   const AnalyzeScreenTexts({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
-      children: const [
+      children: [
         Text(
           'AI Analysis',
           style: TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
-            color: Color(0xFF1F2937),
+            color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
           ),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 32),
+          padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Text(
             'Get personalized insights and recommendations based on your habit patterns and progress.',
             style: TextStyle(
               fontSize: 16,
-              color: Color(0xFF6B7280),
+              color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
               height: 1.5,
             ),
             textAlign: TextAlign.center,

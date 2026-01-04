@@ -1,20 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'app_colors.dart';
 
 class AppTextStyles {
+
+  // NEW: Specifically for the Bold "Confirm Your Email" or "Routina" texts
+  static TextStyle font24BlackBold = TextStyle(
+    fontSize: 24.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.textPrimary,
+  );
+
+  // NEW: Specifically for subtexts in Auth screens
+  static TextStyle font14GrayRegular = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.normal,
+    color: AppColors.textSecondary,
+  );
+
+  // NEW: Specifically for the Big Gradient Buttons (Register/Confirm)
+  static TextStyle font18WhiteExtraBold = TextStyle(
+    fontSize: 18.sp,
+    fontWeight: FontWeight.w800,
+    color: Colors.white,
+    letterSpacing: 1.1,
+  );
+  
+  // ... Keep the rest of your class
   // Display Styles
   static const TextStyle displayLarge = TextStyle(
     fontSize: 32,
     fontWeight: FontWeight.bold,
     color: AppColors.textPrimary,
     height: 1.2,
+    inherit: true,
   );
   
+
   static const TextStyle displayMedium = TextStyle(
     fontSize: 28,
     fontWeight: FontWeight.bold,
     color: AppColors.textPrimary,
     height: 1.2,
+    inherit: true,
   );
   
   static const TextStyle displaySmall = TextStyle(
@@ -22,6 +50,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     color: AppColors.textPrimary,
     height: 1.3,
+    inherit: true,
   );
   
   // Headline Styles
@@ -30,6 +59,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     color: AppColors.textPrimary,
     height: 1.3,
+    inherit: true,
   );
   
   static const TextStyle headlineMedium = TextStyle(
@@ -37,6 +67,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     color: AppColors.textPrimary,
     height: 1.3,
+    inherit: true,
   );
   
   static const TextStyle headlineSmall = TextStyle(
@@ -44,6 +75,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     color: AppColors.textPrimary,
     height: 1.4,
+    inherit: true,
   );
   
   // Title Styles
@@ -52,6 +84,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     color: AppColors.textPrimary,
     height: 1.4,
+    inherit: true,
   );
   
   static const TextStyle titleMedium = TextStyle(
@@ -59,6 +92,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
     color: AppColors.textPrimary,
     height: 1.4,
+    inherit: true,
   );
   
   static const TextStyle titleSmall = TextStyle(
@@ -66,6 +100,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
     color: AppColors.textPrimary,
     height: 1.4,
+    inherit: true,
   );
   
   // Body Styles
@@ -74,6 +109,7 @@ class AppTextStyles {
     fontWeight: FontWeight.normal,
     color: AppColors.textPrimary,
     height: 1.5,
+    inherit: true,
   );
   
   static const TextStyle bodyMedium = TextStyle(
@@ -81,6 +117,7 @@ class AppTextStyles {
     fontWeight: FontWeight.normal,
     color: AppColors.textPrimary,
     height: 1.5,
+    inherit: true,
   );
   
   static const TextStyle bodySmall = TextStyle(
@@ -88,6 +125,7 @@ class AppTextStyles {
     fontWeight: FontWeight.normal,
     color: AppColors.textSecondary,
     height: 1.5,
+    inherit: true,
   );
   
   // Label Styles
@@ -96,6 +134,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
     color: AppColors.textPrimary,
     height: 1.4,
+    inherit: true,
   );
   
   static const TextStyle labelMedium = TextStyle(
@@ -103,6 +142,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
     color: AppColors.textSecondary,
     height: 1.4,
+    inherit: true,
   );
   
   static const TextStyle labelSmall = TextStyle(
@@ -110,6 +150,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
     color: AppColors.textSecondary,
     height: 1.4,
+    inherit: true,
   );
   
   // Button Styles
@@ -118,6 +159,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     color: AppColors.textWhite,
     height: 1.2,
+    inherit: true,
   );
   
   static const TextStyle buttonMedium = TextStyle(
@@ -125,5 +167,6 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     color: AppColors.textWhite,
     height: 1.2,
+    inherit: true,
   );
 }

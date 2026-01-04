@@ -7,20 +7,29 @@ class RegisterScreenTexts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       children: [
-      
-        // Texts
-        const Text(
+        // Main Title
+        Text(
           'Create Account',
-          style: AppTextStyles.displayMedium,
+          style: AppTextStyles.displayMedium.copyWith(
+            // Ensure title is white or near-white in dark mode
+            color: isDark ? Colors.white : AppColors.textPrimary,
+          ),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 8),
+        
+        // Subtitle
         Text(
           'Join us and start building better habits',
           style: AppTextStyles.bodyLarge.copyWith(
-            color: AppColors.textSecondary,
+            // Use a softer grey for dark mode to maintain hierarchy
+            color: isDark 
+                ? Colors.white.withValues(alpha: 0.7) 
+                : AppColors.textSecondary,
           ),
           textAlign: TextAlign.center,
         ),

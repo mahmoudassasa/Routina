@@ -1,91 +1,90 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/features/habit_tracker_screen/ui/widgets/feature_preview_card.dart';
 
-class HabitTrackerScreenComingSoonContent extends StatefulWidget {
+class HabitTrackerScreenComingSoonContent extends StatelessWidget {
   const HabitTrackerScreenComingSoonContent({super.key});
 
   @override
-  State<HabitTrackerScreenComingSoonContent> createState() => _HabitTrackerScreenComingSoonContentState();
-}
-
-class _HabitTrackerScreenComingSoonContentState extends State<HabitTrackerScreenComingSoonContent> {
-  @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Material(
-        color: Colors.transparent,
-        child: Center(
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return SizedBox(
+      width: double.infinity,
+      child: Center(
+        child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(height: 20.h),
+              
               Container(
-                width: 100,
-                height: 100,
+                width: 100.w,
+                height: 100.w,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(50),
+                  color: isDark ? AppColors.darkSurface : Colors.white,
+                  shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.1),
-                      blurRadius: 20,
-                      offset: const Offset(0, 8),
+                      color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.1),
+                      blurRadius: 20.r,
+                      offset: Offset(0, 8.h),
                     ),
                   ],
+                  border: isDark 
+                      ? Border.all(color: AppColors.darkBorder, width: 1.w)
+                      : null,
                 ),
-                child: const Center(
-                  child: Text('🚧', style: TextStyle(fontSize: 48)),
+                child: Center(
+                  child: Text('🚧', style: TextStyle(fontSize: 48.sp)),
                 ),
               ),
-            
-              const SizedBox(height: 24),
-            
-              const Text(
+
+              SizedBox(height: 24.h),
+
+              Text(
                 'Coming Soon!',
                 style: TextStyle(
-                  fontSize: 28,
+                  fontSize: 28.sp,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF1F2937),
+                  color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
                 ),
               ),
-            
-              const SizedBox(height: 16),
-            
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 32),
+
+              SizedBox(height: 16.h),
+
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 32.w),
                 child: Text(
                   'Advanced habit tracking features including charts, statistics, and detailed analytics will be available here.',
                   style: TextStyle(
-                    fontSize: 16,
-                    color: Color(0xFF6B7280),
+                    fontSize: 16.sp,
+                    color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
                     height: 1.5,
                   ),
                   textAlign: TextAlign.center,
                 ),
               ),
-            
-              const SizedBox(height: 32),
-            
-              // Feature Preview Cards
+
+              SizedBox(height: 32.h),
+
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32),
+                padding: EdgeInsets.symmetric(horizontal: 32.w),
                 child: Column(
-                  children: [
+                  children: const [
                     FeaturePreviewCard(
                       icon: '📈',
                       title: 'Progress Charts',
                       description: 'Visual progress tracking over time',
                     ),
-            
-                    const SizedBox(height: 12),
-            
+                    SizedBox(height: 12),
                     FeaturePreviewCard(
                       icon: '🎯',
                       title: 'Goal Setting',
                       description: 'Set and track specific habit goals',
                     ),
-            
-                    const SizedBox(height: 12),
-            
+                    SizedBox(height: 12),
                     FeaturePreviewCard(
                       icon: '🏆',
                       title: 'Achievements',
@@ -94,6 +93,7 @@ class _HabitTrackerScreenComingSoonContentState extends State<HabitTrackerScreen
                   ],
                 ),
               ),
+              SizedBox(height: 40.h),
             ],
           ),
         ),

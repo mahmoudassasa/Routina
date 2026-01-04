@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/theaming/app_colors.dart';
+import 'package:routina/core/theaming/app_theme/logic/cubit/theme_cubit.dart';
 import 'package:routina/core/widgets/main_alert_dialog.dart';
 import 'package:routina/features/login_screen/logic/cubit/login_cubit.dart';
 import 'package:routina/features/login_screen/logic/cubit/login_state.dart';
@@ -35,9 +36,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
-      if (state.status == LoginStatus.success) {
+        if (state.status == LoginStatus.success) {
           context.pushReplacementNamed(Routes.mainNavigationBar);
         } else if (state.status == LoginStatus.error) {
           showDialog(
@@ -55,57 +58,79 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         }
       },
-      child: Material(
-        child: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                AppColors.backgroundGradientStart,
-                AppColors.backgroundGradientEnd,
-              ],
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(32.0),
-            child: Align(
-              alignment: Alignment.center,
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // Logo
-                    LoginScreenLogo(),
-                    const SizedBox(height: 32),
-                    // Texts
-                    LoginScreenTexts(),
-                    const SizedBox(height: 48),
-                    // Email Field
-                    LoginScreenEmailField(emailController: _emailController),
-                    const SizedBox(height: 16),
-                    // Password Field
-                    LoginScreenPasswordField(
-                      passwordController: _passwordController,
-                    ),
-                    const SizedBox(height: 24),
-                    // Login Button
-                    LoginButton(
-                      emailController: _emailController,
-                      passwordController: _passwordController,
-                    ),
-                    const SizedBox(height: 16),
-                    // Forgot Password
-                    ForgotPassword(),
-                    const SizedBox(height: 16),
-                    // Sign Up Link
-                    AlreadyHaveAnAccount(),
+      child: Scaffold(
+        body: Stack(
+          children: [
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 500),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    isDark ? const Color(0xFF1A1A1A) : AppColors.backgroundGradientStart,
+                    isDark ? Colors.black : AppColors.backgroundGradientEnd,
                   ],
                 ),
               ),
             ),
-          ),
+            
+            Positioned(
+              top: 50,
+              left: 20,
+              child: BlocBuilder<ThemeCubit, ThemeState>(
+                builder: (context, state) {
+                  return FloatingActionButton.small(
+                    heroTag: 'themeToggleLogin',
+                    elevation: 0,
+                    backgroundColor: isDark ? Colors.white10 : AppColors.primary.withValues(alpha: 0.1),
+                    shape: CircleBorder(
+                      side: BorderSide(
+                        color: isDark ? Colors.white24 : AppColors.primary.withValues(alpha: 0.5),
+                      ),
+                    ),
+                    onPressed: () => context.read<ThemeCubit>().toggleTheme(),
+                    child: Icon(
+                      isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
+                      color: isDark ? Colors.amber[400] : AppColors.primary,
+                    ),
+                  );
+                },
+              ),
+            ),
+
+            SafeArea(
+              child: Center(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(32.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const LoginScreenLogo(),
+                      const SizedBox(height: 32),
+                      const LoginScreenTexts(),
+                      const SizedBox(height: 48),
+                      LoginScreenEmailField(emailController: _emailController),
+                      const SizedBox(height: 16),
+                      LoginScreenPasswordField(
+                        passwordController: _passwordController,
+                      ),
+                      const SizedBox(height: 24),
+                      LoginButton(
+                        emailController: _emailController,
+                        passwordController: _passwordController,
+                      ),
+                      const SizedBox(height: 24),
+                      const ForgotPassword(),
+                      const SizedBox(height: 16),
+                      const AlreadyHaveAnAccount(),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

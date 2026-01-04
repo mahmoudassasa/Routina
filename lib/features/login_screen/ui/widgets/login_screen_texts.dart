@@ -7,21 +7,26 @@ class LoginScreenTexts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       children: [
         // Title
-        const Text(
+        Text(
           'Welcome Back',
-          style: AppTextStyles.displayMedium,
+          style: AppTextStyles.displayMedium.copyWith(
+            color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+          ),
           textAlign: TextAlign.center,
         ),
-    
-        const SizedBox(height: 8),
-    
+
+        const SizedBox(height: 12), // Slightly more breathing room
+
+        // Subtitle
         Text(
           'Sign in to continue tracking your habits',
           style: AppTextStyles.bodyLarge.copyWith(
-            color: AppColors.textSecondary,
+            color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
           ),
           textAlign: TextAlign.center,
         ),

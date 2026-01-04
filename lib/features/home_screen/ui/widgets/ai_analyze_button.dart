@@ -1,47 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:routina/core/theaming/app_colors.dart';
 
-class AiAnalyzeButton extends StatefulWidget {
+class AiAnalyzeButton extends StatelessWidget {
   const AiAnalyzeButton({super.key});
 
   @override
-  State<AiAnalyzeButton> createState() => _AiAnalyzeButtonState();
-}
-
-class _AiAnalyzeButtonState extends State<AiAnalyzeButton> {
-  @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.all(20.0),
-      child: Container(
-        width: 80,
-        height: 80,        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Color(0xFF3B82F6), Color(0xFF60A5FA)],
-          ),
-          borderRadius: BorderRadius.circular(40),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFF3B82F6).withValues(alpha: 0.3),
-              blurRadius: 20,
-              offset: const Offset(0, 8),
+      child: Tooltip(
+        message: 'AI Analysis',
+        child: Container(
+          width: 80,
+          height: 80,
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                AppColors.primary,
+                Color(0xFF60A5FA), // Lighter blue for a glow effect
+              ],
             ),
-          ],
-        ),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(40),
-            onTap: () {
-              // Navigate to analyze tab
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('🤖 AI Analysis coming soon!'),
-                  backgroundColor: Color(0xFF3B82F6),
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.primary.withValues(alpha: isDark ? 0.4 : 0.3),
+                blurRadius: 20,
+                offset: const Offset(0, 8),
+              ),
+            ],
+          ),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              customBorder: const CircleBorder(),
+              onTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('🤖 AI Analysis coming soon!'),
+                    backgroundColor: AppColors.primary,
+                    behavior: SnackBarBehavior.floating,
+                  ),
+                );
+              },
+              child: const Center(
+                child: Text(
+                  '🤖',
+                  style: TextStyle(fontSize: 32),
                 ),
-              );
-            },
-            child: const Center(
-              child: Text('🤖', style: TextStyle(fontSize: 32)),
+              ),
             ),
           ),
         ),

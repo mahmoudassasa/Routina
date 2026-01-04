@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/features/profile_screen/logic/cubit/profile_cubit.dart';
 import 'package:routina/features/profile_screen/logic/cubit/profile_state.dart';
 
@@ -9,16 +10,28 @@ class ProfileScreenUserDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
         if (state.loading) {
-          return const CircularProgressIndicator();
+          return Padding(
+            padding: EdgeInsets.symmetric(vertical: 20.h),
+            child: const Center(
+              child: CircularProgressIndicator(
+                color: AppColors.primary,
+              ),
+            ),
+          );
         }
 
         if (state.errorMessage != null) {
-          return Text(
-            "Error: ${state.errorMessage}",
-            style: const TextStyle(color: Colors.red),
+          return Padding(
+            padding: EdgeInsets.symmetric(vertical: 10.h),
+            child: Text(
+              "Error: ${state.errorMessage}",
+              style: const TextStyle(color: AppColors.error),
+            ),
           );
         }
 
@@ -29,15 +42,15 @@ class ProfileScreenUserDetails extends StatelessWidget {
               style: TextStyle(
                 fontSize: 28.sp,
                 fontWeight: FontWeight.bold,
-                color: const Color(0xFF1F2937),
+                color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
               ),
             ),
             SizedBox(height: 8.h),
             Text(
               state.email ?? "No Email",
               style: TextStyle(
-                fontSize: 20.sp,
-                color: Colors.grey,
+                fontSize: 16.sp, // Reduced slightly for better hierarchy
+                color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
               ),
             ),
             SizedBox(height: 40.h),

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 
-
-class PageIndicators extends StatefulWidget {
+class PageIndicators extends StatelessWidget {
   final int currentPage;
   final List<Map<String, String>> pages;
 
@@ -13,27 +12,28 @@ class PageIndicators extends StatefulWidget {
   });
 
   @override
-  State<PageIndicators> createState() => _PageIndicatorsState();
-}
-
-class _PageIndicatorsState extends State<PageIndicators> {
-  @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(
-        widget.pages.length,
-        (index) => Container(
-          margin: const EdgeInsets.symmetric(horizontal: 4),
-          width: widget.currentPage == index ? 24 : 8,
-          height: 8,
-          decoration: BoxDecoration(
-            color: widget.currentPage == index
-                ? AppColors.primary
-                : AppColors.border,
-            borderRadius: BorderRadius.circular(4),
-          ),
-        ),
+        pages.length,
+        (index) {
+          final bool isActive = currentPage == index;
+          return AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            margin: const EdgeInsets.symmetric(horizontal: 4),
+            width: isActive ? 24 : 8,
+            height: 8,
+            decoration: BoxDecoration(
+              color: isActive
+                  ? AppColors.primary
+                  : (isDark ? Colors.white24 : AppColors.border),
+              borderRadius: BorderRadius.circular(4),
+            ),
+          );
+        },
       ),
     );
   }

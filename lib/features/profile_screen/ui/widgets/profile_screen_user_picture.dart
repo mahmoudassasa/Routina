@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/features/profile_screen/logic/cubit/profile_cubit.dart';
 import 'package:routina/features/profile_screen/logic/cubit/profile_state.dart';
 
@@ -9,50 +10,60 @@ class ProfileScreenUserPicture extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
-        // 1) Loading
         if (state.loading) {
-          return Container(
+          return SizedBox(
             width: 120.w,
             height: 120.w,
-            alignment: Alignment.center,
-            child: const CircularProgressIndicator(),
+            child: const Center(
+              child: CircularProgressIndicator(color: AppColors.primary),
+            ),
           );
         }
 
-        // 2) Image URL exists
         if (state.imageUrl != null && state.imageUrl!.isNotEmpty) {
-          return _buildImage(state.imageUrl!);
+          return _buildImage(state.imageUrl!, isDark);
         }
 
-        // 3) fallback unknown
-        return _buildImage('assets/images/unknown.png', isLocal: true);
+        // Fallback to local asset
+        return _buildImage('assets/images/unknown.png', isDark, isLocal: true);
       },
     );
   }
 
-Widget _buildImage(String source, {bool isLocal = false}) {
-  return Container(
-    width: 120.w,
-    height: 120.w,
-    decoration: BoxDecoration(
-      shape: BoxShape.circle,
-      color: Colors.white,
-      boxShadow: [
-        BoxShadow(
-          color: const Color(0xFF3B82F6).withValues(alpha: 0.12),
-          blurRadius: 25.w,
-          offset: Offset(0, 8.h),
+  Widget _buildImage(String source, bool isDark, {bool isLocal = false}) {
+    return Container(
+      width: 120.w,
+      height: 120.w,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        // Adaptive background color for the image container
+        color: isDark ? AppColors.darkSurface : Colors.white,
+        border: Border.all(
+          color: isDark ? AppColors.darkBorder : Colors.white,
+          width: 2,
         ),
-      ],
-    ),
-    child: ClipOval(
-      child: isLocal
-          ? Image.asset(source, fit: BoxFit.cover)
-          : Image.network(source, fit: BoxFit.cover),
-    ),
-  );
-}
-
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primary.withValues(alpha: isDark ? 0.2 : 0.12),
+            blurRadius: 25.w,
+            offset: Offset(0, 8.h),
+          ),
+        ],
+      ),
+      child: ClipOval(
+        child: isLocal
+            ? Image.asset(source, fit: BoxFit.cover)
+            : Image.network(
+                source,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) =>
+                    Image.asset('assets/images/unknown.png', fit: BoxFit.cover),
+              ),
+      ),
+    );
+  }
 }

@@ -1,25 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/routing/routes.dart';
+import 'package:routina/core/theaming/app_colors.dart';
 
-class ForgotPasswordScreenBackToLoginButton extends StatefulWidget {
+class ForgotPasswordScreenBackToLoginButton extends StatelessWidget {
   const ForgotPasswordScreenBackToLoginButton({
     super.key,
-      this.textStyle,
+    this.textStyle,
   });
-  final TextStyle? textStyle;
-  @override
-  State<ForgotPasswordScreenBackToLoginButton> createState() =>
-      _ForgotPasswordScreenBackToLoginButtonState();
-}
 
-class _ForgotPasswordScreenBackToLoginButtonState
-    extends State<ForgotPasswordScreenBackToLoginButton> {
+  final TextStyle? textStyle;
+
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () => context.pushReplacementNamed(Routes.loginScreen),
-      child: Text('Back to Login', style: widget.textStyle),
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Container(
+      width: double.infinity,
+      height: 58.h,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(18.r),
+        // Premium Border using Gradient look
+        border: Border.all(
+          color: isDark ? Colors.white12 : AppColors.primary.withValues(alpha: 0.2),
+          width: 1.5,
+        ),
+        color: isDark ? Colors.white.withValues(alpha: 0.03) : Colors.transparent,
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () => context.pushReplacementNamed(Routes.loginScreen),
+          borderRadius: BorderRadius.circular(18.r),
+          highlightColor: AppColors.primary.withValues(alpha: 0.05),
+          splashColor: AppColors.primary.withValues(alpha: 0.1),
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  size: 16.sp,
+                  color: isDark ? Colors.white70 : AppColors.primary,
+                ),
+                SizedBox(width: 10.w),
+                Text(
+                  'Back to Login',
+                  style: textStyle ?? TextStyle(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w700,
+                    color: isDark ? Colors.white : AppColors.primary,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

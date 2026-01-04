@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/theaming/app_text_styles.dart';
 
-
-
-class OnboardingPageView extends StatefulWidget {
+class OnboardingPageView extends StatelessWidget {
   final PageController pageController;
   final int currentPage;
   final List<Map<String, String>> pages;
@@ -19,70 +18,73 @@ class OnboardingPageView extends StatefulWidget {
   });
 
   @override
-  State<OnboardingPageView> createState() => _OnboardingPageViewState();
-}
-
-class _OnboardingPageViewState extends State<OnboardingPageView> {
-  @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: PageView.builder(
-        controller: widget.pageController,
-        onPageChanged: widget.onPageChanged,
-        itemCount: widget.pages.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(32.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Icon
-                Container(
-                  width: 120,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    color: AppColors.surface,
-                    borderRadius: BorderRadius.circular(60),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.primary.withValues(alpha:0.1),
-                        blurRadius: 20,
-                        offset: const Offset(0, 8),
-                      ),
-                    ],
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return PageView.builder(
+      controller: pageController,
+      onPageChanged: onPageChanged,
+      itemCount: pages.length,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 32.w),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Icon Container (Matching Login Style)
+              Container(
+                width: 220.w,
+                height: 110.h,
+                decoration: BoxDecoration(
+                  color: isDark ? AppColors.darkSurface : AppColors.surface,
+                  borderRadius: BorderRadius.circular(30.r),
+                  border: Border.all(
+                    color: isDark ? Colors.white.withValues(alpha: 0.08) : AppColors.primary.withValues(alpha: 0.1),
+                    width: 1.5.w,
                   ),
-                  child: Center(
-                    child: Text(
-                      widget.pages[index]['icon']!,
-                      style: const TextStyle(fontSize: 48),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.primary.withValues(alpha: isDark ? 0.15 : 0.08),
+                      blurRadius: 25.r,
+                      offset: Offset(0, 10.h),
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Text(
+                    pages[index]['icon']!,
+                    style: TextStyle(
+                      fontSize: 50.sp,
                     ),
                   ),
                 ),
+              ),
 
-                const SizedBox(height: 48),
+              SizedBox(height: 48.h),
 
-                // Title
-                Text(
-                  widget.pages[index]['title']!,
-                  style: AppTextStyles.displayMedium,
-                  textAlign: TextAlign.center,
+              // Title
+              Text(
+                pages[index]['title']!,
+                style: AppTextStyles.displayMedium.copyWith(
+                  color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
                 ),
+                textAlign: TextAlign.center,
+              ),
 
-                const SizedBox(height: 16),
+              SizedBox(height: 16.h),
 
-                // Subtitle
-                Text(
-                  widget.pages[index]['subtitle']!,
-                  style: AppTextStyles.bodyLarge.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
-                  textAlign: TextAlign.center,
+              // Subtitle
+              Text(
+                pages[index]['subtitle']!,
+                style: AppTextStyles.bodyLarge.copyWith(
+                  color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
                 ),
-              ],
-            ),
-          );
-        },
-      ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

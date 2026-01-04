@@ -1,38 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/features/habit_tracker_screen/ui/widgets/habit_tracker_screen_coming_soon_content.dart';
 import 'package:routina/features/habit_tracker_screen/ui/widgets/habit_tracker_screen_header.dart';
 
-class HabitTrackerScreen extends StatefulWidget {
+class HabitTrackerScreen extends StatelessWidget {
   const HabitTrackerScreen({super.key});
 
   @override
-  State<HabitTrackerScreen> createState() => _HabitTrackerScreenState();
-}
-
-class _HabitTrackerScreenState extends State<HabitTrackerScreen> {
-  @override
   Widget build(BuildContext context) {
-    return  Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color(0xFFF8FAFC), // very light blue
-              Color(0xFFE0E7FF), // light indigo
-            ],
-          ),
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: isDark
+              ? [AppColors.darkBackgroundGradientStart, AppColors.darkBackgroundGradientEnd]
+              : [AppColors.backgroundGradientStart, AppColors.backgroundGradientEnd],
         ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              // Header
-              HabitTrackerScreenHeader(),
-              // Coming Soon Content
-              HabitTrackerScreenComingSoonContent(),
-            ],
-          ),
+      ),
+      child: const SafeArea(
+        child: Column(
+          children: [
+            HabitTrackerScreenHeader(),
+            Expanded(
+              child: HabitTrackerScreenComingSoonContent(),
+            ),
+          ],
         ),
-      );
+      ),
+    );
   }
 }

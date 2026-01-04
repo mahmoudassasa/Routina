@@ -1,49 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/features/analyze_screen/ui/widgets/analyze_screen_ai_analysis_logo.dart';
 import 'package:routina/features/analyze_screen/ui/widgets/analyze_screen_mock_ai_features.dart';
 import 'package:routina/features/analyze_screen/ui/widgets/analyze_screen_texts.dart';
 
-class AnalyzeScreen extends StatefulWidget {
+class AnalyzeScreen extends StatelessWidget {
   const AnalyzeScreen({super.key});
 
   @override
-  State<AnalyzeScreen> createState() => _AnalyzeScreenState();
-}
-
-class _AnalyzeScreenState extends State<AnalyzeScreen> {
-  @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color(0xFFF8FAFC), // very light blue
-              Color(0xFFE0E7FF), // light indigo
-            ],
-          ),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: isDark
+              ? [AppColors.darkBackgroundGradientStart, AppColors.darkBackgroundGradientEnd]
+              : [AppColors.backgroundGradientStart, AppColors.backgroundGradientEnd],
         ),
-        child: Material(
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent, // لجعل الجرادينت يظهر
+        body: SafeArea(
           child: Center(
             child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(vertical: 40),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // AI Analysis Icon
-                  AnalyzeScreenAiAnalysisLogo(),
+                  const AnalyzeScreenAiAnalysisLogo(),
                   const SizedBox(height: 32),
-                  // Texts
                   const AnalyzeScreenTexts(),
                   const SizedBox(height: 40),
-                  // Mock AI Features
                   const AnalyzeScreenMockAiFeatures(),
-                  const SizedBox(height: 40),
                 ],
               ),
             ),
           ),
         ),
-      );
+      ),
+    );
   }
 }

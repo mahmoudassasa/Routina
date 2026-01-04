@@ -1,56 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:routina/core/theaming/app_theme/logic/cubit/theme_cubit.dart';
 import 'package:routina/features/profile_screen/ui/widgets/profile_screen_settings_tile.dart';
 
-class ProfileScreenSettingsOptions extends StatefulWidget {
+class ProfileScreenSettingsOptions extends StatelessWidget {
   const ProfileScreenSettingsOptions({super.key});
 
-  @override
-  State<ProfileScreenSettingsOptions> createState() =>
-      _ProfileScreenSettingsOptionsState();
-}
-
-class _ProfileScreenSettingsOptionsState
-    extends State<ProfileScreenSettingsOptions> {
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
         children: [
-          Material(
-            child: SettingsTile(
-              icon: '🔔',
-              title: 'Notifications',
-              subtitle: 'Manage your reminders',
-              onTap: () {},
-            ),
+          SettingsTile(
+            icon: '🔔',
+            title: 'Notifications',
+            subtitle: 'Manage your reminders',
+            onTap: () {},
           ),
-    
-          Material(
-            child: SettingsTile(
-              icon: '🌙',
-              title: 'Dark Mode',
-              subtitle: 'Switch app theme',
-              onTap: () {},
-            ),
+          
+          // Fixed: Using ThemeState instead of ThemeMode
+          BlocBuilder<ThemeCubit, ThemeState>(
+            builder: (context, state) {
+              final isDark = state.isDarkMode;
+              return SettingsTile(
+                icon: isDark ? '🌙' : '☀️',
+                title: 'Dark Mode',
+                subtitle: isDark ? 'Enabled' : 'Disabled',
+                onTap: () {
+                  // Fixed: toggleTheme() usually takes no arguments in your implementation
+                  context.read<ThemeCubit>().toggleTheme();
+                },
+              );
+            },
           ),
-    
-          Material(
-            child: SettingsTile(
-              icon: '📱',
-              title: 'Export Data',
-              subtitle: 'Download your habit data',
-              onTap: () {},
-            ),
+
+          SettingsTile(
+            icon: '📱',
+            title: 'Export Data',
+            subtitle: 'Download your habit data',
+            onTap: () {},
           ),
-    
-          Material(
-            child: SettingsTile(
-              icon: '❓',
-              title: 'Help & Support',
-              subtitle: 'Get help and contact us',
-              onTap: () {},
-            ),
+
+          SettingsTile(
+            icon: '❓',
+            title: 'Help & Support',
+            subtitle: 'Get help and contact us',
+            onTap: () {},
           ),
         ],
       ),

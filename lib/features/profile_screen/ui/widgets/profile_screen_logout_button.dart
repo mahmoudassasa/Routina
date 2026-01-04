@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:routina/core/theaming/app_colors.dart'; // تأكد من المسار
+import 'package:flutter/services.dart'; // For HapticFeedback
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/theaming/app_colors.dart';
 
 class ProfileLogoutButton extends StatelessWidget {
   final VoidCallback onTap;
@@ -8,60 +10,81 @@ class ProfileLogoutButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      child: Material(
-        color: AppColors.errorLight.withValues(alpha:0.5), // خلفية حمراء شفافة جداً
-        borderRadius: BorderRadius.circular(16),
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(16),
-          splashColor: AppColors.error.withValues(alpha:0.1),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-                color: AppColors.error.withValues(alpha:0.1), // إطار أحمر خفيف
-                width: 1,
-              ),
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.r), // Softer corners
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.error.withValues(alpha: isDark ? 0.05 : 0.08),
+              blurRadius: 15,
+              offset: const Offset(0, 6),
             ),
-            child: Row(
-              children: [
-                // Icon Box
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: AppColors.surface,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Icon(
-                    Icons.logout_rounded,
-                    color: AppColors.error,
-                    size: 20,
-                  ),
+          ],
+        ),
+        child: Material(
+          color: isDark
+              ? Colors.redAccent.withValues(alpha: 0.08)
+              : const Color(0xFFFFFBFA), // Very light warm tint
+          borderRadius: BorderRadius.circular(20.r),
+          child: InkWell(
+            onTap: () {
+              HapticFeedback.lightImpact(); // Subtle vibration for premium feel
+              onTap();
+            },
+            borderRadius: BorderRadius.circular(20.r),
+            splashColor: AppColors.error.withValues(alpha: 0.1),
+            highlightColor: AppColors.error.withValues(alpha: 0.05),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.r),
+                border: Border.all(
+                  color: AppColors.error.withValues(alpha: isDark ? 0.15 : 0.1),
+                  width: 1.2,
                 ),
-                const SizedBox(width: 16),
-                
-                // Text
-                const Text(
-                  "Log Out",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.error, // نص أحمر
+              ),
+              child: Row(
+                children: [
+                  // Icon with friendly glassmorphism look
+                  Container(
+                    padding: EdgeInsets.all(10.w),
+                    decoration: BoxDecoration(
+                      color: isDark ? Colors.redAccent.withValues(alpha: 0.12) : Colors.redAccent.withValues(alpha: 0.08),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.power_settings_new_rounded, // Friendlier than standard logout icon
+                      color: AppColors.error,
+                      size: 22.sp,
+                    ),
                   ),
-                ),
-                
-                const Spacer(),
-                
-                // Arrow
-                Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  size: 16,
-                  color: AppColors.error.withValues(alpha:0.5),
-                ),
-              ],
+                  SizedBox(width: 16.w),
+
+                  // Text
+                  Text(
+                    "Sign Out", // "Sign Out" feels slightly softer than "Log Out"
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.error,
+                      letterSpacing: 0.3,
+                    ),
+                  ),
+
+                  const Spacer(),
+
+                  // Soft Arrow or Emoji
+                  Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    size: 14.sp,
+                    color: AppColors.error.withValues(alpha: 0.4),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

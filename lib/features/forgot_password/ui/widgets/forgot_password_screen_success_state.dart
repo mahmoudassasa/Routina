@@ -1,33 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 
-class ForgotPasswordScreenSuccessState extends StatefulWidget {
+class ForgotPasswordScreenSuccessState extends StatelessWidget {
   const ForgotPasswordScreenSuccessState({super.key});
 
   @override
-  State<ForgotPasswordScreenSuccessState> createState() =>
-      _ForgotPasswordScreenSuccessStateState();
-}
-
-class _ForgotPasswordScreenSuccessStateState
-    extends State<ForgotPasswordScreenSuccessState> {
-  @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
-      width: 80,
-      height: 80,
+      width: 100.w, // Slightly larger for a better brand feel
+      height: 100.w,
       decoration: BoxDecoration(
-        color: AppColors.successLight,
-        borderRadius: BorderRadius.circular(40),
+        // In dark mode, we use a deep green or a subtle primary tint
+        color: isDark 
+            ? Colors.greenAccent.withValues(alpha: 0.1) 
+            : AppColors.successLight,
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: isDark 
+              ? Colors.greenAccent.withValues(alpha: 0.2) 
+              : Colors.transparent,
+          width: 2,
+        ),
         boxShadow: [
           BoxShadow(
-            color: AppColors.success.withValues(alpha: 0.1),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
+            color: (isDark ? Colors.greenAccent : AppColors.success)
+                .withValues(alpha: isDark ? 0.2 : 0.1),
+            blurRadius: 30,
+            spreadRadius: 5,
+            offset: const Offset(0, 10),
           ),
         ],
       ),
-      child: const Center(child: Text('✅', style: TextStyle(fontSize: 32))),
+      child: Center(
+        child: Icon(
+          Icons.check_circle_rounded,
+          size: 50.sp,
+          color: isDark ? Colors.greenAccent : AppColors.success,
+        ),
+      ),
     );
   }
 }

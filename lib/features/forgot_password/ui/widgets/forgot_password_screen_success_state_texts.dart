@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/theaming/app_text_styles.dart';
 
-class ForgotPasswordScreenSuccessStateTexts extends StatefulWidget {
+class ForgotPasswordScreenSuccessStateTexts extends StatelessWidget {
   final TextEditingController _emailController;
   const ForgotPasswordScreenSuccessStateTexts({
     super.key,
@@ -10,29 +10,39 @@ class ForgotPasswordScreenSuccessStateTexts extends StatefulWidget {
   }) : _emailController = emailController;
 
   @override
-  State<ForgotPasswordScreenSuccessStateTexts> createState() =>
-      _ForgotPasswordScreenSuccessStateTextsState();
-}
-
-class _ForgotPasswordScreenSuccessStateTextsState
-    extends State<ForgotPasswordScreenSuccessStateTexts> {
-  @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       children: [
-        Text(
-          'We\'ve sent a password reset link to ${widget._emailController.text}',
-          style: AppTextStyles.bodyLarge.copyWith(
-            color: AppColors.textSecondary,
-          ),
+        // Using RichText to highlight the email address
+        RichText(
           textAlign: TextAlign.center,
+          text: TextSpan(
+            style: AppTextStyles.bodyLarge.copyWith(
+              color: isDark ? Colors.white70 : AppColors.textSecondary,
+            ),
+            children: [
+              const TextSpan(text: 'We\'ve sent a password reset link to\n'),
+              TextSpan(
+                text: _emailController.text,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: isDark ? Colors.white : Colors.black,
+                ),
+              ),
+            ],
+          ),
         ),
 
         const SizedBox(height: 32),
 
         Text(
           'Didn\'t receive the email? Check your spam folder or try again in a few minutes.',
-          style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textLight),
+          style: AppTextStyles.bodyMedium.copyWith(
+            // Using a lighter tint for dark mode readability
+            color: isDark ? Colors.white54 : AppColors.textLight,
+          ),
           textAlign: TextAlign.center,
         ),
       ],

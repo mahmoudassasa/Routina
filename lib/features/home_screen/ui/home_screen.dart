@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/features/home_screen/ui/widgets/ai_analyze_button.dart';
 import 'package:routina/features/home_screen/ui/widgets/habits_list.dart';
 import 'package:routina/features/home_screen/ui/widgets/home_header.dart';
@@ -11,31 +12,32 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  
-  final  Color selectedItemColor = Color(0xFF3B82F6),
-      unselectedItemColor = Colors.grey;@override
+  @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            Color(0xFFF8FAFC), // very light blue
-            Color(0xFFE0E7FF), // light indigo
-          ],
+          colors: isDark
+              ? [AppColors.darkBackgroundGradientStart, AppColors.darkBackgroundGradientEnd]
+              : [AppColors.backgroundGradientStart, AppColors.backgroundGradientEnd],
         ),
       ),
-      child:  Column(
-          children: [
-            // Header
-            HomeHeader(),
-            // Habits List
-            HabitsList(),
-            // AI Analyze Button
-            AiAnalyzeButton(),
-          ],
+      child: const Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+          child: Column(
+            children: [
+              HomeHeader(),
+              Expanded(child: HabitsList()),
+              AiAnalyzeButton(),
+            ],
+          ),
         ),
-      );
+      ),
+    );
   }
 }

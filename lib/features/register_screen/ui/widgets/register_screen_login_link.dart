@@ -9,20 +9,27 @@ class RegisterScreenLoginLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           'Already have an account? ',
           style: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.textSecondary,
+            // Use white60 for dark mode to keep it subtle but readable
+            color: isDark ? Colors.white60 : AppColors.textSecondary,
           ),
         ),
-        TextButton(
-          onPressed: () => context.pushReplacementNamed(Routes.loginScreen),
+        GestureDetector(
+          onTap: () => context.pushReplacementNamed(Routes.loginScreen),
           child: Text(
             'Sign In',
-            style: AppTextStyles.labelLarge.copyWith(color: AppColors.primary),
+            style: AppTextStyles.labelLarge.copyWith(
+              // Primary color remains consistent to draw attention
+              color: isDark ? AppColors.primaryLight : AppColors.primary,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ],

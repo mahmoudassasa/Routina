@@ -10,40 +10,43 @@ class RegisterScreenUserPicture extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return BlocBuilder<RegisterCubit, RegisterState>(
       builder: (context, state) {
-      if (state.imageStatus == ImageUploadStatus.uploading) {
-  return Container(
-    width: 120.w,
-    height: 120.w,
-    decoration: BoxDecoration(
-      shape: BoxShape.circle,
-      border: Border.all(color: AppColors.primary, width: 3.w),
-    ),
-    child: Center(
-      child: SizedBox(
-        width: 40.w,
-        height: 40.w,
-        child: CircularProgressIndicator(
-          strokeWidth: 3.w,
-          color: AppColors.primary,
-        ),
-      ),
-    ),
-  );
-}
+        if (state.imageStatus == ImageUploadStatus.uploading) {
+          return Container(
+            width: 120.w,
+            height: 120.w,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: isDark ? AppColors.primary.withValues(alpha: 0.8) : AppColors.primary,
+                width: 3.w,
+              ),
+            ),
+            child: Center(
+              child: SizedBox(
+                width: 40.w,
+                height: 40.w,
+                child: CircularProgressIndicator(
+                  strokeWidth: 3.w,
+                  color: AppColors.primary,
+                ),
+              ),
+            ),
+          );
+        }
 
-        final imageWidget = _buildImageWidget(state);
+        final imageWidget = _buildImageWidget(context, state, isDark);
 
         return Center(
           child: Stack(
             clipBehavior: Clip.none,
             children: [
               imageWidget,
-
-              // ------------------------
+              
               // Add button (+)
-              // ------------------------
               Positioned(
                 bottom: -4,
                 right: -4,
@@ -55,7 +58,11 @@ class RegisterScreenUserPicture extends StatelessWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: AppColors.primary,
-                      border: Border.all(color: Colors.white, width: 2.w),
+                      // Adjusted border color for dark mode
+                      border: Border.all(
+                        color: isDark ? const Color(0xFF1A1A1A) : Colors.white, 
+                        width: 2.w,
+                      ),
                     ),
                     child: Icon(Icons.add, color: Colors.white, size: 22.w),
                   ),
@@ -68,31 +75,30 @@ class RegisterScreenUserPicture extends StatelessWidget {
     );
   }
 
-  Widget _buildImageWidget(RegisterState state) {
-// If the user hasn't loaded yet, display the default image
-    if (state.localImage == null) {
-      return Container(
-        width: 120.w,
-        height: 120.w,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(color: AppColors.primary, width: 3.w),
-        ),
-        child: ClipOval(
-          child: Image.asset('assets/images/unknown.png', fit: BoxFit.cover),
-        ),
-      );
-    }
-
-// If there is a picture from the device
+  Widget _buildImageWidget(BuildContext context, RegisterState state, bool isDark) {
     return Container(
       width: 120.w,
       height: 120.w,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(color: AppColors.primary, width: 3.w),
+        // Adding a subtle background color for the placeholder area
+        color: isDark ? Colors.white10 : Colors.grey[100],
+        border: Border.all(
+          color: isDark ? AppColors.primary.withValues(alpha: 0.8) : AppColors.primary, 
+          width: 3.w,
+        ),
       ),
-      child: ClipOval(child: Image.file(state.localImage!, fit: BoxFit.cover)),
+      child: ClipOval(
+        child: state.localImage == null
+            ? Image.asset(
+                'assets/images/unknown.png', 
+                fit: BoxFit.cover,
+                // Apply a slight filter if needed to make the asset blend better with dark mode
+                color: isDark ? Colors.white.withValues(alpha: 0.9) : null,
+                colorBlendMode: isDark ? BlendMode.modulate : null,
+              )
+            : Image.file(state.localImage!, fit: BoxFit.cover),
+      ),
     );
   }
 }

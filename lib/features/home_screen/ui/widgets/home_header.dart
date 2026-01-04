@@ -1,17 +1,20 @@
-
 import 'package:flutter/material.dart';
+import 'package:routina/core/theaming/app_colors.dart';
 
-
-class HomeHeader extends StatefulWidget {
+class HomeHeader extends StatelessWidget {
   const HomeHeader({super.key});
 
-  @override
-  State<HomeHeader> createState() => _HomeHeaderState();
-}
+  String _getGreeting() {
+    final hour = DateTime.now().hour;
+    if (hour < 12) return 'Good Morning! 👋';
+    if (hour < 17) return 'Good Afternoon! ☀️';
+    return 'Good Evening! 🌙';
+  }
 
-class _HomeHeaderState extends State<HomeHeader> {
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Row(
@@ -21,20 +24,24 @@ class _HomeHeaderState extends State<HomeHeader> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Good Morning! 👋',
+                _getGreeting(),
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: Colors.grey[800],
+                  color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
                 ),
               ),
+              const SizedBox(height: 4),
               Text(
                 'Ready to build your habits?',
-                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                style: TextStyle(
+                  fontSize: 16, 
+                  color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                ),
               ),
             ],
           ),
-
+          // You can add a Profile Picture or Notification Icon here later
         ],
       ),
     );

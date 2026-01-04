@@ -21,45 +21,56 @@ class PasswordValidations extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildValidationRow("At least 1 lowercase letter", hasLowerCase),
-        SizedBox(height: 4.h),
-        _buildValidationRow("At least 1 uppercase letter", hasUpperCase),
-        SizedBox(height: 4.h),
-        _buildValidationRow("At least 1 special character", hasSpecialCharacters),
-        SizedBox(height: 4.h),
-        _buildValidationRow("At least 1 number", hasNumber),
-        SizedBox(height: 4.h),
-        _buildValidationRow("At least 8 characters", hasMinLength),
+        _buildValidationRow("At least 1 lowercase letter", hasLowerCase, isDark),
+        SizedBox(height: 8.h),
+        _buildValidationRow("At least 1 uppercase letter", hasUpperCase, isDark),
+        SizedBox(height: 8.h),
+        _buildValidationRow("At least 1 special character", hasSpecialCharacters, isDark),
+        SizedBox(height: 8.h),
+        _buildValidationRow("At least 1 number", hasNumber, isDark),
+        SizedBox(height: 8.h),
+        _buildValidationRow("At least 8 characters", hasMinLength, isDark),
       ],
     );
   }
 
-  Widget _buildValidationRow(String text, bool isValid) {
-    return Row(
-      children: [
-        AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          width: 8.w,
-          height: 8.h,
-          decoration: BoxDecoration(
-            color: isValid ? AppColors.success : AppColors.textLight,
-            shape: BoxShape.circle,
+  Widget _buildValidationRow(String text, bool isValid, bool isDark) {
+    // Brand-consistent colors matching your button and logo
+    final Color activeColor = isDark ? AppColors.primaryLight : AppColors.primary;
+    final Color inactiveColor = isDark ? Colors.white24 : Colors.grey.shade400;
+
+    return AnimatedDefaultTextStyle(
+      duration: const Duration(milliseconds: 300),
+      style: AppTextStyles.bodySmall.copyWith(
+        color: isValid ? (isDark ? Colors.white : AppColors.textPrimary) : inactiveColor,
+        fontWeight: isValid ? FontWeight.w600 : FontWeight.normal,
+      ),
+      child: Row(
+        children: [
+          // Dynamic Icon/Dot based on validation state
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            width: 18.w,
+            height: 18.w,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: isValid ? activeColor.withValues(alpha:  0.1) : Colors.transparent,
+            ),
+            child: Icon(
+              isValid ? Icons.check_circle_rounded : Icons.circle_outlined,
+              size: 16.sp,
+              color: isValid ? activeColor : inactiveColor,
+            ),
           ),
-        ),
-        SizedBox(width: 8.w),
-        Text(
-          text,
-          style: AppTextStyles.bodySmall.copyWith(
-            color: isValid ? AppColors.success : AppColors.textSecondary,
-            decoration: isValid ? TextDecoration.lineThrough : TextDecoration.none,
-            decorationColor: AppColors.success,
-            decorationThickness: 2,
-          ),
-        ),
-      ],
+          SizedBox(width: 10.w),
+          Text(text),
+        ],
+      ),
     );
   }
 }

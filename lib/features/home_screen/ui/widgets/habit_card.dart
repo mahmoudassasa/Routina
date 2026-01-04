@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:routina/core/theaming/app_colors.dart';
 
 class HabitCard extends StatelessWidget {
   final Map<String, dynamic> habit;
@@ -8,15 +9,21 @@ class HabitCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final progress = habit['progress'] as double;
     final isCompleted = habit['completed'] as bool;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       child: Card(
-        elevation: 2,
-        color: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        elevation: isDark ? 0 : 2, // No elevation needed on dark dark surfaces
+        color: isDark ? AppColors.darkSurface : Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: isDark 
+              ? BorderSide(color: AppColors.darkBorder, width: 1) 
+              : BorderSide.none,
+        ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -29,7 +36,7 @@ class HabitCard extends StatelessWidget {
                     width: 48,
                     height: 48,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF3B82F6).withValues(alpha: 0.1),
+                      color: AppColors.primary.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(24),
                     ),
                     child: Center(
@@ -49,10 +56,10 @@ class HabitCard extends StatelessWidget {
                       children: [
                         Text(
                           habit['title'],
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xFF1F2937),
+                            fontWeight: FontWeight.bold,
+                            color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
                           ),
                         ),
                         const SizedBox(height: 4),
@@ -60,7 +67,7 @@ class HabitCard extends StatelessWidget {
                           '${habit['streak']} day streak 🔥',
                           style: TextStyle(
                             fontSize: 14,
-                            color: Colors.grey[600],
+                            color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
                           ),
                         ),
                       ],
@@ -69,20 +76,17 @@ class HabitCard extends StatelessWidget {
 
                   // Progress Percentage
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF3B82F6).withValues(alpha: 0.1),
+                      color: AppColors.primary.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
                       '${(progress * 100).toInt()}%',
                       style: const TextStyle(
                         fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF3B82F6),
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primary,
                       ),
                     ),
                   ),
@@ -97,10 +101,8 @@ class HabitCard extends StatelessWidget {
                 child: LinearProgressIndicator(
                   value: progress,
                   minHeight: 8,
-                  backgroundColor: Colors.grey[200],
-                  valueColor: const AlwaysStoppedAnimation<Color>(
-                    Color(0xFF3B82F6),
-                  ),
+                  backgroundColor: isDark ? AppColors.darkBorder : Colors.grey[200],
+                  valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
                 ),
               ),
 
@@ -115,7 +117,7 @@ class HabitCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
-                      color: Colors.grey[700],
+                      color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
                     ),
                   ),
                   Row(
@@ -127,16 +129,12 @@ class HabitCard extends StatelessWidget {
                         height: 20,
                         decoration: BoxDecoration(
                           color: dayCompleted
-                              ? const Color(0xFF22C55E)
-                              : Colors.grey[300],
+                              ? const Color(0xFF22C55E) // Green stays green
+                              : (isDark ? AppColors.darkBorder : Colors.grey[300]),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: dayCompleted
-                            ? const Icon(
-                                Icons.check,
-                                size: 14,
-                                color: Colors.white,
-                              )
+                            ? const Icon(Icons.check, size: 14, color: Colors.white)
                             : null,
                       );
                     }),
@@ -154,7 +152,7 @@ class HabitCard extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: isCompleted
                         ? const Color(0xFF22C55E)
-                        : const Color(0xFF3B82F6),
+                        : AppColors.primary,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     shape: RoundedRectangleBorder(

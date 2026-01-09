@@ -1,17 +1,19 @@
-// Home States
+import 'package:equatable/equatable.dart';
+
 enum HomeStatus { initial, loading, loaded, error }
 
-class HomeState {
+class HomeState extends Equatable {
   final HomeStatus status;
   final List<Map<String, dynamic>> habits;
   final String? errorMessage;
-  
+
   const HomeState({
     this.status = HomeStatus.initial,
     this.habits = const [],
     this.errorMessage,
   });
-  
+
+  // copyWith: بتسمح لك تعدل قيم معينة وتثبت الباقي
   HomeState copyWith({
     HomeStatus? status,
     List<Map<String, dynamic>>? habits,
@@ -23,4 +25,8 @@ class HomeState {
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }
+
+  // Equatable: عشان Bloc يعرف يقارن بين الـ States ويحدث الشاشة صح
+  @override
+  List<Object?> get props => [status, habits, errorMessage];
 }

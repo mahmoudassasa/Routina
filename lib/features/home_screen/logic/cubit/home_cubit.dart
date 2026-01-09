@@ -1,104 +1,114 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:routina/features/home_screen/logic/cubit/home_state.dart';
+import 'home_state.dart';
 
-
-// Home Cubit
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(const HomeState());
-  
+  // Helper to get real today index (0 = Mon, 6 = Sun)
+  int get _todayIndex {
+    // DateTime.weekday returns 1 for Mon, 7 for Sun. We need 0-6.
+    return DateTime.now().weekday - 1;
+  }
+
   void loadHabits() {
     emit(state.copyWith(status: HomeStatus.loading));
-    
-    try {
-      // Mock habits data with weekly progress
-      final habits = [
-        {
-          'id': 1,
-          'title': 'Morning Exercise',
-          'icon': '🏃‍♂️',
-          'progress': 0.7,
-          'streak': 5,
-          'completed': false,
-          'weekProgress': [true, true, true, true, false, false, false], // Mon-Sun
-        },
-        {
-          'id': 2,
-          'title': 'Read 30 Minutes',
-          'icon': '📚',
-          'progress': 0.5,
-          'streak': 3,
-          'completed': false,
-          'weekProgress': [true, false, true, true, false, false, false],
-        },
-        {
-          'id': 3,
-          'title': 'Drink 8 Glasses Water',
-          'icon': '💧',
-          'progress': 0.9,
-          'streak': 12,
-          'completed': true,
-          'weekProgress': [true, true, true, true, true, true, false],
-        },
-        {
-          'id': 4,
-          'title': 'Meditation',
-          'icon': '🧘‍♀️',
-          'progress': 0.4,
-          'streak': 2,
-          'completed': false,
-          'weekProgress': [false, true, false, true, false, false, false],
-        },
-        {
-          'id': 5,
-          'title': 'Journal Writing',
-          'icon': '✍️',
-          'progress': 0.8,
-          'streak': 7,
-          'completed': true,
-          'weekProgress': [true, true, true, true, true, false, false],
-        },
-      ];
-      
-      emit(state.copyWith(
-        status: HomeStatus.loaded,
-        habits: habits,
-      ));
-    } catch (e) {
-      emit(state.copyWith(
-        status: HomeStatus.error,
-        errorMessage: e.toString(),
-      ));
-    }
+
+    // Mock Data to visualize the professional UI
+    final List<Map<String, dynamic>> mockHabits = [
+      {
+        'id': 1,
+        'title': 'Morning Yoga',
+        'icon': 'sport',
+        'color': 0xFFFF6B6B,
+        'progress': 0.5,
+        'streak': 5,
+        'weekProgress': [true, false, true, false, false, false, false],
+        'frequency': [true, true, true, true, true, false, false],
+      },
+      {
+        'id': 2,
+        'title': 'Read Books',
+        'icon': 'read',
+        'color': 0xFF4ECDC4,
+        'progress': 0.2,
+        'streak': 3,
+        'weekProgress': [false, true, false, false, false, false, false],
+        'frequency': [true, true, true, true, true, true, true],
+      },
+    ];
+
+    // Simulate network delay
+    Future.delayed(const Duration(milliseconds: 500), () {
+      emit(state.copyWith(status: HomeStatus.loaded, habits: mockHabits));
+    });
   }
-  
-  void toggleHabit(int habitId) {
-    // Mock toggle habit completion
+
+  void addHabit({
+    required String title,
+    required String iconKey,
+    required int colorValue,
+    required List<bool> days,
+  }) {
+    final newHabit = {
+      'id': DateTime.now().millisecondsSinceEpoch,
+      'title': title,
+      'icon': iconKey,
+      'color': colorValue,
+      'progress': 0.0,
+      'streak': 0,
+      'weekProgress': List.generate(7, (index) => false),
+      'frequency': days,
+    };
+
+    final updatedHabits = List<Map<String, dynamic>>.from(state.habits)..add(newHabit);
+    emit(state.copyWith(status: HomeStatus.loaded, habits: updatedHabits));
+  }
+
+// Toggle Day Logic (Smart Calculation)
+  void toggleDay(dynamic habitId, int dayIndex) {
     final updatedHabits = state.habits.map((habit) {
       if (habit['id'] == habitId) {
-        final isCompleted = habit['completed'] as bool;
-        final currentProgress = habit['progress'] as double;
-        final currentStreak = habit['streak'] as int;
+        List<bool> weekProgress = List<bool>.from(habit['weekProgress']);
+        List<bool> frequency = List<bool>.from(habit['frequency']);
+
+        // Toggle the status
+        weekProgress[dayIndex] = !weekProgress[dayIndex];
+
+        // Recalculate Progress
+        int scheduledDaysCount = frequency.where((day) => day).length;
         
-        if (!isCompleted) {
-          // Mark as completed today
-          return {
-            ...habit,
-            'completed': true,
-            'progress': 1.0,
-            'streak': currentStreak + 1,
-          };
-        } else {
-          // Unmark completion
-          return {
-            ...habit,
-            'completed': false,
-            'progress': currentProgress * 0.9, // Slight decrease
-          };
+        // Safety check: If scheduled count is 0 (shouldn't happen with validation), avoid crash
+        if (scheduledDaysCount == 0) scheduledDaysCount = 1; 
+
+        int completedDaysCount = 0;
+        for (int i = 0; i < 7; i++) {
+          // Only count if it was scheduled AND is done
+          if (frequency[i] && weekProgress[i]) completedDaysCount++;
         }
+
+        double newProgress = completedDaysCount / scheduledDaysCount;
+        if (newProgress > 1.0) newProgress = 1.0; // Cap at 100%
+
+        // Determine if Streak should increase (Simple logic: if today is done)
+        int currentStreak = habit['streak'] ?? 0;
+        // If we just checked TODAY, increase streak. If unchecked TODAY, decrease.
+        if (dayIndex == _todayIndex) {
+          if (weekProgress[dayIndex]) {
+             currentStreak++; 
+          } else if (currentStreak > 0) {
+             currentStreak--;
+          }
+        }
+
+        return {
+          ...habit,
+          'weekProgress': weekProgress,
+          'progress': newProgress,
+          'streak': currentStreak,
+        };
       }
       return habit;
     }).toList();
-    
+
     emit(state.copyWith(habits: updatedHabits));
   }
 }

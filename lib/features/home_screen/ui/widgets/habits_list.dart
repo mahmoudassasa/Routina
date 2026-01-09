@@ -13,6 +13,7 @@ class HabitsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
+        // 1. Loading State
         if (state.status == HomeStatus.loading) {
           return const Center(
             child: CircularProgressIndicator(
@@ -21,6 +22,7 @@ class HabitsList extends StatelessWidget {
           );
         }
 
+        // 2. Empty State
         if (state.habits.isEmpty) {
           return Center(
             child: Column(
@@ -45,20 +47,19 @@ class HabitsList extends StatelessWidget {
           );
         }
 
+        // 3. Success State (List of Cards)
         return ListView.builder(
+          // Using padding to avoid cards touching the screen edges
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
           physics: const BouncingScrollPhysics(),
           itemCount: state.habits.length,
           itemBuilder: (context, index) {
             final habit = state.habits[index];
-            return Padding(
-              padding: EdgeInsets.only(bottom: 12.h),
-              child: HabitCard(
-                habit: habit,
-                onTap: () {
-                  context.read<HomeCubit>().toggleHabit(habit['id']);
-                },
-              ),
+            
+            return HabitCard(
+              habit: habit,
+              // Note: Internal toggling of days is handled inside HabitCard 
+              // using context.read<HomeCubit>().toggleDay(...)
             );
           },
         );

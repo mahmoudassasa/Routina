@@ -1,232 +1,314 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:routina/core/helpers/extension.dart';
-import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/theaming/habit_constants.dart';
-import 'package:routina/features/home_screen/logic/cubit/home_cubit.dart'; // تأكد من المسار
-
+import 'package:routina/features/home_screen/logic/cubit/home_cubit.dart';
 
 class CreateHabitBottomSheet extends StatefulWidget {
-  const CreateHabitBottomSheet({super.key});
+  final Map<String, dynamic>? habitToEdit;
+
+  const CreateHabitBottomSheet({super.key, this.habitToEdit});
 
   @override
   State<CreateHabitBottomSheet> createState() => _CreateHabitBottomSheetState();
 }
 
 class _CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
-  final TextEditingController _titleController = TextEditingController();
-  String _selectedIconKey = 'sport';
-  Color _selectedColor = HabitConstants.presetColors[0];
-  
-  // 1. حالة أيام الأسبوع (بتبدأ مفعلة كلها)
-  final List<String> _weekDays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-  final List<bool> _selectedDays = List.generate(7, (index) => true);
+  late final TextEditingController _titleController;
+  late String _selectedIconKey;
+  late Color _selectedColor;
+  late final List<bool> _selectedDays;
+  late final bool _isEditMode;
+
+  @override
+  void initState() {
+    super.initState();
+    _isEditMode = widget.habitToEdit != null;
+
+    if (_isEditMode) {
+      final habit = widget.habitToEdit!;
+      _titleController = TextEditingController(text: habit['title'] ?? '');
+      _selectedIconKey = habit['icon'] ?? 'sport';
+      _selectedColor = Color(
+        habit['color'] ?? HabitConstants.presetColors[0].value,
+      );
+      _selectedDays = List<bool>.from(
+        habit['frequency'] ?? List.filled(7, true),
+      );
+    } else {
+      _titleController = TextEditingController();
+      _selectedIconKey = 'sport';
+      _selectedColor = HabitConstants.presetColors[0];
+      _selectedDays = List.generate(7, (index) => true);
+    }
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      constraints: BoxConstraints(maxHeight: 0.9.sh),
       padding: EdgeInsets.only(
-        left: 20.w,
-        right: 20.w,
-        top: 20.h,
-        bottom: MediaQuery.of(context).viewInsets.bottom + 20.h,
+        bottom: MediaQuery.of(context).viewInsets.bottom + 24.h,
+        left: 24.w,
+        right: 24.w,
+        top: 16.h,
       ),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.darkSurface : Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
+        color: isDark ? const Color(0xFF1A1C23) : Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28.r)),
       ),
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // ... (نفس كود الـ Header والـ TextField اللي فات) ...
-            // اختصاراً للمساحة هبدأ من الجديد
-             Center(
-              child: Container(
-                width: 40.w,
-                height: 4.h,
-                decoration: BoxDecoration(
-                  color: isDark ? Colors.grey[700] : Colors.grey[300],
-                  borderRadius: BorderRadius.circular(2.r),
-                ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
+            child: Container(
+              width: 40.w,
+              height: 4.h,
+              decoration: BoxDecoration(
+                color: isDark ? Colors.grey[800] : Colors.grey[300],
+                borderRadius: BorderRadius.circular(10.r),
               ),
             ),
-            SizedBox(height: 24.h),
-            Text("New Habit", style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold, color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary)),
-            SizedBox(height: 24.h),
-            
-            // Name Input
-             Text("NAME", style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w600, color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary, letterSpacing: 1.2)),
-            SizedBox(height: 8.h),
-            TextField(
-              controller: _titleController,
-              autofocus: true,
-              style: TextStyle(fontSize: 16.sp, color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary),
-              decoration: InputDecoration(
-                hintText: "e.g., Read 10 pages",
-                filled: true,
-                fillColor: isDark ? AppColors.darkBackground : AppColors.backgroundLight,
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(16.r), borderSide: BorderSide.none),
-                focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16.r), borderSide: BorderSide(color: _selectedColor, width: 1.5)),
-              ),
-            ),
-            SizedBox(height: 24.h),
+          ),
+          SizedBox(height: 24.h),
 
-            // --- الجديد هنا ---
-            // 2. Frequency (Days Selector)
-            Text(
-              "FREQUENCY",
-              style: TextStyle(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w600,
-                color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
-                letterSpacing: 1.2,
+          TextField(
+            controller: _titleController,
+            style: TextStyle(
+              fontSize: 16.sp,
+              color: isDark ? Colors.white : Colors.black,
+              fontWeight: FontWeight.w600,
+            ),
+            decoration: InputDecoration(
+              hintText: 'Habit Title',
+              hintStyle: TextStyle(color: Colors.grey, fontSize: 15.sp),
+              filled: true,
+              fillColor: isDark
+                  ? Colors.black.withValues(alpha: 0.3)
+                  : Colors.grey[100],
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 16.w,
+                vertical: 16.h,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16.r),
+                borderSide: BorderSide.none,
               ),
             ),
-            SizedBox(height: 12.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(7, (index) {
-                final isSelected = _selectedDays[index];
+          ),
+          SizedBox(height: 24.h),
+
+          Text(
+            "Icon",
+            style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 12.h),
+          SizedBox(
+            height: 54.h,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
+              children: HabitConstants.iconsMap.entries.map((entry) {
+                final isSelected = _selectedIconKey == entry.key;
                 return GestureDetector(
-                  onTap: () {
-                    HapticFeedback.selectionClick();
-                    setState(() {
-                      _selectedDays[index] = !_selectedDays[index];
-                    });
-                  },
+                  onTap: () => setState(() => _selectedIconKey = entry.key),
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
-                    width: 40.w,
-                    height: 40.w,
+                    margin: EdgeInsets.only(right: 12.w),
+                    width: 54.w,
                     decoration: BoxDecoration(
-                      color: isSelected ? _selectedColor : (isDark ? AppColors.darkBackground : AppColors.backgroundLight),
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: isSelected ? Colors.transparent : (isDark ? AppColors.darkBorder : AppColors.border),
-                      ),
+                      color: isSelected
+                          ? _selectedColor
+                          : _selectedColor.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(14.r),
                     ),
-                    child: Center(
-                      child: Text(
-                        _weekDays[index],
-                        style: TextStyle(
-                          color: isSelected ? Colors.white : (isDark ? AppColors.darkTextSecondary : AppColors.textSecondary),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14.sp,
-                        ),
-                      ),
+                    child: Icon(
+                      entry.value,
+                      color: isSelected ? Colors.white : _selectedColor,
+                      size: 24.sp,
                     ),
-                  ),
-                );
-              }),
-            ),
-
-            SizedBox(height: 24.h),
-
-            // Icon Picker (نفس الكود السابق)
-             Text("ICON", style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w600, color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary, letterSpacing: 1.2)),
-            SizedBox(height: 12.h),
-            SizedBox(
-              height: 60.w,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
-                itemCount: HabitConstants.iconsMap.length,
-                separatorBuilder: (_, __) => SizedBox(width: 12.w),
-                itemBuilder: (context, index) {
-                  final key = HabitConstants.iconsMap.keys.elementAt(index);
-                  final iconData = HabitConstants.iconsMap.values.elementAt(index);
-                  final isSelected = _selectedIconKey == key;
-                  return GestureDetector(
-                    onTap: () { HapticFeedback.selectionClick(); setState(() => _selectedIconKey = key); },
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      width: 60.w, height: 60.w,
-                      decoration: BoxDecoration(
-                        color: isSelected ? _selectedColor.withOpacity(0.2) : (isDark ? AppColors.darkBackground : AppColors.backgroundLight),
-                        borderRadius: BorderRadius.circular(16.r),
-                        border: isSelected ? Border.all(color: _selectedColor, width: 2) : null,
-                      ),
-                      child: Icon(iconData, color: isSelected ? _selectedColor : Colors.grey[400], size: 28.sp),
-                    ),
-                  );
-                },
-              ),
-            ),
-            SizedBox(height: 24.h),
-
-            // Color Picker (نفس الكود السابق)
-             Text("COLOR", style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w600, color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary, letterSpacing: 1.2)),
-            SizedBox(height: 12.h),
-            Wrap(
-              spacing: 12.w, runSpacing: 12.h,
-              children: HabitConstants.presetColors.map((color) {
-                final isSelected = _selectedColor == color;
-                return GestureDetector(
-                  onTap: () { HapticFeedback.selectionClick(); setState(() => _selectedColor = color); },
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    width: 40.w, height: 40.w,
-                    decoration: BoxDecoration(color: color, shape: BoxShape.circle, border: isSelected ? Border.all(color: isDark ? Colors.white : Colors.black, width: 3) : null),
-                    child: isSelected ? Icon(Icons.check, color: Colors.white, size: 20.sp) : null,
                   ),
                 );
               }).toList(),
             ),
-            
-            SizedBox(height: 32.h),
+          ),
+          SizedBox(height: 24.h),
 
-            // 3. Create Button (مع اللوجيك الحقيقي)
-            SizedBox(
-              width: double.infinity,
-              height: 56.h,
-              child: ElevatedButton(
-              // Inside onPressed of the Create Button:
+          Text(
+  "Color",
+  style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
+),
+SizedBox(height: 12.h),
+SizedBox(
+  height: 45.h,
+  child: ListView.builder(
+    scrollDirection: Axis.horizontal,
+    physics: const BouncingScrollPhysics(),
+    itemCount: HabitConstants.presetColors.length,
+    itemBuilder: (context, index) {
+      final color = HabitConstants.presetColors[index];
+      final isSelected = _selectedColor == color;
+      
+      final isLightColor = color.computeLuminance() > 0.7;
+      
+      return GestureDetector(
+        onTap: () => setState(() => _selectedColor = color),
+        child: Container(
+          width: 38.w,
+          height: 38.w,
+          margin: EdgeInsets.only(right: 12.w),
+          decoration: BoxDecoration(
+            color: color,
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: isSelected
+                  ? (isDark ? Colors.white : Colors.black)
+                  : (isLightColor && !isDark
+                      ? Colors.grey.withValues(alpha: 0.3)
+                      : Colors.transparent),
+              width: isSelected ? 2.w : 1.w,
+            ),
+          ),
+          child: isSelected
+              ? Icon(
+                  Icons.check,
+                  color: isLightColor ? Colors.black : Colors.white,
+                  size: 20.sp,
+                )
+              : null,
+        ),
+      );
+    },
+  ),
+),
+          SizedBox(height: 24.h),
 
-onPressed: () {
-  if (_titleController.text.trim().isEmpty) {
-    // Show error for title
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Please enter a habit name')),
-    );
-    return;
-  }
-
-  // VALIDATION: Check if at least one day is selected
-  if (!_selectedDays.contains(true)) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Please select at least one day')),
-    );
-    return;
-  }
-
-  context.read<HomeCubit>().addHabit(
-    title: _titleController.text,
-    iconKey: _selectedIconKey,
-    colorValue: _selectedColor.value,
-    days: _selectedDays,
-  );
-
-  context.pop();
-},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: _selectedColor,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
+          Text(
+            "Frequency",
+            style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 12.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: List.generate(7, (index) {
+              final days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+              final isSelected = _selectedDays[index];
+              return GestureDetector(
+                onTap: () => setState(
+                  () => _selectedDays[index] = !_selectedDays[index],
                 ),
-                child: Text("Create Habit", style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold)),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  width: 40.w,
+                  height: 40.w,
+                  decoration: BoxDecoration(
+                    color: isSelected ? _selectedColor : Colors.transparent,
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: isSelected
+                          ? Colors.transparent
+                          : Colors.grey.withValues(alpha: 0.5),
+                      width: 1.5.w,
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      days[index],
+                      style: TextStyle(
+                        color: isSelected ? Colors.white : Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }),
+          ),
+          SizedBox(height: 32.h),
+
+          Container(
+            width: double.infinity,
+            height: 58.h,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(18.r),
+              gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [
+                  _selectedColor,
+                  _selectedColor.withBlue(255).withValues(alpha: 0.8),
+                ],
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: _selectedColor.withValues(alpha: isDark ? 0.4 : 0.25),
+                  blurRadius: 20,
+                  offset: const Offset(0, 8),
+                ),
+              ],
+            ),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  if (_titleController.text.trim().isNotEmpty) {
+                    if (_isEditMode) {
+                      context.read<HomeCubit>().updateHabit(
+                        habitId: widget.habitToEdit!['id'],
+                        title: _titleController.text,
+                        iconKey: _selectedIconKey,
+                        colorValue: _selectedColor.value,
+                        days: _selectedDays,
+                      );
+                    } else {
+                      context.read<HomeCubit>().addHabit(
+                        title: _titleController.text,
+                        iconKey: _selectedIconKey,
+                        colorValue: _selectedColor.value,
+                        days: _selectedDays,
+                      );
+                    }
+                    Navigator.pop(context);
+                  }
+                },
+                borderRadius: BorderRadius.circular(18.r),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        _isEditMode ? Icons.save_rounded : Icons.add_rounded,
+                        color: Colors.white,
+                        size: 24.sp,
+                      ),
+                      SizedBox(width: 8.w),
+                      Text(
+                        _isEditMode ? 'Save Changes' : 'Create Habit',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 1.1,
+                          height: 1.1,
+                          leadingDistribution: TextLeadingDistribution.even,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
-            SizedBox(height: 10.h),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

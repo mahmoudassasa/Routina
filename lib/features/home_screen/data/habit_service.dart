@@ -97,7 +97,7 @@ class HabitService {
         .select()
         .single();
 
-    return _mapRowToHabit(response as Map<String, dynamic>);
+    return _mapRowToHabit(response);
   }
 
   Future<void> updateHabitProgress({

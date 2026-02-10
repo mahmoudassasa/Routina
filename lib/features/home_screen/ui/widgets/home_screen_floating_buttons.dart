@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/widgets/create_habit/ui/create_habit_bottom_sheet.dart';
+import 'package:routina/features/analyze_screen/logic/cubit/ai_analysis_cubit.dart';
+import 'package:routina/features/analyze_screen/ui/widgets/ai_analysis_full_screen.dart';
 import 'package:routina/features/home_screen/logic/cubit/home_cubit.dart';
 
 class FloatingHomeButtons extends StatelessWidget {
@@ -19,43 +21,58 @@ class FloatingHomeButtons extends StatelessWidget {
     );
   }
 
-  Widget _buildAiButton(BuildContext context) {
-    return Container(
-      height: 65.w,
-      width: 65.w,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: const LinearGradient(
-          colors: [AppColors.primary, AppColors.primaryDark],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.primary.withValues(alpha: 0.4),
-            blurRadius: 15,
-            offset: const Offset(0, 8),
-          ),
-        ],
+ Widget _buildAiButton(BuildContext context) {
+  return Container(
+    height: 65.w,
+    width: 65.w,
+    decoration: BoxDecoration(
+      shape: BoxShape.circle,
+      gradient: const LinearGradient(
+        colors: [AppColors.primary, AppColors.primaryDark],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
       ),
-      child: FloatingActionButton(
-        heroTag: 'ai_button',
-        onPressed: () {
+      boxShadow: [
+        BoxShadow(
+          color: AppColors.primary.withValues(alpha: 0.4),
+          blurRadius: 15,
+          offset: const Offset(0, 8),
+        ),
+      ],
+    ),
+    child: FloatingActionButton(
+      heroTag: 'ai_button',
+      onPressed: () {
+        final habits = context.read<HomeCubit>().state.habits;
+        
+        if (habits.isEmpty) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('🤖 AI Analysis coming soon!'),
+              content: Text('Add some habits first!'),
               backgroundColor: AppColors.primary,
               behavior: SnackBarBehavior.floating,
             ),
           );
-        },
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        shape: const CircleBorder(),
-        child: Text('🤖', style: TextStyle(fontSize: 30.sp)),
-      ),
-    );
-  }
+          return;
+        }
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => BlocProvider(
+              create: (_) => AiAnalysisCubit()..analyzeHabits(habits),
+              child: const AiAnalysisFullScreen(),
+            ),
+          ),
+        );
+      },
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      shape: const CircleBorder(),
+      child: Text('🤖', style: TextStyle(fontSize: 30.sp)),
+    ),
+  );
+}
 
   Widget _buildAddButton(BuildContext context) {
     return Container(

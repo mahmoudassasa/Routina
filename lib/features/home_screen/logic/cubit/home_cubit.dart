@@ -137,7 +137,7 @@ class HomeCubit extends Cubit<HomeState> {
       );
 
       await _habitService.updateHabitProgress(
-        habitId: habitId as int,
+        habitId: habitId,
         frequency: normalizedDays,
         weekProgress: updatedWeekProgress,
         progress: newProgress,
@@ -185,16 +185,20 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  Future<void> toggleDay(dynamic habitId, int dayIndex) async {
+ Future<void> toggleDay(dynamic habitId, int dayIndex) async {
+    // ممنوع تعديل أيام في المستقبل
+    if (dayIndex > _todayIndex) return;
+
     final updatedHabits = state.habits.map((habit) {
       if (habit['id'] == habitId) {
         List<bool> weekProgress = List<bool>.from(habit['weekProgress']);
         List<bool> frequency = List<bool>.from(habit['frequency']);
 
+        // 1. عكس حالة اليوم (Toggle)
         weekProgress[dayIndex] = !weekProgress[dayIndex];
 
+        // 2. حساب نسبة الإنجاز (Progress)
         int scheduledDaysCount = frequency.where((day) => day).length;
-
         if (scheduledDaysCount == 0) scheduledDaysCount = 1;
 
         int completedDaysCount = 0;
@@ -205,14 +209,20 @@ class HomeCubit extends Cubit<HomeState> {
         double newProgress = completedDaysCount / scheduledDaysCount;
         if (newProgress > 1.0) newProgress = 1.0;
 
+        // 3. (مهم جداً) تصحيح منطق الـ Streak
+        // بنشوف الستريك القديم كام، ونزوده أو ننقصه بناءً على الاكشن
         int currentStreak = habit['streak'] ?? 0;
-        if (dayIndex == _todayIndex) {
-          if (weekProgress[dayIndex]) {
-            currentStreak++;
-          } else if (currentStreak > 0) {
-            currentStreak--;
-          }
+
+        if (weekProgress[dayIndex]) {
+          // لو علمنا صح: بنزود الستريك
+          currentStreak++;
+        } else {
+          // لو شلنا الصح: بننقص الستريك (بشرط ميكونش صفر)
+          if (currentStreak > 0) currentStreak--;
         }
+        
+        // *ملحوظة للمستقبل:* // الطريقة دي بتعتمد على "عدد مرات الإنجاز" مش "التتابع الزمني الدقيق".
+        // لو عايز تتابع دقيق (لو فوت يوم الستريك يتصفر)، لازم تخزن تاريخ "lastCompletedDate" في الداتابيز.
 
         return {
           ...habit,
@@ -236,12 +246,18 @@ class HomeCubit extends Cubit<HomeState> {
         frequency: List<bool>.from(updatedHabit['frequency'] as List),
         weekProgress: List<bool>.from(updatedHabit['weekProgress'] as List),
         progress: (updatedHabit['progress'] as num).toDouble(),
-        streak: updatedHabit['streak'] as int,
+        streak: updatedHabit['streak'] as int, // ابعت الستريك الجديد للداتابيز
       );
     } catch (e) {
+      // لو حصل ايرور، بنرجع الـ State القديمة (Rollback) عشان المستخدم ميحسش ان الاكشن تم
+      // ممكن تعمل reloadHabits() هنا لو تحب
       emit(
         state.copyWith(status: HomeStatus.error, errorMessage: e.toString()),
       );
     }
   }
+
+
+
+
 }

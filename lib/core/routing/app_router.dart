@@ -6,6 +6,7 @@ import 'package:routina/features/email_confirmation_screen/logic/cubit/email_ver
 import 'package:routina/features/email_confirmation_screen/ui/email_confirmation_screen.dart';
 import 'package:routina/features/forgot_password/ui/forgot_password.dart';
 import 'package:routina/features/habit_tracker_screen/ui/habit_tracker_screen.dart';
+import 'package:routina/features/habit_tracker_screen/ui/widgets/habit_progress_charts_screen.dart';
 import 'package:routina/features/login_screen/logic/cubit/login_cubit.dart';
 import 'package:routina/features/login_screen/ui/login_screen.dart';
 import 'package:routina/features/register_screen/logic/cubit/register_cubit.dart';
@@ -39,12 +40,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (__) => const HabitTrackerScreen());
       case Routes.analyzeScreen:
         return MaterialPageRoute(builder: (__) => const AnalyzeScreen());
-    case Routes.mainNavigationBar:
-  return MaterialPageRoute(
-  
-    builder: (_) => const MainNavigationBar(), 
-  );
-
+      case Routes.mainNavigationBar:
+        return MaterialPageRoute(builder: (_) => const MainNavigationBar());
 
       case Routes.emailConfirmationScreen:
         return MaterialPageRoute(
@@ -52,6 +49,13 @@ class AppRouter {
             create: (_) => EmailVerificationCubit(),
             child: const EmailConfirmationScreen(),
           ),
+        );
+      // جوه الـ generateRoute مثلاً
+      case Routes.habitProgressChartsScreen:
+        final habits =
+            settings.arguments as List<Map<String, dynamic>>; // فك الداتا
+        return MaterialPageRoute(
+          builder: (_) => HabitProgressChartsScreen(habits: habits),
         );
 
       default:

@@ -9,4 +9,5 @@ class Routes {
   static const String emailConfirmationScreen = '/emailConfirmation';
   static const String forgetPasswordScreen = '/forgetPasswordScreen';
   static const String mainNavigationBar = '/mainNavigationBar';
+  static const String habitProgressChartsScreen = '/habitProgressChartsScreen';
 }

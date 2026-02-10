@@ -5,64 +5,35 @@ import 'package:routina/core/theaming/app_colors.dart';
 class HabitConstants {
   static const List<Color> presetColors = [
     AppColors.primary,
-    Color(0xFFFF6B6B),
-    Color(0xFF4ECDC4),
-    Color(0xFFFFBE0B),
-    Color(0xFFA663CC),
-    Color(0xFFFF9F1C),
-    Color(0xFF2EC4B6),
-    Color(0xFF6C5CE7),
-    Color(0xFF00D2FF),
-    Color(0xFF55EFC4),
-    Color(0xFFFD79A8),
-    Color(0xFFFDCB6E),
-    Color(0xFFE17055),
-    Color(0xFF74B9FF),
-    Color(0xFFA29BFE),
-    Color(0xFF00B894),
-    Color(0xFFE84393),
-    Color(0xFF0984E3),
-    Color(0xFF00CEC9),
-    Color(0xFFFF4757),
-    Color(0xFFFF6348),
-    Color(0xFFFF7675),
-    Color(0xFFFD79A8),
-    Color(0xFFFDCB6E),
-    Color(0xFFFFE66D),
-    Color(0xFFFFD93D),
-    Color(0xFFFED330),
-    Color(0xFFFFC312),
-    Color(0xFFF39C12),
-    Color(0xFFE67E22),
-    Color(0xFFD35400),
-    Color(0xFFE74C3C),
-    Color(0xFFC0392B),
-    Color(0xFF1ABC9C),
-    Color(0xFF16A085),
-    Color(0xFF2ECC71),
-    Color(0xFF27AE60),
-    Color(0xFF3498DB),
-    Color(0xFF2980B9),
-    Color(0xFF5DADE2),
-    Color(0xFF85C1E2),
-    Color(0xFFAED6F1),
-    Color(0xFF9B59B6),
-    Color(0xFF8E44AD),
-    Color(0xFFBB8FCE),
-    Color(0xFFD7BDE2),
-    Color(0xFFEC7063),
-    Color(0xFFE8DAEF),
-    Color(0xFFF4D03F),
-    Color(0xFFF7DC6F),
-    Color(0xFF52BE80),
-    Color(0xFF73C6B6),
-    Color(0xFF85C1E9),
-    Color(0xFF5DADE2),
-    Color(0xFF48C9B0),
-    Color(0xFF1C2833),
-    Color(0xFF34495E),
-    Color(0xFF566573),
-
+    Color(0xFFE11D48), // Rose Red أنعم
+    Color(0xFF4ECDC4), // Teal
+    Color(0xFFFFE066), // Pastel Yellow
+    Color(0xFFA663CC), // Purple
+    Color(0xFF3B82F6), // Blue Accent (بدل البرتقالي)
+    Color(0xFF2EC4B6), // Aqua
+    Color(0xFF6C5CE7), // Indigo
+    Color(0xFF00D2FF), // Sky Blue
+    Color(0xFF55EFC4), // Mint
+    Color(0xFFFD79A8), // Pink
+    Color(0xFFFDCB6E), // Soft Orange
+    Color(0xFFE17055), // Coral
+    Color(0xFF74B9FF), // Light Blue
+    Color(0xFFA29BFE), // Lavender
+    Color(0xFF00B894), // Green
+    Color(0xFFE84393), // Magenta
+    Color(0xFF0984E3), // Deep Blue
+    Color(0xFF00CEC9), // Cyan
+    Color(0xFFFF6B81), // Soft Red بدل الأحمر الفاقع
+    Color(0xFFFF9F1C), // Warm Orange
+    Color(0xFFFED330), // Soft Yellow
+    Color(0xFF16A085), // Dark Teal
+    Color(0xFF27AE60), // Emerald
+    Color(0xFF2980B9), // Navy Blue
+    Color(0xFF8E44AD), // Deep Purple
+    Color(0xFFBB8FCE), // Lilac
+    Color(0xFFF4D03F), // Gold
+    Color(0xFF73C6B6), // Aqua Pastel
+    Color(0xFF566573), // Grayish Blue
   ];
 
   static const Map<String, IconData> iconsMap = {

@@ -19,57 +19,32 @@ class ProfileScreenUserStateCards extends StatelessWidget {
         final completionRate = state.completionRate ?? "0%";
         final bestStreak = state.bestStreak ?? "0 days";
 
-        return Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.w),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: StatCard(
-                      icon: '🔥',
-                      title: 'Current Streak',
-                      value: currentStreak,
-                    ),
-                  ),
-                  SizedBox(width: 16.w),
-                  Expanded(
-                    child: StatCard(
-                      icon: '🎯',
-                      title: 'Total Habits',
-                      value: totalHabits,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            
-            SizedBox(height: 16.h),
-            
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.w),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: StatCard(
-                      icon: '📊',
-                      title: 'Completion Rate',
-                      value: completionRate,
-                    ),
-                  ),
-                  SizedBox(width: 16.w),
-                  Expanded(
-                    child: StatCard(
-                      icon: '🏆',
-                      title: 'Best Streak',
-                      value: bestStreak,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        );
+        return  Column( 
+children: [ 
+Padding( 
+padding: EdgeInsets.symmetric(horizontal: 24.w), 
+child: Column( // Column is internal because of the spaces between the rows 
+children: [ 
+Row( 
+children: [ 
+Expanded(child: StatCard(icon: '🔥', title: 'Current Streak', value: currentStreak)), 
+SizedBox(width: 16.w), 
+Expanded(child: StatCard(icon: '🎯', title: 'Total Habits', value: totalHabits)), 
+], 
+), 
+SizedBox(height: 16.h), 
+Row( 
+children: [ 
+Expanded(child: StatCard(icon: '📊', title: 'Completion Rate', value: completionRate)), 
+SizedBox(width: 16.w), 
+Expanded(child: StatCard(icon: '🏆', title: 'Best Streak', value: bestStreak)), 
+], 
+), 
+], 
+), 
+), 
+],
+);
       },
     );
   }

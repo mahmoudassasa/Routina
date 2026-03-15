@@ -11,6 +11,7 @@ import 'package:routina/features/analyze_screen/ui/analyze_screen.dart';
 import 'package:routina/features/profile_screen/logic/cubit/profile_cubit.dart';
 import 'package:routina/features/profile_screen/ui/profile_screen.dart';
 
+
 class MainNavigationBar extends StatefulWidget {
   const MainNavigationBar({super.key});
 

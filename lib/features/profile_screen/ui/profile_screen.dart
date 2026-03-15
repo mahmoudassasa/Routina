@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/routing/routes.dart';
 import 'package:routina/core/theaming/app_colors.dart';
@@ -7,11 +8,13 @@ import 'package:routina/core/widgets/logout_button/cubit/logout_cubit.dart';
 import 'package:routina/core/widgets/logout_button/cubit/logout_state.dart';
 import 'package:routina/core/widgets/logout_button/ui/logout_dialog.dart';
 import 'package:routina/features/profile_screen/logic/cubit/profile_cubit.dart';
+import 'package:routina/features/profile_screen/logic/cubit/profile_state.dart';
+import 'package:routina/features/profile_screen/ui/widgets/profile_screen_header_section.dart';
 import 'package:routina/features/profile_screen/ui/widgets/profile_screen_logout_button.dart';
 import 'package:routina/features/profile_screen/ui/widgets/profile_screen_settings_options.dart';
 import 'package:routina/features/profile_screen/ui/widgets/profile_screen_user_details.dart';
-import 'package:routina/features/profile_screen/ui/widgets/profile_screen_user_picture.dart';
 import 'package:routina/features/profile_screen/ui/widgets/profile_screen_user_state_cards.dart';
+import 'package:routina/features/profile_screen/ui/widgets/profile_shimmer.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -61,30 +64,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: isDark
-                ? [AppColors.darkBackgroundGradientStart, AppColors.darkBackgroundGradientEnd]
-                : [AppColors.backgroundGradientStart, AppColors.backgroundGradientEnd],
+                ? [
+                    AppColors.darkBackgroundGradientStart,
+                    AppColors.darkBackgroundGradientEnd
+                  ]
+                : [
+                    AppColors.backgroundGradientStart,
+                    AppColors.backgroundGradientEnd
+                  ],
           ),
         ),
         child: Scaffold(
-          backgroundColor: Colors.transparent, // Important for the gradient
+          backgroundColor: Colors.transparent,
           body: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(height: 40),
-                  const ProfileScreenUserPicture(),
-                  const SizedBox(height: 24),
-                  const ProfileScreenUserDetails(),
-                  const ProfileScreenUserStateCards(),
-                  const SizedBox(height: 40),
-                  const ProfileScreenSettingsOptions(),
-                  const SizedBox(height: 20),
-                  ProfileLogoutButton(
-                    onTap: () => showLogoutDialog(context),
-                  ),
-                  const SizedBox(height: 30),
-                ],
-              ),
+            child: BlocBuilder<ProfileCubit, ProfileState>(
+              builder: (context, state) {
+                // Check the 'loading' boolean from your ProfileState
+                if (state.loading) {
+                  return const ProfileShimmer();
+                }
+
+                return SingleChildScrollView(
+  child: Column(
+    children: [
+      const ProfileHeaderSection(), 
+       SizedBox(height: 10.h), // مسافة صغيرة جداً لأن الـ Header واخد مساحته
+      const ProfileScreenUserDetails(),
+      const ProfileScreenUserStateCards(),
+      const SizedBox(height: 40),
+      const ProfileScreenSettingsOptions(),
+      const SizedBox(height: 20),
+      ProfileLogoutButton(
+        onTap: () => showLogoutDialog(context),
+      ),
+      const SizedBox(height: 30),
+    ],
+  ),
+);
+              },
             ),
           ),
         ),

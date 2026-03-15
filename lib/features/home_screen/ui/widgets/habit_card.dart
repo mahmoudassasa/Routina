@@ -15,7 +15,7 @@ class HabitCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final Color habitColor = Color(habit['color'] ?? AppColors.primary.value);
+    final Color habitColor = Color(habit['color'] ?? AppColors.primary.toARGB32);
     final IconData iconData = HabitConstants.getIcon(habit['icon'] ?? 'sport');
     final double progress = (habit['progress'] ?? 0.0).toDouble();
 

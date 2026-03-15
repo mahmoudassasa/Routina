@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:routina/core/widgets/main_navigation_bar.dart';
+import 'package:routina/core/widgets/notification_screen.dart';
 import 'package:routina/features/analyze_screen/ui/analyze_screen.dart';
 import 'package:routina/features/email_confirmation_screen/logic/cubit/email_verification_cubit.dart';
 import 'package:routina/features/email_confirmation_screen/ui/email_confirmation_screen.dart';
 import 'package:routina/features/forgot_password/ui/forgot_password.dart';
 import 'package:routina/features/habit_tracker_screen/ui/habit_tracker_screen.dart';
 import 'package:routina/features/habit_tracker_screen/ui/widgets/habit_progress_charts_screen.dart';
+import 'package:routina/features/home_screen/logic/cubit/home_cubit.dart';
 import 'package:routina/features/login_screen/logic/cubit/login_cubit.dart';
 import 'package:routina/features/login_screen/ui/login_screen.dart';
 import 'package:routina/features/register_screen/logic/cubit/register_cubit.dart';
@@ -57,6 +59,17 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => HabitProgressChartsScreen(habits: habits),
         );
+      case Routes.notificationScreen:
+  // 1. Get the cubit from arguments
+  final homeCubit = settings.arguments as HomeCubit;
+
+  return MaterialPageRoute(
+    builder: (_) => BlocProvider.value(
+      value: homeCubit, // 2. Provide the same instance to the new screen
+      child: const NotificationScreen(),
+    ),
+  );
+
 
       default:
         return null;

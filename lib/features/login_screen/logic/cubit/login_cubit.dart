@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'login_state.dart';
 
@@ -35,8 +36,8 @@ class LoginCubit extends Cubit<LoginState> {
       // ✅ If email is verified → success
       emit(state.copyWith(status: LoginStatus.success));
     } on FirebaseAuthException catch (e) {
-      print("FIREBASE ERROR CODE: ${e.code}");
-      print("FIREBASE ERROR MESSAGE: ${e.message}");
+      debugPrint("FIREBASE ERROR CODE: ${e.code}");
+      debugPrint("FIREBASE ERROR MESSAGE: ${e.message}");
       String message;
 
 

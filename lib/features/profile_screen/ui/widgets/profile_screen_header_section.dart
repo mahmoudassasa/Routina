@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -71,7 +70,7 @@ class _ProfileHeaderSectionState extends State<ProfileHeaderSection>
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: Colors.black.withValues(alpha:0.1),
                         blurRadius: 25,
                         offset: const Offset(0, 10),
                       ),
@@ -105,15 +104,15 @@ class _ProfileHeaderSectionState extends State<ProfileHeaderSection>
                       shape: BoxShape.circle,
                       border: Border.all(
                         color: isDark
-                            ? AppColors.primaryLight.withOpacity(0.3)
-                            : AppColors.accent.withOpacity(0.7),
+                            ? AppColors.primaryLight.withValues(alpha:0.3)
+                            : AppColors.accent.withValues(alpha:0.7),
                         width: 2,
                       ),
                       boxShadow: [
                         BoxShadow(
                           color: isDark
-                              ? AppColors.primary.withOpacity(0.25)
-                              : AppColors.accent.withOpacity(0.25),
+                              ? AppColors.primary.withValues(alpha:0.25)
+                              : AppColors.accent.withValues(alpha:0.25),
                           blurRadius: 22,
                           spreadRadius: 2,
                         ),
@@ -147,8 +146,8 @@ class WavePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = isDark
-          ? AppColors.primary.withOpacity(0.08)
-          : AppColors.accent.withOpacity(0.08)
+          ? AppColors.primary.withValues(alpha:0.08)
+          : AppColors.accent.withValues(alpha:0.08)
       ..style = PaintingStyle.fill;
 
     final path = Path();

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'email_verification_state.dart';
@@ -50,7 +51,7 @@ class EmailVerificationCubit extends Cubit<EmailVerificationState> {
 
     final user = FirebaseAuth.instance.currentUser;
 
-    print("Email verified: ${user?.emailVerified}");
+    debugPrint("Email verified: ${user?.emailVerified}");
 
     if (user != null && user.emailVerified) {
       emit(EmailVerificationVerified());

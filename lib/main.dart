@@ -4,13 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/services/notification_service.dart' as notify;
 import 'package:routina/core/theaming/app_theme/logic/cubit/theme_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
 import 'core/routing/app_router.dart';
 import 'routina_app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+await notify.initNotifications();  
+  await notify.requestNotificationPermissions();
+  tz.initializeTimeZones();
   await dotenv.load(fileName: ".env");
   await Firebase.initializeApp();
   // To fix the issue of ScreenUtil texts begin hidden

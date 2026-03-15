@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:routina/features/profile_screen/logic/cubit/profile_state.dart';
@@ -38,7 +39,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       double totalProgress = 0;
 
       for (var habit in habits) {
-        print('Habit: ${habit['title']}, Streak: ${habit['streak']}'); // ضيف السطر ده للتأكد
+        debugPrint('Habit: ${habit['title']}, Streak: ${habit['streak']}'); // ضيف السطر ده للتأكد
         int streak = habit['streak'] as int? ?? 0;
         totalProgress += (habit['progress'] as num? ?? 0).toDouble();
         

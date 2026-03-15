@@ -30,7 +30,7 @@ class _CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
       _titleController = TextEditingController(text: habit['title'] ?? '');
       _selectedIconKey = habit['icon'] ?? 'sport';
       _selectedColor = Color(
-        habit['color'] ?? HabitConstants.presetColors[0].value,
+        habit['color'] ?? HabitConstants.presetColors[0].toARGB32(),
       );
       _selectedDays = List<bool>.from(
         habit['frequency'] ?? List.filled(7, true),
@@ -266,14 +266,14 @@ SizedBox(
                         habitId: widget.habitToEdit!['id'],
                         title: _titleController.text,
                         iconKey: _selectedIconKey,
-                        colorValue: _selectedColor.value,
+                        colorValue: _selectedColor.toARGB32(),
                         days: _selectedDays,
                       );
                     } else {
                       context.read<HomeCubit>().addHabit(
                         title: _titleController.text,
                         iconKey: _selectedIconKey,
-                        colorValue: _selectedColor.value,
+                        colorValue: _selectedColor.toARGB32(),
                         days: _selectedDays,
                       );
                     }

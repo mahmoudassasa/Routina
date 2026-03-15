@@ -27,8 +27,8 @@ class _MainNavigationBarState extends State<MainNavigationBar> {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => HomeCubit()),
-        BlocProvider(create: (_) => ProfileCubit()),
+        BlocProvider(create: (_) => HomeCubit()..loadHabits()),
+        BlocProvider(create: (_) => ProfileCubit()..loadUserData()),
         BlocProvider(create: (_) => LogoutCubit()),
         BlocProvider(create: (_) => AiAnalysisCubit()),
       ],

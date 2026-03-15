@@ -40,8 +40,6 @@ class LoginCubit extends Cubit<LoginState> {
       debugPrint("FIREBASE ERROR MESSAGE: ${e.message}");
       String message;
 
-
-
       switch (e.code) {
         case 'invalid-email':
           message = 'Invalid email format 📧';

@@ -7,5 +7,5 @@ class HabitKeys {
   static const String frequency = 'frequency';
   static const String streak = 'streak';
   static const String progress = 'progress';
+  static const String lastSeenDate = 'lastSeenDate';
 }
-

@@ -30,6 +30,6 @@ void exportData(BuildContext context) async {
     messenger.showSnackBar(
       SnackBar(content: Text("Error: ${e.toString()}")),
     );
-    print("Export Debug Error: $e");
+    debugPrint("Export Debug Error: $e");
   }
 }

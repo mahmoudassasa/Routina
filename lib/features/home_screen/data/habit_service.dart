@@ -3,8 +3,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HabitService {
   HabitService()
-    : _supabase = Supabase.instance.client,
-      _firebaseAuth = FirebaseAuth.instance;
+      : _supabase = Supabase.instance.client,
+        _firebaseAuth = FirebaseAuth.instance;
 
   final SupabaseClient _supabase;
   final FirebaseAuth _firebaseAuth;
@@ -13,23 +13,18 @@ class HabitService {
 
   Future<String> _currentUserId() async {
     final user = _firebaseAuth.currentUser;
-    if (user == null) {
-      throw Exception('User is not logged in');
-    }
+    if (user == null) throw Exception('User is not logged in');
     return user.uid;
   }
 
   List<bool> _parseBoolList(dynamic value) {
-    if (value is List) {
-      return value.map((e) => e == true).toList().cast<bool>();
-    }
+    if (value is List) return value.map((e) => e == true).toList().cast<bool>();
     return List<bool>.filled(7, false);
   }
 
   List<bool> _normalizeBoolList(List<bool> list) {
     if (list.length == 7) return List<bool>.from(list);
     if (list.length > 7) return List<bool>.from(list.take(7));
-
     final result = List<bool>.from(list);
     while (result.length < 7) {
       result.add(false);
@@ -39,9 +34,8 @@ class HabitService {
 
   Map<String, dynamic> _mapRowToHabit(Map<String, dynamic> row) {
     final frequency = _normalizeBoolList(_parseBoolList(row['frequency']));
-    final weekProgress = _normalizeBoolList(
-      _parseBoolList(row['week_progress']),
-    );
+    final weekProgress =
+        _normalizeBoolList(_parseBoolList(row['week_progress']));
 
     return {
       'id': row['id'],
@@ -52,20 +46,20 @@ class HabitService {
       'weekProgress': weekProgress,
       'progress': (row['progress'] ?? 0).toDouble(),
       'streak': row['streak'] ?? 0,
+      // لو الـ column مش موجود في Supabase لسه، بيرجع null وده تمام
+      'lastSeenDate': row['last_seen_date'],
     };
   }
 
   Future<List<Map<String, dynamic>>> fetchHabitsForCurrentUser() async {
     final userId = await _currentUserId();
-
     final response = await _supabase
         .from(_tableName)
         .select()
         .eq('user_id', userId)
         .order('created_at');
 
-    final list = response as List;
-    return list
+    return (response as List)
         .map((item) => _mapRowToHabit(item as Map<String, dynamic>))
         .toList();
   }
@@ -78,22 +72,23 @@ class HabitService {
   }) async {
     final userId = await _currentUserId();
     final frequency = _normalizeBoolList(days);
-    final weekProgress = List<bool>.filled(7, false);
-
-    final insertPayload = {
-      'user_id': userId,
-      'title': title,
-      'icon': iconKey,
-      'color': colorValue,
-      'frequency': frequency,
-      'week_progress': weekProgress,
-      'progress': 0.0,
-      'streak': 0,
-    };
+    final today = DateTime.now();
+    final todayStr =
+        '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
 
     final response = await _supabase
         .from(_tableName)
-        .insert(insertPayload)
+        .insert({
+          'user_id': userId,
+          'title': title,
+          'icon': iconKey,
+          'color': colorValue,
+          'frequency': frequency,
+          'week_progress': List<bool>.filled(7, false),
+          'progress': 0.0,
+          'streak': 0,
+          'last_seen_date': todayStr,
+        })
         .select()
         .single();
 
@@ -106,19 +101,21 @@ class HabitService {
     required List<bool> weekProgress,
     required double progress,
     required int streak,
+    DateTime? lastSeenDate,
   }) async {
-    final normalizedFrequency = _normalizeBoolList(frequency);
-    final normalizedWeekProgress = _normalizeBoolList(weekProgress);
+    final payload = <String, dynamic>{
+      'frequency': _normalizeBoolList(frequency),
+      'week_progress': _normalizeBoolList(weekProgress),
+      'progress': progress,
+      'streak': streak,
+    };
 
-    await _supabase
-        .from(_tableName)
-        .update({
-          'frequency': normalizedFrequency,
-          'week_progress': normalizedWeekProgress,
-          'progress': progress,
-          'streak': streak,
-        })
-        .eq('id', habitId);
+    if (lastSeenDate != null) {
+      payload['last_seen_date'] =
+          '${lastSeenDate.year}-${lastSeenDate.month.toString().padLeft(2, '0')}-${lastSeenDate.day.toString().padLeft(2, '0')}';
+    }
+
+    await _supabase.from(_tableName).update(payload).eq('id', habitId);
   }
 
   Future<void> updateHabit({
@@ -128,17 +125,12 @@ class HabitService {
     required int colorValue,
     required List<bool> days,
   }) async {
-    final normalizedFrequency = _normalizeBoolList(days);
-
-    await _supabase
-        .from(_tableName)
-        .update({
-          'title': title,
-          'icon': iconKey,
-          'color': colorValue,
-          'frequency': normalizedFrequency,
-        })
-        .eq('id', habitId);
+    await _supabase.from(_tableName).update({
+      'title': title,
+      'icon': iconKey,
+      'color': colorValue,
+      'frequency': _normalizeBoolList(days),
+    }).eq('id', habitId);
   }
 
   Future<void> deleteHabit(int habitId) async {

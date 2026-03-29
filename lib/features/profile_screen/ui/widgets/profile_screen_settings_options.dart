@@ -58,7 +58,7 @@ class ProfileScreenSettingsOptions extends StatelessWidget {
             icon: '❓',
             title: 'Help & Support',
             subtitle: 'Get help and contact us',
-            onTap: () {},
+            onTap: () {context.pushNamed(Routes.helpSupportScreen);},
           ),
         ],
       ),

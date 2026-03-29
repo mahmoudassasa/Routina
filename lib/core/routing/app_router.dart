@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:routina/core/services/help_support_screen.dart';
 import 'package:routina/core/widgets/main_navigation_bar.dart';
 import 'package:routina/core/widgets/notification_screen.dart';
 import 'package:routina/features/analyze_screen/ui/analyze_screen.dart';
@@ -60,16 +61,17 @@ class AppRouter {
           builder: (_) => HabitProgressChartsScreen(habits: habits),
         );
       case Routes.notificationScreen:
-  // 1. Get the cubit from arguments
-  final homeCubit = settings.arguments as HomeCubit;
+        // 1. Get the cubit from arguments
+        final homeCubit = settings.arguments as HomeCubit;
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: homeCubit, // 2. Provide the same instance to the new screen
+            child: const NotificationScreen(),
+          ),
+        );
 
-  return MaterialPageRoute(
-    builder: (_) => BlocProvider.value(
-      value: homeCubit, // 2. Provide the same instance to the new screen
-      child: const NotificationScreen(),
-    ),
-  );
-
+      case Routes.helpSupportScreen:
+        return MaterialPageRoute(builder: (_) => const HelpSupportScreen());
 
       default:
         return null;

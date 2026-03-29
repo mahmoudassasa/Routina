@@ -10,4 +10,5 @@ class Routes {
   static const String mainNavigationBar = '/mainNavigationBar';
   static const String habitProgressChartsScreen = '/habitProgressChartsScreen';
   static const String notificationScreen = '/notificationScreen';
+  static const String helpSupportScreen = '/helpSupportScreen';
 }

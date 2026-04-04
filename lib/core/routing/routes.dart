@@ -11,4 +11,5 @@ class Routes {
   static const String habitProgressChartsScreen = '/habitProgressChartsScreen';
   static const String notificationScreen = '/notificationScreen';
   static const String helpSupportScreen = '/helpSupportScreen';
+  static const String aiAnalysisFullScreen = '/aiAnalysisFullScreen';
 }

@@ -73,6 +73,8 @@ class AppRouter {
       case Routes.helpSupportScreen:
         return MaterialPageRoute(builder: (_) => const HelpSupportScreen());
 
+      
+
       default:
         return null;
     }

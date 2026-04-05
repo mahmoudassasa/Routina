@@ -12,4 +12,5 @@ class Routes {
   static const String notificationScreen = '/notificationScreen';
   static const String helpSupportScreen = '/helpSupportScreen';
   static const String aiAnalysisFullScreen = '/aiAnalysisFullScreen';
+  static const String privacyPolicyScreen = '/privacyPolicyScreen';
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:routina/core/services/help_support_screen.dart';
+import 'package:routina/core/services/privacy_policy_screen.dart';
 import 'package:routina/core/widgets/main_navigation_bar.dart';
 import 'package:routina/core/widgets/notification_screen.dart';
 import 'package:routina/features/analyze_screen/ui/analyze_screen.dart';
@@ -72,7 +73,9 @@ class AppRouter {
 
       case Routes.helpSupportScreen:
         return MaterialPageRoute(builder: (_) => const HelpSupportScreen());
-
+        
+      case Routes.privacyPolicyScreen:
+        return MaterialPageRoute(builder: (_) => const PrivacyPolicyScreen());
       
 
       default:

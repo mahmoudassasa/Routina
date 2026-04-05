@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:routina/core/helpers/extension.dart';
+import 'package:routina/core/routing/routes.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/theaming/app_text_styles.dart';
 
@@ -15,9 +17,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
     with TickerProviderStateMixin {
   late AnimationController _fadeController;
   late Animation<double> _fadeAnimation;
-
   int? _expandedFaqIndex;
-
   final _bugSubjectController = TextEditingController();
   final _bugBodyController = TextEditingController();
   final _contactNameController = TextEditingController();
@@ -51,6 +51,8 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
   static const String _whatsappNumber = '+201152461600';
   static const String _telegramUsername = 'mahmoud_assasa';
   static const String _discordInvite = 'https://discord.com/channels/@3ma97';
+  static const String _privacyPolicyUrl =
+      'https://mellow-lokum-05a071.netlify.app/';
 
   final List<_FaqItem> _faqs = const [
     _FaqItem(
@@ -66,7 +68,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
     _FaqItem(
       question: 'Can I edit or delete a habit?',
       answer:
-          'Yes! Swipe to the left any habit card to Delete, To edit press on the pen button .',
+          'Yes! Swipe to the left any habit card to Delete. To edit press on the pen button.',
     ),
     _FaqItem(
       question: 'Why am I not getting reminders?',
@@ -92,15 +94,13 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
       title: 'Setting Up Reminders',
       steps: [
         'Tap on to Profile screen to open it',
-        'Tap the bell icon or  to set the reminder',
+        'Tap the bell icon or to set the reminder',
         'Pick your preferred time',
         'Make sure Routina has notification permission',
         'You\'ll get a daily nudge at that time',
       ],
     ),
   ];
-
-  // ── Launchers ──────────────────────────────────────────────────────────
 
   Future<void> _launchEmail({String subject = '', String body = ''}) async {
     final uri = Uri(
@@ -118,23 +118,26 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
     final uri = Uri.parse(
       'https://wa.me/${_whatsappNumber.replaceAll('+', '')}?text=Hi%2C%20I%20need%20help%20with%20Routina',
     );
-    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication))
       _showError('WhatsApp is not installed.');
-    }
   }
 
   Future<void> _launchTelegram() async {
     final uri = Uri.parse('https://t.me/$_telegramUsername');
-    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication))
       _showError('Could not open Telegram.');
-    }
   }
 
   Future<void> _launchDiscord() async {
     final uri = Uri.parse(_discordInvite);
-    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication))
       _showError('Could not open Discord.');
-    }
+  }
+
+  Future<void> _launchPrivacyPolicyWeb() async {
+    final uri = Uri.parse(_privacyPolicyUrl);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication))
+      _showError('Could not open browser.');
   }
 
   void _showError(String msg) =>
@@ -160,31 +163,20 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
     _launchEmail(subject: 'Support Request from $name', body: message);
   }
 
-  // ── Dark mode helpers ──────────────────────────────────────────────────
-
   bool get _isDark => Theme.of(context).brightness == Brightness.dark;
-
   Color get _scaffoldBg =>
       _isDark ? AppColors.darkBackground : AppColors.background;
-
   Color get _surfaceColor =>
       _isDark ? AppColors.darkSurface : AppColors.surface;
-
   Color get _surfaceLightColor =>
       _isDark ? AppColors.darkBackgroundLight : AppColors.surfaceLight;
-
   Color get _borderColor => _isDark ? AppColors.darkBorder : AppColors.border;
-
   Color get _textPrimary =>
       _isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
-
   Color get _textSecondary =>
       _isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
-
   Color get _iconSubtle =>
       _isDark ? AppColors.darkTextLight : AppColors.textLight;
-
-  // ── Build ──────────────────────────────────────────────────────────────
 
   @override
   Widget build(BuildContext context) {
@@ -219,6 +211,10 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
                   _sectionTitle('Send a Message'),
                   SizedBox(height: 12.h),
                   _contactForm(),
+                  SizedBox(height: 32.h),
+                  _sectionTitle('Legal'),
+                  SizedBox(height: 12.h),
+                  _legalSection(),
                   SizedBox(height: 48.h),
                 ]),
               ),
@@ -248,11 +244,11 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
             gradient: LinearGradient(
               colors: _isDark
                   ? [
-                      AppColors.primaryDark.withValues(alpha: 0.25),
+                      AppColors.primaryDark.withOpacity(0.25),
                       AppColors.darkBackground,
                     ]
                   : [
-                      AppColors.primaryLighter.withValues(alpha: 0.5),
+                      AppColors.primaryLighter.withOpacity(0.5),
                       AppColors.background,
                     ],
             ),
@@ -264,7 +260,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
               child: Icon(
                 Icons.support_agent_rounded,
                 size: 56.sp,
-                color: AppColors.primary.withValues(alpha: 0.15),
+                color: AppColors.primary.withOpacity(0.15),
               ),
             ),
           ),
@@ -292,8 +288,6 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
       ],
     );
   }
-
-  // ── Contact channels ───────────────────────────────────────────────────
 
   Widget _contactChannels() {
     return GridView.count(
@@ -339,7 +333,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
     VoidCallback onTap,
   ) {
     return Material(
-      color: color.withValues(alpha: _isDark ? 0.15 : 0.1),
+      color: color.withOpacity(_isDark ? 0.15 : 0.1),
       borderRadius: BorderRadius.circular(14.r),
       child: InkWell(
         onTap: onTap,
@@ -361,11 +355,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
     );
   }
 
-  // ── Guides ─────────────────────────────────────────────────────────────
-
-  Widget _guidesSection() {
-    return Column(children: _guides.map(_guideCard).toList());
-  }
+  Widget _guidesSection() => Column(children: _guides.map(_guideCard).toList());
 
   Widget _guideCard(_GuideItem guide) {
     return Container(
@@ -373,7 +363,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
       decoration: BoxDecoration(
         color: _surfaceLightColor,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: _borderColor.withValues(alpha: 0.6)),
+        border: Border.all(color: _borderColor.withOpacity(0.6)),
       ),
       child: ExpansionTile(
         leading: Container(
@@ -381,7 +371,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
           height: 40.h,
           decoration: BoxDecoration(
             color: _isDark
-                ? AppColors.primaryDark.withValues(alpha: 0.3)
+                ? AppColors.primaryDark.withOpacity(0.3)
                 : AppColors.primaryLighter,
             borderRadius: BorderRadius.circular(10.r),
           ),
@@ -408,37 +398,41 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
               top: 4.h,
             ),
             child: Column(
-              children: guide.steps.asMap().entries.map((e) {
-                return Padding(
-                  padding: EdgeInsets.symmetric(vertical: 4.h),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CircleAvatar(
-                        radius: 11.r,
-                        backgroundColor: AppColors.primary,
-                        child: Text(
-                          '${e.key + 1}',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 11.sp,
-                            fontWeight: FontWeight.bold,
+              children: guide.steps
+                  .asMap()
+                  .entries
+                  .map(
+                    (e) => Padding(
+                      padding: EdgeInsets.symmetric(vertical: 4.h),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CircleAvatar(
+                            radius: 11.r,
+                            backgroundColor: AppColors.primary,
+                            child: Text(
+                              '${e.key + 1}',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 11.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      SizedBox(width: 10.w),
-                      Expanded(
-                        child: Text(
-                          e.value,
-                          style: AppTextStyles.bodyMedium.copyWith(
-                            color: _textSecondary,
+                          SizedBox(width: 10.w),
+                          Expanded(
+                            child: Text(
+                              e.value,
+                              style: AppTextStyles.bodyMedium.copyWith(
+                                color: _textSecondary,
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
-                );
-              }).toList(),
+                    ),
+                  )
+                  .toList(),
             ),
           ),
         ],
@@ -446,22 +440,18 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
     );
   }
 
-  // ── FAQ ────────────────────────────────────────────────────────────────
-
   Widget _faqSection() {
     return Column(
       children: _faqs.asMap().entries.map((e) {
         final i = e.key;
         final faq = e.value;
         final expanded = _expandedFaqIndex == i;
-
         final expandedBg = _isDark
-            ? AppColors.primaryDark.withValues(alpha: 0.2)
+            ? AppColors.primaryDark.withOpacity(0.2)
             : AppColors.primaryLighter;
         final expandedBorder = _isDark
-            ? AppColors.primaryLight.withValues(alpha: 0.35)
+            ? AppColors.primaryLight.withOpacity(0.35)
             : AppColors.primaryLight;
-
         return Container(
           margin: EdgeInsets.only(bottom: 8.h),
           decoration: BoxDecoration(
@@ -515,19 +505,16 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
     );
   }
 
-  // ── Bug Report Form ────────────────────────────────────────────────────
-
   Widget _bugReportForm() {
     final bgColor = _isDark
-        ? AppColors.error.withValues(alpha: 0.1)
+        ? AppColors.error.withOpacity(0.1)
         : AppColors.errorLight;
-
     return Container(
       padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: AppColors.error.withValues(alpha: 0.2)),
+        border: Border.all(color: AppColors.error.withOpacity(0.2)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -581,8 +568,6 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
     );
   }
 
-  // ── Contact Form ───────────────────────────────────────────────────────
-
   Widget _contactForm() {
     return Container(
       padding: EdgeInsets.all(20.w),
@@ -627,6 +612,92 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
     );
   }
 
+  Widget _legalSection() {
+    return Container(
+      decoration: BoxDecoration(
+        color: _surfaceLightColor,
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(color: _borderColor),
+      ),
+      child: Column(
+        children: [
+          _legalTile(
+            icon: Icons.shield_rounded,
+            title: 'Privacy Policy',
+            subtitle: 'How we handle your data',
+            onTap: () => context.pushNamed(Routes.privacyPolicyScreen),
+          ),
+          Divider(height: 1, color: _borderColor),
+          _legalTile(
+            icon: Icons.open_in_new_rounded,
+            title: 'Privacy Policy (Web)',
+            subtitle: 'View on browser',
+            onTap: _launchPrivacyPolicyWeb,
+            iconColor: AppColors.primaryLight,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _legalTile({
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+    Color? iconColor,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16.r),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+        child: Row(
+          children: [
+            Container(
+              width: 38.w,
+              height: 38.w,
+              decoration: BoxDecoration(
+                color: (iconColor ?? AppColors.primary).withOpacity(0.1),
+                borderRadius: BorderRadius.circular(10.r),
+              ),
+              child: Icon(
+                icon,
+                color: iconColor ?? AppColors.primary,
+                size: 20.sp,
+              ),
+            ),
+            SizedBox(width: 14.w),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: AppTextStyles.titleMedium.copyWith(
+                      color: _textPrimary,
+                    ),
+                  ),
+                  Text(
+                    subtitle,
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: _textSecondary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Icon(
+              Icons.arrow_forward_ios_rounded,
+              size: 14.sp,
+              color: _iconSubtle,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _inputField({
     required TextEditingController controller,
     required String label,
@@ -661,8 +732,6 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
     );
   }
 }
-
-// ── Data classes ──────────────────────────────────────────────────────────────
 
 class _FaqItem {
   final String question;

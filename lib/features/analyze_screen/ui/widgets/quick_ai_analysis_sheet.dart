@@ -122,7 +122,6 @@ class _QuickAiAnalysisSheet extends StatelessWidget {
                 }
 
                 if (state.status == AiAnalysisStatus.error) {
-                  // استخرج رسالة واضحة من الـ error
                   String errorMsg = 'Something went wrong. Please try again.';
                   if (state.errorMessage?.contains('503') == true ||
                       state.errorMessage?.contains('high demand') == true) {
@@ -186,7 +185,7 @@ class _QuickAiAnalysisSheet extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 16.h),
-                        // زرار للتفاصيل الكاملة
+                          
                         SizedBox(
                           width: double.infinity,
                           child: OutlinedButton.icon(

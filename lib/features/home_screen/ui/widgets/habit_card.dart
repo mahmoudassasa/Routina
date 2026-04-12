@@ -15,7 +15,9 @@ class HabitCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final Color habitColor = Color(habit['color'] ?? AppColors.primary.toARGB32);
+    final Color habitColor = Color(
+      habit['color'] ?? AppColors.primary.toARGB32,
+    );
     final IconData iconData = HabitConstants.getIcon(habit['icon'] ?? 'sport');
     final double progress = (habit['progress'] ?? 0.0).toDouble();
 
@@ -49,11 +51,7 @@ class HabitCard extends StatelessWidget {
       background: Container(
         margin: EdgeInsets.only(bottom: 20.h, left: 20.w, right: 20.w),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.red.shade400, Colors.red.shade700],
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-          ),
+          color: Colors.red.shade600,
           borderRadius: BorderRadius.circular(24.r),
         ),
         alignment: Alignment.centerRight,
@@ -165,16 +163,8 @@ class HabitCard extends StatelessWidget {
                   height: 58.h,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(18.r),
-                    gradient: isActionable
-                        ? LinearGradient(
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                            colors: [habitColor, habitColor.withBlue(255)],
-                          )
-                        : null,
-                    color: !isActionable
-                        ? (isDark ? Colors.grey[800] : Colors.grey[200])
-                        : null,
+
+                    color: isActionable ? habitColor : null,
                     boxShadow: isActionable
                         ? [
                             BoxShadow(
@@ -235,6 +225,8 @@ class HabitCard extends StatelessWidget {
                     ),
                   ),
                 ),
+            
+            
               ],
             ),
           ),

@@ -118,26 +118,30 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
     final uri = Uri.parse(
       'https://wa.me/${_whatsappNumber.replaceAll('+', '')}?text=Hi%2C%20I%20need%20help%20with%20Routina',
     );
-    if (!await launchUrl(uri, mode: LaunchMode.externalApplication))
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
       _showError('WhatsApp is not installed.');
+    }
   }
 
   Future<void> _launchTelegram() async {
     final uri = Uri.parse('https://t.me/$_telegramUsername');
-    if (!await launchUrl(uri, mode: LaunchMode.externalApplication))
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
       _showError('Could not open Telegram.');
+    }
   }
 
   Future<void> _launchDiscord() async {
     final uri = Uri.parse(_discordInvite);
-    if (!await launchUrl(uri, mode: LaunchMode.externalApplication))
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
       _showError('Could not open Discord.');
+    }
   }
 
   Future<void> _launchPrivacyPolicyWeb() async {
     final uri = Uri.parse(_privacyPolicyUrl);
-    if (!await launchUrl(uri, mode: LaunchMode.externalApplication))
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
       _showError('Could not open browser.');
+    }
   }
 
   void _showError(String msg) =>
@@ -244,11 +248,11 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
             gradient: LinearGradient(
               colors: _isDark
                   ? [
-                      AppColors.primaryDark.withOpacity(0.25),
+                      AppColors.primaryDark.withValues(alpha:  0.25),
                       AppColors.darkBackground,
                     ]
                   : [
-                      AppColors.primaryLighter.withOpacity(0.5),
+                      AppColors.primaryLighter.withValues(alpha:0.5),
                       AppColors.background,
                     ],
             ),
@@ -260,7 +264,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
               child: Icon(
                 Icons.support_agent_rounded,
                 size: 56.sp,
-                color: AppColors.primary.withOpacity(0.15),
+                color: AppColors.primary.withValues(alpha:0.15),
               ),
             ),
           ),
@@ -333,7 +337,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
     VoidCallback onTap,
   ) {
     return Material(
-      color: color.withOpacity(_isDark ? 0.15 : 0.1),
+      color: color.withValues(alpha:_isDark ? 0.15 : 0.1),
       borderRadius: BorderRadius.circular(14.r),
       child: InkWell(
         onTap: onTap,
@@ -363,7 +367,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
       decoration: BoxDecoration(
         color: _surfaceLightColor,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: _borderColor.withOpacity(0.6)),
+        border: Border.all(color: _borderColor.withValues(alpha:0.6)),
       ),
       child: ExpansionTile(
         leading: Container(
@@ -371,7 +375,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
           height: 40.h,
           decoration: BoxDecoration(
             color: _isDark
-                ? AppColors.primaryDark.withOpacity(0.3)
+                ? AppColors.primaryDark.withValues(alpha:0.3)
                 : AppColors.primaryLighter,
             borderRadius: BorderRadius.circular(10.r),
           ),
@@ -447,10 +451,10 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
         final faq = e.value;
         final expanded = _expandedFaqIndex == i;
         final expandedBg = _isDark
-            ? AppColors.primaryDark.withOpacity(0.2)
+            ? AppColors.primaryDark.withValues(alpha:0.2)
             : AppColors.primaryLighter;
         final expandedBorder = _isDark
-            ? AppColors.primaryLight.withOpacity(0.35)
+            ? AppColors.primaryLight.withValues(alpha:0.35)
             : AppColors.primaryLight;
         return Container(
           margin: EdgeInsets.only(bottom: 8.h),
@@ -507,14 +511,14 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
 
   Widget _bugReportForm() {
     final bgColor = _isDark
-        ? AppColors.error.withOpacity(0.1)
+        ? AppColors.error.withValues(alpha:0.1)
         : AppColors.errorLight;
     return Container(
       padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: AppColors.error.withOpacity(0.2)),
+        border: Border.all(color: AppColors.error.withValues(alpha:0.2)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -658,7 +662,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
               width: 38.w,
               height: 38.w,
               decoration: BoxDecoration(
-                color: (iconColor ?? AppColors.primary).withOpacity(0.1),
+                color: (iconColor ?? AppColors.primary).withValues(alpha:0.1),
                 borderRadius: BorderRadius.circular(10.r),
               ),
               child: Icon(

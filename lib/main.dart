@@ -12,27 +12,26 @@ import 'core/routing/app_router.dart';
 import 'routina_app.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-await notify.initNotifications();  
+ // 1. dotenv أولاً
+  await dotenv.load(fileName: ".env");
+
+  // 2. باقي الـ initializations
+  await notify.initNotifications();
   await notify.requestNotificationPermissions();
   tz.initializeTimeZones();
-  await dotenv.load(fileName: ".env");
-  await Firebase.initializeApp();
-  // To fix the issue of ScreenUtil texts begin hidden
   await ScreenUtil.ensureScreenSize();
 
-  Supabase.initialize(
-    url: 'https://gvqgliulacfmhscswyid.supabase.co',
-    anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2cWdsaXVsYWNmbWhzY3N3eWlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxMzIyMTgsImV4cCI6MjA4MDcwODIxOH0.f6Gx8x45nGzp_h0ZPKFO2LXKtfOSRy04d0Y9pP7mLOY',
-  );
-  // FirebaseAppCheck.instance.activate(
-  //   providerAndroid: AndroidPlayIntegrityProvider(),
-  // );
+  await Firebase.initializeApp();
 
-await FirebaseAppCheck.instance.activate(
-  providerAndroid: const AndroidDebugProvider(),
-);
+  // 3. Supabase بعد ما dotenv اتحمل
+  await Supabase.initialize(
+    url: dotenv.env['SUPABASE_URL']!,
+    anonKey: dotenv.env['SUPABASE_KEY']!,
+  );
+
+  await FirebaseAppCheck.instance.activate(
+    providerAndroid: const AndroidDebugProvider(),
+  );
   runApp(
     BlocProvider(
       create: (context) => ThemeCubit(),

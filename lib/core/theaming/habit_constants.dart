@@ -1,39 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:routina/core/theaming/app_colors.dart';
 
 class HabitConstants {
+  // 16 لون مميز ومختلف تماماً عن بعض
   static const List<Color> presetColors = [
-    AppColors.primary,
-    Color(0xFFE11D48), // Rose Red أنعم
-    Color(0xFF4ECDC4), // Teal
-    Color(0xFFFFE066), // Pastel Yellow
-    Color(0xFFA663CC), // Purple
-    Color(0xFF3B82F6), // Blue Accent (بدل البرتقالي)
-    Color(0xFF2EC4B6), // Aqua
-    Color(0xFF6C5CE7), // Indigo
-    Color(0xFF00D2FF), // Sky Blue
-    Color(0xFF55EFC4), // Mint
-    Color(0xFFFD79A8), // Pink
-    Color(0xFFFDCB6E), // Soft Orange
-    Color(0xFFE17055), // Coral
-    Color(0xFF74B9FF), // Light Blue
-    Color(0xFFA29BFE), // Lavender
-    Color(0xFF00B894), // Green
-    Color(0xFFE84393), // Magenta
-    Color(0xFF0984E3), // Deep Blue
-    Color(0xFF00CEC9), // Cyan
-    Color(0xFFFF6B81), // Soft Red بدل الأحمر الفاقع
-    Color(0xFFFF9F1C), // Warm Orange
-    Color(0xFFFED330), // Soft Yellow
-    Color(0xFF16A085), // Dark Teal
-    Color(0xFF27AE60), // Emerald
-    Color(0xFF2980B9), // Navy Blue
-    Color(0xFF8E44AD), // Deep Purple
-    Color(0xFFBB8FCE), // Lilac
-    Color(0xFFF4D03F), // Gold
-    Color(0xFF73C6B6), // Aqua Pastel
-    Color(0xFF566573), // Grayish Blue
+    Color(0xFF2563EB), // Blue — Primary
+    Color(0xFF7C3AED), // Purple
+    Color(0xFFDB2777), // Pink
+    Color(0xFFDC2626), // Red
+    Color(0xFFEA580C), // Orange
+    Color(0xFFD97706), // Amber
+    Color(0xFFCA8A04), // Yellow
+    Color(0xFF16A34A), // Green
+    Color(0xFF0F766E), // Teal
+    Color(0xFF0891B2), // Cyan
+    Color(0xFF4F46E5), // Indigo
+    Color(0xFFBE185D), // Rose
+    Color(0xFF15803D), // Dark Green
+    Color(0xFF7E22CE), // Dark Purple
+    Color(0xFFB45309), // Brown
+    Color(0xFF475569), // Slate
   ];
 
   static const Map<String, IconData> iconsMap = {
@@ -119,13 +105,10 @@ class HabitConstants {
     'beach': Icons.beach_access_rounded,
     'sunset': Icons.wb_twilight_rounded,
     'sunrise': Icons.wb_sunny_rounded,
-    'weather': Icons.wb_cloudy_rounded,
     'star': Icons.star_rounded,
     'moon': CupertinoIcons.moon_stars_fill,
     'sun': Icons.wb_sunny_rounded,
-    'cloud': Icons.cloud_rounded,
-    'rain': Icons.grain_rounded,
-    'snow': Icons.ac_unit_rounded,
+    'health2': Icons.monitor_heart_rounded,
   };
 
   static IconData getIcon(String key) {

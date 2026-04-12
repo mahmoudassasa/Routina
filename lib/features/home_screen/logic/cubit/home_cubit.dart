@@ -5,8 +5,8 @@ import 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit({HabitService? habitService})
-      : _habitService = habitService ?? HabitService(),
-        super(const HomeState());
+    : _habitService = habitService ?? HabitService(),
+      super(const HomeState());
 
   final HabitService _habitService;
 
@@ -14,18 +14,30 @@ class HomeCubit extends Cubit<HomeState> {
 
   // ── Load ───────────────────────────────────────────────────────────────
 
-  Future<void> loadHabits() async {
-    emit(state.copyWith(status: HomeStatus.loading));
+Future<void> loadHabits({bool isRefresh = false}) async {
+    // Only emit loading if it's NOT a manual refresh to avoid shimmer flickering
+    if (!isRefresh) {
+      emit(state.copyWith(status: HomeStatus.loading));
+    }
+
     try {
       final habits = await _habitService.fetchHabitsForCurrentUser();
       final checkedHabits = await _checkAndResetIfNeeded(habits);
-      emit(state.copyWith(status: HomeStatus.loaded, habits: checkedHabits));
+      
+      // Sort habits: Newest on top based on lastSeenDate
+      final sortedHabits = List<Map<String, dynamic>>.from(checkedHabits)
+        ..sort((a, b) {
+          final dateA = DateTime.parse(a[HabitKeys.lastSeenDate].toString());
+          final dateB = DateTime.parse(b[HabitKeys.lastSeenDate].toString());
+          return dateB.compareTo(dateA);
+        });
+
+      emit(state.copyWith(status: HomeStatus.loaded, habits: sortedHabits));
     } catch (e) {
       emit(state.copyWith(
           status: HomeStatus.error, errorMessage: e.toString()));
     }
   }
-
   // ── Reset logic ────────────────────────────────────────────────────────
 
   Future<List<Map<String, dynamic>>> _checkAndResetIfNeeded(
@@ -41,8 +53,11 @@ class HomeCubit extends Cubit<HomeState> {
       final lastSeen = lastSeenRaw != null
           ? DateTime.parse(lastSeenRaw.toString())
           : todayOnly;
-      final lastSeenOnly =
-          DateTime(lastSeen.year, lastSeen.month, lastSeen.day);
+      final lastSeenOnly = DateTime(
+        lastSeen.year,
+        lastSeen.month,
+        lastSeen.day,
+      );
       final daysDiff = todayOnly.difference(lastSeenOnly).inDays;
 
       // نفس اليوم → مفيش حاجة خالص
@@ -52,9 +67,11 @@ class HomeCubit extends Cubit<HomeState> {
       }
 
       final frequency = List<bool>.from(
-          habit[HabitKeys.frequency] ?? List.filled(7, true));
+        habit[HabitKeys.frequency] ?? List.filled(7, true),
+      );
       final weekProgress = List<bool>.from(
-          habit[HabitKeys.weekProgress] ?? List.filled(7, false));
+        habit[HabitKeys.weekProgress] ?? List.filled(7, false),
+      );
 
       // هل في يوم scheduled فاته المستخدم من غير ما يكمله؟
       bool missedScheduledDay = false;
@@ -127,7 +144,7 @@ class HomeCubit extends Cubit<HomeState> {
       };
 
       final updatedHabits = List<Map<String, dynamic>>.from(state.habits)
-        ..add(tempHabit);
+        ..insert(0, tempHabit);
       emit(state.copyWith(status: HomeStatus.loaded, habits: updatedHabits));
 
       final createdHabit = await _habitService.createHabitForCurrentUser(
@@ -145,8 +162,9 @@ class HomeCubit extends Cubit<HomeState> {
       emit(state.copyWith(status: HomeStatus.loaded, habits: finalHabits));
     } catch (e) {
       await loadHabits();
-      emit(state.copyWith(
-          status: HomeStatus.error, errorMessage: e.toString()));
+      emit(
+        state.copyWith(status: HomeStatus.error, errorMessage: e.toString()),
+      );
     }
   }
 
@@ -160,11 +178,13 @@ class HomeCubit extends Cubit<HomeState> {
     required List<bool> days,
   }) async {
     try {
-      final habitToUpdate = state.habits
-          .firstWhere((habit) => habit[HabitKeys.id] == habitId);
+      final habitToUpdate = state.habits.firstWhere(
+        (habit) => habit[HabitKeys.id] == habitId,
+      );
 
       final oldWeekProgress = List<bool>.from(
-          habitToUpdate[HabitKeys.weekProgress] ?? List.filled(7, false));
+        habitToUpdate[HabitKeys.weekProgress] ?? List.filled(7, false),
+      );
       final normalizedDays = List<bool>.from(days);
 
       // لو يوم اتشال من الـ frequency، امسح تقدمه
@@ -216,8 +236,9 @@ class HomeCubit extends Cubit<HomeState> {
 
       emit(state.copyWith(habits: updatedList));
     } catch (e) {
-      emit(state.copyWith(
-          status: HomeStatus.error, errorMessage: e.toString()));
+      emit(
+        state.copyWith(status: HomeStatus.error, errorMessage: e.toString()),
+      );
     }
   }
 
@@ -228,8 +249,7 @@ class HomeCubit extends Cubit<HomeState> {
 
     final updatedHabits = state.habits.map((habit) {
       if (habit[HabitKeys.id] == habitId) {
-        final weekProgress =
-            List<bool>.from(habit[HabitKeys.weekProgress]);
+        final weekProgress = List<bool>.from(habit[HabitKeys.weekProgress]);
         final frequency = List<bool>.from(habit[HabitKeys.frequency]);
 
         weekProgress[dayIndex] = !weekProgress[dayIndex];
@@ -242,8 +262,9 @@ class HomeCubit extends Cubit<HomeState> {
           if (frequency[i] && weekProgress[i]) completedCount++;
         }
 
-        final newProgress =
-            (completedCount / scheduledCount).clamp(0.0, 1.0).toDouble();
+        final newProgress = (completedCount / scheduledCount)
+            .clamp(0.0, 1.0)
+            .toDouble();
 
         int currentStreak = habit[HabitKeys.streak] ?? 0;
         if (weekProgress[dayIndex]) {
@@ -265,8 +286,9 @@ class HomeCubit extends Cubit<HomeState> {
     emit(state.copyWith(habits: updatedHabits));
 
     try {
-      final updated =
-          updatedHabits.firstWhere((h) => h[HabitKeys.id] == habitId);
+      final updated = updatedHabits.firstWhere(
+        (h) => h[HabitKeys.id] == habitId,
+      );
 
       await _habitService.updateHabitProgress(
         habitId: updated[HabitKeys.id] as int,
@@ -278,10 +300,12 @@ class HomeCubit extends Cubit<HomeState> {
       );
     } catch (e) {
       await loadHabits();
-      emit(state.copyWith(
-        status: HomeStatus.error,
-        errorMessage: 'Sync failed: ${e.toString()}',
-      ));
+      emit(
+        state.copyWith(
+          status: HomeStatus.error,
+          errorMessage: 'Sync failed: ${e.toString()}',
+        ),
+      );
     }
   }
 
@@ -297,8 +321,9 @@ class HomeCubit extends Cubit<HomeState> {
       await _habitService.deleteHabit(habitId as int);
     } catch (e) {
       await loadHabits();
-      emit(state.copyWith(
-          status: HomeStatus.error, errorMessage: e.toString()));
+      emit(
+        state.copyWith(status: HomeStatus.error, errorMessage: e.toString()),
+      );
     }
   }
 }

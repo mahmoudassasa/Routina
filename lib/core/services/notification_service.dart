@@ -14,11 +14,9 @@ Future<void> initNotifications() async {
   const androidSettings = AndroidInitializationSettings('ic_launcher');
   const initializationSettings = InitializationSettings(android: androidSettings);
 
-  // التصحيح هنا: لازم نستخدم التسمية (settings: ...)
   await notificationsPlugin.initialize(
     settings: initializationSettings, 
     onDidReceiveNotificationResponse: (details) {
-      debugPrint("Notification clicked: ${details.payload}");
     },
   );
 
@@ -59,7 +57,6 @@ Future<void> scheduleDailyNotification({
     matchDateTimeComponents: DateTimeComponents.time,
   );
 
-  debugPrint("✅ إشعار مجدول عند: $scheduledTime");
 }
 
 Future<void> cancelNotification(int id) async {

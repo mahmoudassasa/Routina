@@ -240,23 +240,17 @@ class _CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
               width: double.infinity,
               height: 58.h,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(18.r),
-                gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [
-                    _selectedColor,
-                    _selectedColor.withBlue(255).withValues(alpha: 0.8),
-                  ],
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: _selectedColor.withValues(alpha: isDark ? 0.4 : 0.25),
-                    blurRadius: 20,
-                    offset: const Offset(0, 8),
-                  ),
-                ],
-              ),
+  borderRadius: BorderRadius.circular(18.r),
+  // تم إلغاء الـ gradient واستخدام لون ثابت
+  color: _selectedColor, 
+  boxShadow: [
+    BoxShadow(
+      color: _selectedColor.withValues(alpha: isDark ? 0.4 : 0.25),
+      blurRadius: 20,
+      offset: const Offset(0, 8),
+    ),
+  ],
+),
               child: Material(
                 color: Colors.transparent,
                 child: InkWell(

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   // Primary & Accent Colors
-  static const Color primary = Color(0xFF2563EB); 
-  static const Color primaryLight = Color(0xFF60A5FA); 
-  static const Color primaryDark = Color(0xFF1E40AF); 
-  static const Color primaryLighter = Color(0xFFDBEAFE); 
+  static const Color primary = Color(0xFF2563EB);
+  static const Color primaryLight = Color(0xFF60A5FA);
+  static const Color primaryDark = Color(0xFF1E40AF);
+  static const Color primaryLighter = Color(0xFFDBEAFE);
 
-  static const Color accent = Color(0xFFFF7D54); 
+  static const Color accent = Color(0xFFFF7D54);
   static const Color accentLight = Color(0xFFFFDBC8);
 
   // Light Theme Colors
@@ -16,9 +16,9 @@ class AppColors {
   static const Color backgroundGradientStart = Color(0xFFF0F9FF);
   static const Color backgroundGradientEnd = Color(0xFFE0F2FE);
 
-  static const Color textPrimary = Color(0xFF0F172A); 
-  static const Color textSecondary = Color(0xFF475569); 
-  static const Color textLight = Color(0xFF94A3B8); 
+  static const Color textPrimary = Color(0xFF0F172A);
+  static const Color textSecondary = Color(0xFF475569);
+  static const Color textLight = Color(0xFF94A3B8);
   static const Color textWhite = Color(0xFFFFFFFF);
 
   static const Color surface = Color(0xFFFFFFFF);
@@ -28,22 +28,22 @@ class AppColors {
   static const Color borderLight = Color(0xFFF3F4F6);
   static const Color borderFocus = Color(0xFF2563EB);
 
-  // Dark Theme Colors
-  static const Color darkBackground = Color(0xFF0F172A); 
-  static const Color darkBackgroundLight = Color(0xFF1E293B); 
-  static const Color darkBackgroundGradientStart = Color(0xFF1E293B);
-  static const Color darkBackgroundGradientEnd = Color(0xFF334155);
+  // Dark Theme Colors — محسّنة عشان يكون في فرق واضح بين الطبقات
+  static const Color darkBackground = Color(0xFF0B1120);      // أغمق شوية
+  static const Color darkBackgroundLight = Color(0xFF1A2332); // وسط
+  static const Color darkBackgroundGradientStart = Color(0xFF1A2332);
+  static const Color darkBackgroundGradientEnd = Color(0xFF243447);
 
-  static const Color darkTextPrimary = Color(0xFFF1F5F9); 
-  static const Color darkTextSecondary = Color(0xFFCBD5E1); 
-  static const Color darkTextLight = Color(0xFF64748B); 
+  static const Color darkTextPrimary = Color(0xFFF1F5F9);
+  static const Color darkTextSecondary = Color(0xFFCBD5E1);
+  static const Color darkTextLight = Color(0xFF64748B);
 
-  static const Color darkSurface = Color(0xFF1E293B); 
-  static const Color darkSurfaceLight = Color(0xFF334155);
+  static const Color darkSurface = Color(0xFF1A2332);         // مختلف عن الـ background
+  static const Color darkSurfaceLight = Color(0xFF243447);    // مختلف عن الـ surface
 
-  static const Color darkBorder = Color(0xFF334155);
-  static const Color darkBorderLight = Color(0xFF475569);
-  static const Color darkInputFill = Color(0xFF334155);
+  static const Color darkBorder = Color(0xFF2D3F55);          // أوضح شوية
+  static const Color darkBorderLight = Color(0xFF3A5068);
+  static const Color darkInputFill = Color(0xFF1A2332);
 
   // Status Colors
   static const Color error = Color(0xFFDC2626);

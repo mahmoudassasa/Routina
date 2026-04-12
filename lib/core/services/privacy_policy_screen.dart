@@ -44,7 +44,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: isDark
-                      ? [AppColors.primaryDark.withOpacity(0.3), AppColors.darkSurface]
+                      ? [AppColors.primaryDark.withValues(alpha:0.3), AppColors.darkSurface]
                       : [AppColors.primaryLighter, AppColors.background],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -189,7 +189,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                 height: 36.w,
                 decoration: BoxDecoration(
                   color: isDark
-                      ? AppColors.primaryDark.withOpacity(0.2)
+                      ? AppColors.primaryDark.withValues(alpha:0.2)
                       : AppColors.primaryLighter,
                   borderRadius: BorderRadius.circular(10.r),
                 ),

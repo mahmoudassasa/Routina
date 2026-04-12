@@ -157,7 +157,6 @@ Future<void> _handleToggle(bool value, dynamic habit, int habitId) async {
           );
         }
       } catch (e) {
-        debugPrint("❌ Notification Error: $e");
       }
     }
   } else {

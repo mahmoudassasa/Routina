@@ -47,7 +47,7 @@ class ThemeCubit extends Cubit<ThemeState> {
       ));
     } catch (e) {
       // If there's an error, use default light theme
-      debugPrint('Error loading theme preference: $e');
+  
     }
   }
 
@@ -65,7 +65,6 @@ class ThemeCubit extends Cubit<ThemeState> {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool(_themeKey, newIsDarkMode);
     } catch (e) {
-      debugPrint('Error saving theme preference: $e');
     }
   }
 
@@ -81,7 +80,6 @@ class ThemeCubit extends Cubit<ThemeState> {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool(_themeKey, isDark);
     } catch (e) {
-      debugPrint('Error saving theme preference: $e');
     }
   }
 }

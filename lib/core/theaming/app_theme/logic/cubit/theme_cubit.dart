@@ -65,6 +65,8 @@ class ThemeCubit extends Cubit<ThemeState> {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool(_themeKey, newIsDarkMode);
     } catch (e) {
+        // failed to load theme, using default
+
     }
   }
 
@@ -80,6 +82,8 @@ class ThemeCubit extends Cubit<ThemeState> {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool(_themeKey, isDark);
     } catch (e) {
+      // failed to save theme preference
+
     }
   }
 }

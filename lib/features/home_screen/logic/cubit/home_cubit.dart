@@ -16,9 +16,10 @@ class HomeCubit extends Cubit<HomeState> {
 
 Future<void> loadHabits({bool isRefresh = false}) async {
     // Only emit loading if it's NOT a manual refresh to avoid shimmer flickering
-    if (!isRefresh) {
       emit(state.copyWith(status: HomeStatus.loading));
-    }
+
+    await Future.delayed(const Duration(seconds: 2)); // الانتظار الأول
+  
 
     try {
       final habits = await _habitService.fetchHabitsForCurrentUser();

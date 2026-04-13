@@ -157,6 +157,8 @@ Future<void> _handleToggle(bool value, dynamic habit, int habitId) async {
           );
         }
       } catch (e) {
+          // scheduling failed silently
+
       }
     }
   } else {

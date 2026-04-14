@@ -61,7 +61,6 @@ Future<void> loadHabits({bool isRefresh = false}) async {
       );
       final daysDiff = todayOnly.difference(lastSeenOnly).inDays;
 
-      // نفس اليوم → مفيش حاجة خالص
       if (daysDiff == 0) {
         result.add(habit);
         continue;
@@ -124,7 +123,7 @@ Future<void> loadHabits({bool isRefresh = false}) async {
 
   // ── Add ────────────────────────────────────────────────────────────────
 
-  Future<void> addHabit({
+  Future<int?> addHabit({
     required String title,
     required String iconKey,
     required int colorValue,
@@ -161,11 +160,12 @@ Future<void> loadHabits({bool isRefresh = false}) async {
       }).toList();
 
       emit(state.copyWith(status: HomeStatus.loaded, habits: finalHabits));
+
+      return createdHabit[HabitKeys.id] as int?;
     } catch (e) {
       await loadHabits();
-      emit(
-        state.copyWith(status: HomeStatus.error, errorMessage: e.toString()),
-      );
+      emit(state.copyWith(status: HomeStatus.error, errorMessage: e.toString()));
+      return null;
     }
   }
 

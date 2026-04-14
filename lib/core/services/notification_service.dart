@@ -4,25 +4,28 @@ import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-final FlutterLocalNotificationsPlugin notificationsPlugin = FlutterLocalNotificationsPlugin();
+final FlutterLocalNotificationsPlugin notificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 Future<void> initNotifications() async {
   tz.initializeTimeZones();
   final tzInfo = await FlutterTimezone.getLocalTimezone();
   tz.setLocalLocation(tz.getLocation(tzInfo.identifier));
-
-  const androidSettings = AndroidInitializationSettings('ic_launcher');
-  const initializationSettings = InitializationSettings(android: androidSettings);
+  const androidSettings = AndroidInitializationSettings('ic_notification');
+  const initializationSettings = InitializationSettings(
+    android: androidSettings,
+  );
 
   await notificationsPlugin.initialize(
-    settings: initializationSettings, 
-    onDidReceiveNotificationResponse: (details) {
-    },
+    settings: initializationSettings,
+    onDidReceiveNotificationResponse: (details) {},
   );
 
   if (defaultTargetPlatform == TargetPlatform.android) {
     final androidImplementation = notificationsPlugin
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >();
     await androidImplementation?.requestNotificationsPermission();
     await androidImplementation?.requestExactAlarmsPermission();
   }
@@ -50,13 +53,12 @@ Future<void> scheduleDailyNotification({
         'Daily Reminders',
         importance: Importance.max,
         priority: Priority.high,
-        icon: '@mipmap/launcher_icon', // السطر ده اللي هيمنع الـ NullPointerException
+        icon: 'ic_notification',
       ),
     ),
     androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     matchDateTimeComponents: DateTimeComponents.time,
   );
-
 }
 
 Future<void> cancelNotification(int id) async {
@@ -65,7 +67,14 @@ Future<void> cancelNotification(int id) async {
 
 tz.TZDateTime _nextInstanceOfTime(int hour, int minute) {
   final now = tz.TZDateTime.now(tz.local);
-  var scheduledDate = tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute);
+  var scheduledDate = tz.TZDateTime(
+    tz.local,
+    now.year,
+    now.month,
+    now.day,
+    hour,
+    minute,
+  );
   if (scheduledDate.isBefore(now)) {
     scheduledDate = scheduledDate.add(const Duration(days: 1));
   }
@@ -73,13 +82,15 @@ tz.TZDateTime _nextInstanceOfTime(int hour, int minute) {
 }
 
 Future<bool> requestNotificationPermissions() async {
-    final androidPlugin = notificationsPlugin
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+  final androidPlugin = notificationsPlugin
+      .resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin
+      >();
 
-    if (androidPlugin != null) {
-      // دي اللي بتطلع الـ Pop-up الرسمي بتاع أندرويد 13+
-      final bool? granted = await androidPlugin.requestNotificationsPermission();
-      return granted ?? false;
-    }
-    return false;
+  if (androidPlugin != null) {
+    // دي اللي بتطلع الـ Pop-up الرسمي بتاع أندرويد 13+
+    final bool? granted = await androidPlugin.requestNotificationsPermission();
+    return granted ?? false;
   }
+  return false;
+}

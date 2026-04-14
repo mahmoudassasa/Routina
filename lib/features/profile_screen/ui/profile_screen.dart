@@ -66,11 +66,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             colors: isDark
                 ? [
                     AppColors.darkBackgroundGradientStart,
-                    AppColors.darkBackgroundGradientEnd
+                    AppColors.darkBackgroundGradientEnd,
                   ]
                 : [
                     AppColors.backgroundGradientStart,
-                    AppColors.backgroundGradientEnd
+                    AppColors.backgroundGradientEnd,
                   ],
           ),
         ),
@@ -85,22 +85,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 }
 
                 return SingleChildScrollView(
-  child: Column(
-    children: [
-      const ProfileHeaderSection(), 
-       SizedBox(height: 10.h), // مسافة صغيرة جداً لأن الـ Header واخد مساحته
-      const ProfileScreenUserDetails(),
-      const ProfileScreenUserStateCards(),
-      const SizedBox(height: 40),
-      const ProfileScreenSettingsOptions(),
-      const SizedBox(height: 20),
-      ProfileLogoutButton(
-        onTap: () => showLogoutDialog(context),
-      ),
-      const SizedBox(height: 30),
-    ],
-  ),
-);
+                  child: Column(
+                    children: [
+                      const ProfileHeaderSection(),
+                      SizedBox(
+                        height: 10.h,
+                      ), // مسافة صغيرة جداً لأن الـ Header واخد مساحته
+                      const ProfileScreenUserDetails(),
+                      const ProfileScreenUserStateCards(),
+                      const SizedBox(height: 40),
+                      const ProfileScreenSettingsOptions(),
+                      const SizedBox(height: 20),
+                      ProfileLogoutButton(
+                        onTap: () => showLogoutDialog(context),
+                      ),
+                      const SizedBox(height: 30),
+                    ],
+                  ),
+                );
               },
             ),
           ),

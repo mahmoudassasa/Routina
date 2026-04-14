@@ -26,15 +26,21 @@ class _NotificationScreenState extends State<NotificationScreen> {
     _loadAllScheduledNotifications();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _loadAllScheduledNotifications();
+  }
+
   Future<void> _loadAllScheduledNotifications() async {
-    final List<PendingNotificationRequest> pendingRequests = 
+    final List<PendingNotificationRequest> pendingRequests =
         await notificationsPlugin.pendingNotificationRequests();
-    
+
     final Map<int, bool> tempMap = {};
     for (var r in pendingRequests) {
       tempMap[r.id] = true;
     }
-    
+
     if (mounted) {
       setState(() {
         scheduledHabits = tempMap;
@@ -73,7 +79,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
               final String idString = habit['id'].toString();
               final int habitId = fastHash(idString);
               final bool isON = scheduledHabits[habitId] ?? false;
-              final Color habitColor = Color(habit['color'] ?? AppColors.primary.toARGB32());
+              final Color habitColor = Color(
+                habit['color'] ?? AppColors.primary.toARGB32(),
+              );
 
               return Card(
                 margin: EdgeInsets.only(bottom: 12.h),
@@ -85,11 +93,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   ),
                 ),
                 child: ListTile(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 4.h,
+                  ),
                   leading: CircleAvatar(
                     backgroundColor: habitColor.withValues(alpha: 0.1),
                     child: Icon(
-                      isON ? Icons.notifications_active : Icons.notifications_none,
+                      isON
+                          ? Icons.notifications_active
+                          : Icons.notifications_none,
                       color: habitColor,
                     ),
                   ),
@@ -118,52 +131,53 @@ class _NotificationScreenState extends State<NotificationScreen> {
     );
   }
 
-Future<void> _handleToggle(bool value, dynamic habit, int habitId) async {
-  if (value) {
-    bool isAllowed = await requestNotificationPermissions();
-    if (!mounted) return;
+  Future<void> _handleToggle(bool value, dynamic habit, int habitId) async {
+    if (value) {
+      bool isAllowed = await requestNotificationPermissions();
+      if (!mounted) return;
 
-    if (!isAllowed) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Please enable notifications from system settings"),
-          backgroundColor: Colors.red,
-        ),
-      );
-      return;
-    }
-
-    final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-      helpText: "Remind me of ${habit['title']}",
-    );
-
-    if (picked != null) {
-      try {
-        await scheduleDailyNotification(
-          id: habitId,
-          title: 'Routina: Time for ${habit['title']}! 🚀',
-          body: 'Stay consistent! It is time to complete this habit.',
-          hour: picked.hour,
-          minute: picked.minute,
+      if (!isAllowed) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Please enable notifications from system settings"),
+            backgroundColor: Colors.red,
+          ),
         );
-
-        if (mounted) setState(() => scheduledHabits[habitId] = true);
-
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Reminder set for ${picked.format(context)}")),
-          );
-        }
-      } catch (e) {
-          // scheduling failed silently
-
+        return;
       }
+
+      final TimeOfDay? picked = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+        helpText: "Remind me of ${habit['title']}",
+      );
+
+      if (picked != null) {
+        try {
+          await scheduleDailyNotification(
+            id: habitId,
+            title: 'Routina: Time for ${habit['title']}! 🚀',
+            body: 'Stay consistent! It is time to complete this habit.',
+            hour: picked.hour,
+            minute: picked.minute,
+          );
+
+          if (mounted) setState(() => scheduledHabits[habitId] = true);
+
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text("Reminder set for ${picked.format(context)}"),
+              ),
+            );
+          }
+        } catch (e) {
+          // scheduling failed silently
+        }
+      }
+    } else {
+      await cancelNotification(habitId);
+      if (mounted) setState(() => scheduledHabits[habitId] = false);
     }
-  } else {
-    await cancelNotification(habitId);
-    if (mounted) setState(() => scheduledHabits[habitId] = false);
   }
-}
 }

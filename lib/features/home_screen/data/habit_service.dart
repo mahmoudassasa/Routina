@@ -46,7 +46,6 @@ class HabitService {
       'weekProgress': weekProgress,
       'progress': (row['progress'] ?? 0).toDouble(),
       'streak': row['streak'] ?? 0,
-      // لو الـ column مش موجود في Supabase لسه، بيرجع null وده تمام
       'lastSeenDate': row['last_seen_date'],
     };
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/extension.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/features/analyze_screen/logic/cubit/ai_analysis_cubit.dart';
 import 'package:routina/features/analyze_screen/logic/cubit/ai_analysis_state.dart';
@@ -34,7 +36,7 @@ class AiAnalysisFullScreen extends StatelessWidget {
           backgroundColor: Colors.transparent,
           elevation: 0,
           leading: IconButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => context.pop(),
             icon: Icon(
               Icons.arrow_back_ios_new_rounded,
               color: isDark ? Colors.white : Colors.black87,
@@ -58,11 +60,11 @@ class AiAnalysisFullScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('🤖', style: TextStyle(fontSize: 60.sp)),
-                      SizedBox(height: 24.h),
+                      verticalSpace(24), 
                       const CircularProgressIndicator(
                         color: AppColors.primary,
                       ),
-                      SizedBox(height: 16.h),
+                      verticalSpace(16), 
                       Text(
                         'Analyzing your habits...',
                         style: TextStyle(
@@ -88,7 +90,7 @@ class AiAnalysisFullScreen extends StatelessWidget {
                           size: 80.sp,
                           color: Colors.red,
                         ),
-                        SizedBox(height: 24.h),
+                        verticalSpace(24), 
                         Text(
                           'Analysis Failed',
                           style: TextStyle(
@@ -97,7 +99,7 @@ class AiAnalysisFullScreen extends StatelessWidget {
                             color: isDark ? Colors.white : Colors.black87,
                           ),
                         ),
-                        SizedBox(height: 12.h),
+                        verticalSpace(12), 
                         Text(
                           state.errorMessage ?? 'Unknown error',
                           style: TextStyle(
@@ -146,7 +148,7 @@ class AiAnalysisFullScreen extends StatelessWidget {
                                 child: Text('✨', style: TextStyle(fontSize: 24.sp)),
                               ),
                             ),
-                            SizedBox(width: 16.w),
+                            horizontalSpace(16),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -175,7 +177,7 @@ class AiAnalysisFullScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 24.h),
+                        verticalSpace(24), 
                         Text(
                           state.analysis!,
                           style: TextStyle(

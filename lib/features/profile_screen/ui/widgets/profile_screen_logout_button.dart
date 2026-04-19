@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // For HapticFeedback
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 
 class ProfileLogoutButton extends StatelessWidget {
@@ -53,17 +54,19 @@ class ProfileLogoutButton extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.all(10.w),
                     decoration: BoxDecoration(
-                      color: isDark ? Colors.redAccent.withValues(alpha: 0.12) : Colors.redAccent.withValues(alpha: 0.08),
+                      color: isDark
+                          ? Colors.redAccent.withValues(alpha: 0.12)
+                          : Colors.redAccent.withValues(alpha: 0.08),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
-                      Icons.power_settings_new_rounded, // Friendlier than standard logout icon
+                      Icons
+                          .power_settings_new_rounded, // Friendlier than standard logout icon
                       color: AppColors.error,
                       size: 22.sp,
                     ),
                   ),
-                  SizedBox(width: 16.w),
-
+                  horizontalSpace(16),
                   // Text
                   Text(
                     "Sign Out", // "Sign Out" feels slightly softer than "Log Out"

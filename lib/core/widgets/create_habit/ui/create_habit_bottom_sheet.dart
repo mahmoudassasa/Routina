@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/extension.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/services/notification_service.dart';
 import 'package:routina/core/theaming/habit_constants.dart';
 import 'package:routina/features/home_screen/logic/cubit/home_cubit.dart';
@@ -83,8 +85,7 @@ class _CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
                 ),
               ),
             ),
-            SizedBox(height: 24.h),
-
+        verticalSpace(24),
             TextField(
               controller: _titleController,
               style: TextStyle(
@@ -109,13 +110,12 @@ class _CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
                 ),
               ),
             ),
-            SizedBox(height: 24.h),
-
+        verticalSpace(24),
             Text(
               "Icon",
               style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 12.h),
+                    verticalSpace(12),
             SizedBox(
               height: 54.h,
               child: ListView(
@@ -145,13 +145,12 @@ class _CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
                 }).toList(),
               ),
             ),
-            SizedBox(height: 24.h),
-
+        verticalSpace(24),
             Text(
               "Color",
               style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 12.h),
+                    verticalSpace(12),
             SizedBox(
               height: 45.h,
               child: ListView.builder(
@@ -193,13 +192,12 @@ class _CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
                 },
               ),
             ),
-            SizedBox(height: 24.h),
-
+        verticalSpace(24),
             Text(
               "Frequency",
               style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 12.h),
+                    verticalSpace(12),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(7, (index) {
@@ -237,8 +235,7 @@ class _CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
                 );
               }),
             ),
-            SizedBox(height: 24.h),
-
+        verticalSpace(24),
             // Reminder Button
             GestureDetector(
               onTap: () async {
@@ -247,7 +244,7 @@ class _CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
                   initialTime: _selectedTime ?? TimeOfDay.now(),
                   helpText: 'Set daily reminder',
                 );
-                if (picked != null) {
+                if (picked != null && mounted) {
                   setState(() => _selectedTime = picked);
                 }
               },
@@ -258,8 +255,8 @@ class _CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
                   color: _selectedTime != null
                       ? _selectedColor.withValues(alpha: 0.1)
                       : (isDark
-                          ? Colors.white.withValues(alpha: 0.05)
-                          : Colors.grey[100]),
+                            ? Colors.white.withValues(alpha: 0.05)
+                            : Colors.grey[100]),
                   borderRadius: BorderRadius.circular(16.r),
                   border: Border.all(
                     color: _selectedTime != null
@@ -274,10 +271,12 @@ class _CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
                       _selectedTime != null
                           ? Icons.notifications_active_rounded
                           : Icons.notifications_none_rounded,
-                      color: _selectedTime != null ? _selectedColor : Colors.grey,
+                      color: _selectedTime != null
+                          ? _selectedColor
+                          : Colors.grey,
                       size: 22.sp,
                     ),
-                    SizedBox(width: 12.w),
+                    horizontalSpace(12),
                     Expanded(
                       child: Text(
                         _selectedTime != null
@@ -307,7 +306,7 @@ class _CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
                 ),
               ),
             ),
-            SizedBox(height: 32.h),
+            verticalSpace(24),
 
             // Create / Save Button
             Container(
@@ -318,7 +317,9 @@ class _CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
                 color: _selectedColor,
                 boxShadow: [
                   BoxShadow(
-                    color: _selectedColor.withValues(alpha: isDark ? 0.4 : 0.25),
+                    color: _selectedColor.withValues(
+                      alpha: isDark ? 0.4 : 0.25,
+                    ),
                     blurRadius: 20,
                     offset: const Offset(0, 8),
                   ),
@@ -328,57 +329,33 @@ class _CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
                 color: Colors.transparent,
                 child: InkWell(
                   onTap: () async {
-                    if (_titleController.text.trim().isNotEmpty) {
-                      if (_isEditMode) {
-                        context.read<HomeCubit>().updateHabit(
-                          habitId: widget.habitToEdit!['id'],
-                          title: _titleController.text,
-                          iconKey: _selectedIconKey,
-                          colorValue: _selectedColor.toARGB32(),
-                          days: _selectedDays,
+                    if (_isEditMode) {
+                      final homeCubit = context.read<HomeCubit>();
+                      final habitTitle = _titleController.text;
+                      final habitId = fastHash(
+                        widget.habitToEdit!['id'].toString(),
+                      );
+                      final selectedTime = _selectedTime;
+
+                      homeCubit.updateHabit(
+                        habitId: widget.habitToEdit!['id'],
+                        title: habitTitle,
+                        iconKey: _selectedIconKey,
+                        colorValue: _selectedColor.toARGB32(),
+                        days: _selectedDays,
+                      );
+
+                      if (!mounted) return;
+context.pop(context);
+                      if (selectedTime != null) {
+                        await cancelNotification(habitId);
+                        await scheduleDailyNotification(
+                          id: habitId,
+                          title: 'Routina: Time for $habitTitle! 🚀',
+                          body: 'Stay consistent! Time to complete this habit.',
+                          hour: selectedTime.hour,
+                          minute: selectedTime.minute,
                         );
-
-                        if (_selectedTime != null) {
-                          final habitId = fastHash(
-                            widget.habitToEdit!['id'].toString(),
-                          );
-                          await cancelNotification(habitId);
-                          await scheduleDailyNotification(
-                            id: habitId,
-                            title:
-                                'Routina: Time for ${_titleController.text}! 🚀',
-                            body:
-                                'Stay consistent! Time to complete this habit.',
-                            hour: _selectedTime!.hour,
-                            minute: _selectedTime!.minute,
-                          );
-                        }
-
-                        Navigator.pop(context);
-                      } else {
-                        final selectedTime = _selectedTime;
-                        final title = _titleController.text.trim();
-
-                        Navigator.pop(context);
-
-                        final realId = await context.read<HomeCubit>().addHabit(
-                          title: title,
-                          iconKey: _selectedIconKey,
-                          colorValue: _selectedColor.toARGB32(),
-                          days: _selectedDays,
-                        );
-
-                        if (selectedTime != null && realId != null) {
-                          final habitId = fastHash(realId.toString());
-                          await scheduleDailyNotification(
-                            id: habitId,
-                            title: 'Routina: Time for $title! 🚀',
-                            body:
-                                'Stay consistent! Time to complete this habit.',
-                            hour: selectedTime.hour,
-                            minute: selectedTime.minute,
-                          );
-                        }
                       }
                     }
                   },
@@ -392,7 +369,7 @@ class _CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
                           color: Colors.white,
                           size: 24.sp,
                         ),
-                        SizedBox(width: 8.w),
+                        horizontalSpace(8),
                         Text(
                           _isEditMode ? 'Save Changes' : 'Create Habit',
                           style: TextStyle(

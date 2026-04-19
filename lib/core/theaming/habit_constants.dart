@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 class HabitConstants {
-  // 16 لون مميز ومختلف تماماً عن بعض
   static const List<Color> presetColors = [
     Color(0xFF2563EB), // Blue — Primary
     Color(0xFF7C3AED), // Purple

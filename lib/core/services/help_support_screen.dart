@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/routing/routes.dart';
@@ -195,31 +196,37 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               sliver: SliverList(
                 delegate: SliverChildListDelegate([
-                  SizedBox(height: 8.h),
+                  verticalSpace(8),
                   _sectionTitle('Contact Us'),
-                  SizedBox(height: 12.h),
+                  verticalSpace(12),
+
                   _contactChannels(),
-                  SizedBox(height: 32.h),
+                          verticalSpace(12),
                   _sectionTitle('How-to Guides'),
-                  SizedBox(height: 12.h),
+                  verticalSpace(12),
+
                   _guidesSection(),
-                  SizedBox(height: 32.h),
+                          verticalSpace(12),
                   _sectionTitle('FAQ'),
-                  SizedBox(height: 12.h),
+                  verticalSpace(12),
+
                   _faqSection(),
-                  SizedBox(height: 32.h),
+                          verticalSpace(12),
                   _sectionTitle('Report a Bug'),
-                  SizedBox(height: 12.h),
+                  verticalSpace(12),
+
                   _bugReportForm(),
-                  SizedBox(height: 32.h),
+                          verticalSpace(12),
                   _sectionTitle('Send a Message'),
-                  SizedBox(height: 12.h),
+                  verticalSpace(12),
+
                   _contactForm(),
-                  SizedBox(height: 32.h),
+                          verticalSpace(12),
                   _sectionTitle('Legal'),
-                  SizedBox(height: 12.h),
+                  verticalSpace(12),
+
                   _legalSection(),
-                  SizedBox(height: 48.h),
+                  verticalSpace(48),
                 ]),
               ),
             ),
@@ -248,11 +255,11 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
             gradient: LinearGradient(
               colors: _isDark
                   ? [
-                      AppColors.primaryDark.withValues(alpha:  0.25),
+                      AppColors.primaryDark.withValues(alpha: 0.25),
                       AppColors.darkBackground,
                     ]
                   : [
-                      AppColors.primaryLighter.withValues(alpha:0.5),
+                      AppColors.primaryLighter.withValues(alpha: 0.5),
                       AppColors.background,
                     ],
             ),
@@ -264,7 +271,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
               child: Icon(
                 Icons.support_agent_rounded,
                 size: 56.sp,
-                color: AppColors.primary.withValues(alpha:0.15),
+                color: AppColors.primary.withValues(alpha: 0.15),
               ),
             ),
           ),
@@ -284,7 +291,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
             borderRadius: BorderRadius.circular(2.r),
           ),
         ),
-        SizedBox(width: 10.w),
+        horizontalSpace(10),
         Text(
           title,
           style: AppTextStyles.titleLarge.copyWith(color: _textPrimary),
@@ -337,7 +344,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
     VoidCallback onTap,
   ) {
     return Material(
-      color: color.withValues(alpha:_isDark ? 0.15 : 0.1),
+      color: color.withValues(alpha: _isDark ? 0.15 : 0.1),
       borderRadius: BorderRadius.circular(14.r),
       child: InkWell(
         onTap: onTap,
@@ -347,7 +354,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
           child: Row(
             children: [
               Icon(icon, color: color, size: 22.sp),
-              SizedBox(width: 10.w),
+              horizontalSpace(10),
               Text(
                 label,
                 style: AppTextStyles.labelLarge.copyWith(color: color),
@@ -367,7 +374,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
       decoration: BoxDecoration(
         color: _surfaceLightColor,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: _borderColor.withValues(alpha:0.6)),
+        border: Border.all(color: _borderColor.withValues(alpha: 0.6)),
       ),
       child: ExpansionTile(
         leading: Container(
@@ -375,7 +382,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
           height: 40.h,
           decoration: BoxDecoration(
             color: _isDark
-                ? AppColors.primaryDark.withValues(alpha:0.3)
+                ? AppColors.primaryDark.withValues(alpha: 0.3)
                 : AppColors.primaryLighter,
             borderRadius: BorderRadius.circular(10.r),
           ),
@@ -423,7 +430,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
                               ),
                             ),
                           ),
-                          SizedBox(width: 10.w),
+                          horizontalSpace(10),
                           Expanded(
                             child: Text(
                               e.value,
@@ -451,10 +458,10 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
         final faq = e.value;
         final expanded = _expandedFaqIndex == i;
         final expandedBg = _isDark
-            ? AppColors.primaryDark.withValues(alpha:0.2)
+            ? AppColors.primaryDark.withValues(alpha: 0.2)
             : AppColors.primaryLighter;
         final expandedBorder = _isDark
-            ? AppColors.primaryLight.withValues(alpha:0.35)
+            ? AppColors.primaryLight.withValues(alpha: 0.35)
             : AppColors.primaryLight;
         return Container(
           margin: EdgeInsets.only(bottom: 8.h),
@@ -492,7 +499,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
                     ],
                   ),
                   if (expanded) ...[
-                    SizedBox(height: 10.h),
+                            verticalSpace(10),
                     Text(
                       faq.answer,
                       style: AppTextStyles.bodyMedium.copyWith(
@@ -511,14 +518,14 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
 
   Widget _bugReportForm() {
     final bgColor = _isDark
-        ? AppColors.error.withValues(alpha:0.1)
+        ? AppColors.error.withValues(alpha: 0.1)
         : AppColors.errorLight;
     return Container(
       padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: AppColors.error.withValues(alpha:0.2)),
+        border: Border.all(color: AppColors.error.withValues(alpha: 0.2)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -530,27 +537,28 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
                 color: AppColors.error,
                 size: 20.sp,
               ),
-              SizedBox(width: 8.w),
+              horizontalSpace(8),
               Text(
                 'Something not working?',
                 style: AppTextStyles.titleMedium.copyWith(color: _textPrimary),
               ),
             ],
           ),
-          SizedBox(height: 16.h),
+                  verticalSpace(16),
           _inputField(
             controller: _bugSubjectController,
             label: 'Issue title',
             hint: 'e.g. Notification not showing',
           ),
-          SizedBox(height: 12.h),
+          verticalSpace(12),
+
           _inputField(
             controller: _bugBodyController,
             label: 'Describe the bug',
             hint: 'Steps to reproduce...',
             maxLines: 4,
           ),
-          SizedBox(height: 16.h),
+                  verticalSpace(16),
           SizedBox(
             width: double.infinity,
             child: FilledButton.icon(
@@ -587,14 +595,15 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
             label: 'Your name',
             hint: 'Enter your name',
           ),
-          SizedBox(height: 12.h),
+          verticalSpace(12),
+
           _inputField(
             controller: _contactMessageController,
             label: 'Message',
             hint: 'What can we help you with?',
             maxLines: 4,
           ),
-          SizedBox(height: 16.h),
+                  verticalSpace(16),
           SizedBox(
             width: double.infinity,
             child: FilledButton.icon(
@@ -662,7 +671,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
               width: 38.w,
               height: 38.w,
               decoration: BoxDecoration(
-                color: (iconColor ?? AppColors.primary).withValues(alpha:0.1),
+                color: (iconColor ?? AppColors.primary).withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10.r),
               ),
               child: Icon(
@@ -671,7 +680,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
                 size: 20.sp,
               ),
             ),
-            SizedBox(width: 14.w),
+            horizontalSpace(10),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

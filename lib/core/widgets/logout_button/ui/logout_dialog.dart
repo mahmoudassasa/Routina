@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/helpers/extension.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/widgets/logout_button/cubit/logout_cubit.dart';
 import 'package:routina/core/widgets/logout_button/cubit/logout_state.dart';
@@ -39,8 +40,7 @@ Future<void> showLogoutDialog(BuildContext context) async {
                       // Friendly Header
                       _buildAnimatedHeader(isProcessing),
                       
-                      SizedBox(height: 24.h),
-                      
+verticalSpace(24),                       
                       Text(
                         isProcessing ? "See You Soon!" : "Leaving So Soon?",
                         style: TextStyle(
@@ -51,8 +51,7 @@ Future<void> showLogoutDialog(BuildContext context) async {
                         ),
                       ),
                       
-                      SizedBox(height: 12.h),
-                      
+verticalSpace(12),                       
                       Text(
                         isProcessing 
                           ? "We're making sure everything is saved for you. 💙" 
@@ -66,8 +65,7 @@ Future<void> showLogoutDialog(BuildContext context) async {
                         ),
                       ),
                       
-                      SizedBox(height: 32.h),
-
+verticalSpace(32), 
                       _buildActionButtons(context, isProcessing),
                     ],
                   );
@@ -129,7 +127,7 @@ Widget _buildActionButtons(BuildContext context, bool isProcessing) {
         ),
       ),
       
-      SizedBox(width: 8.w), // Slightly smaller gap
+      horizontalSpace(8), // Slightly smaller gap
 
       // Right Button: Yes, Log Out
       Expanded(

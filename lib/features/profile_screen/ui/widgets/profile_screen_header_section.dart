@@ -40,7 +40,6 @@ class _ProfileHeaderSectionState extends State<ProfileHeaderSection>
         alignment: Alignment.center,
         clipBehavior: Clip.none,
         children: [
-          // خلفية متحركة بريميوم مع SafeArea
           Positioned(
             top: MediaQuery.of(context).padding.top,
             left: 0,
@@ -81,14 +80,12 @@ class _ProfileHeaderSectionState extends State<ProfileHeaderSection>
             ),
           ),
 
-          // موجة متحركة فوق الخلفية
           Positioned.fill(
             child: CustomPaint(
               painter: WavePainter(_controller.value, isDark),
             ),
           ),
 
-          // صورة المستخدم بفريم أنيق
           Positioned(
             top: 120.h,
             child: TweenAnimationBuilder<double>(

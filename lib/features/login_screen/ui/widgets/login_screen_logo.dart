@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 
 class LoginScreenLogo extends StatelessWidget {
@@ -12,13 +13,15 @@ class LoginScreenLogo extends StatelessWidget {
     return Center(
       child: Container(
         // 280.w gives it that wide "Chat Bubble" look without hitting the screen edges
-        width: 280.w, 
-        height: 100.h, 
+        width: 280.w,
+        height: 100.h,
         decoration: BoxDecoration(
           color: isDark ? AppColors.darkSurface : AppColors.surface,
           borderRadius: BorderRadius.circular(24.r),
           border: Border.all(
-            color: isDark ? Colors.white.withValues(alpha: 0.08) : AppColors.primary.withValues(alpha: 0.1),
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.08)
+                : AppColors.primary.withValues(alpha: 0.1),
             width: 1.5.w,
           ),
           boxShadow: [
@@ -33,11 +36,8 @@ class LoginScreenLogo extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                '🎯',
-                style: TextStyle(fontSize: 40.sp),
-              ),
-              SizedBox(width: 12.w),
+              Text('🎯', style: TextStyle(fontSize: 40.sp)),
+              horizontalSpace(12),
               Text(
                 'Routina',
                 style: TextStyle(

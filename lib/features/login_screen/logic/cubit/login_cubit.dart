@@ -1,25 +1,27 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:routina/features/login_screen/data/repos/login_repo.dart';
 import 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  LoginCubit() : super(const LoginState());
+  final LoginRepo _loginRepo;
+  LoginCubit(this._loginRepo) : super(const LoginState());
 
   Future<void> login(String email, String password) async {
     emit(state.copyWith(status: LoginStatus.loading));
 
     try {
       // Try signing in
-      UserCredential credential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-            email: email.trim(),
-            password: password.trim(),
-          );
+  UserCredential credential = await _loginRepo.signIn(
+        email.trim(),
+        password.trim(),
+      );
 
       User? user = credential.user;
 
       // ✅ Check if email is verified
       if (user != null && !user.emailVerified) {
+        await _loginRepo.signOut();
         // Sign out because email is not verified
         await FirebaseAuth.instance.signOut();
 

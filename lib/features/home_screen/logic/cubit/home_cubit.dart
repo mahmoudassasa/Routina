@@ -18,7 +18,7 @@ Future<void> loadHabits({bool isRefresh = false}) async {
     // Only emit loading if it's NOT a manual refresh to avoid shimmer flickering
       emit(state.copyWith(status: HomeStatus.loading));
 
-    await Future.delayed(const Duration(seconds: 2)); // الانتظار الأول
+    await Future.delayed(const Duration(seconds: 2));
   
 
     try {
@@ -49,7 +49,6 @@ Future<void> loadHabits({bool isRefresh = false}) async {
     final result = <Map<String, dynamic>>[];
 
     for (final habit in habits) {
-      // اقرأ الـ lastSeenDate — لو null معناه أول مرة يفتح، اعتبره النهارده
       final lastSeenRaw = habit[HabitKeys.lastSeenDate];
       final lastSeen = lastSeenRaw != null
           ? DateTime.parse(lastSeenRaw.toString())
@@ -73,7 +72,6 @@ Future<void> loadHabits({bool isRefresh = false}) async {
         habit[HabitKeys.weekProgress] ?? List.filled(7, false),
       );
 
-      // هل في يوم scheduled فاته المستخدم من غير ما يكمله؟
       bool missedScheduledDay = false;
       for (int d = 1; d <= daysDiff; d++) {
         final missedDate = todayOnly.subtract(Duration(days: d));
@@ -85,7 +83,6 @@ Future<void> loadHabits({bool isRefresh = false}) async {
       }
 
       if (missedScheduledDay) {
-        // ريست كامل
         await _habitService.updateHabitProgress(
           habitId: habit[HabitKeys.id] as int,
           frequency: frequency,
@@ -102,7 +99,6 @@ Future<void> loadHabits({bool isRefresh = false}) async {
           HabitKeys.lastSeenDate: todayOnly.toIso8601String(),
         });
       } else {
-        // الأيام اللي فاتت كلها rest days → بس حدّث lastSeenDate
         await _habitService.updateHabitProgress(
           habitId: habit[HabitKeys.id] as int,
           frequency: frequency,
@@ -188,7 +184,6 @@ Future<void> loadHabits({bool isRefresh = false}) async {
       );
       final normalizedDays = List<bool>.from(days);
 
-      // لو يوم اتشال من الـ frequency، امسح تقدمه
       final updatedWeekProgress = List<bool>.from(oldWeekProgress);
       for (int i = 0; i < 7; i++) {
         if (!normalizedDays[i]) updatedWeekProgress[i] = false;

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/extension.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/theaming/habit_constants.dart';
 import 'package:routina/core/widgets/create_habit/ui/create_habit_bottom_sheet.dart';
@@ -60,7 +62,7 @@ class HabitCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.delete_outline, color: Colors.white, size: 32.sp),
-            SizedBox(height: 8.h),
+            verticalSpace(8),
             Text(
               'Delete',
               style: TextStyle(
@@ -106,7 +108,7 @@ class HabitCard extends StatelessWidget {
                 Row(
                   children: [
                     _buildIconBox(habitColor, iconData),
-                    SizedBox(width: 16.w),
+                    horizontalSpace(16),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,7 +121,7 @@ class HabitCard extends StatelessWidget {
                               color: isDark ? Colors.white : Colors.black87,
                             ),
                           ),
-                          SizedBox(height: 4.h),
+                          verticalSpace(2), 
                           Text(
                             "${(progress * 100).toInt()}% Weekly Goal",
                             style: TextStyle(
@@ -146,9 +148,9 @@ class HabitCard extends StatelessWidget {
                   ],
                 ),
 
-                SizedBox(height: 24.h),
+                verticalSpace(24), 
                 _buildProgressBar(context, progress, habitColor, isDark),
-                SizedBox(height: 24.h),
+                verticalSpace(24), 
                 _buildInteractiveWeekStrip(
                   context,
                   frequency,
@@ -156,7 +158,7 @@ class HabitCard extends StatelessWidget {
                   habitColor,
                   isDark,
                 ),
-                SizedBox(height: 24.h),
+                verticalSpace(24), 
 
                 Container(
                   width: double.infinity,
@@ -200,7 +202,7 @@ class HabitCard extends StatelessWidget {
                               color: isActionable ? Colors.white : Colors.grey,
                               size: 22.sp,
                             ),
-                            SizedBox(width: 12.w),
+                            horizontalSpace(12),
                             Text(
                               isActionable
                                   ? 'Mark as Done'
@@ -266,7 +268,7 @@ class HabitCard extends StatelessWidget {
           ),
           actions: [
             TextButton(
-              onPressed: () => Navigator.of(context).pop(false),
+              onPressed: () => context.pop(false),
               child: Text(
                 'Cancel',
                 style: TextStyle(
@@ -277,7 +279,7 @@ class HabitCard extends StatelessWidget {
               ),
             ),
             TextButton(
-              onPressed: () => Navigator.of(context).pop(true),
+              onPressed: () => context.pop(true),
               style: TextButton.styleFrom(
                 backgroundColor: Colors.red.withValues(alpha: 0.1),
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
@@ -365,7 +367,7 @@ class HabitCard extends StatelessWidget {
                       : Colors.grey[400],
                 ),
               ),
-              SizedBox(height: 10.h),
+              verticalSpace(10), 
               GestureDetector(
                 onTap: isScheduled
                     ? () => context.read<HomeCubit>().toggleDay(

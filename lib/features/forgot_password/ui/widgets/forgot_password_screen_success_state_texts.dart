@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/theaming/app_text_styles.dart';
 
@@ -35,7 +36,7 @@ class ForgotPasswordScreenSuccessStateTexts extends StatelessWidget {
           ),
         ),
 
-        const SizedBox(height: 32),
+        verticalSpace(32),
 
         Text(
           'Didn\'t receive the email? Check your spam folder or try again in a few minutes.',

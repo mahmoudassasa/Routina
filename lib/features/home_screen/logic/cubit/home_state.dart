@@ -13,7 +13,6 @@ class HomeState extends Equatable {
     this.errorMessage,
   });
 
-  // copyWith: بتسمح لك تعدل قيم معينة وتثبت الباقي
   HomeState copyWith({
     HomeStatus? status,
     List<Map<String, dynamic>>? habits,
@@ -26,7 +25,6 @@ class HomeState extends Equatable {
     );
   }
 
-  // Equatable: عشان Bloc يعرف يقارن بين الـ States ويحدث الشاشة صح
   @override
   List<Object?> get props => [status, habits, errorMessage];
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/widgets/create_habit/ui/create_habit_bottom_sheet.dart';
 import 'package:routina/features/home_screen/logic/cubit/home_cubit.dart';
@@ -16,8 +17,7 @@ class HomeEmptyState extends StatelessWidget {
     return ListView(
       physics: const AlwaysScrollableScrollPhysics(),
       children: [
-        SizedBox(height: 60.h),
-        Center(
+verticalSpace(60),         Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -35,8 +35,7 @@ class HomeEmptyState extends StatelessWidget {
                   color: AppColors.primary,
                 ),
               ),
-              SizedBox(height: 32.h),
-
+verticalSpace(32), 
               // Title
               Text(
                 'No Habits Yet',
@@ -48,8 +47,7 @@ class HomeEmptyState extends StatelessWidget {
                       : AppColors.textPrimary,
                 ),
               ),
-              SizedBox(height: 12.h),
-
+verticalSpace(12), 
               // Subtitle
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40.w),
@@ -65,8 +63,7 @@ class HomeEmptyState extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 40.h),
-
+verticalSpace(40), 
               // CTA Button
               GestureDetector(
                 onTap: () {
@@ -110,7 +107,7 @@ class HomeEmptyState extends StatelessWidget {
                         color: Colors.white,
                         size: 22.sp,
                       ),
-                      SizedBox(width: 8.w),
+                      horizontalSpace(8),
                       Text(
                         'Add Your First Habit',
                         style: TextStyle(

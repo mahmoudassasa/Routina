@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/helpers/extension.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/routing/routes.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/features/habit_tracker_screen/ui/widgets/feature_bottom_sheet.dart';
@@ -21,7 +22,7 @@ class HabitTrackerScreenContent extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
-            SizedBox(height: 32.h),
+            verticalSpace(32), 
 
             Container(
               width: 90.w,
@@ -42,7 +43,7 @@ class HabitTrackerScreenContent extends StatelessWidget {
               ),
             ),
 
-            SizedBox(height: 24.h),
+            verticalSpace(24), 
 
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 40.w),
@@ -56,7 +57,7 @@ class HabitTrackerScreenContent extends StatelessWidget {
                       color: isDark ? Colors.white : Colors.black87,
                     ),
                   ),
-                  SizedBox(height: 8.h),
+                  verticalSpace(8),
                   Text(
                     'Visualize your progress and unlock deep insights into your daily habits.',
                     style: TextStyle(
@@ -70,7 +71,7 @@ class HabitTrackerScreenContent extends StatelessWidget {
               ),
             ),
 
-            SizedBox(height: 40.h),
+            verticalSpace(40), 
 
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -91,7 +92,7 @@ class HabitTrackerScreenContent extends StatelessWidget {
                     },
                   ),
 
-                  SizedBox(height: 16.h),
+                  verticalSpace(16), 
                   FeaturePreviewCard(
                     icon: '🎯',
                     title: 'Strategic Goals',
@@ -109,7 +110,7 @@ class HabitTrackerScreenContent extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(height: 16.h),
+                  verticalSpace(16), 
                   FeaturePreviewCard(
                     icon: '💎',
                     title: 'Premium Analytics',
@@ -130,7 +131,7 @@ class HabitTrackerScreenContent extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 40.h),
+            verticalSpace(40), 
           ],
         ),
       ),

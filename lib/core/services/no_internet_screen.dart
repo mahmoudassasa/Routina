@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/theaming/app_text_styles.dart';
 
@@ -13,8 +14,7 @@ class NoInternetScreen extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor:
-          isDark ? AppColors.darkBackground : AppColors.background,
+      backgroundColor: isDark ? AppColors.darkBackground : AppColors.background,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 32.w),
@@ -42,8 +42,7 @@ class NoInternetScreen extends StatelessWidget {
                 ),
               ),
 
-              SizedBox(height: 32.h),
-
+              verticalSpace(32),
               Text(
                 'No Internet Connection',
                 style: AppTextStyles.headlineMedium.copyWith(
@@ -54,8 +53,7 @@ class NoInternetScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
 
-              SizedBox(height: 12.h),
-
+              verticalSpace(12),
               Text(
                 'Please check your connection\nand try again.',
                 style: AppTextStyles.bodyMedium.copyWith(
@@ -87,7 +85,7 @@ class NoInternetScreen extends StatelessWidget {
                 ),
               ),
 
-              SizedBox(height: 48.h),
+              verticalSpace(48),
             ],
           ),
         ),

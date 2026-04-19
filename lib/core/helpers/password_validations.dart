@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/theaming/app_text_styles.dart';
 
@@ -27,13 +28,13 @@ class PasswordValidations extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildValidationRow("At least 1 lowercase letter", hasLowerCase, isDark),
-        SizedBox(height: 8.h),
+        verticalSpace(8),
         _buildValidationRow("At least 1 uppercase letter", hasUpperCase, isDark),
-        SizedBox(height: 8.h),
+        verticalSpace(8),
         _buildValidationRow("At least 1 special character", hasSpecialCharacters, isDark),
-        SizedBox(height: 8.h),
+        verticalSpace(8),
         _buildValidationRow("At least 1 number", hasNumber, isDark),
-        SizedBox(height: 8.h),
+        verticalSpace(8),
         _buildValidationRow("At least 8 characters", hasMinLength, isDark),
       ],
     );
@@ -67,7 +68,7 @@ class PasswordValidations extends StatelessWidget {
               color: isValid ? activeColor : inactiveColor,
             ),
           ),
-          SizedBox(width: 10.w),
+          horizontalSpace(10),
           Text(text),
         ],
       ),

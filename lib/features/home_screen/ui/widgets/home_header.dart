@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/features/profile_screen/logic/cubit/profile_cubit.dart';
 import 'package:routina/features/profile_screen/logic/cubit/profile_state.dart';
@@ -38,7 +39,7 @@ class HomeHeader extends StatelessWidget {
                       color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                   verticalSpace(4), 
                   Text(
                     'Ready to build your habits?',
                     style: TextStyle(

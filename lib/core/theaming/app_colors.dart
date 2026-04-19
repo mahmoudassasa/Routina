@@ -28,9 +28,8 @@ class AppColors {
   static const Color borderLight = Color(0xFFF3F4F6);
   static const Color borderFocus = Color(0xFF2563EB);
 
-  // Dark Theme Colors — محسّنة عشان يكون في فرق واضح بين الطبقات
-  static const Color darkBackground = Color(0xFF0B1120);      // أغمق شوية
-  static const Color darkBackgroundLight = Color(0xFF1A2332); // وسط
+  static const Color darkBackground = Color(0xFF0B1120);     
+  static const Color darkBackgroundLight = Color(0xFF1A2332);
   static const Color darkBackgroundGradientStart = Color(0xFF1A2332);
   static const Color darkBackgroundGradientEnd = Color(0xFF243447);
 
@@ -38,10 +37,10 @@ class AppColors {
   static const Color darkTextSecondary = Color(0xFFCBD5E1);
   static const Color darkTextLight = Color(0xFF64748B);
 
-  static const Color darkSurface = Color(0xFF1A2332);         // مختلف عن الـ background
-  static const Color darkSurfaceLight = Color(0xFF243447);    // مختلف عن الـ surface
+  static const Color darkSurface = Color(0xFF1A2332);      
+  static const Color darkSurfaceLight = Color(0xFF243447);  
 
-  static const Color darkBorder = Color(0xFF2D3F55);          // أوضح شوية
+  static const Color darkBorder = Color(0xFF2D3F55);         
   static const Color darkBorderLight = Color(0xFF3A5068);
   static const Color darkInputFill = Color(0xFF1A2332);
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/widgets/create_habit/ui/create_habit_bottom_sheet.dart';
 import 'package:routina/core/widgets/logout_button/cubit/logout_cubit.dart';
@@ -164,7 +165,7 @@ class _MainNavigationBarState extends State<MainNavigationBar> {
                 size: 24.sp,
               ),
             ),
-            SizedBox(height: 4.h),
+            verticalSpace(4), 
             Text(
               label,
               style: TextStyle(

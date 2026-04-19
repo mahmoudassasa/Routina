@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/helpers/extension.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/routing/routes.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/widgets/logout_button/cubit/logout_cubit.dart';
@@ -90,16 +91,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const ProfileHeaderSection(),
                       SizedBox(
                         height: 10.h,
-                      ), // مسافة صغيرة جداً لأن الـ Header واخد مساحته
+                      ),
                       const ProfileScreenUserDetails(),
                       const ProfileScreenUserStateCards(),
-                      const SizedBox(height: 40),
+                       verticalSpace(40), 
                       const ProfileScreenSettingsOptions(),
-                      const SizedBox(height: 20),
+                       verticalSpace(20), 
                       ProfileLogoutButton(
                         onTap: () => showLogoutDialog(context),
                       ),
-                      const SizedBox(height: 30),
+                      verticalSpace(30), 
                     ],
                   ),
                 );

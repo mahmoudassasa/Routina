@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:routina/core/di/dependency_injection.dart';
 import 'package:routina/core/services/help_support_screen.dart';
 import 'package:routina/core/services/privacy_policy_screen.dart';
 import 'package:routina/core/widgets/main_navigation_bar.dart';
@@ -27,7 +28,7 @@ class AppRouter {
       case Routes.loginScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (context) => LoginCubit(),
+            create: (context) => getIt<LoginCubit>(),
             child: const LoginScreen(),
           ),
         );
@@ -54,10 +55,9 @@ class AppRouter {
             child: const EmailConfirmationScreen(),
           ),
         );
-      // جوه الـ generateRoute مثلاً
       case Routes.habitProgressChartsScreen:
         final habits =
-            settings.arguments as List<Map<String, dynamic>>; // فك الداتا
+            settings.arguments as List<Map<String, dynamic>>;
         return MaterialPageRoute(
           builder: (_) => HabitProgressChartsScreen(habits: habits),
         );

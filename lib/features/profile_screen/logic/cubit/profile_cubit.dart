@@ -36,7 +36,7 @@ if (isClosed) return;
       // --- Calculations ---
       int total = habits.length;
       int bestStreak = 0;
-      int currentActiveStreak = 0; // ده اللي هيعبر عن الـ Current Streak
+      int currentActiveStreak = 0;
       double totalProgress = 0;
 
       for (var habit in habits) {

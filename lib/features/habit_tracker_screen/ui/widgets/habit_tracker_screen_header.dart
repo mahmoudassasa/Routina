@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 
 class HabitTrackerScreenHeader extends StatelessWidget {
@@ -21,8 +22,10 @@ class HabitTrackerScreenHeader extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppColors.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(24),
-                border: isDark 
-                    ? Border.all(color: AppColors.primary.withValues(alpha: 0.2)) 
+                border: isDark
+                    ? Border.all(
+                        color: AppColors.primary.withValues(alpha: 0.2),
+                      )
                     : null,
               ),
               child: const Center(
@@ -30,7 +33,7 @@ class HabitTrackerScreenHeader extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(width: 16),
+            horizontalSpace(16),
 
             // Header Text
             Column(
@@ -41,15 +44,19 @@ class HabitTrackerScreenHeader extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+                    color: isDark
+                        ? AppColors.darkTextPrimary
+                        : AppColors.textPrimary,
                   ),
                 ),
-                const SizedBox(height: 2),
+                verticalSpace(2),
                 Text(
                   'Detailed view of your progress',
                   style: TextStyle(
                     fontSize: 14, // Slightly smaller for better hierarchy
-                    color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                    color: isDark
+                        ? AppColors.darkTextSecondary
+                        : AppColors.textSecondary,
                   ),
                 ),
               ],

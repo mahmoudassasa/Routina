@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 
 class RegisterScreenLogo extends StatelessWidget {
@@ -35,11 +36,8 @@ class RegisterScreenLogo extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                '🎯',
-                style: TextStyle(fontSize: 40.sp),
-              ),
-              SizedBox(width: 12.w),
+              Text('🎯', style: TextStyle(fontSize: 40.sp)),
+              horizontalSpace(12),
               Text(
                 'Routina',
                 style: TextStyle(

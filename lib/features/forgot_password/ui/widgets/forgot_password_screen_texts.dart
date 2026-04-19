@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/theaming/app_text_styles.dart';
 
@@ -21,7 +22,7 @@ class ForgotPasswordScreenTexts extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
 
-        const SizedBox(height: 8),
+        verticalSpace(8),
 
         Text(
           'Enter your email address and we\'ll send you a link to reset your password',

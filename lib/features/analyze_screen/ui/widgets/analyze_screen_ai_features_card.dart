@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 
 class AIFeatureCard extends StatelessWidget {
@@ -52,7 +53,7 @@ class AIFeatureCard extends StatelessWidget {
                 child: Text(icon, style: const TextStyle(fontSize: 24)),
               ),
             ),
-             SizedBox(width: 16.w),
+             horizontalSpace(16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +68,7 @@ class AIFeatureCard extends StatelessWidget {
                           : AppColors.textPrimary,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                   verticalSpace(4), 
                   Text(
                     description,
                     style: TextStyle(

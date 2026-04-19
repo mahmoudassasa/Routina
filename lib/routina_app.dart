@@ -3,17 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:routina/core/di/dependency_injection.dart';
 import 'package:routina/core/routing/app_router.dart';
 import 'package:routina/core/services/no_internet_screen.dart';
 import 'package:routina/core/theaming/app_theme/app_theme.dart';
 import 'package:routina/core/theaming/app_theme/logic/cubit/theme_cubit.dart';
 import 'package:routina/core/widgets/main_navigation_bar.dart';
+import 'package:routina/features/login_screen/logic/cubit/login_cubit.dart';
+import 'package:routina/features/login_screen/ui/login_screen.dart';
 import 'package:routina/features/onboarding_screen/ui/onboarding_screen.dart';
 
 class RoutinaApp extends StatefulWidget {
   final AppRouter appRouter;
-
-  const RoutinaApp({super.key, required this.appRouter});
+final bool isFirstTime; // Add this
+  const RoutinaApp({super.key, required this.appRouter, required this.isFirstTime});
 
   @override
   State<RoutinaApp> createState() => _RoutinaAppState();
@@ -66,27 +69,35 @@ class _RoutinaAppState extends State<RoutinaApp> {
     );
   }
 
-  Widget _buildHome() {
-    if (_checkingInternet) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
-    }
-
-    if (!_hasInternet) {
-      return NoInternetScreen(onRetry: _checkInternet);
-    }
-    return StreamBuilder(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
-        }
-        if (snapshot.hasData) {
-          return const MainNavigationBar();
-        }
-        return const OnboardingScreen();
-      },
-    );
+Widget _buildHome() {
+  if (_checkingInternet) {
+    return const Scaffold(body: Center(child: CircularProgressIndicator()));
   }
+
+  if (!_hasInternet) {
+    return NoInternetScreen(onRetry: _checkInternet);
+  }
+
+  return StreamBuilder(
+    stream: FirebaseAuth.instance.authStateChanges(),
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      }
+
+      if (snapshot.hasData) {
+        return const MainNavigationBar();
+      }
+
+      if (widget.isFirstTime) {
+        return const OnboardingScreen();
+      } else {
+        return BlocProvider(
+          create: (context) => getIt<LoginCubit>(),
+          child: const LoginScreen(),
+        ); 
+      }
+    },
+  );
+}
 }

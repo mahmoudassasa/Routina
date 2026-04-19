@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/theaming/app_text_styles.dart';
 
@@ -60,7 +61,7 @@ class OnboardingPageView extends StatelessWidget {
                 ),
               ),
 
-              SizedBox(height: 48.h),
+              verticalSpace(48), 
 
               // Title
               Text(
@@ -71,7 +72,7 @@ class OnboardingPageView extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
 
-              SizedBox(height: 16.h),
+              verticalSpace(16), 
 
               // Subtitle
               Text(

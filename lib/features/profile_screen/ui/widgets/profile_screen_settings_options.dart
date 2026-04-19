@@ -25,7 +25,7 @@ class ProfileScreenSettingsOptions extends StatelessWidget {
               context.pushNamed(
                 Routes.notificationScreen,
                 arguments: context
-                    .read<HomeCubit>(), // بنبعت الـ instance اللي شغال حالياً
+                    .read<HomeCubit>(), 
               );
             },
           ),

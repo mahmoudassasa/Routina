@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/features/analyze_screen/logic/cubit/ai_analysis_cubit.dart';
 import 'package:routina/features/analyze_screen/logic/cubit/ai_analysis_state.dart';
-import 'package:routina/features/analyze_screen/ui/widgets/analyze_screen_ai_analysis_result.dart'; // مهم جداً
+import 'package:routina/features/analyze_screen/ui/widgets/analyze_screen_ai_analysis_result.dart';
 import 'package:routina/features/analyze_screen/ui/widgets/analyze_screen_ai_features_card.dart';
 import 'package:routina/features/home_screen/logic/cubit/home_cubit.dart';
 import 'package:routina/features/habit_tracker_screen/ui/widgets/feature_bottom_sheet.dart'; 
@@ -13,18 +14,15 @@ class AnalyzeScreenMockAiFeatures extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // نستخدم BlocListener هنا عشان أول ما التحليل يخلص أو يبدأ، نفتح الشيت علطول
     return BlocListener<AiAnalysisCubit, AiAnalysisState>(
       listenWhen: (previous, current) => current.status != AiAnalysisStatus.initial,
       listener: (context, state) {
-        // نفتح الشيت الخاص بالتحليل
         AnalyzeScreenAiAnalysisResult.showAnalysisSheet(context, state);
       },
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 32.w),
         child: Column(
           children: [
-            // الميزة الأولى: تطلب التحليل وتفتح الشيت (عبر الـ Listener)
             AIFeatureCard(
               icon: '✨',
               title: 'Overall Analysis',
@@ -40,9 +38,8 @@ class AnalyzeScreenMockAiFeatures extends StatelessWidget {
                 }
               },
             ),
-            SizedBox(height: 16.h),
+            verticalSpace(16), 
 
-            // الميزة الثانية: تفتح شيت البريميوم
             AIFeatureCard(
               icon: '💡',
               title: 'Smart Suggestions',
@@ -55,9 +52,8 @@ class AnalyzeScreenMockAiFeatures extends StatelessWidget {
                 features: ['Habit stacking strategies', 'Best performing hours', 'Routine optimization'],
               ),
             ),
-            SizedBox(height: 16.h),
+            verticalSpace(16), 
 
-            // الميزة الثالثة: تفتح شيت البريميوم
             AIFeatureCard(
               icon: '🎯',
               title: 'Goal Optimization',

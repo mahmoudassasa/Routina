@@ -42,8 +42,8 @@ class ProfileScreenUserPicture extends StatelessWidget {
   shape: BoxShape.circle,
   color: isDark ? AppColors.darkSurface : Colors.white,
   border: Border.all(
-    color: isDark ? AppColors.darkBackground : Colors.white, // لون يفصل الصورة عن الكفر
-    width: 4.w, // تخنت البرودر شوية عشان يبان الاحترافية
+    color: isDark ? AppColors.darkBackground : Colors.white,
+    width: 4.w, 
   ),
   boxShadow: [
     BoxShadow(

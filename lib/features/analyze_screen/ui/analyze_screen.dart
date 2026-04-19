@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/features/analyze_screen/logic/cubit/ai_analysis_cubit.dart';
 import 'package:routina/features/analyze_screen/logic/cubit/ai_analysis_state.dart';
@@ -55,11 +56,11 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 40),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children:  [
                         AnalyzeScreenAiAnalysisLogo(),
-                        SizedBox(height: 32),
+                        verticalSpace(32), 
                         AnalyzeScreenTexts(),
-                        SizedBox(height: 40),
+                        verticalSpace(40), 
                         AnalyzeScreenMockAiFeatures(),
                       ],
                     ),
@@ -74,11 +75,11 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const AnalyzeScreenAiAnalysisLogo(),
-                      const SizedBox(height: 32),
+                      verticalSpace(32), 
                       const AnalyzeScreenTexts(),
-                      const SizedBox(height: 40),
+                      verticalSpace(40) ,
                       AnalyzeScreenAiAnalysisResult(state: state),
-                      const SizedBox(height: 24),
+                      verticalSpace(24), 
                       const AnalyzeScreenMockAiFeatures(),
                     ],
                   ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/extension.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 
 class HabitProgressChartsScreen extends StatelessWidget {
@@ -39,7 +41,7 @@ class HabitProgressChartsScreen extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new, size: 20.sp),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
       ),
       body: habits.isEmpty
@@ -51,9 +53,9 @@ class HabitProgressChartsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildSectionTitle(isDark, 'Weekly Activity'),
-                  SizedBox(height: 12.h),
+                  verticalSpace(12), 
                   _buildWeeklyHeatmap(isDark, habits),
-                  SizedBox(height: 24.h),
+                  verticalSpace(24), 
                   Row(
                     children: [
                       Expanded(
@@ -65,7 +67,7 @@ class HabitProgressChartsScreen extends StatelessWidget {
                           Colors.blueAccent,
                         ),
                       ),
-                      SizedBox(width: 12.w),
+                      horizontalSpace(12),
                       Expanded(
                         child: _buildMetricCard(
                           isDark,
@@ -77,9 +79,9 @@ class HabitProgressChartsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 24.h),
+                  verticalSpace(24), 
                   _buildSectionTitle(isDark, 'Individual Performance'),
-                  SizedBox(height: 12.h),
+                  verticalSpace(12), 
                   ...habits.map((habit) {
                     return _buildHabitProgressLine(
                       isDark,
@@ -88,9 +90,9 @@ class HabitProgressChartsScreen extends StatelessWidget {
                       Color(habit['color'] as int),
                     );
                   }),
-                  SizedBox(height: 32.h),
+                  verticalSpace(32), 
                   _buildInsightBox(isDark, avgCompletion),
-                  SizedBox(height: 24.h),
+                  verticalSpace(24), 
                 ],
               ),
             ),
@@ -148,7 +150,7 @@ class HabitProgressChartsScreen extends StatelessWidget {
                     ? Icon(Icons.check, size: 16.sp, color: Colors.white)
                     : null,
               ),
-              SizedBox(height: 8.h),
+              verticalSpace(8),
               Text(
                 days[index],
                 style: TextStyle(
@@ -174,7 +176,7 @@ class HabitProgressChartsScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(icon, color: color, size: 24.sp),
-          SizedBox(height: 12.h),
+          verticalSpace(12), 
           Text(value,
               style: TextStyle(
                   fontSize: 18.sp,
@@ -209,7 +211,7 @@ class HabitProgressChartsScreen extends StatelessWidget {
                       color: color)),
             ],
           ),
-          SizedBox(height: 8.h),
+          verticalSpace(8),
           ClipRRect(
             borderRadius: BorderRadius.circular(10.r),
             child: LinearProgressIndicator(
@@ -242,7 +244,7 @@ class HabitProgressChartsScreen extends StatelessWidget {
       child: Row(
         children: [
           Text('💡', style: TextStyle(fontSize: 24.sp)),
-          SizedBox(width: 16.w),
+          horizontalSpace(16),
           Expanded(
             child: Text(
               message,

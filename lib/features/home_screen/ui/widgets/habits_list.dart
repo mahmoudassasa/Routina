@@ -48,7 +48,6 @@ class HabitsList extends StatelessWidget {
 );
   }
 
-  // دالة مساعدة عشان نضمن إن أي حالة بتدعم السكرول
   Widget _buildScrollableList({required Widget child}) {
     return SizedBox.expand(
       child: child is ListView ? child : ListView(physics: const AlwaysScrollableScrollPhysics(), children: [child]),

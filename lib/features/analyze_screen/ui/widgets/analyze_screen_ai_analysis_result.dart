@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/features/analyze_screen/logic/cubit/ai_analysis_state.dart';
 
@@ -43,9 +44,9 @@ class AnalyzeScreenAiAnalysisResult extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.r),
               ),
             ),
-            SizedBox(height: 24.h),
-            _buildHeader(isDark),
-            SizedBox(height: 24.h),
+verticalSpace(24),
+             _buildHeader(isDark),
+            verticalSpace(24), 
             _buildContent(state, isDark),
           ],
         ),
@@ -65,7 +66,7 @@ class AnalyzeScreenAiAnalysisResult extends StatelessWidget {
           ),
           child: Center(child: Text('✨', style: TextStyle(fontSize: 28.sp))),
         ),
-        SizedBox(width: 16.w),
+        horizontalSpace(16),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

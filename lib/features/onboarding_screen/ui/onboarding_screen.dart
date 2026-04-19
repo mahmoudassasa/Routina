@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:routina/core/helpers/extension.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/theaming/app_theme/logic/cubit/theme_cubit.dart';
 import 'package:routina/core/routing/routes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'widgets/next_get_started_button.dart';
 import 'widgets/onboarding_page_view.dart';
@@ -41,16 +43,25 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     },
   ];
 
-  void _handleNextPressed() {
-    if (_currentPage < _pages.length - 1) {
-      _pageController.nextPage(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    } else {
-      context.pushReplacementNamed(Routes.loginScreen);
-    }
+Future<void> _onFinish() async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setBool('isFirstTime', false);
+  
+  if (mounted) {
+    context.pushReplacementNamed(Routes.loginScreen);
   }
+}
+
+void _handleNextPressed() {
+  if (_currentPage < _pages.length - 1) {
+    _pageController.nextPage(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  } else {
+    _onFinish();
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +129,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               children: [
                 SkipButton(
                   onPressed: () =>
-                      context.pushReplacementNamed(Routes.loginScreen),
+                      _onFinish,
                 ),
 
                 Expanded(
@@ -141,7 +152,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       PageIndicators(currentPage: _currentPage, pages: _pages),
-                      const SizedBox(height: 40),
+                       verticalSpace(40), 
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24),
                         child: NextGetStartedButton(
@@ -153,7 +164,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
+                 verticalSpace(20), 
               ],
             ),
           ),

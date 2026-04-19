@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/features/profile_screen/logic/cubit/profile_cubit.dart';
 import 'package:routina/features/profile_screen/logic/cubit/profile_state.dart';
@@ -18,9 +19,7 @@ class ProfileScreenUserDetails extends StatelessWidget {
           return Padding(
             padding: EdgeInsets.symmetric(vertical: 20.h),
             child: const Center(
-              child: CircularProgressIndicator(
-                color: AppColors.primary,
-              ),
+              child: CircularProgressIndicator(color: AppColors.primary),
             ),
           );
         }
@@ -42,18 +41,22 @@ class ProfileScreenUserDetails extends StatelessWidget {
               style: TextStyle(
                 fontSize: 28.sp,
                 fontWeight: FontWeight.bold,
-                color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+                color: isDark
+                    ? AppColors.darkTextPrimary
+                    : AppColors.textPrimary,
               ),
             ),
-            SizedBox(height: 8.h),
+            verticalSpace(8),
             Text(
               state.email ?? "No Email",
               style: TextStyle(
                 fontSize: 16.sp, // Reduced slightly for better hierarchy
-                color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                color: isDark
+                    ? AppColors.darkTextSecondary
+                    : AppColors.textSecondary,
               ),
             ),
-            SizedBox(height: 40.h),
+            verticalSpace(40), 
           ],
         );
       },

@@ -88,7 +88,6 @@ Future<bool> requestNotificationPermissions() async {
       >();
 
   if (androidPlugin != null) {
-    // دي اللي بتطلع الـ Pop-up الرسمي بتاع أندرويد 13+
     final bool? granted = await androidPlugin.requestNotificationsPermission();
     return granted ?? false;
   }

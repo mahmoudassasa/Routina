@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 
 class AnalyzeScreenTexts extends StatelessWidget {
@@ -18,7 +19,7 @@ class AnalyzeScreenTexts extends StatelessWidget {
             color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
           ),
         ),
-        const SizedBox(height: 16),
+        verticalSpace(16), 
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Text(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 
 void showAiFeatureBottomSheet({
@@ -58,7 +59,7 @@ class _AiFeatureBottomSheetContent extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.r),
             ),
           ),
-          SizedBox(height: 24.h),
+          verticalSpace(24), 
           Row(
             children: [
               Container(
@@ -72,7 +73,7 @@ class _AiFeatureBottomSheetContent extends StatelessWidget {
                   child: Text(icon, style: TextStyle(fontSize: 28.sp)),
                 ),
               ),
-              SizedBox(width: 16.w),
+              horizontalSpace(16),
               Expanded(
                 child: Text(
                   title,
@@ -85,7 +86,7 @@ class _AiFeatureBottomSheetContent extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 24.h),
+          verticalSpace(24), 
           Flexible(
             child: SingleChildScrollView(
               child: FutureBuilder<String>(
@@ -95,7 +96,7 @@ class _AiFeatureBottomSheetContent extends StatelessWidget {
                     return Column(
                       children: [
                         const CircularProgressIndicator(color: AppColors.primary),
-                        SizedBox(height: 16.h),
+                        verticalSpace(16), 
                         Text(
                           'Generating insights...',
                           style: TextStyle(
@@ -111,7 +112,7 @@ class _AiFeatureBottomSheetContent extends StatelessWidget {
                     return Column(
                       children: [
                         Icon(Icons.error_outline, size: 48.sp, color: Colors.red),
-                        SizedBox(height: 16.h),
+                        verticalSpace(16), 
                         Text(
                           'Failed to generate',
                           style: TextStyle(fontSize: 16.sp, color: Colors.red),

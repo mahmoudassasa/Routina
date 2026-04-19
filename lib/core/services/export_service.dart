@@ -45,7 +45,7 @@ final path = '${directory!.path}/routina_habits_data.csv';
 
       // 5. Trigger the native share dialog
       await Share.shareXFiles(
-        [XFile(path)], // من غير mimeType خالص، خليه يتحدد أوتوماتيك
+        [XFile(path)],
         text: 'Here is my habit tracking data from Routina!',
       );
     } catch (e) {

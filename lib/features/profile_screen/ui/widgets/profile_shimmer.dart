@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ProfileShimmer extends StatelessWidget {
@@ -17,13 +18,10 @@ class ProfileShimmer extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 40.h),
+            verticalSpace(40),
             // User Picture Shimmer
-            CircleAvatar(
-              radius: 60.r,
-              backgroundColor: Colors.white,
-            ),
-            SizedBox(height: 24.h),
+            CircleAvatar(radius: 60.r, backgroundColor: Colors.white),
+            verticalSpace(24),
             // User Details Shimmer (Name & Email)
             Container(
               width: 150.w,
@@ -33,7 +31,7 @@ class ProfileShimmer extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.r),
               ),
             ),
-            SizedBox(height: 10.h),
+            verticalSpace(10),
             Container(
               width: 200.w,
               height: 15.h,
@@ -42,19 +40,19 @@ class ProfileShimmer extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.r),
               ),
             ),
-            SizedBox(height: 30.h),
+            verticalSpace(30),
             // State Cards Shimmer
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Row(
                 children: [
                   Expanded(child: _buildCardSkeleton()),
-                  SizedBox(width: 15.w),
+                  horizontalSpace(15),
                   Expanded(child: _buildCardSkeleton()),
                 ],
               ),
             ),
-            SizedBox(height: 40.h),
+            verticalSpace(40),
             // Settings Options Shimmer
             _buildListTileSkeleton(context),
             _buildListTileSkeleton(context),

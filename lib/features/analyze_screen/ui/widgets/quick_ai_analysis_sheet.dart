@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/extension.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/features/analyze_screen/logic/cubit/ai_analysis_cubit.dart';
 import 'package:routina/features/analyze_screen/logic/cubit/ai_analysis_state.dart';
 
 void showQuickAiAnalysisSheet(BuildContext context) {
-  // احفظه قبل الـ showModalBottomSheet
   final aiCubit = context.read<AiAnalysisCubit>();
 
   showModalBottomSheet(
@@ -14,7 +15,7 @@ void showQuickAiAnalysisSheet(BuildContext context) {
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
     builder: (_) => BlocProvider.value(
-      value: aiCubit, // ← استخدم النسخة المحفوظة
+      value: aiCubit,
       child: const _QuickAiAnalysisSheet(),
     ),
   );
@@ -37,7 +38,7 @@ class _QuickAiAnalysisSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           // Handle
-          SizedBox(height: 12.h),
+          verticalSpace(12),
           Container(
             width: 40.w,
             height: 4.h,
@@ -46,7 +47,7 @@ class _QuickAiAnalysisSheet extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.r),
             ),
           ),
-          SizedBox(height: 20.h),
+          verticalSpace(20), 
 
           // Header
           Padding(
@@ -68,7 +69,7 @@ class _QuickAiAnalysisSheet extends StatelessWidget {
                     child: Text('✨', style: TextStyle(fontSize: 24.sp)),
                   ),
                 ),
-                SizedBox(width: 14.w),
+                horizontalSpace(10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -93,7 +94,7 @@ class _QuickAiAnalysisSheet extends StatelessWidget {
             ),
           ),
 
-          SizedBox(height: 24.h),
+          verticalSpace(24), 
 
           // Content
           Flexible(
@@ -108,7 +109,7 @@ class _QuickAiAnalysisSheet extends StatelessWidget {
                         const CircularProgressIndicator(
                           color: AppColors.primary,
                         ),
-                        SizedBox(height: 16.h),
+                        verticalSpace(16), 
                         Text(
                           'Analyzing your habits...',
                           style: TextStyle(
@@ -141,7 +142,7 @@ class _QuickAiAnalysisSheet extends StatelessWidget {
                           size: 48.sp,
                           color: AppColors.error,
                         ),
-                        SizedBox(height: 12.h),
+                        verticalSpace(12), 
                         Text(
                           errorMsg,
                           style: TextStyle(
@@ -184,12 +185,12 @@ class _QuickAiAnalysisSheet extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 16.h),
-                          
+                        verticalSpace(16), 
+
                         SizedBox(
                           width: double.infinity,
                           child: OutlinedButton.icon(
-                            onPressed: () => Navigator.pop(context),
+                            onPressed: () => context.pop(),
                             icon: Icon(Icons.analytics_outlined, size: 18.sp),
                             label: const Text('View Full Analysis'),
                             style: OutlinedButton.styleFrom(
@@ -202,7 +203,7 @@ class _QuickAiAnalysisSheet extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 24.h),
+                        verticalSpace(24), 
                       ],
                     ),
                   );

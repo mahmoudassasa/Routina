@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 
 class FeaturePreviewCard extends StatelessWidget {
@@ -48,7 +49,7 @@ class FeaturePreviewCard extends StatelessWidget {
                 child: Text(icon, style: TextStyle(fontSize: 20.sp)),
               ),
             ),
-            SizedBox(width: 12.w),
+            horizontalSpace(12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +64,7 @@ class FeaturePreviewCard extends StatelessWidget {
                           : AppColors.textPrimary,
                     ),
                   ),
-                  SizedBox(height: 2.h),
+                  verticalSpace(2),
                   Text(
                     description,
                     style: TextStyle(

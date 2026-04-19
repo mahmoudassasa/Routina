@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/extension.dart';
+import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/theaming/app_text_styles.dart';
 
@@ -29,7 +31,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
             color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
             size: 20.sp,
           ),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
       ),
       body: SingleChildScrollView(
@@ -58,15 +60,13 @@ class PrivacyPolicyScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Icon(Icons.shield_rounded, color: AppColors.primary, size: 32.sp),
-                  SizedBox(height: 12.h),
-                  Text(
+        verticalSpace(12),                  Text(
                     'Your Privacy Matters',
                     style: AppTextStyles.titleLarge.copyWith(
                       color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
                     ),
                   ),
-                  SizedBox(height: 6.h),
-                  Text(
+        verticalSpace(6),                  Text(
                     'Last updated: April 2026',
                     style: AppTextStyles.bodySmall.copyWith(
                       color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
@@ -76,8 +76,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
               ),
             ),
 
-            SizedBox(height: 24.h),
-
+verticalSpace(24), 
             _buildSection(
               isDark: isDark,
               icon: Icons.info_outline_rounded,
@@ -142,9 +141,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                   'If you have any questions about this Privacy Policy or our data practices, please contact us at dev.egy01@gmail.com. We aim to respond to all inquiries within 48 hours.',
             ),
 
-            SizedBox(height: 32.h),
-
-            // Footer
+verticalSpace(32),             // Footer
             Container(
               width: double.infinity,
               padding: EdgeInsets.all(16.w),
@@ -164,8 +161,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
               ),
             ),
 
-            SizedBox(height: 32.h),
-          ],
+verticalSpace(32),           ],
         ),
       ),
     );
@@ -195,7 +191,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                 ),
                 child: Icon(icon, color: AppColors.primary, size: 18.sp),
               ),
-              SizedBox(width: 12.w),
+              horizontalSpace(12),
               Expanded(
                 child: Text(
                   title,
@@ -207,8 +203,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 10.h),
-          Padding(
+verticalSpace(10),           Padding(
             padding: EdgeInsets.only(left: 48.w),
             child: Text(
               content,
@@ -218,7 +213,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 8.h),
+          verticalSpace(8),
           Divider(
             color: isDark ? AppColors.darkBorder : AppColors.border,
             thickness: 0.5,

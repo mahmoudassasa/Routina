@@ -6,6 +6,11 @@ import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/services/notification_service.dart';
 import 'package:routina/core/theaming/habit_constants.dart';
 import 'package:routina/features/home_screen/logic/cubit/home_cubit.dart';
+import 'package:routina/core/widgets/create_habit/ui/widgets/icon_selector.dart';
+import 'package:routina/core/widgets/create_habit/ui/widgets/color_picker_widget.dart';
+import 'package:routina/core/widgets/create_habit/ui/widgets/frequency_selector.dart';
+import 'package:routina/core/widgets/create_habit/ui/widgets/reminder_time_picker_tile.dart';
+import 'package:routina/core/widgets/create_habit/ui/widgets/create_habit_action_button.dart';
 
 class CreateHabitBottomSheet extends StatefulWidget {
   final Map<String, dynamic>? habitToEdit;
@@ -85,7 +90,7 @@ class _CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
                 ),
               ),
             ),
-        verticalSpace(24),
+            verticalSpace(24),
             TextField(
               controller: _titleController,
               style: TextStyle(
@@ -110,134 +115,29 @@ class _CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
                 ),
               ),
             ),
-        verticalSpace(24),
-            Text(
-              "Icon",
-              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
+            verticalSpace(24),
+            IconSelector(
+              selectedIconKey: _selectedIconKey,
+              selectedColor: _selectedColor,
+              onIconSelected: (iconKey) => setState(() => _selectedIconKey = iconKey),
             ),
-                    verticalSpace(12),
-            SizedBox(
-              height: 54.h,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
-                children: HabitConstants.iconsMap.entries.map((entry) {
-                  final isSelected = _selectedIconKey == entry.key;
-                  return GestureDetector(
-                    onTap: () => setState(() => _selectedIconKey = entry.key),
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      margin: EdgeInsets.only(right: 12.w),
-                      width: 54.w,
-                      decoration: BoxDecoration(
-                        color: isSelected
-                            ? _selectedColor
-                            : _selectedColor.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(14.r),
-                      ),
-                      child: Icon(
-                        entry.value,
-                        color: isSelected ? Colors.white : _selectedColor,
-                        size: 24.sp,
-                      ),
-                    ),
-                  );
-                }).toList(),
+            verticalSpace(24),
+            ColorPickerWidget(
+              selectedColor: _selectedColor,
+              onColorSelected: (color) => setState(() => _selectedColor = color),
+            ),
+            verticalSpace(24),
+            FrequencySelector(
+              selectedDays: _selectedDays,
+              selectedColor: _selectedColor,
+              onDayToggled: (index) => setState(
+                () => _selectedDays[index] = !_selectedDays[index],
               ),
             ),
-        verticalSpace(24),
-            Text(
-              "Color",
-              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
-            ),
-                    verticalSpace(12),
-            SizedBox(
-              height: 45.h,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
-                itemCount: HabitConstants.presetColors.length,
-                itemBuilder: (context, index) {
-                  final color = HabitConstants.presetColors[index];
-                  final isSelected = _selectedColor == color;
-                  final isLightColor = color.computeLuminance() > 0.7;
-
-                  return GestureDetector(
-                    onTap: () => setState(() => _selectedColor = color),
-                    child: Container(
-                      width: 38.w,
-                      height: 38.w,
-                      margin: EdgeInsets.only(right: 12.w),
-                      decoration: BoxDecoration(
-                        color: color,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: isSelected
-                              ? (isDark ? Colors.white : Colors.black)
-                              : (isLightColor && !isDark
-                                    ? Colors.grey.withValues(alpha: 0.3)
-                                    : Colors.transparent),
-                          width: isSelected ? 2.w : 1.w,
-                        ),
-                      ),
-                      child: isSelected
-                          ? Icon(
-                              Icons.check,
-                              color: isLightColor ? Colors.black : Colors.white,
-                              size: 20.sp,
-                            )
-                          : null,
-                    ),
-                  );
-                },
-              ),
-            ),
-        verticalSpace(24),
-            Text(
-              "Frequency",
-              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
-            ),
-                    verticalSpace(12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(7, (index) {
-                final days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-                final isSelected = _selectedDays[index];
-                return GestureDetector(
-                  onTap: () => setState(
-                    () => _selectedDays[index] = !_selectedDays[index],
-                  ),
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    width: 40.w,
-                    height: 40.w,
-                    decoration: BoxDecoration(
-                      color: isSelected ? _selectedColor : Colors.transparent,
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: isSelected
-                            ? Colors.transparent
-                            : Colors.grey.withValues(alpha: 0.5),
-                        width: 1.5.w,
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        days[index],
-                        style: TextStyle(
-                          color: isSelected ? Colors.white : Colors.grey,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14.sp,
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              }),
-            ),
-        verticalSpace(24),
-            // Reminder Button
-            GestureDetector(
+            verticalSpace(24),
+            ReminderTimePickerTile(
+              selectedTime: _selectedTime,
+              selectedColor: _selectedColor,
               onTap: () async {
                 final TimeOfDay? picked = await showTimePicker(
                   context: context,
@@ -248,144 +148,72 @@ class _CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
                   setState(() => _selectedTime = picked);
                 }
               },
-              child: Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
-                decoration: BoxDecoration(
-                  color: _selectedTime != null
-                      ? _selectedColor.withValues(alpha: 0.1)
-                      : (isDark
-                            ? Colors.white.withValues(alpha: 0.05)
-                            : Colors.grey[100]),
-                  borderRadius: BorderRadius.circular(16.r),
-                  border: Border.all(
-                    color: _selectedTime != null
-                        ? _selectedColor.withValues(alpha: 0.4)
-                        : Colors.grey.withValues(alpha: 0.3),
-                    width: 1.5,
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    Icon(
-                      _selectedTime != null
-                          ? Icons.notifications_active_rounded
-                          : Icons.notifications_none_rounded,
-                      color: _selectedTime != null
-                          ? _selectedColor
-                          : Colors.grey,
-                      size: 22.sp,
-                    ),
-                    horizontalSpace(12),
-                    Expanded(
-                      child: Text(
-                        _selectedTime != null
-                            ? 'Reminder at ${_selectedTime!.format(context)}'
-                            : 'Set a reminder (optional)',
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          color: _selectedTime != null
-                              ? _selectedColor
-                              : Colors.grey,
-                          fontWeight: _selectedTime != null
-                              ? FontWeight.w600
-                              : FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                    if (_selectedTime != null)
-                      GestureDetector(
-                        onTap: () => setState(() => _selectedTime = null),
-                        child: Icon(
-                          Icons.close_rounded,
-                          color: Colors.grey,
-                          size: 18.sp,
-                        ),
-                      ),
-                  ],
-                ),
-              ),
+              onClear: () => setState(() => _selectedTime = null),
             ),
             verticalSpace(24),
 
-            // Create / Save Button
-            Container(
-              width: double.infinity,
-              height: 58.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(18.r),
-                color: _selectedColor,
-                boxShadow: [
-                  BoxShadow(
-                    color: _selectedColor.withValues(
-                      alpha: isDark ? 0.4 : 0.25,
-                    ),
-                    blurRadius: 20,
-                    offset: const Offset(0, 8),
-                  ),
-                ],
-              ),
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: () async {
-                    if (_isEditMode) {
-                      final homeCubit = context.read<HomeCubit>();
-                      final habitTitle = _titleController.text;
-                      final habitId = fastHash(
-                        widget.habitToEdit!['id'].toString(),
-                      );
-                      final selectedTime = _selectedTime;
+            CreateHabitActionButton(
+              isEditMode: _isEditMode,
+              selectedColor: _selectedColor,
+              onPressed: () async {
+                if (_titleController.text.trim().isEmpty) return;
 
-                      homeCubit.updateHabit(
-                        habitId: widget.habitToEdit!['id'],
-                        title: habitTitle,
-                        iconKey: _selectedIconKey,
-                        colorValue: _selectedColor.toARGB32(),
-                        days: _selectedDays,
-                      );
+                if (_isEditMode) {
+                  final homeCubit = context.read<HomeCubit>();
+                  final habitTitle = _titleController.text;
+                  final habitId = fastHash(
+                    widget.habitToEdit!['id'].toString(),
+                  );
+                  final selectedTime = _selectedTime;
 
-                      if (!mounted) return;
-context.pop(context);
-                      if (selectedTime != null) {
-                        await cancelNotification(habitId);
-                        await scheduleDailyNotification(
-                          id: habitId,
-                          title: 'Routina: Time for $habitTitle! 🚀',
-                          body: 'Stay consistent! Time to complete this habit.',
-                          hour: selectedTime.hour,
-                          minute: selectedTime.minute,
-                        );
-                      }
-                    }
-                  },
-                  borderRadius: BorderRadius.circular(18.r),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          _isEditMode ? Icons.save_rounded : Icons.add_rounded,
-                          color: Colors.white,
-                          size: 24.sp,
-                        ),
-                        horizontalSpace(8),
-                        Text(
-                          _isEditMode ? 'Save Changes' : 'Create Habit',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w800,
-                            letterSpacing: 1.1,
-                            height: 1.1,
-                            leadingDistribution: TextLeadingDistribution.even,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+                  homeCubit.updateHabit(
+                    habitId: widget.habitToEdit!['id'],
+                    title: habitTitle,
+                    iconKey: _selectedIconKey,
+                    colorValue: _selectedColor.toARGB32(),
+                    days: _selectedDays,
+                  );
+
+                  if (!mounted) return;
+
+                  context.pop();
+
+                  if (selectedTime != null) {
+                    await cancelNotification(habitId);
+                    await scheduleDailyNotification(
+                      id: habitId,
+                      title: 'Routina: Time for $habitTitle! 🚀',
+                      body: 'Stay consistent! Time to complete this habit.',
+                      hour: selectedTime.hour,
+                      minute: selectedTime.minute,
+                    );
+                  }
+                } else {
+                  final selectedTime = _selectedTime;
+                  final title = _titleController.text.trim();
+                  final homeCubit = context.read<HomeCubit>();
+
+                  context.pop();
+
+                  final realId = await homeCubit.addHabit(
+                    title: title,
+                    iconKey: _selectedIconKey,
+                    colorValue: _selectedColor.toARGB32(),
+                    days: _selectedDays,
+                  );
+
+                  if (selectedTime != null && realId != null) {
+                    final habitId = fastHash(realId.toString());
+                    await scheduleDailyNotification(
+                      id: habitId,
+                      title: 'Routina: Time for $title! 🚀',
+                      body: 'Stay consistent! Time to complete this habit.',
+                      hour: selectedTime.hour,
+                      minute: selectedTime.minute,
+                    );
+                  }
+                }
+              },
             ),
           ],
         ),

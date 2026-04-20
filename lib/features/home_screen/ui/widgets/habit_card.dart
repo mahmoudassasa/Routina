@@ -4,9 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
-import 'package:routina/core/theaming/habit_constants.dart';
 import 'package:routina/core/widgets/create_habit/ui/create_habit_bottom_sheet.dart';
 import 'package:routina/features/home_screen/logic/cubit/home_cubit.dart';
+import 'package:routina/features/home_screen/ui/widgets/habit_icon_box.dart';
+import 'package:routina/features/home_screen/ui/widgets/habit_progress_bar.dart';
+import 'package:routina/features/home_screen/ui/widgets/habit_week_strip.dart';
+import 'package:routina/features/home_screen/ui/widgets/habit_action_button.dart';
 
 class HabitCard extends StatelessWidget {
   final Map<String, dynamic> habit;
@@ -20,7 +23,6 @@ class HabitCard extends StatelessWidget {
     final Color habitColor = Color(
       habit['color'] ?? AppColors.primary.toARGB32,
     );
-    final IconData iconData = HabitConstants.getIcon(habit['icon'] ?? 'sport');
     final double progress = (habit['progress'] ?? 0.0).toDouble();
 
     final List<bool> frequency = List<bool>.from(
@@ -107,7 +109,10 @@ class HabitCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    _buildIconBox(habitColor, iconData),
+                    HabitIconBox(
+                      habitColor: habitColor,
+                      iconKey: habit['icon'] ?? 'sport',
+                    ),
                     horizontalSpace(16),
                     Expanded(
                       child: Column(
@@ -149,83 +154,30 @@ class HabitCard extends StatelessWidget {
                 ),
 
                 verticalSpace(24), 
-                _buildProgressBar(context, progress, habitColor, isDark),
+                HabitProgressBar(
+                  progress: progress,
+                  color: habitColor,
+                  isDark: isDark,
+                ),
                 verticalSpace(24), 
-                _buildInteractiveWeekStrip(
-                  context,
-                  frequency,
-                  weekProgress,
-                  habitColor,
-                  isDark,
+                HabitWeekStrip(
+                  frequency: frequency,
+                  weekProgress: weekProgress,
+                  color: habitColor,
+                  isDark: isDark,
+                  habitId: habit['id'],
                 ),
                 verticalSpace(24), 
 
-                Container(
-                  width: double.infinity,
-                  height: 58.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(18.r),
-
-                    color: isActionable ? habitColor : null,
-                    boxShadow: isActionable
-                        ? [
-                            BoxShadow(
-                              color: habitColor.withValues(
-                                alpha: isDark ? 0.4 : 0.25,
-                              ),
-                              blurRadius: 20,
-                              offset: const Offset(0, 8),
-                            ),
-                          ]
-                        : [],
-                  ),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: isActionable
-                          ? () => context.read<HomeCubit>().toggleDay(
-                              habit['id'],
-                              targetIndex,
-                            )
-                          : null,
-                      borderRadius: BorderRadius.circular(18.r),
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              isActionable
-                                  ? Icons.circle_outlined
-                                  : (isTodayScheduled
-                                        ? Icons.check_circle
-                                        : Icons.bedtime_rounded),
-                              color: isActionable ? Colors.white : Colors.grey,
-                              size: 22.sp,
-                            ),
-                            horizontalSpace(12),
-                            Text(
-                              isActionable
-                                  ? 'Mark as Done'
-                                  : (isTodayScheduled
-                                        ? 'Completed Today'
-                                        : 'Rest Day'),
-                              style: TextStyle(
-                                color: isActionable
-                                    ? Colors.white
-                                    : Colors.grey,
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w800,
-                                letterSpacing: 1.1,
-                                height: 1.1,
-                                leadingDistribution:
-                                    TextLeadingDistribution.even,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                HabitActionButton(
+                  isActionable: isActionable,
+                  isTodayScheduled: isTodayScheduled,
+                  habitColor: habitColor,
+                  isDark: isDark,
+                  onPressed: () => context.read<HomeCubit>().toggleDay(
+                      habit['id'],
+                      targetIndex,
                     ),
-                  ),
                 ),
             
             
@@ -299,132 +251,6 @@ class HabitCard extends StatelessWidget {
           ],
         );
       },
-    );
-  }
-
-  Widget _buildProgressBar(
-    BuildContext context,
-    double progress,
-    Color color,
-    bool isDark,
-  ) {
-    final double availableWidth = 1.sw - 80.w;
-    final double clampedProgress = progress.clamp(0.0, 1.0);
-
-    return Stack(
-      children: [
-        Container(
-          height: 10.h,
-          decoration: BoxDecoration(
-            color: isDark ? Colors.grey[800] : Colors.grey[100],
-            borderRadius: BorderRadius.circular(10.r),
-          ),
-        ),
-        AnimatedContainer(
-          duration: const Duration(milliseconds: 600),
-          height: 10.h,
-          width: availableWidth * clampedProgress,
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(10.r),
-            boxShadow: [
-              BoxShadow(
-                color: color.withValues(alpha: 0.3),
-                blurRadius: 8,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildInteractiveWeekStrip(
-    BuildContext context,
-    List<bool> frequency,
-    List<bool> weekProgress,
-    Color color,
-    bool isDark,
-  ) {
-    final days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: List.generate(7, (index) {
-        bool isScheduled = frequency[index];
-        bool isDone = weekProgress[index];
-        return Expanded(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                days[index],
-                style: TextStyle(
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w700,
-                  color: isScheduled
-                      ? (isDark ? Colors.white70 : Colors.grey[800])
-                      : Colors.grey[400],
-                ),
-              ),
-              verticalSpace(10), 
-              GestureDetector(
-                onTap: isScheduled
-                    ? () => context.read<HomeCubit>().toggleDay(
-                        habit['id'],
-                        index,
-                      )
-                    : null,
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  width: 32.w,
-                  height: 32.w,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: isDone ? color : Colors.transparent,
-                    border: isScheduled
-                        ? Border.all(
-                            color: isDone
-                                ? Colors.transparent
-                                : (isDark
-                                      ? Colors.grey[700]!
-                                      : Colors.grey[300]!),
-                            width: 1.5.w,
-                          )
-                        : null,
-                  ),
-                  child: isDone
-                      ? Icon(Icons.check, color: Colors.white, size: 18.sp)
-                      : (!isScheduled
-                            ? Center(
-                                child: Container(
-                                  width: 4.w,
-                                  height: 4.w,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[300],
-                                    shape: BoxShape.circle,
-                                  ),
-                                ),
-                              )
-                            : null),
-                ),
-              ),
-            ],
-          ),
-        );
-      }),
-    );
-  }
-
-  Widget _buildIconBox(Color color, IconData icon) {
-    return Container(
-      width: 56.w,
-      height: 56.w,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(18.r),
-      ),
-      child: Icon(icon, color: color, size: 28.sp),
     );
   }
 

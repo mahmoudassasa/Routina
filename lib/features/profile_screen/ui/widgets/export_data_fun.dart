@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:routina/core/services/export_service.dart';
+import 'package:routina/features/export_service/ui/export_service.dart';
 import 'package:routina/features/home_screen/logic/cubit/home_cubit.dart';
 
 void exportData(BuildContext context) async {

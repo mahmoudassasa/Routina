@@ -19,7 +19,16 @@ class GeminiService {
       ],
     );
   }
-
+Exception _handleError(Object e) {
+    final errorStr = e.toString().toLowerCase();
+    if (errorStr.contains('429') ||
+        errorStr.contains('quota') ||
+        errorStr.contains('resource_exhausted') ||
+        errorStr.contains('ratelimitexceeded')) {
+      return Exception('quota_exceeded');
+    }
+    return Exception('failed: ${e.toString()}');
+  }
   Future<String> analyzeHabits({
     required List<Map<String, dynamic>> habits,
   }) async {
@@ -53,7 +62,7 @@ class GeminiService {
 
       return response.text ?? 'Unable to generate analysis';
     } catch (e) {
-      throw Exception('Failed to analyze habits: ${e.toString()}');
+      throw _handleError(e);
     }
   }
 
@@ -82,7 +91,7 @@ class GeminiService {
 
       return response.text ?? 'Unable to generate progress analysis';
     } catch (e) {
-      throw Exception('Failed: ${e.toString()}');
+      throw _handleError(e);
     }
   }
 
@@ -108,7 +117,7 @@ class GeminiService {
 
       return response.text ?? 'Unable to generate suggestions';
     } catch (e) {
-      throw Exception('Failed: ${e.toString()}');
+      throw _handleError(e);
     }
   }
 
@@ -137,7 +146,7 @@ class GeminiService {
 
       return response.text ?? 'Unable to generate optimization';
     } catch (e) {
-      throw Exception('Failed: ${e.toString()}');
+      throw _handleError(e);
     }
   }
 
@@ -168,7 +177,7 @@ class GeminiService {
         yield chunk.text ?? '';
       }
     } catch (e) {
-      throw Exception('Stream failed: ${e.toString()}');
+      throw _handleError(e);
     }
   }
 }

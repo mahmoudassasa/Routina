@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/theaming/app_colors.dart';
-import 'package:routina/core/widgets/bottom_navigation_bar/nav_item_button.dart';
-import 'package:routina/core/widgets/bottom_navigation_bar/center_action_button.dart';
-
+import 'package:routina/features/bottom_navigation_bar/ui/widgets/center_action_button.dart';
+import 'package:routina/features/bottom_navigation_bar/ui/widgets/nav_item_button.dart';
 class BottomNavigationBarWidget extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onIndexChanged;

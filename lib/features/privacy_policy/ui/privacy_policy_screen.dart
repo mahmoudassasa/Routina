@@ -5,6 +5,10 @@ import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/theaming/app_text_styles.dart';
 
+part 'widgets/header_card.dart';
+part 'widgets/privacy_section.dart';
+part 'widgets/footer.dart';
+
 class PrivacyPolicyScreen extends StatelessWidget {
   const PrivacyPolicyScreen({super.key});
 
@@ -40,41 +44,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Header card
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.all(20.w),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: isDark
-                      ? [AppColors.primaryDark.withValues(alpha:0.3), AppColors.darkSurface]
-                      : [AppColors.primaryLighter, AppColors.background],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: BorderRadius.circular(16.r),
-                border: Border.all(
-                  color: isDark ? AppColors.darkBorder : AppColors.border,
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(Icons.shield_rounded, color: AppColors.primary, size: 32.sp),
-        verticalSpace(12),                  Text(
-                    'Your Privacy Matters',
-                    style: AppTextStyles.titleLarge.copyWith(
-                      color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
-                    ),
-                  ),
-        verticalSpace(6),                  Text(
-                    'Last updated: April 2026',
-                    style: AppTextStyles.bodySmall.copyWith(
-                      color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _buildHeaderCard(isDark),
 
 verticalSpace(24), 
             _buildSection(
@@ -141,84 +111,13 @@ verticalSpace(24),
                   'If you have any questions about this Privacy Policy or our data practices, please contact us at dev.egy01@gmail.com. We aim to respond to all inquiries within 48 hours.',
             ),
 
-verticalSpace(32),             // Footer
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.all(16.w),
-              decoration: BoxDecoration(
-                color: isDark ? AppColors.darkSurface : AppColors.surfaceLight,
-                borderRadius: BorderRadius.circular(12.r),
-                border: Border.all(
-                  color: isDark ? AppColors.darkBorder : AppColors.border,
-                ),
-              ),
-              child: Text(
-                '© 2026 Routina. All rights reserved.',
-                style: AppTextStyles.bodySmall.copyWith(
-                  color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
+verticalSpace(32),
+            // Footer
+            _buildFooter(isDark),
 
-verticalSpace(32),           ],
+verticalSpace(32),
+          ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildSection({
-    required bool isDark,
-    required IconData icon,
-    required String title,
-    required String content,
-  }) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 20.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 36.w,
-                height: 36.w,
-                decoration: BoxDecoration(
-                  color: isDark
-                      ? AppColors.primaryDark.withValues(alpha:0.2)
-                      : AppColors.primaryLighter,
-                  borderRadius: BorderRadius.circular(10.r),
-                ),
-                child: Icon(icon, color: AppColors.primary, size: 18.sp),
-              ),
-              horizontalSpace(12),
-              Expanded(
-                child: Text(
-                  title,
-                  style: AppTextStyles.titleMedium.copyWith(
-                    color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ],
-          ),
-verticalSpace(10),           Padding(
-            padding: EdgeInsets.only(left: 48.w),
-            child: Text(
-              content,
-              style: AppTextStyles.bodyMedium.copyWith(
-                color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
-                height: 1.6,
-              ),
-            ),
-          ),
-          verticalSpace(8),
-          Divider(
-            color: isDark ? AppColors.darkBorder : AppColors.border,
-            thickness: 0.5,
-          ),
-        ],
       ),
     );
   }

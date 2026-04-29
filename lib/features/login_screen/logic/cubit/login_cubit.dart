@@ -1,12 +1,30 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:routina/core/services/google_sign_in_service.dart';
 import 'package:routina/features/login_screen/data/repos/login_repo.dart';
 import 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  final LoginRepo _loginRepo;
-  LoginCubit(this._loginRepo) : super(const LoginState());
+final LoginRepo _loginRepo;
+final GoogleSignInService _googleSignInService;
 
+LoginCubit(this._loginRepo, this._googleSignInService) : super(const LoginState());
+Future<void> signInWithGoogle() async {
+    emit(state.copyWith(status: LoginStatus.loading));
+    try {
+      final credential = await _googleSignInService.signInWithGoogle();
+      if (credential == null) {
+        emit(state.copyWith(status: LoginStatus.initial));
+        return;
+      }
+      emit(state.copyWith(status: LoginStatus.success));
+    } catch (e) {
+      emit(state.copyWith(
+        status: LoginStatus.error,
+        errorMessage: 'Google Sign-In failed. Please try again.',
+      ));
+    }
+  }
   Future<void> login(String email, String password) async {
     emit(state.copyWith(status: LoginStatus.loading));
 

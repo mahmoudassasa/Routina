@@ -15,30 +15,32 @@ class HomeCubit extends Cubit<HomeState> {
   // ── Load ───────────────────────────────────────────────────────────────
 
 Future<void> loadHabits({bool isRefresh = false}) async {
-    // Only emit loading if it's NOT a manual refresh to avoid shimmer flickering
-      emit(state.copyWith(status: HomeStatus.loading));
+  if (isClosed) return;
+  emit(state.copyWith(status: HomeStatus.loading));
 
-    await Future.delayed(const Duration(seconds: 2));
-  
+  await Future.delayed(const Duration(seconds: 2));
+  if (isClosed) return; // ← بعد الـ delay مباشرة
 
-    try {
-      final habits = await _habitService.fetchHabitsForCurrentUser();
-      final checkedHabits = await _checkAndResetIfNeeded(habits);
-      
-      // Sort habits: Newest on top based on lastSeenDate
-      final sortedHabits = List<Map<String, dynamic>>.from(checkedHabits)
-        ..sort((a, b) {
-          final dateA = DateTime.parse(a[HabitKeys.lastSeenDate].toString());
-          final dateB = DateTime.parse(b[HabitKeys.lastSeenDate].toString());
-          return dateB.compareTo(dateA);
-        });
+  try {
+    final habits = await _habitService.fetchHabitsForCurrentUser();
+    if (isClosed) return;
+    
+    final checkedHabits = await _checkAndResetIfNeeded(habits);
+    if (isClosed) return;
 
-      emit(state.copyWith(status: HomeStatus.loaded, habits: sortedHabits));
-    } catch (e) {
-      emit(state.copyWith(
-          status: HomeStatus.error, errorMessage: e.toString()));
-    }
+    final sortedHabits = List<Map<String, dynamic>>.from(checkedHabits)
+      ..sort((a, b) {
+        final dateA = DateTime.parse(a[HabitKeys.lastSeenDate].toString());
+        final dateB = DateTime.parse(b[HabitKeys.lastSeenDate].toString());
+        return dateB.compareTo(dateA);
+      });
+
+    emit(state.copyWith(status: HomeStatus.loaded, habits: sortedHabits));
+  } catch (e) {
+    if (isClosed) return;
+    emit(state.copyWith(status: HomeStatus.error, errorMessage: e.toString()));
   }
+}
   // ── Reset logic ────────────────────────────────────────────────────────
 
   Future<List<Map<String, dynamic>>> _checkAndResetIfNeeded(

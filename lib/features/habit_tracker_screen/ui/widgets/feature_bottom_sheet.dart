@@ -4,6 +4,13 @@ import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 
+part 'premium_feature_widgets/drag_handle.dart';
+part 'premium_feature_widgets/feature_icon.dart';
+part 'premium_feature_widgets/premium_badge.dart';
+part 'premium_feature_widgets/features_list.dart';
+part 'premium_feature_widgets/upgrade_button.dart';
+part 'premium_feature_widgets/maybe_later_button.dart';
+
 void showPremiumFeatureBottomSheet({
   required BuildContext context,
   required String icon,
@@ -56,64 +63,14 @@ class _PremiumFeatureBottomSheetContent extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            width: 40.w,
-            height: 4.h,
-            decoration: BoxDecoration(
-              color: isDark ? Colors.grey[800] : Colors.grey[300],
-              borderRadius: BorderRadius.circular(10.r),
-            ),
-          ),
+          const _DragHandle(),
           verticalSpace(24),
 
-          Container(
-            width: 80.w,
-            height: 80.w,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [AppColors.primary, AppColors.primary.withBlue(255)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.3),
-                  blurRadius: 20,
-                  offset: Offset(0, 8.h),
-                ),
-              ],
-            ),
-            child: Center(
-              child: Text(icon, style: TextStyle(fontSize: 40.sp)),
-            ),
-          ),
+          _FeatureIcon(icon: icon),
 
           verticalSpace(24),
 
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(colors: [Colors.amber, Colors.orange]),
-              borderRadius: BorderRadius.circular(20.r),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.workspace_premium, color: Colors.white, size: 16.sp),
-                horizontalSpace(6),
-                Text(
-                  'PREMIUM FEATURE',
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    letterSpacing: 1,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          const _PremiumBadge(),
 
           verticalSpace(16),
 
@@ -145,154 +102,15 @@ class _PremiumFeatureBottomSheetContent extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Container(
-                    padding: EdgeInsets.all(20.w),
-                    decoration: BoxDecoration(
-                      color: isDark ? Colors.grey[900] : Colors.grey[50],
-                      borderRadius: BorderRadius.circular(16.r),
-                      border: Border.all(
-                        color: isDark
-                            ? AppColors.darkBorder
-                            : Colors.grey.shade200,
-                      ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.star_rounded,
-                              color: Colors.amber,
-                              size: 20.sp,
-                            ),
-                            horizontalSpace(8),
-                            Text(
-                              'What you\'ll get:',
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.bold,
-                                color: isDark ? Colors.white : Colors.black87,
-                              ),
-                            ),
-                          ],
-                        ),
-                        verticalSpace(16),
-                        ...features.map(
-                          (feature) => Padding(
-                            padding: EdgeInsets.only(bottom: 12.h),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.only(top: 2.h),
-                                  width: 20.w,
-                                  height: 20.w,
-                                  decoration: BoxDecoration(
-                                    color: AppColors.primary.withValues(
-                                      alpha: 0.2,
-                                    ),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Icon(
-                                    Icons.check,
-                                    size: 14.sp,
-                                    color: AppColors.primary,
-                                  ),
-                                ),
-                                horizontalSpace(12),
-                                Expanded(
-                                  child: Text(
-                                    feature,
-                                    style: TextStyle(
-                                      fontSize: 14.sp,
-                                      color: isDark
-                                          ? Colors.grey[300]
-                                          : Colors.grey[700],
-                                      height: 1.4,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  _FeaturesList(features: features),
 
                   verticalSpace(24),
 
-                  Container(
-                    width: double.infinity,
-                    height: 56.h,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Colors.amber, Colors.orange],
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                      ),
-                      borderRadius: BorderRadius.circular(16.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.amber.withValues(alpha: 0.4),
-                          blurRadius: 20,
-                          offset: Offset(0, 8.h),
-                        ),
-                      ],
-                    ),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () {
-                          context.pop();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Premium features coming soon! 🎉'),
-                              backgroundColor: Colors.amber,
-                              behavior: SnackBarBehavior.floating,
-                            ),
-                          );
-                        },
-                        borderRadius: BorderRadius.circular(16.r),
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.workspace_premium_rounded,
-                                color: Colors.white,
-                                size: 24.sp,
-                              ),
-                              horizontalSpace(10),
-                              Text(
-                                'Upgrade to Premium',
-                                style: TextStyle(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  letterSpacing: 0.5,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  const _UpgradeButton(),
 
                   verticalSpace(16),
 
-                  TextButton(
-                    onPressed: () => context.pop(),
-                    child: Text(
-                      'Maybe Later',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: isDark ? Colors.grey[500] : Colors.grey[600],
-                      ),
-                    ),
-                  ),
+                  const _MaybeLaterButton(),
                 ],
               ),
             ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
@@ -8,6 +10,7 @@ import 'package:routina/core/widgets/main_alert_dialog.dart';
 import 'package:routina/features/login_screen/logic/cubit/login_cubit.dart';
 import 'package:routina/features/login_screen/logic/cubit/login_state.dart';
 import 'package:routina/features/login_screen/ui/widgets/already_have_an_account.dart';
+import 'package:routina/features/login_screen/ui/widgets/google_signin.dart';
 import 'package:routina/features/login_screen/ui/widgets/login_screen_email_field.dart';
 import 'package:routina/features/login_screen/ui/widgets/forgot_password.dart';
 import 'package:routina/features/login_screen/ui/widgets/login_button.dart';
@@ -130,9 +133,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         emailController: _emailController,
                         passwordController: _passwordController,
                       ),
-                      verticalSpace(24),
-                      const ForgotPassword(),
                       verticalSpace(16),
+                      GoogleSignin(),
+                      verticalSpace(16),
+                      const ForgotPassword(),
+                      verticalSpace(8),
                       const AlreadyHaveAnAccount(),
                     ],
                   ),

@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
+import 'package:routina/core/routing/routes.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/features/analyze_screen/logic/cubit/ai_analysis_cubit.dart';
 import 'package:routina/features/analyze_screen/logic/cubit/ai_analysis_state.dart';
+import 'package:shimmer/shimmer.dart';
 
 void showQuickAiAnalysisSheet(BuildContext context) {
   final aiCubit = context.read<AiAnalysisCubit>();
@@ -47,7 +49,7 @@ class _QuickAiAnalysisSheet extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.r),
             ),
           ),
-          verticalSpace(20), 
+          verticalSpace(20),
 
           // Header
           Padding(
@@ -94,7 +96,7 @@ class _QuickAiAnalysisSheet extends StatelessWidget {
             ),
           ),
 
-          verticalSpace(24), 
+          verticalSpace(24),
 
           // Content
           Flexible(
@@ -102,34 +104,48 @@ class _QuickAiAnalysisSheet extends StatelessWidget {
               builder: (context, state) {
                 if (state.status == AiAnalysisStatus.loading) {
                   return Padding(
-                    padding: EdgeInsets.symmetric(vertical: 48.h),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const CircularProgressIndicator(
-                          color: AppColors.primary,
-                        ),
-                        verticalSpace(16), 
-                        Text(
-                          'Analyzing your habits...',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: isDark ? Colors.grey[400] : Colors.grey[600],
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 24.w,
+                      vertical: 8.h,
+                    ),
+                    child: Shimmer.fromColors(
+                      baseColor: isDark ? Colors.grey[800]! : Colors.grey[300]!,
+                      highlightColor: isDark
+                          ? Colors.grey[700]!
+                          : Colors.grey[100]!,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: List.generate(
+                          20,
+                          (i) => Padding(
+                            padding: EdgeInsets.only(bottom: 12.h),
+                            child: Container(
+                              width: i % 2 == 0 ? double.infinity : 0.65.sw,
+                              height: 14.h,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8.r),
+                              ),
+                            ),
                           ),
                         ),
-                      ],
+                      ),
                     ),
                   );
                 }
 
                 if (state.status == AiAnalysisStatus.error) {
-                  String errorMsg = 'Something went wrong. Please try again.';
-                  if (state.errorMessage?.contains('503') == true ||
+                  String errorMsg;
+                  if (state.errorMessage == 'quota_exceeded') {
+                    errorMsg = 'Daily AI limit reached. Try again tomorrow.';
+                  } else if (state.errorMessage?.contains('503') == true ||
                       state.errorMessage?.contains('high demand') == true) {
                     errorMsg =
                         'AI is busy right now. Please try again in a moment.';
                   } else if (state.errorMessage?.contains('network') == true) {
                     errorMsg = 'Check your internet connection and try again.';
+                  } else {
+                    errorMsg = 'Something went wrong. Please try again.';
                   }
 
                   return Padding(
@@ -142,7 +158,7 @@ class _QuickAiAnalysisSheet extends StatelessWidget {
                           size: 48.sp,
                           color: AppColors.error,
                         ),
-                        verticalSpace(12), 
+                        verticalSpace(12),
                         Text(
                           errorMsg,
                           style: TextStyle(
@@ -185,12 +201,19 @@ class _QuickAiAnalysisSheet extends StatelessWidget {
                             ),
                           ),
                         ),
-                        verticalSpace(16), 
+                        verticalSpace(16),
 
                         SizedBox(
                           width: double.infinity,
                           child: OutlinedButton.icon(
-                            onPressed: () => context.pop(),
+                            onPressed: () {
+                              final aiCubit = context.read<AiAnalysisCubit>();
+                              context.pop();
+                              context.pushNamed(
+                                Routes.aiAnalysisFullScreen,
+                                arguments: aiCubit,
+                              );
+                            },
                             icon: Icon(Icons.analytics_outlined, size: 18.sp),
                             label: const Text('View Full Analysis'),
                             style: OutlinedButton.styleFrom(
@@ -203,7 +226,7 @@ class _QuickAiAnalysisSheet extends StatelessWidget {
                             ),
                           ),
                         ),
-                        verticalSpace(24), 
+                        verticalSpace(24),
                       ],
                     ),
                   );

@@ -14,46 +14,48 @@ class AnalyzeScreenAiAnalysisResult extends StatelessWidget {
     return const SizedBox.shrink();
   }
 
-  static void showAnalysisSheet(BuildContext context, AiAnalysisState state) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+static void showAnalysisSheet(BuildContext context, AiAnalysisState state) {
+  final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) => Container(
-        constraints: BoxConstraints(maxHeight: 0.8.sh),
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom + 24.h,
-          left: 24.w,
-          right: 24.w,
-          top: 16.h,
-        ),
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    builder: (context) => DraggableScrollableSheet(
+      initialChildSize: 0.6,
+      minChildSize: 0.4,
+      maxChildSize: 0.9,
+      builder: (context, scrollController) => Container(
+        padding: EdgeInsets.symmetric(horizontal: 24.w),
         decoration: BoxDecoration(
           color: isDark ? const Color(0xFF1A1C23) : Colors.white,
           borderRadius: BorderRadius.vertical(top: Radius.circular(28.r)),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        child: ListView(
+          controller: scrollController,
           children: [
-            Container(
-              width: 40.w,
-              height: 4.h,
-              decoration: BoxDecoration(
-                color: isDark ? Colors.grey[800] : Colors.grey[300],
-                borderRadius: BorderRadius.circular(10.r),
+            verticalSpace(12),
+            Center(
+              child: Container(
+                width: 40.w,
+                height: 4.h,
+                decoration: BoxDecoration(
+                  color: isDark ? Colors.grey[800] : Colors.grey[300],
+                  borderRadius: BorderRadius.circular(10.r),
+                ),
               ),
             ),
-verticalSpace(24),
-             _buildHeader(isDark),
-            verticalSpace(24), 
+            verticalSpace(24),
+            _buildHeader(isDark),
+            verticalSpace(24),
             _buildContent(state, isDark),
+            verticalSpace(24),
           ],
         ),
       ),
-    );
-  }
-
+    ),
+  );
+}
   static Widget _buildHeader(bool isDark) {
     return Row(
       children: [
@@ -103,23 +105,19 @@ verticalSpace(24),
        return Text(state.errorMessage ?? 'Error occurred');
     }
 
-    return Flexible(
-      child: SingleChildScrollView(
-        child: Container(
-          width: double.infinity,
-          padding: EdgeInsets.all(20.w),
-          decoration: BoxDecoration(
-            color: isDark ? Colors.grey[900] : Colors.grey[50],
-            borderRadius: BorderRadius.circular(16.r),
-          ),
-          child: Text(
-            state.analysis ?? '',
-            style: TextStyle(
-              fontSize: 14.sp,
-              height: 1.6,
-              color: isDark ? Colors.grey[300] : Colors.grey[800],
-            ),
-          ),
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(20.w),
+      decoration: BoxDecoration(
+        color: isDark ? Colors.grey[900] : Colors.grey[50],
+        borderRadius: BorderRadius.circular(16.r),
+      ),
+      child: Text(
+        state.analysis ?? '',
+        style: TextStyle(
+          fontSize: 14.sp,
+          height: 1.6,
+          color: isDark ? Colors.grey[300] : Colors.grey[800],
         ),
       ),
     );

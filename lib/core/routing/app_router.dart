@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:routina/core/di/dependency_injection.dart';
-import 'package:routina/core/services/help_support_screen.dart';
-import 'package:routina/core/services/privacy_policy_screen.dart';
-import 'package:routina/core/widgets/main_navigation_bar.dart';
+import 'package:routina/features/analyze_screen/logic/cubit/ai_analysis_cubit.dart';
+import 'package:routina/features/analyze_screen/ui/widgets/ai_analysis_full_screen.dart';
+import 'package:routina/features/help_support/ui/help_support_screen.dart';
+import 'package:routina/features/privacy_policy/ui/privacy_policy_screen.dart';
+import 'package:routina/features/bottom_navigation_bar/ui/main_navigation_bar.dart';
 import 'package:routina/core/widgets/notification_screen.dart';
 import 'package:routina/features/analyze_screen/ui/analyze_screen.dart';
 import 'package:routina/features/email_confirmation_screen/logic/cubit/email_verification_cubit.dart';
@@ -56,8 +58,7 @@ class AppRouter {
           ),
         );
       case Routes.habitProgressChartsScreen:
-        final habits =
-            settings.arguments as List<Map<String, dynamic>>;
+        final habits = settings.arguments as List<Map<String, dynamic>>;
         return MaterialPageRoute(
           builder: (_) => HabitProgressChartsScreen(habits: habits),
         );
@@ -73,10 +74,24 @@ class AppRouter {
 
       case Routes.helpSupportScreen:
         return MaterialPageRoute(builder: (_) => const HelpSupportScreen());
-        
+
       case Routes.privacyPolicyScreen:
         return MaterialPageRoute(builder: (_) => const PrivacyPolicyScreen());
-      
+
+      case Routes.aiAnalysisFullScreen:
+        final args = settings.arguments as Map<String, dynamic>;
+        final aiCubit = args['aiCubit'] as AiAnalysisCubit;
+        final homeCubit = args['homeCubit'] as HomeCubit;
+
+        return MaterialPageRoute(
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider.value(value: aiCubit),
+              BlocProvider.value(value: homeCubit),
+            ],
+            child: const AiAnalysisFullScreen(),
+          ),
+        );
 
       default:
         return null;

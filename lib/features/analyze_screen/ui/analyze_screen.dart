@@ -45,49 +45,55 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: SafeArea(
-          child: BlocBuilder<AiAnalysisCubit, AiAnalysisState>(
-            builder: (context, state) {
-              final habits = context.read<HomeCubit>().state.habits;
+      body: SafeArea(
+  child: BlocBuilder<AiAnalysisCubit, AiAnalysisState>(
+    builder: (context, state) {
+      final habits = context.read<HomeCubit>().state.habits;
 
-              if (habits.isEmpty) {
-                return Center(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.symmetric(vertical: 40),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children:  [
-                        AnalyzeScreenAiAnalysisLogo(),
-                        verticalSpace(32), 
-                        AnalyzeScreenTexts(),
-                        verticalSpace(40), 
-                        AnalyzeScreenMockAiFeatures(),
-                      ],
-                    ),
-                  ),
-                );
-              }
+      final content = habits.isEmpty
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AnalyzeScreenAiAnalysisLogo(),
+                verticalSpace(32),
+                AnalyzeScreenTexts(),
+                verticalSpace(40),
+                AnalyzeScreenMockAiFeatures(),
+              ],
+            )
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const AnalyzeScreenAiAnalysisLogo(),
+                verticalSpace(32),
+                const AnalyzeScreenTexts(),
+                verticalSpace(40),
+                AnalyzeScreenAiAnalysisResult(state: state),
+                verticalSpace(24),
+                const AnalyzeScreenMockAiFeatures(),
+              ],
+            );
 
-              return Center(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(vertical: 40),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const AnalyzeScreenAiAnalysisLogo(),
-                      verticalSpace(32), 
-                      const AnalyzeScreenTexts(),
-                      verticalSpace(40) ,
-                      AnalyzeScreenAiAnalysisResult(state: state),
-                      verticalSpace(24), 
-                      const AnalyzeScreenMockAiFeatures(),
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
+      return RefreshIndicator(
+        color: AppColors.primary,
+        backgroundColor: isDark ? AppColors.darkSurface : Colors.white,
+        onRefresh: () async {
+          if (habits.isNotEmpty) {
+            context.read<AiAnalysisCubit>().analyzeHabits(habits);
+            await context.read<AiAnalysisCubit>().stream.firstWhere(
+              (s) => s.status != AiAnalysisStatus.loading,
+            );
+          }
+        },
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(), // ضروري للـ RefreshIndicator
+          padding: const EdgeInsets.symmetric(vertical: 40),
+          child: Center(child: content),
         ),
+      );
+    },
+  ),
+),
       ),
     );
   }

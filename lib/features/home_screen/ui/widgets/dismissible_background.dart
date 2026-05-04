@@ -1,4 +1,4 @@
-part of '../habit_card.dart';
+part of 'habit_card.dart';
 
 extension DismissibleBackground on HabitCard {
   Widget _buildDismissibleBackground() {

@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:routina/core/di/dependency_injection.dart';
 import 'package:routina/features/analyze_screen/logic/cubit/ai_analysis_cubit.dart';
 import 'package:routina/features/analyze_screen/ui/widgets/ai_analysis_full_screen.dart';
+import 'package:routina/features/habit_tracker_screen/ui/premium_analytics_screen.dart';
+import 'package:routina/features/habit_tracker_screen/ui/strategic_goals_screen.dart';
 import 'package:routina/features/help_support/ui/help_support_screen.dart';
 import 'package:routina/features/privacy_policy/ui/privacy_policy_screen.dart';
 import 'package:routina/features/bottom_navigation_bar/ui/main_navigation_bar.dart';
@@ -92,7 +94,17 @@ class AppRouter {
             child: const AiAnalysisFullScreen(),
           ),
         );
+case Routes.strategicGoalsScreen:
+  final habits = settings.arguments as List<Map<String, dynamic>>;
+  return MaterialPageRoute(
+    builder: (_) => StrategicGoalsScreen(habits: habits),
+  );
 
+case Routes.premiumAnalyticsScreen:
+  final habits = settings.arguments as List<Map<String, dynamic>>;
+  return MaterialPageRoute(
+    builder: (_) => PremiumAnalyticsScreen(habits: habits),
+  );
       default:
         return null;
     }

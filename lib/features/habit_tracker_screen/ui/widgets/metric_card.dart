@@ -1,4 +1,4 @@
-part of '../habit_progress_charts_screen.dart';
+part of 'habit_progress_charts_screen.dart';
 
 extension MetricCard on HabitProgressChartsScreen {
   Widget _buildMetricCard(bool isDark, String label, String value, IconData icon, Color color) {

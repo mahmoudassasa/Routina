@@ -11,9 +11,9 @@ import 'package:routina/features/home_screen/ui/widgets/habit_progress_bar.dart'
 import 'package:routina/features/home_screen/ui/widgets/habit_week_strip.dart';
 import 'package:routina/features/home_screen/ui/widgets/habit_action_button.dart';
 
-part 'habit_card/dismissible_background.dart';
-part 'habit_card/delete_confirmation_dialog.dart';
-part 'habit_card/edit_bottom_sheet.dart';
+part 'dismissible_background.dart';
+part 'delete_confirmation_dialog.dart';
+part 'edit_bottom_sheet.dart';
 
 class HabitCard extends StatelessWidget {
   final Map<String, dynamic> habit;

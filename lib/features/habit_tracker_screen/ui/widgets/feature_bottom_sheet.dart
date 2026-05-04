@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
+import 'package:routina/features/billing_service/logic/cubit/billing_cubit.dart';
+import 'package:routina/features/billing_service/ui/widgets/paywall_screen.dart';
 
-part 'premium_feature_widgets/drag_handle.dart';
-part 'premium_feature_widgets/feature_icon.dart';
-part 'premium_feature_widgets/premium_badge.dart';
-part 'premium_feature_widgets/features_list.dart';
-part 'premium_feature_widgets/upgrade_button.dart';
-part 'premium_feature_widgets/maybe_later_button.dart';
+part 'drag_handle.dart';
+part 'feature_icon.dart';
+part 'premium_badge.dart';
+part 'features_list.dart';
+part 'upgrade_button.dart';
+part 'maybe_later_button.dart';
 
 void showPremiumFeatureBottomSheet({
   required BuildContext context,

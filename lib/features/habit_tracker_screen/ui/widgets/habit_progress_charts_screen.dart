@@ -4,12 +4,12 @@ import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 
-part 'habit_progress_charts/section_title.dart';
-part 'habit_progress_charts/weekly_heatmap.dart';
-part 'habit_progress_charts/metric_card.dart';
-part 'habit_progress_charts/habit_progress_line.dart';
-part 'habit_progress_charts/insight_box.dart';
-part 'habit_progress_charts/empty_state.dart';
+part 'section_title.dart';
+part 'weekly_heatmap.dart';
+part 'metric_card.dart';
+part 'habit_progress_line.dart';
+part 'insight_box.dart';
+part 'empty_state.dart';
 
 class HabitProgressChartsScreen extends StatelessWidget {
   final List<Map<String, dynamic>> habits;

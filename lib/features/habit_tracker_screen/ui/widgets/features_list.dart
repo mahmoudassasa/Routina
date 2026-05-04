@@ -1,4 +1,4 @@
-part of '../feature_bottom_sheet.dart';
+part of 'feature_bottom_sheet.dart';
 
 class _FeaturesList extends StatelessWidget {
   final List<String> features;

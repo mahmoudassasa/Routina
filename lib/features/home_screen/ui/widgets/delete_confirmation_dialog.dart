@@ -1,4 +1,4 @@
-part of '../habit_card.dart';
+part of 'habit_card.dart';
 
 extension DeleteConfirmationDialog on HabitCard {
   Future<bool?> _showDeleteConfirmationDialog(

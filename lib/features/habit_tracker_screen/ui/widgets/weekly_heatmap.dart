@@ -1,4 +1,4 @@
-part of '../habit_progress_charts_screen.dart';
+part of 'habit_progress_charts_screen.dart';
 
 extension WeeklyHeatmap on HabitProgressChartsScreen {
   Widget _buildWeeklyHeatmap(bool isDark, List<Map<String, dynamic>> habits) {

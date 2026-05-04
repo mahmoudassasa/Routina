@@ -170,4 +170,28 @@ class AppTextStyles {
     height: 1.2,
     inherit: true,
   );
+
+  // White Styles (used in Paywall & Premium screens)
+  static TextStyle font14WhiteRegular = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.normal,
+    color: Colors.white,
+  );
+  static TextStyle font24WhiteBold = TextStyle(
+    fontSize: 24.sp,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
+
+  static TextStyle font16WhiteMedium = TextStyle(
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w500,
+    color: Colors.white,
+  );
+
+  static TextStyle font12WhiteRegular = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeight.normal,
+    color: Colors.white,
+  );
 }

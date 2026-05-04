@@ -1,4 +1,4 @@
-part of '../feature_bottom_sheet.dart';
+part of 'feature_bottom_sheet.dart';
 
 class _MaybeLaterButton extends StatelessWidget {
   const _MaybeLaterButton();

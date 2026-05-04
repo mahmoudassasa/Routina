@@ -1,4 +1,4 @@
-part of '../feature_bottom_sheet.dart';
+part of 'feature_bottom_sheet.dart';
 
 class _UpgradeButton extends StatelessWidget {
   const _UpgradeButton();
@@ -28,11 +28,10 @@ class _UpgradeButton extends StatelessWidget {
         child: InkWell(
           onTap: () {
             context.pop();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Premium features coming soon! 🎉'),
-                backgroundColor: Colors.amber,
-                behavior: SnackBarBehavior.floating,
+            context.push(
+              BlocProvider(
+                create: (_) => BillingCubit()..init(),
+                child: const PaywallScreen(),
               ),
             );
           },

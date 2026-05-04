@@ -1,4 +1,4 @@
-part of '../habit_progress_charts_screen.dart';
+part of 'habit_progress_charts_screen.dart';
 
 extension HabitProgressLine on HabitProgressChartsScreen {
   Widget _buildHabitProgressLine(bool isDark, String name, double progress, Color color) {

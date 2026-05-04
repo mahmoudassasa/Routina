@@ -1,4 +1,4 @@
-part of '../feature_bottom_sheet.dart';
+part of 'feature_bottom_sheet.dart';
 
 class _DragHandle extends StatelessWidget {
   const _DragHandle();

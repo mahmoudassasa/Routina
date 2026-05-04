@@ -5,6 +5,7 @@ import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/routing/routes.dart';
 import 'package:routina/core/theaming/app_colors.dart';
+import 'package:routina/features/billing_service/logic/cubit/billing_cubit.dart';
 import 'package:routina/features/habit_tracker_screen/ui/widgets/feature_bottom_sheet.dart';
 import 'package:routina/features/habit_tracker_screen/ui/widgets/feature_preview_card.dart';
 import 'package:routina/features/home_screen/logic/cubit/home_cubit.dart';
@@ -22,7 +23,7 @@ class HabitTrackerScreenContent extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
-            verticalSpace(32), 
+            verticalSpace(32),
 
             Container(
               width: 90.w,
@@ -43,7 +44,7 @@ class HabitTrackerScreenContent extends StatelessWidget {
               ),
             ),
 
-            verticalSpace(24), 
+            verticalSpace(24),
 
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 40.w),
@@ -71,7 +72,7 @@ class HabitTrackerScreenContent extends StatelessWidget {
               ),
             ),
 
-            verticalSpace(40), 
+            verticalSpace(40),
 
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -86,52 +87,86 @@ class HabitTrackerScreenContent extends StatelessWidget {
                       final habitsList = context.read<HomeCubit>().state.habits;
 
                       context.pushNamed(
-                        Routes.habitProgressChartsScreen, 
+                        Routes.habitProgressChartsScreen,
                         arguments: habitsList,
                       );
                     },
                   ),
 
-                  verticalSpace(16), 
+                  verticalSpace(16),
+                  // Strategic Goals
                   FeaturePreviewCard(
                     icon: '🎯',
                     title: 'Strategic Goals',
                     description: 'Set milestones and track achievements',
-                    onTap: () => showPremiumFeatureBottomSheet(
-                      context: context,
-                      icon: '🎯',
-                      title: 'Smart Goal Tracking',
-                      description:
-                          'Go beyond daily tasks and start building long-term streaks with AI guidance.',
-                      features: [
-                        'Multi-stage goal milestones',
-                        'Predictive streak counting',
-                        'Custom success criteria',
-                      ],
-                    ),
+                    // Strategic Goals
+                    onTap: () {
+                      final isPremium = context
+                          .read<BillingCubit>()
+                          .state
+                          .isPremium;
+                      if (isPremium) {
+                        final habits = context.read<HomeCubit>().state.habits;
+                        context.pushNamed(
+                          Routes.strategicGoalsScreen,
+                          arguments: habits,
+                        );
+                      } else {
+                        showPremiumFeatureBottomSheet(
+                          context: context,
+                          icon: '🎯',
+                          title: 'Smart Goal Tracking',
+                          description:
+                              'Go beyond daily tasks and start building long-term streaks with AI guidance.',
+                          features: [
+                            'Multi-stage goal milestones',
+                            'Predictive streak counting',
+                            'Custom success criteria',
+                          ],
+                        );
+                      }
+                    },
                   ),
-                  verticalSpace(16), 
+
+                  verticalSpace(16),
+
+                  // Premium Analytics
                   FeaturePreviewCard(
                     icon: '💎',
                     title: 'Premium Analytics',
                     description: 'Advanced data for power users',
-                    onTap: () => showPremiumFeatureBottomSheet(
-                      context: context,
-                      icon: '💎',
-                      title: 'Elite Insights',
-                      description:
-                          'Unlock the full power of your data with our most advanced tracking engine.',
-                      features: [
-                        'Behavioral pattern recognition',
-                        'Smart time-of-day suggestions',
-                        'Priority habit focus',
-                      ],
-                    ),
+                    // Premium Analytics
+                    onTap: () {
+                      final isPremium = context
+                          .read<BillingCubit>()
+                          .state
+                          .isPremium;
+                      if (isPremium) {
+                        final habits = context.read<HomeCubit>().state.habits;
+                        context.pushNamed(
+                          Routes.premiumAnalyticsScreen,
+                          arguments: habits,
+                        );
+                      } else {
+                        showPremiumFeatureBottomSheet(
+                          context: context,
+                          icon: '💎',
+                          title: 'Elite Insights',
+                          description:
+                              'Unlock the full power of your data with our most advanced tracking engine.',
+                          features: [
+                            'Behavioral pattern recognition',
+                            'Smart time-of-day suggestions',
+                            'Priority habit focus',
+                          ],
+                        );
+                      }
+                    },
                   ),
                 ],
               ),
             ),
-            verticalSpace(40), 
+            verticalSpace(40),
           ],
         ),
       ),

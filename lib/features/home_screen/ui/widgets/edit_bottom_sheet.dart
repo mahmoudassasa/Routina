@@ -1,4 +1,4 @@
-part of '../habit_card.dart';
+part of 'habit_card.dart';
 
 extension EditBottomSheet on HabitCard {
   void _showEditBottomSheet(BuildContext context) {

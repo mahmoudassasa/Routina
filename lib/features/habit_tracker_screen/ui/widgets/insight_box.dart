@@ -1,4 +1,4 @@
-part of '../habit_progress_charts_screen.dart';
+part of 'habit_progress_charts_screen.dart';
 
 extension InsightBox on HabitProgressChartsScreen {
   Widget _buildInsightBox(bool isDark, double avgProgress) {

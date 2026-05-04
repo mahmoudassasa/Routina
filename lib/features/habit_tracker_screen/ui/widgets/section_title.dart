@@ -1,4 +1,4 @@
-part of '../habit_progress_charts_screen.dart';
+part of 'habit_progress_charts_screen.dart';
 
 extension SectionTitle on HabitProgressChartsScreen {
   Widget _buildSectionTitle(bool isDark, String title) {

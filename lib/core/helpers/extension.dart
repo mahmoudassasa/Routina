@@ -6,7 +6,9 @@ extension Navigation on BuildContext {
   }
 
   Future<dynamic> pushReplacementNamed(String routeName, {Object? arguments}) {
-    return  Navigator.of(this).pushReplacementNamed(routeName, arguments: arguments);
+    return Navigator.of(
+      this,
+    ).pushReplacementNamed(routeName, arguments: arguments);
   }
 
   Future<dynamic> pushNamedAndRemoveUntil(
@@ -19,6 +21,10 @@ extension Navigation on BuildContext {
       predicate ?? (_) => false,
       arguments: arguments,
     );
+  }
+
+  Future<dynamic> push(Widget page) {
+    return Navigator.of(this).push(MaterialPageRoute(builder: (_) => page));
   }
 
   void pop([Object? result]) => Navigator.of(this).pop(result);

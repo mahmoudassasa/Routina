@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 
 class ReminderTimePickerTile extends StatelessWidget {
@@ -54,8 +55,8 @@ class ReminderTimePickerTile extends StatelessWidget {
             Expanded(
               child: Text(
                 selectedTime != null
-                    ? 'Reminder at ${selectedTime!.format(context)}'
-                    : 'Set a reminder (optional)',
+                    ? context.l10n.reminderAtTime(selectedTime!.format(context))
+                    : context.l10n.setReminderOptional,
                 style: TextStyle(
                   fontSize: 14.sp,
                   color: selectedTime != null

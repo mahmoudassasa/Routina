@@ -13,7 +13,7 @@ class EmailVerificationCubit extends Cubit<EmailVerificationState> {
   int remainingSeconds = 60;
 
   void startResendTimer() {
-    remainingSeconds = 60; 
+    remainingSeconds = 60;
     emit(EmailVerificationTimerTick(remainingSeconds));
 
     _timer?.cancel();
@@ -36,31 +36,29 @@ class EmailVerificationCubit extends Cubit<EmailVerificationState> {
       emit(EmailVerificationEmailSent());
       startResendTimer();
     } catch (_) {
-      emit(EmailVerificationError("Error sending verification email"));
+      emit(EmailVerificationError('send_error'));
     }
   }
 
   Future<void> checkVerification() async {
-  try {
-    emit(EmailVerificationLoading());
+    try {
+      emit(EmailVerificationLoading());
 
-    // Force refresh user data
-    await FirebaseAuth.instance.currentUser?.reload();
-    await Future.delayed(const Duration(seconds: 1));
+      // Force refresh user data
+      await FirebaseAuth.instance.currentUser?.reload();
+      await Future.delayed(const Duration(seconds: 1));
 
-    final user = FirebaseAuth.instance.currentUser;
+      final user = FirebaseAuth.instance.currentUser;
 
-
-    if (user != null && user.emailVerified) {
-      emit(EmailVerificationVerified());
-    } else {
-      emit(EmailVerificationNotVerified());
+      if (user != null && user.emailVerified) {
+        emit(EmailVerificationVerified());
+      } else {
+        emit(EmailVerificationNotVerified());
+      }
+    } catch (_) {
+      emit(EmailVerificationError('check_error'));
     }
-  } catch (e) {
-    emit(EmailVerificationError("Error checking verification status: $e"));
   }
-}
-
 
   @override
   Future<void> close() {

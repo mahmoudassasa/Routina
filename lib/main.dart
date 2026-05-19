@@ -7,11 +7,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/di/dependency_injection.dart';
 import 'package:routina/core/services/notification_service.dart' as notify;
 import 'package:routina/core/theaming/app_theme/logic/cubit/theme_cubit.dart';
+import 'package:routina/features/locale/logic/locale_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'core/routing/app_router.dart';
 import 'routina_app.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Ensure this is present
@@ -35,13 +37,16 @@ void main() async {
     providerAndroid: const AndroidDebugProvider(),
   );
 await setupGetIt();
-  runApp(
-    BlocProvider(
-      create: (context) => ThemeCubit(),
+runApp(
+  BlocProvider(
+    create: (context) => ThemeCubit(),
+    child: BlocProvider(
+      create: (context) => LocaleCubit()..loadSavedLocale(),
       child: RoutinaApp(
         appRouter: AppRouter(),
-        isFirstTime: isFirstTime, // Pass the flag
+        isFirstTime: isFirstTime,
       ),
     ),
-  );
+  ),
+);
 }

@@ -59,7 +59,7 @@ class PremiumAnalyticsScreen extends StatelessWidget {
             ),
           ),
           title: Text(
-            'Elite Insights',
+            context.l10n.eliteInsights,
             style: TextStyle(
               fontSize: 18.sp,
               fontWeight: FontWeight.bold,
@@ -79,8 +79,7 @@ class PremiumAnalyticsScreen extends StatelessWidget {
                   Expanded(
                     child: _MetricCard(
                       isDark: isDark,
-                      label: 'Avg Completion',
-                      value: '${(avgCompletion * 100).toInt()}%',
+label: context.l10n.avgCompletion,                      value: '${(avgCompletion * 100).toInt()}%',
                       icon: '📊',
                       color: AppColors.primary,
                     ),
@@ -89,8 +88,7 @@ class PremiumAnalyticsScreen extends StatelessWidget {
                   Expanded(
                     child: _MetricCard(
                       isDark: isDark,
-                      label: 'Total Habits',
-                      value: '${habits.length}',
+label: context.l10n.totalHabits,                      value: '${habits.length}',
                       icon: '📋',
                       color: Colors.amber,
                     ),
@@ -103,8 +101,7 @@ class PremiumAnalyticsScreen extends StatelessWidget {
                   Expanded(
                     child: _MetricCard(
                       isDark: isDark,
-                      label: 'Best Streak',
-                      value: '${best?['streak'] ?? 0}d',
+label: context.l10n.bestStreak,                      value: '${best?['streak'] ?? 0}d',
                       icon: '🔥',
                       color: Colors.orange,
                     ),
@@ -113,8 +110,7 @@ class PremiumAnalyticsScreen extends StatelessWidget {
                   Expanded(
                     child: _MetricCard(
                       isDark: isDark,
-                      label: 'Needs Focus',
-                      value: worst?['title'] as String? ?? '-',
+label: context.l10n.needsFocus,                      value: worst?['title'] as String? ?? '-',
                       icon: '⚡',
                       color: Colors.redAccent,
                       small: true,
@@ -126,14 +122,14 @@ class PremiumAnalyticsScreen extends StatelessWidget {
 
               // Best habit
               if (best != null) ...[
-                _SectionTitle(title: '🏆 Best Performing', isDark: isDark),
+                _SectionTitle(title: context.l10n.bestPerforming, isDark: isDark),
                 verticalSpace(12),
                 _HabitInsightCard(habit: best, isDark: isDark, highlight: true),
                 verticalSpace(24),
               ],
 
               // All habits breakdown
-              _SectionTitle(title: '📈 Completion Breakdown', isDark: isDark),
+              _SectionTitle(title: context.l10n.completionBreakdown, isDark: isDark),
               verticalSpace(12),
               ...habits.map(
                 (habit) => Padding(
@@ -145,7 +141,7 @@ class PremiumAnalyticsScreen extends StatelessWidget {
               verticalSpace(24),
 
               // Priority focus
-              _SectionTitle(title: '🎯 Priority Focus', isDark: isDark),
+              _SectionTitle(title: context.l10n.priorityFocus, isDark: isDark),
               verticalSpace(12),
               Container(
                 width: double.infinity,
@@ -201,7 +197,7 @@ class PremiumAnalyticsScreen extends StatelessWidget {
                     ))
                       Center(
                         child: Text(
-                          '🎉 All habits on track!',
+                          context.l10n.allHabitsOnTrack,
                           style: TextStyle(
                             fontSize: 14.sp,
                             color: AppColors.primary,
@@ -353,7 +349,7 @@ class _HabitInsightCard extends StatelessWidget {
                 ),
                 verticalSpace(4),
                 Text(
-                  '🔥 $streak day streak • ${(progress * 100).toInt()}% complete',
+                  context.l10n.dayStreak(streak.toString(), (progress * 100).toInt().toString()),
                   style: TextStyle(
                     fontSize: 12.sp,
                     color: isDark ? Colors.grey[400] : Colors.grey[600],

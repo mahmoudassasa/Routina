@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/features/profile_screen/logic/cubit/profile_cubit.dart';
@@ -37,7 +38,7 @@ class ProfileScreenUserDetails extends StatelessWidget {
         return Column(
           children: [
             Text(
-              state.name ?? "Unknown User",
+              state.name ?? context.l10n.unknownUser,
               style: TextStyle(
                 fontSize: 28.sp,
                 fontWeight: FontWeight.bold,
@@ -48,7 +49,7 @@ class ProfileScreenUserDetails extends StatelessWidget {
             ),
             verticalSpace(8),
             Text(
-              state.email ?? "No Email",
+              state.email ?? context.l10n.noEmail,
               style: TextStyle(
                 fontSize: 16.sp, // Reduced slightly for better hierarchy
                 color: isDark

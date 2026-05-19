@@ -30,12 +30,12 @@ class _SuccessDialog extends StatelessWidget {
         children: [
           const Icon(Icons.check_circle_rounded, size: 80, color: Colors.greenAccent),
           verticalSpace(16),
-          Text("Success!", style: AppTextStyles.displaySmall.copyWith(
+          Text(context.l10n.success, style: AppTextStyles.displaySmall.copyWith(
              color: isDark ? Colors.white : AppColors.textPrimary,
           )),
           verticalSpace(8),
           Text(
-            "Email verified! Redirecting to login...",
+            context.l10n.emailVerifiedRedirect,
             textAlign: TextAlign.center,
             style: AppTextStyles.bodyMedium.copyWith(
                color: isDark ? Colors.white70 : AppColors.textSecondary,

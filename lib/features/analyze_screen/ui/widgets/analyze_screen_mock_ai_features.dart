@@ -17,14 +17,16 @@ class AnalyzeScreenMockAiFeatures extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 32.w),
       child: Column(
         children: [
           AIFeatureCard(
             icon: '✨',
-            title: 'Overall Analysis',
-            description: 'Get a full AI breakdown of your routine',
+            title: context.l10n.overallAnalysis,
+            description: context.l10n.overallAnalysisDesc,
             onTap: () {
               final habits = context.read<HomeCubit>().state.habits;
               if (habits.isEmpty) {
@@ -46,8 +48,8 @@ class AnalyzeScreenMockAiFeatures extends StatelessWidget {
           verticalSpace(16),
           AIFeatureCard(
             icon: '💡',
-            title: 'Smart Suggestions',
-            description: 'Personalized tips to improve your habits',
+            title: context.l10n.smartSuggestions,
+            description: context.l10n.smartSuggestionsDesc,
             onTap: () {
               final isPremium = context.read<BillingCubit>().state.isPremium;
               if (isPremium) {
@@ -57,13 +59,12 @@ class AnalyzeScreenMockAiFeatures extends StatelessWidget {
                 showPremiumFeatureBottomSheet(
                   context: context,
                   icon: '💡',
-                  title: 'Smart AI Suggestions',
-                  description:
-                      'Our AI will analyze your patterns to give you tailored advice.',
+                  title: context.l10n.smartAiSuggestions,
+                  description: context.l10n.smartAiSuggestionsDesc,
                   features: [
-                    'Habit stacking strategies',
-                    'Best performing hours',
-                    'Routine optimization',
+                    context.l10n.habitStacking,
+                    context.l10n.bestPerformingHours,
+                    context.l10n.routineOptimization,
                   ],
                 );
               }
@@ -74,8 +75,8 @@ class AnalyzeScreenMockAiFeatures extends StatelessWidget {
           // Goal Optimization
           AIFeatureCard(
             icon: '🎯',
-            title: 'Goal Optimization',
-            description: 'AI-powered recommendations for better results',
+            title: context.l10n.goalOptimization,
+            description: context.l10n.goalOptimizationDesc,
             onTap: () {
               final isPremium = context.read<BillingCubit>().state.isPremium;
               if (isPremium) {
@@ -85,13 +86,12 @@ class AnalyzeScreenMockAiFeatures extends StatelessWidget {
                 showPremiumFeatureBottomSheet(
                   context: context,
                   icon: '🎯',
-                  title: 'Goal Optimization',
-                  description:
-                      'Let Gemini AI help you set smarter, more achievable goals.',
+                  title: context.l10n.goalOptimizationTitle,
+                  description: context.l10n.goalOptimizationDesc2,
                   features: [
-                    'Success forecasting',
-                    'Dynamic difficulty',
-                    'Milestone breakdown',
+                    context.l10n.successForecasting,
+                    context.l10n.dynamicDifficulty,
+                    context.l10n.milestoneBreakdown,
                   ],
                 );
               }

@@ -53,7 +53,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           context.pop();
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(state.errorMessage ?? 'Logout failed'),
+              content: Text(state.errorMessage ?? context.l10n.logoutFailed),
               backgroundColor: Colors.red,
             ),
           );
@@ -89,18 +89,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Column(
                     children: [
                       const ProfileHeaderSection(),
-                      SizedBox(
-                        height: 10.h,
-                      ),
+                      SizedBox(height: 10.h),
                       const ProfileScreenUserDetails(),
                       const ProfileScreenUserStateCards(),
-                       verticalSpace(40), 
+                      verticalSpace(40),
                       const ProfileScreenSettingsOptions(),
-                       verticalSpace(20), 
+                      verticalSpace(20),
                       ProfileLogoutButton(
                         onTap: () => showLogoutDialog(context),
                       ),
-                      verticalSpace(30), 
+
+                      verticalSpace(30),
                     ],
                   ),
                 );

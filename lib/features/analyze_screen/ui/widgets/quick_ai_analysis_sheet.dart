@@ -29,7 +29,7 @@ class _QuickAiAnalysisSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-
+     
     return Container(
       constraints: BoxConstraints(maxHeight: 0.85.sh),
       decoration: BoxDecoration(
@@ -76,7 +76,7 @@ class _QuickAiAnalysisSheet extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Quick AI Analysis',
+                      context.l10n.quickAiAnalysis,
                       style: TextStyle(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.bold,
@@ -84,7 +84,7 @@ class _QuickAiAnalysisSheet extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Powered by Gemini',
+                      context.l10n.poweredByGemini,
                       style: TextStyle(
                         fontSize: 12.sp,
                         color: isDark ? Colors.grey[400] : Colors.grey[600],
@@ -137,15 +137,14 @@ class _QuickAiAnalysisSheet extends StatelessWidget {
                 if (state.status == AiAnalysisStatus.error) {
                   String errorMsg;
                   if (state.errorMessage == 'quota_exceeded') {
-                    errorMsg = 'Daily AI limit reached. Try again tomorrow.';
+                    errorMsg = context.l10n.quotaExceeded;
                   } else if (state.errorMessage?.contains('503') == true ||
                       state.errorMessage?.contains('high demand') == true) {
-                    errorMsg =
-                        'AI is busy right now. Please try again in a moment.';
+                    errorMsg = context.l10n.aiBusy;
                   } else if (state.errorMessage?.contains('network') == true) {
-                    errorMsg = 'Check your internet connection and try again.';
+                    errorMsg = context.l10n.networkError;
                   } else {
-                    errorMsg = 'Something went wrong. Please try again.';
+                    errorMsg = context.l10n.somethingWentWrong;
                   }
 
                   return Padding(
@@ -215,7 +214,7 @@ class _QuickAiAnalysisSheet extends StatelessWidget {
                               );
                             },
                             icon: Icon(Icons.analytics_outlined, size: 18.sp),
-                            label: const Text('View Full Analysis'),
+                            label: Text(context.l10n.viewFullAnalysis),
                             style: OutlinedButton.styleFrom(
                               foregroundColor: AppColors.primary,
                               side: const BorderSide(color: AppColors.primary),

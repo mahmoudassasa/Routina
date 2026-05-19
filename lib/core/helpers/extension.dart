@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:routina/l10n/app_localizations.dart';
 
 extension Navigation on BuildContext {
   Future<dynamic> pushNamed(String routeName, {Object? arguments}) {
@@ -40,4 +41,8 @@ extension ListExtension<T> on List<T>? {
 
 extension MapExtension<K, V> on Map<K, V>? {
   bool isNullOrEmpty() => this == null || this!.isEmpty;
+}
+
+extension L10nX on BuildContext {
+  AppLocalizations get l10n => AppLocalizations.of(this)!;
 }

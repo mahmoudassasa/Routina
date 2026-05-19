@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/services/notification_service.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/features/home_screen/logic/cubit/home_cubit.dart';
@@ -55,7 +56,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Habit Reminders',
+          context.l10n.habitReminders,
           style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
         ),
         elevation: 0,
@@ -65,7 +66,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           if (state.habits.isEmpty) {
             return Center(
               child: Text(
-                "No habits found to schedule",
+                context.l10n.noHabitsFound,
                 style: TextStyle(fontSize: 14.sp, color: Colors.grey),
               ),
             );
@@ -107,14 +108,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     ),
                   ),
                   title: Text(
-                    habit['title'] ?? "Unnamed Habit",
+                    habit['title'] ?? context.l10n.unnamedHabit,
                     style: TextStyle(
                       fontSize: 15.sp,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   subtitle: Text(
-                    isON ? "Reminder is active" : "Reminder is off",
+                    isON
+                        ? context.l10n.reminderActive
+                        : context.l10n.reminderOff,
                     style: TextStyle(fontSize: 12.sp),
                   ),
                   trailing: Switch.adaptive(
@@ -133,15 +136,18 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   Future<void> _handleToggle(bool value, dynamic habit, int habitId) async {
     if (value) {
+      final enableMsg = context.l10n.enableNotificationsMsg;
+      final remindMeMsg = context.l10n.remindMeOf(habit['title'] ?? '');
+      final notifTitle = context.l10n.notificationTitle(habit['title'] ?? '');
+      final notifBody = context.l10n.notificationBody;
+      final buildReminderMsg = context.l10n.reminderSetFor;
+
       bool isAllowed = await requestNotificationPermissions();
       if (!mounted) return;
 
       if (!isAllowed) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Please enable notifications from system settings"),
-            backgroundColor: Colors.red,
-          ),
+          SnackBar(content: Text(enableMsg), backgroundColor: Colors.red),
         );
         return;
       }
@@ -149,27 +155,27 @@ class _NotificationScreenState extends State<NotificationScreen> {
       final TimeOfDay? picked = await showTimePicker(
         context: context,
         initialTime: TimeOfDay.now(),
-        helpText: "Remind me of ${habit['title']}",
+        helpText: remindMeMsg,
       );
 
       if (picked != null) {
+        final hour = picked.hour.toString().padLeft(2, '0');
+        final minute = picked.minute.toString().padLeft(2, '0');
+        final reminderMsg = buildReminderMsg('$hour:$minute');
+
         try {
           await scheduleDailyNotification(
             id: habitId,
-            title: 'Routina: Time for ${habit['title']}! 🚀',
-            body: 'Stay consistent! It is time to complete this habit.',
+            title: notifTitle,
+            body: notifBody,
             hour: picked.hour,
             minute: picked.minute,
           );
-
           if (mounted) setState(() => scheduledHabits[habitId] = true);
-
           if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text("Reminder set for ${picked.format(context)}"),
-              ),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(reminderMsg)));
           }
         } catch (e) {
           // scheduling failed silently

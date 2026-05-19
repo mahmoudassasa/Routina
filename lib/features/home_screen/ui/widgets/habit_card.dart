@@ -56,7 +56,7 @@ class HabitCard extends StatelessWidget {
     return Dismissible(
       key: Key(habit['id'].toString()),
       direction: DismissDirection.endToStart,
-      background: _buildDismissibleBackground(),
+      background: _buildDismissibleBackground (context),
       confirmDismiss: (direction) async {
         return await _showDeleteConfirmationDialog(context, habit['title']);
       },
@@ -64,7 +64,7 @@ class HabitCard extends StatelessWidget {
         context.read<HomeCubit>().deleteHabit(habit['id']);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('${habit['title']} deleted'),
+            content: Text(context.l10n.habitDeleted(habit['title'])),
             backgroundColor: Colors.red.shade600,
             behavior: SnackBarBehavior.floating,
             duration: const Duration(seconds: 2),
@@ -109,7 +109,7 @@ class HabitCard extends StatelessWidget {
                           ),
                           verticalSpace(2), 
                           Text(
-                            "${(progress * 100).toInt()}% Weekly Goal",
+                            context.l10n.weeklyGoal((progress * 100).toInt()),
                             style: TextStyle(
                               fontSize: 13.sp,
                               color: isDark

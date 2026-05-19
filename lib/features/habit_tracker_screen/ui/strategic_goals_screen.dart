@@ -42,7 +42,7 @@ class StrategicGoalsScreen extends StatelessWidget {
             ),
           ),
           title: Text(
-            'Strategic Goals',
+            context.l10n.strategicGoals,
             style: TextStyle(
               fontSize: 18.sp,
               fontWeight: FontWeight.bold,
@@ -52,13 +52,13 @@ class StrategicGoalsScreen extends StatelessWidget {
           centerTitle: true,
         ),
         body: habits.isEmpty
-            ? _buildEmpty(isDark)
+            ? _buildEmpty(isDark, context)
             : _buildContent(context, isDark),
       ),
     );
   }
 
-  Widget _buildEmpty(bool isDark) {
+  Widget _buildEmpty(bool isDark, BuildContext context) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -66,7 +66,7 @@ class StrategicGoalsScreen extends StatelessWidget {
           Text('🎯', style: TextStyle(fontSize: 64.sp)),
           verticalSpace(16),
           Text(
-            'No habits yet',
+            context.l10n.noHabitsYet,
             style: TextStyle(
               fontSize: 18.sp,
               fontWeight: FontWeight.bold,
@@ -75,7 +75,7 @@ class StrategicGoalsScreen extends StatelessWidget {
           ),
           verticalSpace(8),
           Text(
-            'Add habits first to set strategic goals',
+            context.l10n.noHabitsYetDesc,
             style: TextStyle(
               fontSize: 14.sp,
               color: isDark ? Colors.grey[400] : Colors.grey[600],
@@ -145,7 +145,7 @@ class StrategicGoalsScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20.r),
                     ),
                     child: Text(
-                      '🔥 $streak days',
+                      context.l10n.streakBadge(streak.toString()),
                       style: TextStyle(
                         fontSize: 12.sp,
                         color: AppColors.primary,
@@ -162,7 +162,7 @@ class StrategicGoalsScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Next milestone: $currentMilestone days',
+                    context.l10n.nextMilestone(currentMilestone.toString()),
                     style: TextStyle(
                       fontSize: 12.sp,
                       color: isDark ? Colors.grey[400] : Colors.grey[600],

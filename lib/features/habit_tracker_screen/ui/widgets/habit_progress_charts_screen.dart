@@ -40,7 +40,7 @@ class HabitProgressChartsScreen extends StatelessWidget {
           isDark ? const Color(0xFF13151A) : const Color(0xFFF8F9FB),
       appBar: AppBar(
         title: Text(
-          'Habit Analytics',
+context.l10n.habitAnalytics,
           style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -52,23 +52,23 @@ class HabitProgressChartsScreen extends StatelessWidget {
         ),
       ),
       body: habits.isEmpty
-          ? _buildEmptyState(isDark)
+          ? _buildEmptyState(isDark, context)
           : SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildSectionTitle(isDark, 'Weekly Activity'),
+                  _buildSectionTitle(isDark, context.l10n.weeklyActivity),
                   verticalSpace(12), 
-                  _buildWeeklyHeatmap(isDark, habits),
+                  _buildWeeklyHeatmap(isDark, habits, context),
                   verticalSpace(24), 
                   Row(
                     children: [
                       Expanded(
                         child: _buildMetricCard(
                           isDark,
-                          'Avg. Progress',
+                          context.l10n.avgProgress,
                           '${(avgCompletion * 100).toInt()}%',
                           Icons.donut_large,
                           Colors.blueAccent,
@@ -78,8 +78,8 @@ class HabitProgressChartsScreen extends StatelessWidget {
                       Expanded(
                         child: _buildMetricCard(
                           isDark,
-                          'Total Streaks',
-                          '$totalStreaks Days',
+                          context.l10n.totalStreaks,
+                          context.l10n.totalStreaksDays(totalStreaks),
                           Icons.local_fire_department,
                           Colors.orange,
                         ),
@@ -87,7 +87,7 @@ class HabitProgressChartsScreen extends StatelessWidget {
                     ],
                   ),
                   verticalSpace(24), 
-                  _buildSectionTitle(isDark, 'Individual Performance'),
+                  _buildSectionTitle(isDark, context.l10n.individualPerformance),
                   verticalSpace(12), 
                   ...habits.map((habit) {
                     return _buildHabitProgressLine(
@@ -98,7 +98,7 @@ class HabitProgressChartsScreen extends StatelessWidget {
                     );
                   }),
                   verticalSpace(32), 
-                  _buildInsightBox(isDark, avgCompletion),
+                  _buildInsightBox(isDark, avgCompletion,context),
                   verticalSpace(24), 
                 ],
               ),
@@ -106,5 +106,4 @@ class HabitProgressChartsScreen extends StatelessWidget {
     );
   }
 
-  // --- UI Helper Methods ---
 }

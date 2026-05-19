@@ -1,11 +1,14 @@
 part of 'habit_progress_charts_screen.dart';
 
 extension InsightBox on HabitProgressChartsScreen {
-  Widget _buildInsightBox(bool isDark, double avgProgress) {
+  Widget _buildInsightBox(
+    bool isDark,
+    double avgProgress,
+    BuildContext context,
+  ) {
     String message = avgProgress > 0.5
-        ? "You're doing great! Your consistency is above average."
-        : "Keep going! Small steps lead to big changes.";
-
+        ? context.l10n.insightGreat
+        : context.l10n.insightKeepGoing;
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
@@ -16,20 +19,23 @@ extension InsightBox on HabitProgressChartsScreen {
         ),
         borderRadius: BorderRadius.circular(16.r),
       ),
-      child: Row(
-        children: [
-          Text('💡', style: TextStyle(fontSize: 24.sp)),
-          horizontalSpace(16),
-          Expanded(
-            child: Text(
-              message,
-              style: TextStyle(
-                fontSize: 13.sp,
-                color: isDark ? Colors.white : Colors.blue.shade900,
+      child: Directionality(
+        textDirection: Directionality.of(context), // ← بدل TextDirection.ltr
+        child: Row(
+          children: [
+            Text('💡', style: TextStyle(fontSize: 24.sp)),
+            horizontalSpace(16),
+            Expanded(
+              child: Text(
+                message,
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  color: isDark ? Colors.white : Colors.blue.shade900,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

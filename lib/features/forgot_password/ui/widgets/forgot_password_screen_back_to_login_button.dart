@@ -48,7 +48,7 @@ class ForgotPasswordScreenBackToLoginButton extends StatelessWidget {
                 ),
                 horizontalSpace(10),
                 Text(
-                  'Back to Login',
+                  context.l10n.backToLogin,
                   style:
                       textStyle ??
                       TextStyle(

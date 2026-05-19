@@ -99,7 +99,7 @@ class _CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
                 fontWeight: FontWeight.w600,
               ),
               decoration: InputDecoration(
-                hintText: 'Habit Title',
+                hintText: context.l10n.habitTitle,
                 hintStyle: TextStyle(color: Colors.grey, fontSize: 15.sp),
                 filled: true,
                 fillColor: isDark
@@ -119,20 +119,21 @@ class _CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
             IconSelector(
               selectedIconKey: _selectedIconKey,
               selectedColor: _selectedColor,
-              onIconSelected: (iconKey) => setState(() => _selectedIconKey = iconKey),
+              onIconSelected: (iconKey) =>
+                  setState(() => _selectedIconKey = iconKey),
             ),
             verticalSpace(24),
             ColorPickerWidget(
               selectedColor: _selectedColor,
-              onColorSelected: (color) => setState(() => _selectedColor = color),
+              onColorSelected: (color) =>
+                  setState(() => _selectedColor = color),
             ),
             verticalSpace(24),
             FrequencySelector(
               selectedDays: _selectedDays,
               selectedColor: _selectedColor,
-              onDayToggled: (index) => setState(
-                () => _selectedDays[index] = !_selectedDays[index],
-              ),
+              onDayToggled: (index) =>
+                  setState(() => _selectedDays[index] = !_selectedDays[index]),
             ),
             verticalSpace(24),
             ReminderTimePickerTile(
@@ -142,7 +143,7 @@ class _CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
                 final TimeOfDay? picked = await showTimePicker(
                   context: context,
                   initialTime: _selectedTime ?? TimeOfDay.now(),
-                  helpText: 'Set daily reminder',
+                  helpText: context.l10n.setDailyReminder,
                 );
                 if (picked != null && mounted) {
                   setState(() => _selectedTime = picked);
@@ -179,11 +180,13 @@ class _CreateHabitBottomSheetState extends State<CreateHabitBottomSheet> {
                   context.pop();
 
                   if (selectedTime != null) {
+                    final notifTitle = context.l10n.notificationTitle;
+                    final notifBody = context.l10n.notificationBody;
                     await cancelNotification(habitId);
                     await scheduleDailyNotification(
                       id: habitId,
-                      title: 'Routina: Time for $habitTitle! 🚀',
-                      body: 'Stay consistent! Time to complete this habit.',
+                      title: notifTitle(habitTitle),
+                      body: notifBody,
                       hour: selectedTime.hour,
                       minute: selectedTime.minute,
                     );

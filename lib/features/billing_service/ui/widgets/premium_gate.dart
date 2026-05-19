@@ -34,6 +34,7 @@ class _LockedOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     
     return GestureDetector(
       onTap: () => _openPaywall(context),
       child: Container(
@@ -61,7 +62,7 @@ class _LockedOverlay extends StatelessWidget {
             ),
             SizedBox(height: 14.h),
             Text(
-              'Premium Feature',
+              context.l10n.premiumFeature,
               style: AppTextStyles.font16WhiteMedium,
             ),
             SizedBox(height: 6.h),
@@ -84,7 +85,7 @@ class _LockedOverlay extends StatelessWidget {
                   ),
                 ),
                 child:
-                    Text('Unlock Premium', style: AppTextStyles.font14WhiteRegular),
+                    Text(context.l10n.upgradeToPremium, style: AppTextStyles.font14WhiteRegular),
               ),
             ),
           ],

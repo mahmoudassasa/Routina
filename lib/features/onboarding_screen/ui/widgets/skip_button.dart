@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/theaming/app_text_styles.dart';
 
@@ -19,13 +20,15 @@ class SkipButton extends StatelessWidget {
           onPressed: onPressed,
           style: TextButton.styleFrom(
             // Use primaryLight for dark mode visibility
-            foregroundColor: isDark ? AppColors.primaryLight : AppColors.primary,
+            foregroundColor: isDark
+                ? AppColors.primaryLight
+                : AppColors.primary,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
           ),
           child: Text(
-            'Skip',
+            context.l10n.skip,
             style: AppTextStyles.labelLarge.copyWith(
               fontWeight: FontWeight.bold,
               // Fallback color if primaryLight isn't white enough

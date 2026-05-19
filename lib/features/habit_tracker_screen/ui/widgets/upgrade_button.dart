@@ -47,7 +47,7 @@ class _UpgradeButton extends StatelessWidget {
                 ),
                 horizontalSpace(10),
                 Text(
-                  'Upgrade to Premium',
+                  context.l10n.upgradeToPremium,
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.bold,

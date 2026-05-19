@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 
 class HabitActionButton extends StatelessWidget {
@@ -29,9 +30,7 @@ class HabitActionButton extends StatelessWidget {
         boxShadow: isActionable
             ? [
                 BoxShadow(
-                  color: habitColor.withValues(
-                    alpha: isDark ? 0.4 : 0.25,
-                  ),
+                  color: habitColor.withValues(alpha: isDark ? 0.4 : 0.25),
                   blurRadius: 20,
                   offset: const Offset(0, 8),
                 ),
@@ -59,20 +58,17 @@ class HabitActionButton extends StatelessWidget {
                 horizontalSpace(12),
                 Text(
                   isActionable
-                      ? 'Mark as Done'
+                      ? context.l10n.markAsDone
                       : (isTodayScheduled
-                            ? 'Completed Today'
-                            : 'Rest Day'),
+                            ? context.l10n.completedToday
+                            : context.l10n.restDay),
                   style: TextStyle(
-                    color: isActionable
-                        ? Colors.white
-                        : Colors.grey,
+                    color: isActionable ? Colors.white : Colors.grey,
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.1,
                     height: 1.1,
-                    leadingDistribution:
-                        TextLeadingDistribution.even,
+                    leadingDistribution: TextLeadingDistribution.even,
                   ),
                 ),
               ],

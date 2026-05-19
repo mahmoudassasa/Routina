@@ -56,11 +56,10 @@ if (isClosed) return;
             name: userData['name'] as String?,
             email: userData['email'] as String?,
             imageUrl: userData['imageUrl'] as String?,
-            totalHabits: "$total active",
-            currentStreak:
-                "$currentActiveStreak days", 
+            totalHabitsCount: total,    
+          currentStreakCount: currentActiveStreak, 
             completionRate: "${avgCompletion.toInt()}%",
-            bestStreak: "$bestStreak days",
+          bestStreakCount: bestStreak,  
           ),
         );
       }

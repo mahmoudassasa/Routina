@@ -11,25 +11,25 @@ extension _HelpSupportContactChannels on _HelpSupportScreenState {
       childAspectRatio: 2.4,
       children: [
         _channelCard(
-          'Email',
+          context.l10n.channelEmail,
           Icons.email_rounded,
           AppColors.primary,
           _launchEmail,
         ),
         _channelCard(
-          'WhatsApp',
+          context.l10n.channelWhatsApp,
           Icons.chat_rounded,
           AppColors.success,
           _launchWhatsApp,
         ),
         _channelCard(
-          'Telegram',
+          context.l10n.channelTelegram,
           Icons.send_rounded,
           AppColors.primaryDark,
           _launchTelegram,
         ),
         _channelCard(
-          'Discord',
+          context.l10n.channelDiscord,
           Icons.discord,
           AppColors.accent,
           _launchDiscord,

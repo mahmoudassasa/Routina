@@ -19,11 +19,13 @@ class PrivacyPolicyScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: isDark ? AppColors.darkBackground : AppColors.background,
       appBar: AppBar(
-        backgroundColor: isDark ? AppColors.darkBackground : AppColors.background,
+        backgroundColor: isDark
+            ? AppColors.darkBackground
+            : AppColors.background,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         title: Text(
-          'Privacy Policy',
+          context.l10n.privacyPolicyTitle,
           style: AppTextStyles.headlineMedium.copyWith(
             color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
           ),
@@ -44,78 +46,70 @@ class PrivacyPolicyScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Header card
-            _buildHeaderCard(isDark),
+            _buildHeaderCard(isDark, context),
 
-verticalSpace(24), 
+            verticalSpace(24),
             _buildSection(
               isDark: isDark,
               icon: Icons.info_outline_rounded,
-              title: '1. Information We Collect',
-              content:
-                  'Routina collects only the information necessary to provide our habit tracking service. This includes your email address for authentication, habit data you create within the app, and basic usage analytics to improve your experience.',
+              title: context.l10n.privacy1Title,
+              content: context.l10n.privacy1Content,
             ),
 
             _buildSection(
               isDark: isDark,
               icon: Icons.storage_rounded,
-              title: '2. How We Use Your Data',
-              content:
-                  'Your data is used solely to power the features of Routina, including habit tracking, progress analysis, and AI-powered insights. We do not sell, rent, or share your personal information with third parties for marketing purposes.',
+              title: context.l10n.privacy2Title,
+              content: context.l10n.privacy2Content,
             ),
 
             _buildSection(
               isDark: isDark,
               icon: Icons.lock_outline_rounded,
-              title: '3. Data Security',
-              content:
-                  'We use industry-standard security measures including Firebase Authentication and Supabase with Row Level Security (RLS) to protect your data. All data is encrypted in transit and at rest.',
+              title: context.l10n.privacy3Title,
+              content: context.l10n.privacy3Content,
             ),
 
             _buildSection(
               isDark: isDark,
               icon: Icons.auto_awesome_outlined,
-              title: '4. AI Features',
-              content:
-                  'The AI analysis feature in Routina uses Google Gemini to process your habit data. This processing is done securely and your data is not stored or used to train AI models. AI responses are generated in real-time and not retained by third parties.',
+              title: context.l10n.privacy4Title,
+              content: context.l10n.privacy4Content,
             ),
 
             _buildSection(
               isDark: isDark,
               icon: Icons.person_outline_rounded,
-              title: '5. Your Rights',
-              content:
-                  'You have the right to access, correct, or delete your personal data at any time. You can delete your account and all associated data directly from the app settings. For any privacy-related requests, contact us at dev.egy01@gmail.com.',
+              title: context.l10n.privacy5Title,
+              content: context.l10n.privacy5Content,
             ),
 
             _buildSection(
               isDark: isDark,
               icon: Icons.child_care_rounded,
-              title: '6. Children\'s Privacy',
-              content:
-                  'Routina is not directed at children under the age of 13. We do not knowingly collect personal information from children. If you believe a child has provided us with personal information, please contact us immediately.',
+              title: context.l10n.privacy6Title,
+              content: context.l10n.privacy6Content,
             ),
 
             _buildSection(
               isDark: isDark,
               icon: Icons.update_rounded,
-              title: '7. Changes to This Policy',
-              content:
-                  'We may update this Privacy Policy from time to time. We will notify you of any significant changes through the app or via email. Continued use of Routina after changes constitutes acceptance of the updated policy.',
+              title: context.l10n.privacy7Title,
+              content: context.l10n.privacy7Content,
             ),
 
             _buildSection(
               isDark: isDark,
               icon: Icons.mail_outline_rounded,
-              title: '8. Contact Us',
-              content:
-                  'If you have any questions about this Privacy Policy or our data practices, please contact us at dev.egy01@gmail.com. We aim to respond to all inquiries within 48 hours.',
+              title: context.l10n.privacy8Title,
+              content: context.l10n.privacy8Content,
             ),
 
-verticalSpace(32),
+            verticalSpace(32),
             // Footer
-            _buildFooter(isDark),
+            _buildFooter(isDark, context),
 
-verticalSpace(32),
+            verticalSpace(32),
           ],
         ),
       ),

@@ -16,7 +16,7 @@ extension DeleteConfirmationDialog on HabitCard {
             borderRadius: BorderRadius.circular(20.r),
           ),
           title: Text(
-            'Delete Habit?',
+            context.l10n.deleteHabit,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20.sp,
@@ -24,7 +24,7 @@ extension DeleteConfirmationDialog on HabitCard {
             ),
           ),
           content: Text(
-            'Are you sure you want to delete "$habitTitle"? This action cannot be undone.',
+          context.l10n.deleteHabitConfirm(habitTitle),
             style: TextStyle(
               fontSize: 15.sp,
               color: isDark ? Colors.grey[400] : Colors.grey[700],
@@ -34,7 +34,7 @@ extension DeleteConfirmationDialog on HabitCard {
             TextButton(
               onPressed: () => context.pop(false),
               child: Text(
-                'Cancel',
+                context.l10n.cancel,
                 style: TextStyle(
                   color: isDark ? Colors.grey[400] : Colors.grey[600],
                   fontSize: 16.sp,
@@ -52,7 +52,7 @@ extension DeleteConfirmationDialog on HabitCard {
                 ),
               ),
               child: Text(
-                'Delete',
+                context.l10n.delete,
                 style: TextStyle(
                   color: Colors.red,
                   fontSize: 16.sp,

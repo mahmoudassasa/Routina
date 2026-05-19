@@ -48,7 +48,8 @@ class _MainNavigationBarState extends State<MainNavigationBar> {
                 final habitsCount = homeCubit.state.habits.length;
 
                 // Premium gate: free users limited to 3 habits
-                if (!billingState.isPremium && habitsCount >= _freeHabitsLimit) {
+                if (!billingState.isPremium &&
+                    habitsCount >= _freeHabitsLimit) {
                   _showPaywall(context);
                   return;
                 }
@@ -64,11 +65,13 @@ class _MainNavigationBarState extends State<MainNavigationBar> {
                 );
               },
               onCenterLongPress: () {
+                 
+
                 final habits = context.read<HomeCubit>().state.habits;
                 if (habits.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Add some habits first!'),
+                    SnackBar(
+                      content: Text(context.l10n.addHabitsFirst),
                       backgroundColor: AppColors.primary,
                       behavior: SnackBarBehavior.floating,
                     ),
@@ -86,12 +89,12 @@ class _MainNavigationBarState extends State<MainNavigationBar> {
     );
   }
 
-void _showPaywall(BuildContext context) {
-  context.push(
-    BlocProvider.value(
-      value: context.read<BillingCubit>(),
-      child: const PaywallScreen(),
-    ),
-  );
-}
+  void _showPaywall(BuildContext context) {
+    context.push(
+      BlocProvider.value(
+        value: context.read<BillingCubit>(),
+        child: const PaywallScreen(),
+      ),
+    );
+  }
 }

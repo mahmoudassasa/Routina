@@ -15,18 +15,22 @@ class RegisterScreenLoginLink extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'Already have an account? ',
+          context.l10n.alreadyHaveAccount,
           style: AppTextStyles.bodyMedium.copyWith(
             // Use white60 for dark mode to keep it subtle but readable
             color: isDark ? Colors.white60 : AppColors.textSecondary,
           ),
         ),
-        GestureDetector(
-          onTap: () => context.pushReplacementNamed(Routes.loginScreen),
+        TextButton(
+          onPressed: () => context.pushReplacementNamed(Routes.loginScreen),
+          style: TextButton.styleFrom(
+            padding: EdgeInsets.zero,
+            minimumSize: Size.zero,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
           child: Text(
-            'Sign In',
+            context.l10n.loginLink,
             style: AppTextStyles.labelLarge.copyWith(
-              // Primary color remains consistent to draw attention
               color: isDark ? AppColors.primaryLight : AppColors.primary,
               fontWeight: FontWeight.bold,
             ),

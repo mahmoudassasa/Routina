@@ -30,7 +30,7 @@ class _FeaturesList extends StatelessWidget {
               ),
               horizontalSpace(8),
               Text(
-                'What you\'ll get:',
+                context.l10n.whatYoullGet,
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,

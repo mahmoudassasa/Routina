@@ -1,7 +1,7 @@
 part of '../privacy_policy_screen.dart';
 
 extension Footer on PrivacyPolicyScreen {
-  Widget _buildFooter(bool isDark) {
+  Widget _buildFooter(bool isDark, BuildContext context) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(16.w),
@@ -13,7 +13,7 @@ extension Footer on PrivacyPolicyScreen {
         ),
       ),
       child: Text(
-        '© 2026 Routina. All rights reserved.',
+        context.l10n.copyright,
         style: AppTextStyles.bodySmall.copyWith(
           color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
         ),

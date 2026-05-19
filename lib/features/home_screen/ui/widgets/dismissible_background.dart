@@ -1,7 +1,7 @@
 part of 'habit_card.dart';
 
 extension DismissibleBackground on HabitCard {
-  Widget _buildDismissibleBackground() {
+  Widget _buildDismissibleBackground(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: 20.h, left: 20.w, right: 20.w),
       decoration: BoxDecoration(
@@ -16,7 +16,7 @@ extension DismissibleBackground on HabitCard {
           Icon(Icons.delete_outline, color: Colors.white, size: 32.sp),
           verticalSpace(8),
           Text(
-            'Delete',
+            context.l10n.delete,
             style: TextStyle(
               color: Colors.white,
               fontSize: 14.sp,

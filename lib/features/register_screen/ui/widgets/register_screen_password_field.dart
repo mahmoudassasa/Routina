@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:routina/core/helpers/app_regex.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/helpers/password_validations.dart';
@@ -7,13 +8,18 @@ import 'package:routina/core/helpers/password_validations.dart';
 class RegisterScreenPasswordfield extends StatefulWidget {
   final TextEditingController passwordController;
 
-  const RegisterScreenPasswordfield({super.key, required this.passwordController});
+  const RegisterScreenPasswordfield({
+    super.key,
+    required this.passwordController,
+  });
 
   @override
-  State<RegisterScreenPasswordfield> createState() => _RegisterScreenPasswordfieldState();
+  State<RegisterScreenPasswordfield> createState() =>
+      _RegisterScreenPasswordfieldState();
 }
 
-class _RegisterScreenPasswordfieldState extends State<RegisterScreenPasswordfield> {
+class _RegisterScreenPasswordfieldState
+    extends State<RegisterScreenPasswordfield> {
   bool isObscure = true;
 
   @override
@@ -28,13 +34,15 @@ class _RegisterScreenPasswordfieldState extends State<RegisterScreenPasswordfiel
           controller: widget.passwordController,
           obscureText: isObscure,
           onChanged: (_) => setState(() {}),
-          style: TextStyle(color: isDark ? Colors.white : AppColors.textPrimary),
+          style: TextStyle(
+            color: isDark ? Colors.white : AppColors.textPrimary,
+          ),
           decoration: InputDecoration(
-            labelText: 'Password',
+            labelText: context.l10n.password,
             labelStyle: TextStyle(
               color: isDark ? Colors.white60 : AppColors.textSecondary,
             ),
-            hintText: "Enter your password",
+            hintText: context.l10n.enterPassword,
             hintStyle: TextStyle(
               color: isDark ? Colors.white30 : Colors.grey[400],
             ),
@@ -44,7 +52,9 @@ class _RegisterScreenPasswordfieldState extends State<RegisterScreenPasswordfiel
             ),
             suffixIcon: IconButton(
               icon: Icon(
-                isObscure ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                isObscure
+                    ? Icons.visibility_off_outlined
+                    : Icons.visibility_outlined,
                 color: isDark ? Colors.white60 : AppColors.textLight,
               ),
               onPressed: () => setState(() => isObscure = !isObscure),
@@ -52,10 +62,10 @@ class _RegisterScreenPasswordfieldState extends State<RegisterScreenPasswordfiel
           ),
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return "Password is required";
+              return context.l10n.passwordRequired;
             }
             if (!AppRegex.isPasswordValid(value)) {
-              return "Password does not meet requirements";
+              return context.l10n.passwordInvalid;
             }
             return null;
           },

@@ -10,9 +10,9 @@ extension _HelpSupportAppBar on _HelpSupportScreenState {
       centerTitle: false,
       leadingWidth: 56.w,
       flexibleSpace: FlexibleSpaceBar(
-        titlePadding: EdgeInsets.only(left: 56.w, bottom: 16.h),
+        titlePadding: EdgeInsetsDirectional.only(start: 56.w, bottom: 16.h),
         title: Text(
-          'Help & Support',
+          context.l10n.helpAndSupport,
           style: AppTextStyles.headlineMedium.copyWith(color: _textPrimary),
         ),
         background: Container(

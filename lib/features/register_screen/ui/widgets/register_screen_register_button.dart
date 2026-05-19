@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/theaming/app_text_styles.dart';
 import 'package:routina/features/register_screen/logic/cubit/register_cubit.dart';
@@ -69,7 +70,7 @@ class RegisterScreenRegisterButton extends StatelessWidget {
                         ),
                       )
                     : Text(
-                        'Create Account',
+                        context.l10n.createAccount,
                         style: AppTextStyles.font18WhiteExtraBold,
                       ),
               ),

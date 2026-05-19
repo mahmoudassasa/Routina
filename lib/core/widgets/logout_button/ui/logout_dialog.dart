@@ -24,10 +24,12 @@ Future<void> showLogoutDialog(BuildContext context) async {
             }
           },
           child: Dialog(
-            backgroundColor: Theme.of(context).brightness == Brightness.dark 
-                ? AppColors.darkSurface 
+            backgroundColor: Theme.of(context).brightness == Brightness.dark
+                ? AppColors.darkSurface
                 : Colors.white,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28.r)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(28.r),
+            ),
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 32.h, horizontal: 24.w),
               child: BlocBuilder<LogoutCubit, LogoutState>(
@@ -39,33 +41,37 @@ Future<void> showLogoutDialog(BuildContext context) async {
                     children: [
                       // Friendly Header
                       _buildAnimatedHeader(isProcessing),
-                      
-verticalSpace(24),                       
+
+                      verticalSpace(24),
                       Text(
-                        isProcessing ? "See You Soon!" : "Leaving So Soon?",
+                        isProcessing
+                            ? context.l10n.seeYouSoon
+                            : context.l10n.leavingSoSoon,
                         style: TextStyle(
                           fontSize: 22.sp,
                           fontWeight: FontWeight.w800,
-                          color: Theme.of(context).brightness == Brightness.dark 
-                              ? AppColors.darkTextPrimary : AppColors.textPrimary,
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? AppColors.darkTextPrimary
+                              : AppColors.textPrimary,
                         ),
                       ),
-                      
-verticalSpace(12),                       
+
+                      verticalSpace(12),
                       Text(
-                        isProcessing 
-                          ? "We're making sure everything is saved for you. 💙" 
-                          : "We love having you here! Are you sure you want to sign out?",
+                        isProcessing
+                            ? context.l10n.logoutProcessMsg
+                            : context.l10n.logoutConfirmMsg,
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 15.sp, 
+                          fontSize: 15.sp,
                           height: 1.5,
-                          color: Theme.of(context).brightness == Brightness.dark 
-                              ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? AppColors.darkTextSecondary
+                              : AppColors.textSecondary,
                         ),
                       ),
-                      
-verticalSpace(32), 
+
+                      verticalSpace(32),
                       _buildActionButtons(context, isProcessing),
                     ],
                   );
@@ -84,15 +90,20 @@ Widget _buildAnimatedHeader(bool isProcessing) {
     width: 80.w,
     height: 80.w,
     decoration: BoxDecoration(
-      color: isProcessing ? AppColors.primary.withValues(alpha: 0.1) : Colors.red.withValues(alpha: 0.1),
+      color: isProcessing
+          ? AppColors.primary.withValues(alpha: 0.1)
+          : Colors.red.withValues(alpha: 0.1),
       shape: BoxShape.circle,
     ),
     child: Center(
-      child: isProcessing 
+      child: isProcessing
           ? SizedBox(
               width: 32.w,
               height: 32.w,
-              child: const CircularProgressIndicator(color: AppColors.primary, strokeWidth: 3),
+              child: const CircularProgressIndicator(
+                color: AppColors.primary,
+                strokeWidth: 3,
+              ),
             )
           : Text("🥺", style: TextStyle(fontSize: 40.sp)),
     ),
@@ -112,10 +123,11 @@ Widget _buildActionButtons(BuildContext context, bool isProcessing) {
           style: TextButton.styleFrom(
             padding: EdgeInsets.zero, // Remove internal padding to save space
           ),
-          child: FittedBox( // Scales text down slightly if it's too long for the screen
+          child: FittedBox(
+            // Scales text down slightly if it's too long for the screen
             fit: BoxFit.scaleDown,
             child: Text(
-              "Stay with us",
+              context.l10n.stayWithUs,
               maxLines: 1,
               style: TextStyle(
                 fontSize: 15.sp, // Slightly smaller font for better fit
@@ -126,9 +138,8 @@ Widget _buildActionButtons(BuildContext context, bool isProcessing) {
           ),
         ),
       ),
-      
-      horizontalSpace(8), // Slightly smaller gap
 
+      horizontalSpace(8), // Slightly smaller gap
       // Right Button: Yes, Log Out
       Expanded(
         flex: 3, // Balanced flex
@@ -158,7 +169,7 @@ Widget _buildActionButtons(BuildContext context, bool isProcessing) {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 8.w),
                     child: Text(
-                      "Yes, Log Out",
+                      context.l10n.yesLogOut,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16.sp,

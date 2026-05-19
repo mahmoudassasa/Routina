@@ -20,10 +20,12 @@ class RegisterCubit extends Cubit<RegisterState> {
     final picked = await _picker.pickImage(source: ImageSource.gallery);
 
     if (picked != null) {
-      emit(state.copyWith(
-        localImage: File(picked.path),
-        imageStatus: ImageUploadStatus.success,
-      ));
+      emit(
+        state.copyWith(
+          localImage: File(picked.path),
+          imageStatus: ImageUploadStatus.success,
+        ),
+      );
     } else {
       emit(state.copyWith(imageStatus: ImageUploadStatus.initial));
     }
@@ -39,7 +41,9 @@ class RegisterCubit extends Cubit<RegisterState> {
       final fileName =
           "$uid-profile-${DateTime.now().millisecondsSinceEpoch}.jpg";
 
-      await supabase.storage.from('users').upload(
+      await supabase.storage
+          .from('users')
+          .upload(
             fileName,
             state.localImage!,
             fileOptions: const FileOptions(contentType: 'image/jpeg'),
@@ -47,17 +51,21 @@ class RegisterCubit extends Cubit<RegisterState> {
 
       final imageUrl = supabase.storage.from('users').getPublicUrl(fileName);
 
-      emit(state.copyWith(
-        imageStatus: ImageUploadStatus.success,
-        imageUrl: imageUrl,
-      ));
+      emit(
+        state.copyWith(
+          imageStatus: ImageUploadStatus.success,
+          imageUrl: imageUrl,
+        ),
+      );
 
       return imageUrl;
     } catch (e) {
-      emit(state.copyWith(
-        imageStatus: ImageUploadStatus.error,
-        errorMessage: e.toString(),
-      ));
+      emit(
+        state.copyWith(
+          imageStatus: ImageUploadStatus.error,
+          errorMessage: e.toString(),
+        ),
+      );
       return null;
     }
   }
@@ -67,23 +75,16 @@ class RegisterCubit extends Cubit<RegisterState> {
     emit(state.copyWith(status: RegisterStatus.loading));
 
     try {
-      // 1) Create Firebase Account
-      UserCredential userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
 
       final uid = userCredential.user!.uid;
       await userCredential.user!.sendEmailVerification();
 
-      // 2) Upload profile image (if exists)
       String? imageUrl = await uploadImage(uid);
+      imageUrl ??=
+          "https://gvqgliulacfmhscswyid.supabase.co/storage/v1/object/public/users/unknown.png";
 
-      // If no image → use default
-      imageUrl ??= "https://gvqgliulacfmhscswyid.supabase.co/storage/v1/object/public/users/unknown.png";
-
-      // 3) Save user data in Firestore
       await FirebaseFirestore.instance.collection('users').doc(uid).set({
         'uid': uid,
         'name': name,
@@ -93,11 +94,31 @@ class RegisterCubit extends Cubit<RegisterState> {
       });
 
       emit(state.copyWith(status: RegisterStatus.success));
+    } on FirebaseAuthException catch (e) {
+      emit(
+        state.copyWith(
+          status: RegisterStatus.error,
+          errorCode: _mapError(e.code),
+        ),
+      );
     } catch (e) {
-      emit(state.copyWith(
-        status: RegisterStatus.error,
-        errorMessage: e.toString(),
-      ));
+      emit(
+        state.copyWith(
+          status: RegisterStatus.error,
+          errorCode: 'unexpectedError',
+        ),
+      );
     }
+  }
+
+  String _mapError(String code) {
+    return switch (code) {
+      'email-already-in-use' => 'emailAlreadyInUse',
+      'invalid-email' => 'invalidEmail',
+      'weak-password' => 'weakPassword',
+      'operation-not-allowed' => 'operationNotAllowed',
+      'network-request-failed' => 'networkError',
+      _ => 'unexpectedError',
+    };
   }
 }

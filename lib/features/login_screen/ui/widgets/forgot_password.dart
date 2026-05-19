@@ -13,7 +13,7 @@ class ForgotPassword extends StatelessWidget {
       onPressed: () =>
           context.pushReplacementNamed(Routes.forgetPasswordScreen),
       child: Text(
-        'Forgot Password?',
+        context.l10n.forgotPassword,
         style: AppTextStyles.labelLarge.copyWith(color: AppColors.primary),
       ),
     );

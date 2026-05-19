@@ -66,128 +66,107 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
   static const String _privacyPolicyUrl =
       'https://mellow-lokum-05a071.netlify.app/';
 
-  final List<_FaqItem> _faqs = const [
-      _FaqItem(
-    question: 'How does the streak system work?',
-    answer:
-        'Your streak increases each day you complete all scheduled habits. '
-        'Missing a scheduled day resets your streak to zero. '
-        'Rest days (days not in your habit frequency) do not break your streak.',
-  ),
-  _FaqItem(
-    question: 'What does the AI Analysis do?',
-    answer:
-        'The AI Analysis reviews your habit data — including streaks, progress, '
-        'and completion patterns — and generates a personalized summary with insights '
-        'and recommendations to help you improve.',
-  ),
-_FaqItem(
-    question: 'How do I set a reminder for a habit?',
-    answer:
-        'When creating a new habit, tap the notification bell icon to set a daily reminder. '
-        'You can also update reminders by editing an existing habit.',
-  ),
-  _FaqItem(
-    question: 'Can I change the days a habit repeats?',
-    answer:
-        'Yes. When creating or editing a habit, select the days of the week '
-        'you want the habit to be active. Unselected days are treated as rest days.',
-  ),
-  _FaqItem(
-    question: 'Why was my progress reset?',
-    answer:
-        'Progress resets if you missed completing a habit on a scheduled day. '
-        'This is by design to keep your tracking accurate. '
-        'Routina checks for missed days automatically when you open the app.',
-  ),
-  _FaqItem(
-    question: 'Is my data private?',
-    answer:
-        'Yes. Your data is stored securely and is only accessible to your account. '
-        'Screenshots are blocked within the app to protect your privacy.',
-  ),
-  _FaqItem(
-    question: 'How do I delete a habit?',
-    answer:
-        'Long press on a habit card to reveal the delete option. '
-        'Deleted habits are permanently removed along with their progress data.',
-  ),
-  _FaqItem(
-    question: 'Does Routina work offline?',
-    answer:
-        'Core habit tracking requires an internet connection to sync with the server. '
-        'Offline support is planned for a future update.',
-  ),
+  List<_FaqItem> get _faqs => [
+    _FaqItem(
+      question: context.l10n.faqStreakQuestion,
+      answer: context.l10n.faqStreakAnswer,
+    ),
+    _FaqItem(
+      question: context.l10n.faqAiQuestion,
+      answer: context.l10n.faqAiAnswer,
+    ),
+    _FaqItem(
+      question: context.l10n.faqReminderQuestion,
+      answer: context.l10n.faqReminderAnswer,
+    ),
+    _FaqItem(
+      question: context.l10n.faqChangeDaysQuestion,
+      answer: context.l10n.faqChangeDaysAnswer,
+    ),
+    _FaqItem(
+      question: context.l10n.faqProgressResetQuestion,
+      answer: context.l10n.faqProgressResetAnswer,
+    ),
+    _FaqItem(
+      question: context.l10n.faqPrivacyQuestion,
+      answer: context.l10n.faqPrivacyAnswer,
+    ),
+    _FaqItem(
+      question: context.l10n.faqDeleteQuestion,
+      answer: context.l10n.faqDeleteAnswer,
+    ),
+    _FaqItem(
+      question: context.l10n.faqOfflineQuestion,
+      answer: context.l10n.faqOfflineAnswer,
+    ),
   ];
 
-  final List<_GuideItem> _guides = const [
-     _GuideItem(
-    icon: Icons.rocket_launch_rounded,
-    title: 'Getting Started',
-    steps: [
-      'Tap the + button in the bottom navigation bar',
-      'Enter your habit name and choose an icon and color',
-      'Select which days of the week to track it',
-      'Optionally set a daily reminder time',
-      'Tap Save — your habit is live!',
-    ],
-  ),
+  List<_GuideItem> get _guides => [
     _GuideItem(
-      icon: Icons.notifications_active_rounded,
-      title: 'Setting Up Reminders (General)',
+      icon: Icons.rocket_launch_rounded,
+      title: context.l10n.guideGettingStartedTitle,
       steps: [
-        'Tap on to Profile screen to open it',
-        'Tap the bell icon or to set the reminder',
-        'Pick your preferred time',
-        'Make sure Routina has notification permission',
-        'You\'ll get a daily nudge at that time',
+        context.l10n.guideGettingStartedStep1,
+        context.l10n.guideGettingStartedStep2,
+        context.l10n.guideGettingStartedStep3,
+        context.l10n.guideGettingStartedStep4,
+        context.l10n.guideGettingStartedStep5,
       ],
     ),
-  
-  _GuideItem(
-    icon: Icons.notifications_active_rounded,
-    title: 'Setting Up Reminders',
-    steps: [
-      'Tap the + button to open the Add Habit sheet',
-      'Fill in the habit name and schedule',
-      'Tap the bell icon to enable a reminder',
-      'Pick your preferred hour and minute',
-      'Save the habit — you\'ll get a daily notification at that time',
-    ],
-  ),
-  _GuideItem(
-    icon: Icons.edit_rounded,
-    title: 'Editing a Habit',
-    steps: [
-      'On the Home screen, tap on any habit card',
-      'Update the name, icon, color, or schedule',
-      'To change the reminder, tap the bell icon',
-      'The old reminder will be replaced automatically',
-      'Tap Save to apply your changes',
-    ],
-  ),
-  _GuideItem(
-    icon: Icons.auto_awesome_rounded,
-    title: 'Using AI Analysis',
-    steps: [
-      'Navigate to the Analyze tab',
-      'Tap "Overall Analysis" to start',
-      'The AI will review your streaks and progress',
-      'Read your personalized insights and recommendations',
-      'OR Long press the + button for a quick summary anywhere',
-    ],
-  ),
-  _GuideItem(
-    icon: Icons.delete_outline_rounded,
-    title: 'Deleting a Habit',
-    steps: [
-      'On the Home screen, Swipe to the left on a habit card',
-      'A delete option will appear',
-      'Confirm to permanently remove the habit',
-      'All progress and streak data will be deleted',
-    ],
-  ),
-  
+    _GuideItem(
+      icon: Icons.notifications_active_rounded,
+      title: context.l10n.guideRemindersGeneralTitle,
+      steps: [
+        context.l10n.guideRemindersGeneralStep1,
+        context.l10n.guideRemindersGeneralStep2,
+        context.l10n.guideRemindersGeneralStep3,
+        context.l10n.guideRemindersGeneralStep4,
+        context.l10n.guideRemindersGeneralStep5,
+      ],
+    ),
+    _GuideItem(
+      icon: Icons.notifications_active_rounded,
+      title: context.l10n.guideRemindersTitle,
+      steps: [
+        context.l10n.guideRemindersStep1,
+        context.l10n.guideRemindersStep2,
+        context.l10n.guideRemindersStep3,
+        context.l10n.guideRemindersStep4,
+        context.l10n.guideRemindersStep5,
+      ],
+    ),
+    _GuideItem(
+      icon: Icons.edit_rounded,
+      title: context.l10n.guideEditingTitle,
+      steps: [
+        context.l10n.guideEditingStep1,
+        context.l10n.guideEditingStep2,
+        context.l10n.guideEditingStep3,
+        context.l10n.guideEditingStep4,
+        context.l10n.guideEditingStep5,
+      ],
+    ),
+    _GuideItem(
+      icon: Icons.auto_awesome_rounded,
+      title: context.l10n.guideAiTitle,
+      steps: [
+        context.l10n.guideAiStep1,
+        context.l10n.guideAiStep2,
+        context.l10n.guideAiStep3,
+        context.l10n.guideAiStep4,
+        context.l10n.guideAiStep5,
+      ],
+    ),
+    _GuideItem(
+      icon: Icons.delete_outline_rounded,
+      title: context.l10n.guideDeletingTitle,
+      steps: [
+        context.l10n.guideDeletingStep1,
+        context.l10n.guideDeletingStep2,
+        context.l10n.guideDeletingStep3,
+        context.l10n.guideDeletingStep4,
+      ],
+    ),
   ];
 
   Future<void> _launchEmail({String subject = '', String body = ''}) async {
@@ -199,7 +178,11 @@ _FaqItem(
         if (body.isNotEmpty) 'body': body,
       },
     );
-    if (!await launchUrl(uri)) _showError('Could not open mail app.');
+
+    if (!await launchUrl(uri)) {
+      if (!mounted) return;
+      _showError(context.l10n.couldNotOpenMail);
+    }
   }
 
   Future<void> _launchWhatsApp() async {
@@ -207,28 +190,32 @@ _FaqItem(
       'https://wa.me/${_whatsappNumber.replaceAll('+', '')}?text=Hi%2C%20I%20need%20help%20with%20Routina',
     );
     if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-      _showError('WhatsApp is not installed.');
+      if (!mounted) return;
+      _showError(context.l10n.whatsAppNotInstalled);
     }
   }
 
   Future<void> _launchTelegram() async {
     final uri = Uri.parse('https://t.me/$_telegramUsername');
     if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-      _showError('Could not open Telegram.');
+      if (!mounted) return;
+      _showError(context.l10n.couldNotOpenTelegram);
     }
   }
 
   Future<void> _launchDiscord() async {
     final uri = Uri.parse(_discordInvite);
     if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-      _showError('Could not open Discord.');
+      if (!mounted) return;
+      _showError(context.l10n.couldNotOpenDiscord);
     }
   }
 
   Future<void> _launchPrivacyPolicyWeb() async {
     final uri = Uri.parse(_privacyPolicyUrl);
     if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-      _showError('Could not open browser.');
+      if (!mounted) return;
+      _showError(context.l10n.couldNotOpenBrowser);
     }
   }
 
@@ -239,7 +226,7 @@ _FaqItem(
     final subject = _bugSubjectController.text.trim();
     final body = _bugBodyController.text.trim();
     if (subject.isEmpty || body.isEmpty) {
-      _showError('Please fill in both fields before sending.');
+      _showError(context.l10n.fillBothFields);
       return;
     }
     _launchEmail(subject: '[Bug] $subject', body: body);
@@ -249,7 +236,7 @@ _FaqItem(
     final name = _contactNameController.text.trim();
     final message = _contactMessageController.text.trim();
     if (name.isEmpty || message.isEmpty) {
-      _showError('Please fill in all fields.');
+      _showError(context.l10n.fillAllFields);
       return;
     }
     _launchEmail(subject: 'Support Request from $name', body: message);
@@ -284,32 +271,32 @@ _FaqItem(
               sliver: SliverList(
                 delegate: SliverChildListDelegate([
                   verticalSpace(8),
-                  _sectionTitle('Contact Us'),
+                  _sectionTitle(context.l10n.contactUs),
                   verticalSpace(12),
 
                   _contactChannels(),
-                          verticalSpace(12),
-                  _sectionTitle('How-to Guides'),
+                  verticalSpace(12),
+                  _sectionTitle(context.l10n.howToGuides),
                   verticalSpace(12),
 
                   _guidesSection(),
-                          verticalSpace(12),
-                  _sectionTitle('FAQ'),
+                  verticalSpace(12),
+                  _sectionTitle(context.l10n.faq),
                   verticalSpace(12),
 
                   _faqSection(),
-                          verticalSpace(12),
-                  _sectionTitle('Report a Bug'),
+                  verticalSpace(12),
+                  _sectionTitle(context.l10n.reportABug),
                   verticalSpace(12),
 
                   _bugReportForm(),
-                          verticalSpace(12),
-                  _sectionTitle('Send a Message'),
+                  verticalSpace(12),
+                  _sectionTitle(context.l10n.sendAMessage),
                   verticalSpace(12),
 
                   _contactForm(),
-                          verticalSpace(12),
-                  _sectionTitle('Legal'),
+                  verticalSpace(12),
+                  _sectionTitle(context.l10n.legal),
                   verticalSpace(12),
 
                   _legalSection(),
@@ -322,7 +309,6 @@ _FaqItem(
       ),
     );
   }
-
 }
 
 class _FaqItem {

@@ -1,14 +1,27 @@
 part of 'habit_progress_charts_screen.dart';
 
 extension WeeklyHeatmap on HabitProgressChartsScreen {
-  Widget _buildWeeklyHeatmap(bool isDark, List<Map<String, dynamic>> habits) {
-    final days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+  Widget _buildWeeklyHeatmap(
+    bool isDark,
+    List<Map<String, dynamic>> habits,
+    BuildContext context,
+  ) {
+    final days = [
+      context.l10n.monday,
+      context.l10n.tuesday,
+      context.l10n.wednesday,
+      context.l10n.thursday,
+      context.l10n.friday,
+      context.l10n.saturday,
+      context.l10n.sunday,
+    ];
     List<double> dailyActivity = List.filled(7, 0.0);
-
     for (int i = 0; i < 7; i++) {
       int completedCount = 0;
       for (var habit in habits) {
-        final weekProgress = List<bool>.from(habit['weekProgress'] ?? List.filled(7, false));
+        final weekProgress = List<bool>.from(
+          habit['weekProgress'] ?? List.filled(7, false),
+        );
         if (weekProgress[i]) completedCount++;
       }
       dailyActivity[i] = habits.isEmpty ? 0 : completedCount / habits.length;
@@ -20,7 +33,8 @@ extension WeeklyHeatmap on HabitProgressChartsScreen {
         color: isDark ? AppColors.darkSurface : Colors.white,
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(
-            color: isDark ? AppColors.darkBorder : Colors.grey.shade200),
+          color: isDark ? AppColors.darkBorder : Colors.grey.shade200,
+        ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -32,7 +46,8 @@ extension WeeklyHeatmap on HabitProgressChartsScreen {
                 height: 32.w,
                 decoration: BoxDecoration(
                   color: AppColors.primary.withValues(
-                      alpha: dailyActivity[index].clamp(0.1, 1.0)),
+                    alpha: dailyActivity[index].clamp(0.1, 1.0),
+                  ),
                   borderRadius: BorderRadius.circular(8.r),
                 ),
                 child: dailyActivity[index] >= 0.5

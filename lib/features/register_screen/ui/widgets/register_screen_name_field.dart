@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 
 class RegisterScreenNameField extends StatelessWidget {
@@ -15,14 +16,12 @@ class RegisterScreenNameField extends StatelessWidget {
       keyboardType: TextInputType.name,
       style: TextStyle(color: isDark ? Colors.white : AppColors.textPrimary),
       decoration: InputDecoration(
-        labelText: 'Full Name',
+        labelText: context.l10n.fullName,
         labelStyle: TextStyle(
           color: isDark ? Colors.white60 : AppColors.textSecondary,
         ),
-        hintText: 'Enter your full name',
-        hintStyle: TextStyle(
-          color: isDark ? Colors.white30 : Colors.grey[400],
-        ),
+        hintText: context.l10n.enterFullName,
+        hintStyle: TextStyle(color: isDark ? Colors.white30 : Colors.grey[400]),
         prefixIcon: Icon(
           Icons.person_outline_rounded,
           color: isDark ? AppColors.primaryLight : AppColors.primary,
@@ -30,9 +29,9 @@ class RegisterScreenNameField extends StatelessWidget {
       ),
       validator: (value) {
         if (value == null || value.trim().isEmpty) {
-          return 'Please enter your name';
+          return context.l10n.nameRequired;
         } else if (value.trim().length < 3) {
-          return 'Name must be at least 3 characters';
+          return context.l10n.nameMinLength;
         }
         return null;
       },

@@ -17,7 +17,7 @@ class _PremiumBadge extends StatelessWidget {
           Icon(Icons.workspace_premium, color: Colors.white, size: 16.sp),
           horizontalSpace(6),
           Text(
-            'PREMIUM FEATURE',
+            context.l10n.premiumFeature,
             style: TextStyle(
               fontSize: 12.sp,
               fontWeight: FontWeight.bold,

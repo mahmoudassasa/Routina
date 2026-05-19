@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/theaming/app_text_styles.dart';
@@ -14,7 +15,7 @@ class RegisterScreenTexts extends StatelessWidget {
       children: [
         // Main Title
         Text(
-          'Create Account',
+          context.l10n.createAccount,
           style: AppTextStyles.displayMedium.copyWith(
             // Ensure title is white or near-white in dark mode
             color: isDark ? Colors.white : AppColors.textPrimary,
@@ -25,7 +26,7 @@ class RegisterScreenTexts extends StatelessWidget {
 
         // Subtitle
         Text(
-          'Join us and start building better habits',
+          context.l10n.registerSubtitle,
           style: AppTextStyles.bodyLarge.copyWith(
             // Use a softer grey for dark mode to maintain hierarchy
             color: isDark

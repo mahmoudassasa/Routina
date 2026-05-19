@@ -24,7 +24,7 @@ extension _HelpSupportForms on _HelpSupportScreenState {
               ),
               horizontalSpace(8),
               Text(
-                'Something not working?',
+                context.l10n.somethingNotWorking,
                 style: AppTextStyles.titleMedium.copyWith(color: _textPrimary),
               ),
             ],
@@ -32,14 +32,14 @@ extension _HelpSupportForms on _HelpSupportScreenState {
           verticalSpace(16),
           _inputField(
             controller: _bugSubjectController,
-            label: 'Issue title',
-            hint: 'e.g. Notification not showing',
+            label: context.l10n.issueTitle,
+            hint: context.l10n.issueTitleHint,
           ),
           verticalSpace(12),
           _inputField(
             controller: _bugBodyController,
-            label: 'Describe the bug',
-            hint: 'Steps to reproduce...',
+            label: context.l10n.describeTheBug,
+            hint: context.l10n.describeTheBugHint,
             maxLines: 4,
           ),
           verticalSpace(16),
@@ -48,7 +48,7 @@ extension _HelpSupportForms on _HelpSupportScreenState {
             child: FilledButton.icon(
               onPressed: _submitBugReport,
               icon: Icon(Icons.send_rounded, size: 18.sp),
-              label: const Text('Send Bug Report'),
+              label: Text(context.l10n.sendBugReport),
               style: FilledButton.styleFrom(
                 backgroundColor: AppColors.error,
                 foregroundColor: Colors.white,
@@ -76,14 +76,14 @@ extension _HelpSupportForms on _HelpSupportScreenState {
         children: [
           _inputField(
             controller: _contactNameController,
-            label: 'Your name',
-            hint: 'Enter your name',
+            label: context.l10n.yourName, 
+            hint: context.l10n.yourNameHint,
           ),
           verticalSpace(12),
           _inputField(
             controller: _contactMessageController,
-            label: 'Message',
-            hint: 'What can we help you with?',
+            label: context.l10n.message,
+            hint: context.l10n.messageHint,
             maxLines: 4,
           ),
           verticalSpace(16),
@@ -92,7 +92,7 @@ extension _HelpSupportForms on _HelpSupportScreenState {
             child: FilledButton.icon(
               onPressed: _submitContactForm,
               icon: Icon(Icons.email_rounded, size: 18.sp),
-              label: const Text('Send Message'),
+              label: Text(context.l10n.sendMessage),
               style: FilledButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 foregroundColor: Colors.white,
@@ -119,15 +119,15 @@ extension _HelpSupportForms on _HelpSupportScreenState {
         children: [
           _legalTile(
             icon: Icons.shield_rounded,
-            title: 'Privacy Policy',
-            subtitle: 'How we handle your data',
+            title: context.l10n.privacyPolicy,
+            subtitle: context.l10n.privacyPolicySubtitle,
             onTap: () => context.pushNamed(Routes.privacyPolicyScreen),
           ),
           Divider(height: 1, color: _borderColor),
           _legalTile(
             icon: Icons.open_in_new_rounded,
-            title: 'Privacy Policy (Web)',
-            subtitle: 'View on browser',
+            title: context.l10n.privacyPolicyWeb,
+            subtitle: context.l10n.privacyPolicyWebSubtitle,
             onTap: _launchPrivacyPolicyWeb,
             iconColor: AppColors.primaryLight,
           ),

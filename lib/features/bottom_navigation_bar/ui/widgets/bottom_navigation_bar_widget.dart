@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/features/bottom_navigation_bar/ui/widgets/center_action_button.dart';
 import 'package:routina/features/bottom_navigation_bar/ui/widgets/nav_item_button.dart';
+
 class BottomNavigationBarWidget extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onIndexChanged;
@@ -47,7 +49,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
                 currentIndex: currentIndex,
                 icon: Icons.home_outlined,
                 activeIcon: Icons.home_rounded,
-                label: 'Home',
+                label: context.l10n.home,
                 selectedColor: selectedColor,
                 unselectedColor: unselectedColor,
                 onTap: () => onIndexChanged(0),
@@ -57,7 +59,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
                 currentIndex: currentIndex,
                 icon: Icons.track_changes_outlined,
                 activeIcon: Icons.track_changes_rounded,
-                label: 'Habits',
+                label: context.l10n.habits,
                 selectedColor: selectedColor,
                 unselectedColor: unselectedColor,
                 onTap: () => onIndexChanged(1),
@@ -71,7 +73,8 @@ class BottomNavigationBarWidget extends StatelessWidget {
                 currentIndex: currentIndex,
                 icon: Icons.analytics_outlined,
                 activeIcon: Icons.analytics_rounded,
-                label: 'Analyze',
+                label: context.l10n.analyze,
+
                 selectedColor: selectedColor,
                 unselectedColor: unselectedColor,
                 onTap: () => onIndexChanged(3),
@@ -81,7 +84,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
                 currentIndex: currentIndex,
                 icon: Icons.person_outline_rounded,
                 activeIcon: Icons.person_rounded,
-                label: 'Profile',
+                label: context.l10n.profile,
                 selectedColor: selectedColor,
                 unselectedColor: unselectedColor,
                 onTap: () => onIndexChanged(4),
@@ -93,6 +96,3 @@ class BottomNavigationBarWidget extends StatelessWidget {
     );
   }
 }
-
-
-

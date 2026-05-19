@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/routing/routes.dart';
 import 'package:routina/core/theaming/app_theme/logic/cubit/theme_cubit.dart';
+import 'package:routina/core/widgets/language_bottom_sheet.dart';
 import 'package:routina/features/home_screen/logic/cubit/home_cubit.dart';
+import 'package:routina/features/locale/logic/locale_cubit.dart';
 import 'package:routina/features/profile_screen/ui/widgets/export_data_fun.dart';
 import 'package:routina/features/profile_screen/ui/widgets/profile_screen_settings_tile.dart';
 
@@ -19,13 +21,12 @@ class ProfileScreenSettingsOptions extends StatelessWidget {
           //Notifications Settings
           SettingsTile(
             icon: '🔔',
-            title: 'Notifications',
-            subtitle: 'Manage your reminders',
+            title: context.l10n.notifications,
+            subtitle: context.l10n.manageReminders,
             onTap: () {
               context.pushNamed(
                 Routes.notificationScreen,
-                arguments: context
-                    .read<HomeCubit>(), 
+                arguments: context.read<HomeCubit>(),
               );
             },
           ),
@@ -35,8 +36,10 @@ class ProfileScreenSettingsOptions extends StatelessWidget {
               final isDark = state.isDarkMode;
               return SettingsTile(
                 icon: isDark ? '🌙' : '☀️',
-                title: 'Dark Mode',
-                subtitle: isDark ? 'Enabled' : 'Disabled',
+                title: context.l10n.darkMode,
+                subtitle: isDark
+                    ? context.l10n.darkModeEnabled
+                    : context.l10n.darkModeDisabled,
                 onTap: () {
                   // Fixed: toggleTheme() usually takes no arguments in your implementation
                   context.read<ThemeCubit>().toggleTheme();
@@ -47,8 +50,8 @@ class ProfileScreenSettingsOptions extends StatelessWidget {
           //Exporting Settings
           SettingsTile(
             icon: '📱',
-            title: 'Export Data',
-            subtitle: 'Download your habit data',
+            title: context.l10n.exportData,
+            subtitle: context.l10n.downloadHabitData,
             onTap: () {
               exportData(context);
             },
@@ -56,9 +59,28 @@ class ProfileScreenSettingsOptions extends StatelessWidget {
           //Help & Support Settings
           SettingsTile(
             icon: '❓',
-            title: 'Help & Support',
-            subtitle: 'Get help and contact us',
-            onTap: () {context.pushNamed(Routes.helpSupportScreen);},
+            title: context.l10n.helpAndSupport,
+            subtitle: context.l10n.getHelpContact,
+            onTap: () {
+              context.pushNamed(Routes.helpSupportScreen);
+            },
+          ),
+          SettingsTile(
+            icon: '🌐',
+            title: context.l10n.language,
+            subtitle: context.l10n.languageSubtitle,
+            onTap: () {
+              final localeCubit = context
+                  .read<LocaleCubit>(); 
+              showModalBottomSheet(
+                context: context,
+                backgroundColor: Colors.transparent,
+                builder: (_) => BlocProvider.value(
+                  value: localeCubit, 
+                  child: LanguageBottomSheet(),
+                ),
+              );
+            },
           ),
         ],
       ),

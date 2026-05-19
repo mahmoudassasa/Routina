@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 
@@ -35,6 +36,7 @@ class _AiFeatureBottomSheetContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+     
 
     return Container(
       constraints: BoxConstraints(maxHeight: 0.8.sh),
@@ -98,7 +100,7 @@ class _AiFeatureBottomSheetContent extends StatelessWidget {
                         const CircularProgressIndicator(color: AppColors.primary),
                         verticalSpace(16), 
                         Text(
-                          'Generating insights...',
+                          context.l10n.generatingInsights,
                           style: TextStyle(
                             fontSize: 14.sp,
                             color: isDark ? Colors.grey[400] : Colors.grey[600],
@@ -114,7 +116,7 @@ class _AiFeatureBottomSheetContent extends StatelessWidget {
                         Icon(Icons.error_outline, size: 48.sp, color: Colors.red),
                         verticalSpace(16), 
                         Text(
-                          'Failed to generate',
+                          context.l10n.failedToGenerate,
                           style: TextStyle(fontSize: 16.sp, color: Colors.red),
                         ),
                       ],

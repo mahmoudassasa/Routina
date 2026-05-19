@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/theaming/app_text_styles.dart';
@@ -14,7 +15,7 @@ class ForgotPasswordScreenTexts extends StatelessWidget {
     return Column(
       children: [
         Text(
-          'Forgot Password?',
+          context.l10n.forgotPassword,
           style: AppTextStyles.displayMedium.copyWith(
             // Use white for dark mode, primary text for light mode
             color: isDark ? Colors.white : AppColors.textPrimary,
@@ -25,7 +26,7 @@ class ForgotPasswordScreenTexts extends StatelessWidget {
         verticalSpace(8),
 
         Text(
-          'Enter your email address and we\'ll send you a link to reset your password',
+          context.l10n.forgotPasswordDesc,
           style: AppTextStyles.bodyLarge.copyWith(
             // Use a lighter gray (white70) for dark mode readability
             color: isDark ? Colors.white70 : AppColors.textSecondary,

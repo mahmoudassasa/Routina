@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 
@@ -7,23 +8,24 @@ class AnalyzeScreenTexts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Column(
       children: [
         Text(
-          'AI Analysis',
+          context.l10n.aiAnalysis,
           style: TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
             color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
           ),
         ),
-        verticalSpace(16), 
+        verticalSpace(16),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Text(
-            'Get personalized insights and recommendations based on your habit patterns and progress.',
+            context.l10n.analyzeScreenSubtitle,
             style: TextStyle(
               fontSize: 16,
               color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,

@@ -13,7 +13,7 @@ class AlreadyHaveAnAccount extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'Already have an account? ',
+          context.l10n.dontHaveAccount,
           style: AppTextStyles.bodyMedium.copyWith(
             color: AppColors.textSecondary,
           ),
@@ -21,7 +21,7 @@ class AlreadyHaveAnAccount extends StatelessWidget {
         TextButton(
           onPressed: () => context.pushReplacementNamed(Routes.registerScreen),
           child: Text(
-            'Sign Up',
+            context.l10n.signUp,
             style: AppTextStyles.labelLarge.copyWith(color: AppColors.primary),
           ),
         ),

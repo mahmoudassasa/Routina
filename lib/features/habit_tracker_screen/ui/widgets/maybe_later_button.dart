@@ -10,7 +10,7 @@ class _MaybeLaterButton extends StatelessWidget {
     return TextButton(
       onPressed: () => context.pop(),
       child: Text(
-        'Maybe Later',
+        context.l10n.maybeLater,
         style: TextStyle(
           fontSize: 14.sp,
           color: isDark ? Colors.grey[500] : Colors.grey[600],

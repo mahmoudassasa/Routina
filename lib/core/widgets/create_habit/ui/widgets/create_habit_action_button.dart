@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 
 class CreateHabitActionButton extends StatelessWidget {
@@ -50,7 +51,7 @@ class CreateHabitActionButton extends StatelessWidget {
                 ),
                 horizontalSpace(8),
                 Text(
-                  isEditMode ? 'Save Changes' : 'Create Habit',
+                    isEditMode ? context.l10n.saveChanges : context.l10n.createHabit,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.sp,

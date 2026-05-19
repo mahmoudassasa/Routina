@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/features/profile_screen/logic/cubit/profile_cubit.dart';
 import 'package:routina/features/profile_screen/logic/cubit/profile_state.dart';
@@ -15,10 +16,10 @@ class ProfileScreenUserStateCards extends StatelessWidget {
       builder: (context, state) {
         // We can show dummy data while loading or use specific values from state
         // Assuming your ProfileState will eventually have these fields
-        final currentStreak = state.currentStreak ?? "0 days";
-        final totalHabits = state.totalHabits ?? "0 active";
-        final completionRate = state.completionRate ?? "0%";
-        final bestStreak = state.bestStreak ?? "0 days";
+      final currentStreak = "${state.currentStreakCount ?? 0} ${context.l10n.days}";
+final totalHabits = "${state.totalHabitsCount ?? 0} ${context.l10n.active}";
+final completionRate = state.completionRate ?? "0%";
+final bestStreak = "${state.bestStreakCount ?? 0} ${context.l10n.days}";
 
         return Column(
           children: [
@@ -32,7 +33,7 @@ class ProfileScreenUserStateCards extends StatelessWidget {
                       Expanded(
                         child: StatCard(
                           icon: '🔥',
-                          title: 'Current Streak',
+                          title: context.l10n.currentStreak,
                           value: currentStreak,
                         ),
                       ),
@@ -40,7 +41,7 @@ class ProfileScreenUserStateCards extends StatelessWidget {
                       Expanded(
                         child: StatCard(
                           icon: '🎯',
-                          title: 'Total Habits',
+                          title: context.l10n.totalHabitsLabel,
                           value: totalHabits,
                         ),
                       ),
@@ -52,7 +53,7 @@ class ProfileScreenUserStateCards extends StatelessWidget {
                       Expanded(
                         child: StatCard(
                           icon: '📊',
-                          title: 'Completion Rate',
+                          title: context.l10n.completionRate,
                           value: completionRate,
                         ),
                       ),
@@ -60,7 +61,7 @@ class ProfileScreenUserStateCards extends StatelessWidget {
                       Expanded(
                         child: StatCard(
                           icon: '🏆',
-                          title: 'Best Streak',
+                          title: context.l10n.bestStreakLabel,
                           value: bestStreak,
                         ),
                       ),

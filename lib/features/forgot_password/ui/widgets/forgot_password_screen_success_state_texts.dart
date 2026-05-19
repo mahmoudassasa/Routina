@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/theaming/app_text_styles.dart';
@@ -24,7 +25,7 @@ class ForgotPasswordScreenSuccessStateTexts extends StatelessWidget {
               color: isDark ? Colors.white70 : AppColors.textSecondary,
             ),
             children: [
-              const TextSpan(text: 'We\'ve sent a password reset link to\n'),
+              TextSpan(text: context.l10n.weSentResetLink),
               TextSpan(
                 text: _emailController.text,
                 style: TextStyle(
@@ -39,7 +40,7 @@ class ForgotPasswordScreenSuccessStateTexts extends StatelessWidget {
         verticalSpace(32),
 
         Text(
-          'Didn\'t receive the email? Check your spam folder or try again in a few minutes.',
+          context.l10n.didntReceiveEmail,
           style: AppTextStyles.bodyMedium.copyWith(
             // Using a lighter tint for dark mode readability
             color: isDark ? Colors.white54 : AppColors.textLight,

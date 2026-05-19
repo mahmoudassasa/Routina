@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/features/login_screen/logic/cubit/login_cubit.dart';
 import 'package:routina/features/login_screen/logic/cubit/login_state.dart';
@@ -32,7 +33,10 @@ class LoginButton extends StatelessWidget {
               end: Alignment.centerRight,
               colors: isDark
                   ? [AppColors.primary, AppColors.primary.withBlue(255)]
-                  : [AppColors.primary, AppColors.primary.withValues(alpha: 0.85)],
+                  : [
+                      AppColors.primary,
+                      AppColors.primary.withValues(alpha: 0.85),
+                    ],
             ),
             boxShadow: [
               BoxShadow(
@@ -52,7 +56,9 @@ class LoginButton extends StatelessWidget {
                       final password = passwordController.text.trim();
                       if (email.isEmpty || password.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Missing credentials')),
+                          SnackBar(
+                            content: Text(context.l10n.missingCredentials),
+                          ),
                         );
                         return;
                       }
@@ -69,9 +75,9 @@ class LoginButton extends StatelessWidget {
                           strokeWidth: 2.5,
                         ),
                       )
-                    : const Text(
-                        'Login',
-                        style: TextStyle(
+                    : Text(
+                        context.l10n.login,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.w800,

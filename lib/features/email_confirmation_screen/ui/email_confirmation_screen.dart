@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,13 +32,14 @@ class EmailConfirmationScreen extends StatelessWidget {
 
             _MainContentCard(
               isDark: isDark,
-              child: BlocConsumer<EmailVerificationCubit, EmailVerificationState>(
-                listener: _handleStateListeners,
-                builder: (context, state) {
-                  final cubit = context.read<EmailVerificationCubit>();
-                  return _buildBody(context, state, cubit, isDark);
-                },
-              ),
+              child:
+                  BlocConsumer<EmailVerificationCubit, EmailVerificationState>(
+                    listener: _handleStateListeners,
+                    builder: (context, state) {
+                      final cubit = context.read<EmailVerificationCubit>();
+                      return _buildBody(context, state, cubit, isDark);
+                    },
+                  ),
             ),
           ],
         ),
@@ -45,35 +47,57 @@ class EmailConfirmationScreen extends StatelessWidget {
     );
   }
 
-  void _handleStateListeners(BuildContext context, EmailVerificationState state) {
-    if (state is EmailVerificationEmailSent) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text("Verification email sent again ✅"),
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        ),
-      );
-    }
+void _handleStateListeners(BuildContext context, EmailVerificationState state) {
+  final l10n = context.l10n;
 
-    if (state is EmailVerificationVerified) {
-      _SuccessDialog.show(context);
-      Future.delayed(const Duration(seconds: 2), () {
-        if (context.mounted) {
-          context.pop(); // Close dialog
-          context.pushReplacementNamed(Routes.loginScreen);
-        }
-      });
-    }
-
-    if (state is EmailVerificationNotVerified) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Email is not verified yet ❗")),
-      );
-    }
+  if (state is EmailVerificationEmailSent) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(l10n.verificationEmailSent),
+      ),
+    );
   }
 
-  Widget _buildBody(BuildContext context, EmailVerificationState state, EmailVerificationCubit cubit, bool isDark) {
+  if (state is EmailVerificationVerified) {
+    _SuccessDialog.show(context);
+    Future.delayed(const Duration(seconds: 2), () {
+      if (context.mounted) {
+        context.pop();
+        context.pushReplacementNamed(Routes.loginScreen);
+      }
+    });
+  }
+
+  if (state is EmailVerificationNotVerified) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(l10n.emailNotVerified),
+      ),
+    );
+  }
+
+  if (state is EmailVerificationError) {
+    final msg = switch (state.message) {
+      'send_error' => l10n.sendEmailError,
+      'check_error' => l10n.checkVerificationError,
+      _ => l10n.somethingWentWrong,
+    };
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(msg),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+}
+
+  Widget _buildBody(
+    BuildContext context,
+    EmailVerificationState state,
+    EmailVerificationCubit cubit,
+    bool isDark,
+  ) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -81,7 +105,7 @@ class EmailConfirmationScreen extends StatelessWidget {
         verticalSpace(24),
 
         Text(
-          "Confirm Your Email",
+          context.l10n.confirmEmail,
           style: AppTextStyles.displaySmall.copyWith(
             color: isDark ? Colors.white : AppColors.textPrimary,
           ),
@@ -89,7 +113,7 @@ class EmailConfirmationScreen extends StatelessWidget {
         verticalSpace(12),
 
         Text(
-          "We sent a verification link to your email.\nPlease check your inbox.",
+          context.l10n.confirmEmailDesc,
           textAlign: TextAlign.center,
           style: AppTextStyles.bodyMedium.copyWith(
             color: isDark ? Colors.white70 : AppColors.textSecondary,
@@ -99,8 +123,8 @@ class EmailConfirmationScreen extends StatelessWidget {
 
         _PremiumButton(
           label: state is EmailVerificationTimerTick
-              ? "Resend in ${state.seconds}s"
-              : "Resend Email",
+              ? context.l10n.resendIn(state.seconds)
+              : context.l10n.resendEmail,
           isLoading: false,
           isDisabled: state is EmailVerificationTimerTick,
           onPressed: () => cubit.resendEmail(),
@@ -110,11 +134,29 @@ class EmailConfirmationScreen extends StatelessWidget {
         verticalSpace(16),
 
         _SecondaryButton(
-          label: "I Verified My Email ✓",
+          label: context.l10n.iVerifiedEmail,
           isLoading: state is EmailVerificationLoading,
           onPressed: () => cubit.checkVerification(),
           isDark: isDark,
         ),
+
+        verticalSpace(16),
+
+TextButton(
+  onPressed: () async {
+    await FirebaseAuth.instance.currentUser?.delete();
+    if (context.mounted) {
+      context.pushReplacementNamed(Routes.registerScreen);
+    }
+  },
+  child: Text(
+    context.l10n.wrongEmail,
+    style: TextStyle(
+      color: Colors.redAccent,
+      fontSize: 14.sp,
+    ),
+  ),
+),
       ],
     );
   }

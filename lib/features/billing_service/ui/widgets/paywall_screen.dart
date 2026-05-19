@@ -16,6 +16,7 @@ class PaywallScreen extends StatefulWidget {
 }
 
 class _PaywallScreenState extends State<PaywallScreen> {
+  
   List<ProductDetails> _products = [];
   bool _loadingProducts = true;
   String? _selectedId;
@@ -41,6 +42,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
 
   @override
   Widget build(BuildContext context) {
+     
     return Scaffold(
       backgroundColor: AppColors.darkBackground,
       body: SafeArea(
@@ -56,6 +58,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   }
 
   Widget _buildHeader(BuildContext context) {
+     
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
       child: Row(
@@ -71,7 +74,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   ? null
                   : () => context.read<BillingCubit>().restore(),
               child: Text(
-                state.isRestoring ? 'Restoring...' : 'Restore',
+                state.isRestoring ? context.l10n.restoring : context.l10n.restore,
                 style: AppTextStyles.font14WhiteRegular.copyWith(
                   color: AppColors.primaryLight,
                 ),
@@ -84,6 +87,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   }
 
   Widget _buildContent() {
+     
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(horizontal: 24.w),
       child: Column(
@@ -92,13 +96,15 @@ class _PaywallScreenState extends State<PaywallScreen> {
           _buildCrownIcon(),
           SizedBox(height: 20.h),
           Text(
-            'Routina Premium',
+              context.l10n.routinaPremium,
+
             style: AppTextStyles.font24WhiteBold,
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 8.h),
           Text(
-            'Unlock your full potential',
+            context.l10n.unlockPotential,
+
             style: AppTextStyles.font14WhiteRegular.copyWith(
               color: Colors.white54,
             ),
@@ -128,11 +134,12 @@ class _PaywallScreenState extends State<PaywallScreen> {
   }
 
   Widget _buildFeatureList() {
-    final features = [
-      (Icons.analytics_outlined, 'Full AI Habit Analysis', 'Powered by Gemini'),
-      (Icons.all_inclusive, 'Unlimited Habits', 'No restrictions'),
-      (Icons.support_agent_outlined, 'Priority Support', 'We\'ve got your back'),
-    ];
+   
+final features = [
+  (Icons.analytics_outlined, context.l10n.featureAiAnalysis, context.l10n.featureAiAnalysisDesc),
+  (Icons.all_inclusive, context.l10n.featureUnlimitedHabits, context.l10n.featureUnlimitedHabitsDesc),
+  (Icons.support_agent_outlined, context.l10n.featurePrioritySupport, context.l10n.featurePrioritySupportDesc),
+];
     return Column(
       children: features.map((f) => _featureRow(f.$1, f.$2, f.$3)).toList(),
     );
@@ -185,8 +192,9 @@ class _PaywallScreenState extends State<PaywallScreen> {
   }
 
   Widget _buildProductCards() {
+     
     if (_products.isEmpty) {
-      return Text('Products unavailable',
+      return Text(context.l10n.productsUnavailable,
           style: AppTextStyles.font14WhiteRegular.copyWith(color: Colors.white38));
     }
     return Column(
@@ -197,7 +205,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   Widget _productCard(ProductDetails product) {
     final isSelected = _selectedId == product.id;
     final isYearly = product.id == BillingService.yearlyId;
-
+     
     return GestureDetector(
       onTap: () => setState(() => _selectedId = product.id),
       child: AnimatedContainer(
@@ -240,7 +248,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   Row(
                     children: [
                       Text(
-                        isYearly ? 'Yearly' : 'Monthly',
+                        isYearly ? context.l10n.yearly : context.l10n.monthly,
                         style: AppTextStyles.font16WhiteMedium,
                       ),
                       if (isYearly) ...[
@@ -252,7 +260,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                             color: AppColors.accent,
                             borderRadius: BorderRadius.circular(20.r),
                           ),
-                          child: Text('Best value',
+                          child: Text(context.l10n.bestValue,
                               style: AppTextStyles.font12WhiteRegular),
                         ),
                       ],
@@ -261,8 +269,8 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   SizedBox(height: 4.h),
                   Text(
                     isYearly
-                        ? '${product.price} / year'
-                        : '${product.price} / month',
+      ? '${product.price} ${context.l10n.perYear}'
+      : '${product.price} ${context.l10n.perMonth}',
                     style: AppTextStyles.font14WhiteRegular
                         .copyWith(color: Colors.white54),
                   ),
@@ -276,6 +284,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   }
 
   Widget _buildFooter(BuildContext context) {
+     
     return Padding(
       padding: EdgeInsets.fromLTRB(24.w, 0, 24.w, 24.h),
       child: Column(
@@ -287,7 +296,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
               } else if (state.status == BillingStatus.error) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text(state.errorMessage ?? 'Something went wrong'),
+                    content: Text(state.errorMessage ?? context.l10n.somethingWentWrong),
                     backgroundColor: Colors.red,
                   ),
                 );
@@ -323,14 +332,14 @@ class _PaywallScreenState extends State<PaywallScreen> {
                             strokeWidth: 2,
                           ),
                         )
-                      : Text('Continue', style: AppTextStyles.font16WhiteMedium),
+                      : Text(context.l10n.continueText, style: AppTextStyles.font16WhiteMedium),
                 ),
               );
             },
           ),
           SizedBox(height: 12.h),
           Text(
-            'Cancel anytime · Billed via Google Play',
+            context.l10n.cancelAnytime,
             style: AppTextStyles.font12WhiteRegular
                 .copyWith(color: Colors.white30),
           ),

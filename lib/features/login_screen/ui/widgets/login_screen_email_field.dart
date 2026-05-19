@@ -1,5 +1,6 @@
 // Email Field
 import 'package:flutter/material.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 
 class LoginScreenEmailField extends StatelessWidget {
@@ -15,8 +16,10 @@ class LoginScreenEmailField extends StatelessWidget {
       keyboardType: TextInputType.emailAddress,
       style: TextStyle(color: isDark ? Colors.white : AppColors.textPrimary),
       decoration: InputDecoration(
-        labelText: 'Email Address',
-        labelStyle: TextStyle(color: isDark ? Colors.white60 : AppColors.textSecondary),
+        labelText: context.l10n.emailAddress,
+        labelStyle: TextStyle(
+          color: isDark ? Colors.white60 : AppColors.textSecondary,
+        ),
         prefixIcon: Icon(
           Icons.email_outlined,
           color: isDark ? AppColors.primaryLight : AppColors.primary,
@@ -25,4 +28,3 @@ class LoginScreenEmailField extends StatelessWidget {
     );
   }
 }
-

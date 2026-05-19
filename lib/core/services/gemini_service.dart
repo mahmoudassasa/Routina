@@ -19,7 +19,8 @@ class GeminiService {
       ],
     );
   }
-Exception _handleError(Object e) {
+
+  Exception _handleError(Object e) {
     final errorStr = e.toString().toLowerCase();
     if (errorStr.contains('429') ||
         errorStr.contains('quota') ||
@@ -29,6 +30,7 @@ Exception _handleError(Object e) {
     }
     return Exception('failed: ${e.toString()}');
   }
+
   Future<String> analyzeHabits({
     required List<Map<String, dynamic>> habits,
   }) async {
@@ -44,22 +46,22 @@ Exception _handleError(Object e) {
 
       final prompt =
           '''
-      Analyze these habits and provide:
-      1. Overall performance summary
-      2. Best performing habit
-      3. Habits that need improvement
-      4. Motivational tip
-      5. One actionable suggestion
-      
-      Habits:
-      $habitsText
-      
-      Keep response concise (max 150 words) and encouraging.
-      ''';
+Analyze these habits and provide:
+1. Overall performance summary
+2. Best performing habit
+3. Habits that need improvement
+4. Motivational tip
+5. One actionable suggestion
+
+Habits:
+$habitsText
+
+Keep response concise (max 150 words) and encouraging.
+Respond in the same language as the habit names above.
+''';
 
       final content = [Content.text(prompt)];
       final response = await _model.generateContent(content);
-
       return response.text ?? 'Unable to generate analysis';
     } catch (e) {
       throw _handleError(e);
@@ -80,15 +82,15 @@ Exception _handleError(Object e) {
 
       final prompt =
           '''
-      Provide detailed progress analysis:
-      $habitsText
-      
-      Include completion trends and consistency patterns. Max 150 words.
-      ''';
+Provide detailed progress analysis:
+$habitsText
+
+Include completion trends and consistency patterns. Max 150 words.
+Respond in the same language as the habit names above.
+''';
 
       final content = [Content.text(prompt)];
       final response = await _model.generateContent(content);
-
       return response.text ?? 'Unable to generate progress analysis';
     } catch (e) {
       throw _handleError(e);
@@ -99,22 +101,18 @@ Exception _handleError(Object e) {
     required List<Map<String, dynamic>> habits,
   }) async {
     try {
-      final habitsText = habits
-          .map((habit) {
-            return habit['title'];
-          })
-          .join(', ');
+      final habitsText = habits.map((habit) => habit['title']).join(', ');
 
       final prompt =
           '''
-      Based on these habits: $habitsText
-      
-      Give 5 practical tips to improve consistency. Keep it short and actionable.
-      ''';
+Based on these habits: $habitsText
+
+Give 5 practical tips to improve consistency. Keep it short and actionable.
+Respond in the same language as the habit names above.
+''';
 
       final content = [Content.text(prompt)];
       final response = await _model.generateContent(content);
-
       return response.text ?? 'Unable to generate suggestions';
     } catch (e) {
       throw _handleError(e);
@@ -135,15 +133,15 @@ Exception _handleError(Object e) {
 
       final prompt =
           '''
-      Optimize goals for these habits:
-      $habitsText
-      
-      Suggest which to prioritize and how to adjust frequency. Max 120 words.
-      ''';
+Optimize goals for these habits:
+$habitsText
+
+Suggest which to prioritize and how to adjust frequency. Max 120 words.
+Respond in the same language as the habit names above.
+''';
 
       final content = [Content.text(prompt)];
       final response = await _model.generateContent(content);
-
       return response.text ?? 'Unable to generate optimization';
     } catch (e) {
       throw _handleError(e);
@@ -164,11 +162,12 @@ Exception _handleError(Object e) {
 
       final prompt =
           '''
-      Provide motivational analysis for these habits:
-      $habitsText
-      
-      Be encouraging and specific. Max 100 words.
-      ''';
+Provide motivational analysis for these habits:
+$habitsText
+
+Be encouraging and specific. Max 100 words.
+Respond in the same language as the habit names above.
+''';
 
       final content = [Content.text(prompt)];
       final stream = _model.generateContentStream(content);

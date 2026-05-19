@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 
@@ -40,7 +41,7 @@ class HabitTrackerScreenHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Habit Tracker',
+                  context.l10n.habitTracker,
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -51,7 +52,7 @@ class HabitTrackerScreenHeader extends StatelessWidget {
                 ),
                 verticalSpace(2),
                 Text(
-                  'Detailed view of your progress',
+                  context.l10n.habitTrackerDesc,
                   style: TextStyle(
                     fontSize: 14, // Slightly smaller for better hierarchy
                     color: isDark

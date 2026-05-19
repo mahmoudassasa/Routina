@@ -85,7 +85,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         TextButton(
                           onPressed: () => context.pushReplacementNamed(Routes.loginScreen),
                           child: Text(
-                            'Back to Login',
+                            context.l10n.backToLogin,
                             style: AppTextStyles.labelLarge.copyWith(
                               color: isDark ? AppColors.primaryLight : AppColors.primary,
                             ),
@@ -95,7 +95,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         const ForgotPasswordScreenSuccessState(),
                         verticalSpace(32),
                         Text(
-                          'Email Sent!',
+                          context.l10n.emailSent,
                           style: AppTextStyles.displayMedium.copyWith(
                             color: isDark ? Colors.white : AppColors.textPrimary,
                             fontSize: 28.sp, // Ensuring ScreenUtil

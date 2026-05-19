@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 
 class FrequencySelector extends StatelessWidget {
@@ -20,14 +21,22 @@ class FrequencySelector extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Frequency",
+          context.l10n.frequencyLabel,
           style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
         ),
         verticalSpace(12),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: List.generate(7, (index) {
-            final days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+            final days = [
+              context.l10n.monday,
+              context.l10n.tuesday,
+              context.l10n.wednesday,
+              context.l10n.thursday,
+              context.l10n.friday,
+              context.l10n.saturday,
+              context.l10n.sunday,
+            ];
             final isSelected = selectedDays[index];
             return GestureDetector(
               onTap: () => onDayToggled(index),

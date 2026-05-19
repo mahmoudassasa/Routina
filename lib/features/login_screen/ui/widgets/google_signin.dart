@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/features/login_screen/logic/cubit/login_cubit.dart';
 
@@ -22,7 +23,7 @@ class GoogleSignin extends StatelessWidget {
           height: 20.w,
         ),
         label: Text(
-          'Continue with Google',
+          context.l10n.continueWithGoogle,
           style: TextStyle(
             fontSize: 14.sp,
             fontWeight: FontWeight.w500,

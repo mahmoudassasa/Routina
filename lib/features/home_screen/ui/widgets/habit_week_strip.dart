@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/features/home_screen/logic/cubit/home_cubit.dart';
 
@@ -22,7 +23,15 @@ class HabitWeekStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+    final days = [
+      context.l10n.monday,
+      context.l10n.tuesday,
+      context.l10n.wednesday,
+      context.l10n.thursday,
+      context.l10n.friday,
+      context.l10n.saturday,
+      context.l10n.sunday,
+    ];
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -46,10 +55,7 @@ class HabitWeekStrip extends StatelessWidget {
               verticalSpace(10),
               GestureDetector(
                 onTap: isScheduled
-                    ? () => context.read<HomeCubit>().toggleDay(
-                        habitId,
-                        index,
-                      )
+                    ? () => context.read<HomeCubit>().toggleDay(habitId, index)
                     : null,
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 300),

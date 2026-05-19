@@ -15,7 +15,7 @@ class AiAnalysisFullScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-
+     
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -45,7 +45,7 @@ class AiAnalysisFullScreen extends StatelessWidget {
             ),
           ),
           title: Text(
-            'AI Analysis',
+            context.l10n.aiAnalysis,
             style: TextStyle(
               color: isDark ? Colors.white : Colors.black87,
               fontWeight: FontWeight.bold,
@@ -170,7 +170,7 @@ class AiAnalysisFullScreen extends StatelessWidget {
                         ),
                         verticalSpace(24),
                         Text(
-                          'Analysis Failed',
+                          context.l10n.analysisFailed,
                           style: TextStyle(
                             fontSize: 20.sp,
                             fontWeight: FontWeight.bold,
@@ -191,7 +191,7 @@ class AiAnalysisFullScreen extends StatelessWidget {
                   ),
                 );
               }
-            //Success state with analysis
+              //Success state with analysis
               if (state.status == AiAnalysisStatus.success &&
                   state.analysis != null) {
                 return RefreshIndicator(
@@ -253,7 +253,7 @@ class AiAnalysisFullScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'AI Insights',
+                                      context.l10n.aiInsights,
                                       style: TextStyle(
                                         fontSize: 18.sp,
                                         fontWeight: FontWeight.bold,
@@ -263,7 +263,7 @@ class AiAnalysisFullScreen extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      'Powered by Gemini',
+                                      context.l10n.poweredByGemini,
                                       style: TextStyle(
                                         fontSize: 13.sp,
                                         color: isDark

@@ -37,7 +37,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _passwordController.dispose();
     super.dispose();
   }
-
+String _getErrorMessage(BuildContext context, RegisterState state) {
+  return switch (state.errorCode) {
+    'emailAlreadyInUse' => context.l10n.emailAlreadyInUse,
+    'invalidEmail' => context.l10n.invalidEmail,
+    'weakPassword' => context.l10n.weakPassword,
+    'networkError' => context.l10n.networkError,
+    _ => context.l10n.registerError,
+  };
+}
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -45,7 +53,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
       body: Stack(
         children: [
-        
           AnimatedContainer(
             duration: const Duration(milliseconds: 500),
             decoration: BoxDecoration(
@@ -53,14 +60,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  isDark ? const Color(0xFF1A1A1A) : AppColors.backgroundGradientStart,
+                  isDark
+                      ? const Color(0xFF1A1A1A)
+                      : AppColors.backgroundGradientStart,
                   isDark ? Colors.black : AppColors.backgroundGradientEnd,
                 ],
               ),
             ),
           ),
 
-          
           SafeArea(
             child: BlocListener<RegisterCubit, RegisterState>(
               listener: (context, state) {
@@ -68,7 +76,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   context.pushReplacementNamed(Routes.emailConfirmationScreen);
                 } else if (state.status == RegisterStatus.error) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(state.errorMessage ?? 'Error')),
+                    SnackBar(
+                      content: Text(_getErrorMessage(context, state)),
+                      backgroundColor: Colors.red,
+                    ),
                   );
                 }
               },
@@ -79,18 +90,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     key: _formKey,
                     child: Column(
                       children: [
-                        verticalSpace(60), 
+                        verticalSpace(60),
                         const RegisterScreenLogo(),
                         verticalSpace(24),
                         const RegisterScreenTexts(),
                         verticalSpace(32),
                         const RegisterScreenUserPicture(),
                         verticalSpace(32),
-                        RegisterScreenNameField(nameController: _nameController),
+                        RegisterScreenNameField(
+                          nameController: _nameController,
+                        ),
                         verticalSpace(16),
-                        RegisterScreenEmailField(emailController: _emailController),
+                        RegisterScreenEmailField(
+                          emailController: _emailController,
+                        ),
                         verticalSpace(16),
-                        RegisterScreenPasswordfield(passwordController: _passwordController),
+                        RegisterScreenPasswordfield(
+                          passwordController: _passwordController,
+                        ),
                         verticalSpace(32),
                         RegisterScreenRegisterButton(
                           nameController: _nameController,
@@ -113,15 +130,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: BlocBuilder<ThemeCubit, ThemeState>(
               builder: (context, state) {
                 return FloatingActionButton.small(
-                  heroTag: 'themeToggleRegister',       
+                  heroTag: 'themeToggleRegister',
                   elevation: 0,
-                  backgroundColor: isDark 
-                      ? Colors.white10 
+                  backgroundColor: isDark
+                      ? Colors.white10
                       : AppColors.primary.withValues(alpha: 0.1),
                   shape: CircleBorder(
                     side: BorderSide(
-                      color: isDark 
-                          ? Colors.white24 
+                      color: isDark
+                          ? Colors.white24
                           : AppColors.primary.withValues(alpha: 0.5),
                     ),
                   ),

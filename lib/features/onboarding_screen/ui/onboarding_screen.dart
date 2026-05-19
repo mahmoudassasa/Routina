@@ -23,45 +23,43 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
-  final List<Map<String, String>> _pages = [
+  List<Map<String, String>> get _pages => [
     {
-      'title': 'Welcome to Routina',
-      'subtitle':
-          'Build better habits with our beautiful and intuitive tracker',
+      'title': context.l10n.onboarding1Title,
+      'subtitle': context.l10n.onboarding1Subtitle,
       'icon': '🎯',
     },
     {
-      'title': 'Track Your Progress',
-      'subtitle':
-          'Monitor your daily habits and see your improvements over time',
+      'title': context.l10n.onboarding2Title,
+      'subtitle': context.l10n.onboarding2Subtitle,
       'icon': '📊',
     },
     {
-      'title': 'Stay Motivated',
-      'subtitle': 'Get AI-powered insights and personalized recommendations',
+      'title': context.l10n.onboarding3Title,
+      'subtitle': context.l10n.onboarding3Subtitle,
       'icon': '🚀',
     },
   ];
 
-Future<void> _onFinish() async {
-  final prefs = await SharedPreferences.getInstance();
-  await prefs.setBool('isFirstTime', false);
-  
-  if (mounted) {
-    context.pushReplacementNamed(Routes.loginScreen);
-  }
-}
+  Future<void> _onFinish() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isFirstTime', false);
 
-void _handleNextPressed() {
-  if (_currentPage < _pages.length - 1) {
-    _pageController.nextPage(
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
-  } else {
-    _onFinish();
+    if (mounted) {
+      context.pushReplacementNamed(Routes.loginScreen);
+    }
   }
-}
+
+  void _handleNextPressed() {
+    if (_currentPage < _pages.length - 1) {
+      _pageController.nextPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    } else {
+      _onFinish();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,10 +125,7 @@ void _handleNextPressed() {
           SafeArea(
             child: Column(
               children: [
-                SkipButton(
-                  onPressed: () =>
-                      _onFinish,
-                ),
+                SkipButton(onPressed: _onFinish),
 
                 Expanded(
                   flex: 3,
@@ -152,7 +147,7 @@ void _handleNextPressed() {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       PageIndicators(currentPage: _currentPage, pages: _pages),
-                       verticalSpace(40), 
+                      verticalSpace(40),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24),
                         child: NextGetStartedButton(
@@ -164,7 +159,7 @@ void _handleNextPressed() {
                     ],
                   ),
                 ),
-                 verticalSpace(20), 
+                verticalSpace(20),
               ],
             ),
           ),

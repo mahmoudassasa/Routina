@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 
 class ForgotPasswordScreenEmailField extends StatelessWidget {
   final TextEditingController _emailController;
-  
+
   const ForgotPasswordScreenEmailField({
     super.key,
     required TextEditingController emailController,
@@ -22,7 +23,7 @@ class ForgotPasswordScreenEmailField extends StatelessWidget {
         fontSize: 16.sp,
       ),
       decoration: InputDecoration(
-        hintText: 'Email Address',
+        hintText: context.l10n.emailAddress,
         hintStyle: TextStyle(
           color: isDark ? Colors.white54 : AppColors.textSecondary,
           fontSize: 14.sp,
@@ -33,21 +34,22 @@ class ForgotPasswordScreenEmailField extends StatelessWidget {
           size: 20.sp,
         ),
         filled: true,
-        fillColor: isDark ? AppColors.darkSurface : Colors.white.withValues(alpha: 0.9),
-        
+        fillColor: isDark
+            ? AppColors.darkSurface
+            : Colors.white.withValues(alpha: 0.9),
+
         // Custom Rounded Borders to match your theme
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16.r),
           borderSide: BorderSide(
-            color: isDark ? Colors.white10 : AppColors.primary.withValues(alpha: 0.1),
+            color: isDark
+                ? Colors.white10
+                : AppColors.primary.withValues(alpha: 0.1),
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16.r),
-          borderSide: const BorderSide(
-            color: AppColors.primary,
-            width: 1.5,
-          ),
+          borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
         ),
         contentPadding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 20.w),
       ),

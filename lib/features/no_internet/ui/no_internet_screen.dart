@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/theaming/app_text_styles.dart';
@@ -44,7 +45,7 @@ class NoInternetScreen extends StatelessWidget {
 
               verticalSpace(32),
               Text(
-                'No Internet Connection',
+                context.l10n.noInternetConnection,
                 style: AppTextStyles.headlineMedium.copyWith(
                   color: isDark
                       ? AppColors.darkTextPrimary
@@ -55,7 +56,7 @@ class NoInternetScreen extends StatelessWidget {
 
               verticalSpace(12),
               Text(
-                'Please check your connection\nand try again.',
+                context.l10n.noInternetDesc,
                 style: AppTextStyles.bodyMedium.copyWith(
                   color: isDark
                       ? AppColors.darkTextSecondary
@@ -72,7 +73,7 @@ class NoInternetScreen extends StatelessWidget {
                 child: FilledButton.icon(
                   onPressed: onRetry,
                   icon: Icon(Icons.refresh_rounded, size: 20.sp),
-                  label: const Text('Try Again'),
+                  label: Text(context.l10n.tryAgain),
                   style: FilledButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     foregroundColor: Colors.white,

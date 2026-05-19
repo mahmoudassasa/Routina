@@ -86,7 +86,7 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
           }
         },
         child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(), // ضروري للـ RefreshIndicator
+          physics: const AlwaysScrollableScrollPhysics(), 
           padding: const EdgeInsets.symmetric(vertical: 40),
           child: Center(child: content),
         ),

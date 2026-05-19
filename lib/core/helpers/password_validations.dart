@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/theaming/app_text_styles.dart';
@@ -27,28 +28,48 @@ class PasswordValidations extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildValidationRow("At least 1 lowercase letter", hasLowerCase, isDark),
+        _buildValidationRow(
+          context.l10n.passwordLowercase,
+          hasLowerCase,
+          isDark,
+        ),
         verticalSpace(8),
-        _buildValidationRow("At least 1 uppercase letter", hasUpperCase, isDark),
+        _buildValidationRow(
+          context.l10n.passwordUppercase,
+          hasUpperCase,
+          isDark,
+        ),
         verticalSpace(8),
-        _buildValidationRow("At least 1 special character", hasSpecialCharacters, isDark),
+        _buildValidationRow(
+          context.l10n.passwordSpecial,
+          hasSpecialCharacters,
+          isDark,
+        ),
         verticalSpace(8),
-        _buildValidationRow("At least 1 number", hasNumber, isDark),
+        _buildValidationRow(context.l10n.passwordNumber, hasNumber, isDark),
         verticalSpace(8),
-        _buildValidationRow("At least 8 characters", hasMinLength, isDark),
+        _buildValidationRow(
+          context.l10n.passwordMinLength,
+          hasMinLength,
+          isDark,
+        ),
       ],
     );
   }
 
   Widget _buildValidationRow(String text, bool isValid, bool isDark) {
     // Brand-consistent colors matching your button and logo
-    final Color activeColor = isDark ? AppColors.primaryLight : AppColors.primary;
+    final Color activeColor = isDark
+        ? AppColors.primaryLight
+        : AppColors.primary;
     final Color inactiveColor = isDark ? Colors.white24 : Colors.grey.shade400;
 
     return AnimatedDefaultTextStyle(
       duration: const Duration(milliseconds: 300),
       style: AppTextStyles.bodySmall.copyWith(
-        color: isValid ? (isDark ? Colors.white : AppColors.textPrimary) : inactiveColor,
+        color: isValid
+            ? (isDark ? Colors.white : AppColors.textPrimary)
+            : inactiveColor,
         fontWeight: isValid ? FontWeight.w600 : FontWeight.normal,
       ),
       child: Row(
@@ -60,7 +81,9 @@ class PasswordValidations extends StatelessWidget {
             height: 18.w,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: isValid ? activeColor.withValues(alpha:  0.1) : Colors.transparent,
+              color: isValid
+                  ? activeColor.withValues(alpha: 0.1)
+                  : Colors.transparent,
             ),
             child: Icon(
               isValid ? Icons.check_circle_rounded : Icons.circle_outlined,

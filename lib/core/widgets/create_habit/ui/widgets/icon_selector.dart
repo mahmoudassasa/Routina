@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/habit_constants.dart';
 
@@ -21,7 +22,7 @@ class IconSelector extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Icon",
+          context.l10n.iconLabel,
           style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
         ),
         verticalSpace(12),

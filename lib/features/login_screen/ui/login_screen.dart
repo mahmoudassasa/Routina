@@ -28,6 +28,23 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  String _getErrorMessage(BuildContext context, LoginState state) {
+    return switch (state.errorCode) {
+      'invalidEmail' => context.l10n.invalidEmail,
+      'userNotFound' => context.l10n.userNotFound,
+      'wrongPassword' => context.l10n.wrongPassword,
+      'invalidCredential' => context.l10n.invalidCredential,
+      'missingPassword' => context.l10n.missingPassword,
+      'tooManyRequests' => context.l10n.tooManyRequests,
+      'userDisabled' => context.l10n.userDisabled,
+      'googleSignInFailed' => context.l10n.googleSignInFailed,
+      'pleaseVerifyEmail' => context.l10n.pleaseVerifyEmail,
+      'unexpectedError' => context.l10n.unexpectedError(
+        state.errorMessage ?? '',
+      ),
+      _ => context.l10n.loginFailed,
+    };
+  }
 
   @override
   void dispose() {
@@ -48,12 +65,12 @@ class _LoginScreenState extends State<LoginScreen> {
           showDialog(
             context: context,
             builder: (_) => MainAlertDialog(
-              dialogTitle: const Text("Login Error"),
-              dialogContent: Text(state.errorMessage ?? "Login failed"),
+              dialogTitle: Text(context.l10n.loginError),
+              dialogContent: Text(_getErrorMessage(context, state)),
               dialogActions: [
                 TextButton(
                   onPressed: () => context.pop(),
-                  child: const Text("OK"),
+                  child: Text(context.l10n.ok),
                 ),
               ],
             ),
@@ -76,36 +93,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     isDark ? Colors.black : AppColors.backgroundGradientEnd,
                   ],
                 ),
-              ),
-            ),
-
-            Positioned(
-              top: 50,
-              left: 20,
-              child: BlocBuilder<ThemeCubit, ThemeState>(
-                builder: (context, state) {
-                  return FloatingActionButton.small(
-                    heroTag: 'themeToggleLogin',
-                    elevation: 0,
-                    backgroundColor: isDark
-                        ? Colors.white10
-                        : AppColors.primary.withValues(alpha: 0.1),
-                    shape: CircleBorder(
-                      side: BorderSide(
-                        color: isDark
-                            ? Colors.white24
-                            : AppColors.primary.withValues(alpha: 0.5),
-                      ),
-                    ),
-                    onPressed: () => context.read<ThemeCubit>().toggleTheme(),
-                    child: Icon(
-                      isDark
-                          ? Icons.light_mode_rounded
-                          : Icons.dark_mode_rounded,
-                      color: isDark ? Colors.amber[400] : AppColors.primary,
-                    ),
-                  );
-                },
               ),
             ),
 
@@ -139,6 +126,29 @@ class _LoginScreenState extends State<LoginScreen> {
                       const AlreadyHaveAnAccount(),
                     ],
                   ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: 50,
+              left: 20,
+              child: FloatingActionButton.small(
+                heroTag: 'themeToggleLogin',
+                elevation: 0,
+                backgroundColor: isDark
+                    ? Colors.white10
+                    : AppColors.primary.withValues(alpha: 0.1),
+                shape: CircleBorder(
+                  side: BorderSide(
+                    color: isDark
+                        ? Colors.white24
+                        : AppColors.primary.withValues(alpha: 0.5),
+                  ),
+                ),
+                onPressed: () => context.read<ThemeCubit>().toggleTheme(),
+                child: Icon(
+                  isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
+                  color: isDark ? Colors.amber[400] : AppColors.primary,
                 ),
               ),
             ),

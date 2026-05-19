@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -19,6 +20,7 @@ class UpdateDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+     
 
     return PopScope(
       canPop: false, 
@@ -28,7 +30,7 @@ class UpdateDialog extends StatelessWidget {
           borderRadius: BorderRadius.circular(20.r),
         ),
         title: Text(
-          'Update Required',
+          context.l10n.updateRequired,
           style: TextStyle(
             fontSize: 18.sp,
             fontWeight: FontWeight.bold,
@@ -36,7 +38,7 @@ class UpdateDialog extends StatelessWidget {
           ),
         ),
         content: Text(
-          'A new version of Routina is available. Please update to continue.',
+          context.l10n.updateMessage,
           style: TextStyle(
             fontSize: 14.sp,
             color: isDark ? Colors.grey[400] : Colors.grey[600],
@@ -55,7 +57,7 @@ class UpdateDialog extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 14.h),
               ),
               child: Text(
-                'Update Now',
+                context.l10n.updateNow,
                 style: TextStyle(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.bold,

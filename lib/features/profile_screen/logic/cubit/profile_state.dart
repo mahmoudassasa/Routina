@@ -6,10 +6,10 @@ class ProfileState extends Equatable {
   final String? email;
   final String? imageUrl;
   final String? errorMessage;
-  final String? currentStreak;
-  final String? totalHabits;
   final String? completionRate;
-  final String? bestStreak;
+  final int? currentStreakCount;
+  final int? totalHabitsCount;
+  final int? bestStreakCount;
 
   const ProfileState({
     this.loading = false,
@@ -17,10 +17,10 @@ class ProfileState extends Equatable {
     this.email,
     this.imageUrl,
     this.errorMessage,
-    this.currentStreak,
-    this.totalHabits,
     this.completionRate,
-    this.bestStreak,
+    this.currentStreakCount,
+    this.totalHabitsCount,
+    this.bestStreakCount,
   });
 
   ProfileState copyWith({
@@ -29,10 +29,10 @@ class ProfileState extends Equatable {
     String? email,
     String? imageUrl,
     String? errorMessage,
-    String? currentStreak,
-    String? totalHabits,
     String? completionRate,
-    String? bestStreak,
+    int? currentStreakCount,
+    int? totalHabitsCount,
+    int? bestStreakCount,
   }) {
     return ProfileState(
       loading: loading ?? this.loading,
@@ -40,23 +40,16 @@ class ProfileState extends Equatable {
       email: email ?? this.email,
       imageUrl: imageUrl ?? this.imageUrl,
       errorMessage: errorMessage ?? this.errorMessage,
-      currentStreak: currentStreak ?? this.currentStreak,
-      totalHabits: totalHabits ?? this.totalHabits,
       completionRate: completionRate ?? this.completionRate,
-      bestStreak: bestStreak ?? this.bestStreak,
+      currentStreakCount: currentStreakCount ?? this.currentStreakCount,
+      totalHabitsCount: totalHabitsCount ?? this.totalHabitsCount,
+      bestStreakCount: bestStreakCount ?? this.bestStreakCount,
     );
   }
 
   @override
   List<Object?> get props => [
-        loading,
-        name,
-        email,
-        imageUrl,
-        errorMessage,
-        currentStreak,
-        totalHabits,
-        completionRate,
-        bestStreak,
+        loading, name, email, imageUrl, errorMessage,
+        completionRate, currentStreakCount, totalHabitsCount, bestStreakCount,
       ];
 }

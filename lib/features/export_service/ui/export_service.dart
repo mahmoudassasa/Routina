@@ -38,16 +38,15 @@ class ExportService {
       String csvData = const ListToCsvConverter().convert(rows);
 
       // 4. Save to a temporary directory
-final directory = await getExternalStorageDirectory();
-final path = '${directory!.path}/routina_habits_data.csv';
+      final directory = await getExternalStorageDirectory();
+      final path = '${directory!.path}/routina_habits_data.csv';
       final file = File(path);
       await file.writeAsString(csvData);
 
       // 5. Trigger the native share dialog
-      await Share.shareXFiles(
-        [XFile(path)],
-        text: 'Here is my habit tracking data from Routina!',
-      );
+      await Share.shareXFiles([
+        XFile(path),
+      ], text: 'Here is my habit tracking data from Routina!');
     } catch (e) {
       throw Exception("Failed to export data: $e");
     }

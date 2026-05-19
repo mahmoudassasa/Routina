@@ -51,7 +51,7 @@ class HabitTrackerScreenContent extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    'Track Your Growth',
+                    context.l10n.trackYourGrowth,
                     style: TextStyle(
                       fontSize: 24.sp,
                       fontWeight: FontWeight.bold,
@@ -60,7 +60,7 @@ class HabitTrackerScreenContent extends StatelessWidget {
                   ),
                   verticalSpace(8),
                   Text(
-                    'Visualize your progress and unlock deep insights into your daily habits.',
+                    context.l10n.trackYourGrowthDesc,
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: isDark ? Colors.grey[400] : Colors.grey[600],
@@ -80,9 +80,8 @@ class HabitTrackerScreenContent extends StatelessWidget {
                 children: [
                   FeaturePreviewCard(
                     icon: '📊',
-                    title: 'Progress Charts',
-                    description:
-                        'Interactive weekly and monthly visualizations',
+                    title: context.l10n.progressCharts,
+                    description: context.l10n.progressChartsDesc,
                     onTap: () {
                       final habitsList = context.read<HomeCubit>().state.habits;
 
@@ -97,8 +96,8 @@ class HabitTrackerScreenContent extends StatelessWidget {
                   // Strategic Goals
                   FeaturePreviewCard(
                     icon: '🎯',
-                    title: 'Strategic Goals',
-                    description: 'Set milestones and track achievements',
+                    title: context.l10n.strategicGoalsCard,
+                    description: context.l10n.strategicGoalsCardDesc,
                     // Strategic Goals
                     onTap: () {
                       final isPremium = context
@@ -115,13 +114,12 @@ class HabitTrackerScreenContent extends StatelessWidget {
                         showPremiumFeatureBottomSheet(
                           context: context,
                           icon: '🎯',
-                          title: 'Smart Goal Tracking',
-                          description:
-                              'Go beyond daily tasks and start building long-term streaks with AI guidance.',
+                          title: context.l10n.smartGoalTracking,
+                          description: context.l10n.smartGoalTrackingDesc,
                           features: [
-                            'Multi-stage goal milestones',
-                            'Predictive streak counting',
-                            'Custom success criteria',
+                            context.l10n.multiStageGoalMilestones,
+                            context.l10n.predictiveStreakCounting,
+                            context.l10n.customSuccessCriteria,
                           ],
                         );
                       }
@@ -133,8 +131,8 @@ class HabitTrackerScreenContent extends StatelessWidget {
                   // Premium Analytics
                   FeaturePreviewCard(
                     icon: '💎',
-                    title: 'Premium Analytics',
-                    description: 'Advanced data for power users',
+                    title: context.l10n.premiumAnalytics,
+                    description: context.l10n.premiumAnalyticsDesc,
                     // Premium Analytics
                     onTap: () {
                       final isPremium = context
@@ -151,13 +149,12 @@ class HabitTrackerScreenContent extends StatelessWidget {
                         showPremiumFeatureBottomSheet(
                           context: context,
                           icon: '💎',
-                          title: 'Elite Insights',
-                          description:
-                              'Unlock the full power of your data with our most advanced tracking engine.',
+                          title: context.l10n.eliteInsightsTitle,
+                          description: context.l10n.eliteInsightsDesc,
                           features: [
-                            'Behavioral pattern recognition',
-                            'Smart time-of-day suggestions',
-                            'Priority habit focus',
+                            context.l10n.behavioralPatternRecognition,
+                            context.l10n.smartTimeOfDaySuggestions,
+                            context.l10n.priorityHabitFocus,
                           ],
                         );
                       }

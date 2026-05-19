@@ -9,12 +9,14 @@ class RegisterState {
   final File? localImage;//Chosen image from device
   final String? imageUrl; //Upload link from  Supabase
   final ImageUploadStatus imageStatus;
+  final String? errorCode;
 
   const RegisterState({
     this.status = RegisterStatus.initial,
     this.errorMessage,
     this.localImage,
     this.imageUrl,
+    this.errorCode,
     this.imageStatus = ImageUploadStatus.initial,
   });
 
@@ -24,6 +26,7 @@ class RegisterState {
     File? localImage,
     String? imageUrl,
     ImageUploadStatus? imageStatus,
+    String? errorCode,
   }) {
     return RegisterState(
       status: status ?? this.status,
@@ -31,6 +34,7 @@ class RegisterState {
       localImage: localImage ?? this.localImage,
       imageUrl: imageUrl ?? this.imageUrl,
       imageStatus: imageStatus ?? this.imageStatus,
+      errorCode: errorCode ?? this.errorCode,
     );
   }
 }

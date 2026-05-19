@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:routina/core/helpers/app_regex.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 
 class RegisterScreenEmailField extends StatelessWidget {
@@ -16,11 +17,11 @@ class RegisterScreenEmailField extends StatelessWidget {
       keyboardType: TextInputType.emailAddress,
       style: TextStyle(color: isDark ? Colors.white : AppColors.textPrimary),
       decoration: InputDecoration(
-        labelText: 'Email Address',
+        labelText: context.l10n.emailAddress, 
         labelStyle: TextStyle(
           color: isDark ? Colors.white60 : AppColors.textSecondary,
         ),
-        hintText: 'Enter your email',
+        hintText: context.l10n.enterEmail, 
         hintStyle: TextStyle(
           color: isDark ? Colors.white30 : Colors.grey[400],
         ),
@@ -31,9 +32,9 @@ class RegisterScreenEmailField extends StatelessWidget {
       ),
       validator: (value) {
         if (value == null || value.trim().isEmpty) {
-          return 'Please enter your email';
+          return context.l10n.emailRequired;
         } else if (!AppRegex.isEmailValid(value.trim())) {
-          return 'Please enter a valid email';
+          return context.l10n.emailInvalid;
         }
         return null;
       },

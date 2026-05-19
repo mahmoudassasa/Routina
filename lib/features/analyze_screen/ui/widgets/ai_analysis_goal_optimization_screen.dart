@@ -38,7 +38,7 @@ class _GoalOptimizationScreenState extends State<GoalOptimizationScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-
+     
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -59,7 +59,7 @@ class _GoalOptimizationScreenState extends State<GoalOptimizationScreen> {
             icon: Icon(Icons.arrow_back_ios_new_rounded,
                 color: isDark ? Colors.white : Colors.black87),
           ),
-          title: Text('Goal Optimization',
+          title: Text(context.l10n.goalOptimization,
               style: TextStyle(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.bold,
@@ -115,6 +115,8 @@ class _GoalOptimizationScreenState extends State<GoalOptimizationScreen> {
   }
 
   Widget _buildError(bool isDark) {
+         
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -122,14 +124,14 @@ class _GoalOptimizationScreenState extends State<GoalOptimizationScreen> {
           verticalSpace(60),
           Icon(Icons.error_outline, size: 64.sp, color: Colors.redAccent),
           verticalSpace(16),
-          Text('Failed to load optimization',
+          Text(context.l10n.failedToLoadOptimization,
               style: TextStyle(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.bold,
                 color: isDark ? Colors.white : Colors.black87,
               )),
           verticalSpace(8),
-          Text('Pull down to retry',
+          Text(context.l10n.pullDownToRetry,
               style: TextStyle(
                 fontSize: 14.sp,
                 color: isDark ? Colors.grey[400] : Colors.grey[600],

@@ -7,9 +7,12 @@ version: 1.0.0+1
 environment:
   sdk: ^3.9.2
 
+
 dependencies:
   flutter:
     sdk: flutter
+
+  intl: any
 
   # ----- State Management -----
   flutter_bloc: ^8.1.5
@@ -50,6 +53,10 @@ dependencies:
   get_it: ^9.2.1
   package_info_plus: ^8.1.2
   google_sign_in: ^6.2.1
+  in_app_purchase: ^3.2.0
+  flutter_localizations:
+    sdk: flutter
+
 
 
 
@@ -63,6 +70,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true
 
 
   assets:

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/widgets/create_habit/ui/create_habit_bottom_sheet.dart';
@@ -17,7 +18,8 @@ class HomeEmptyState extends StatelessWidget {
     return ListView(
       physics: const AlwaysScrollableScrollPhysics(),
       children: [
-verticalSpace(60),         Center(
+        verticalSpace(60),
+        Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -35,10 +37,10 @@ verticalSpace(60),         Center(
                   color: AppColors.primary,
                 ),
               ),
-verticalSpace(32), 
+              verticalSpace(32),
               // Title
               Text(
-                'No Habits Yet',
+                context.l10n.noHabitsYetTitle,
                 style: TextStyle(
                   fontSize: 24.sp,
                   fontWeight: FontWeight.bold,
@@ -47,12 +49,12 @@ verticalSpace(32),
                       : AppColors.textPrimary,
                 ),
               ),
-verticalSpace(12), 
+              verticalSpace(12),
               // Subtitle
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40.w),
                 child: Text(
-                  'Start building your first habit and track your progress every day.',
+                  context.l10n.noHabitsYetEmptyDesc,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 14.sp,
@@ -63,7 +65,7 @@ verticalSpace(12),
                   ),
                 ),
               ),
-verticalSpace(40), 
+              verticalSpace(40),
               // CTA Button
               GestureDetector(
                 onTap: () {
@@ -102,14 +104,10 @@ verticalSpace(40),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(
-                        Icons.add_rounded,
-                        color: Colors.white,
-                        size: 22.sp,
-                      ),
+                      Icon(Icons.add_rounded, color: Colors.white, size: 22.sp),
                       horizontalSpace(8),
                       Text(
-                        'Add Your First Habit',
+                        context.l10n.addFirstHabit,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16.sp,

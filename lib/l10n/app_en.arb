@@ -384,5 +384,15 @@
   "unnamedHabit": "Unnamed Habit",
   "emailAlreadyInUse": "This email is already registered.",
   "weakPassword": "Password is too weak. Use at least 6 characters.",
-  "wrongEmail": "Wrong email? Go back and try again"
+  "wrongEmail": "Wrong email? Go back and try again",
+  "about": "About",
+  "appVersion": "Version {version}",
+  "@appVersion": {"placeholders": {"version": {}}},
+  "madeWithLove": "Made with ❤️ by Nilient",
+  "rateApp": "Rate the App",
+  "rateAppSubtitle": "Love Routina? Leave us a review ⭐",
+  "shareApp": "Share the App",
+  "shareAppSubtitle": "Help others build better habits",
+  "shareAppMessage": "Check out Routina — a beautiful habit tracker app! https://play.google.com/store/apps/details?id=com.routina.app",
+  "appName": "Routina"
 }

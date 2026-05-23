@@ -70,16 +70,23 @@ class ProfileScreenSettingsOptions extends StatelessWidget {
             title: context.l10n.language,
             subtitle: context.l10n.languageSubtitle,
             onTap: () {
-              final localeCubit = context
-                  .read<LocaleCubit>(); 
+              final localeCubit = context.read<LocaleCubit>();
               showModalBottomSheet(
                 context: context,
                 backgroundColor: Colors.transparent,
                 builder: (_) => BlocProvider.value(
-                  value: localeCubit, 
+                  value: localeCubit,
                   child: LanguageBottomSheet(),
                 ),
               );
+            },
+          ),
+          SettingsTile(
+            icon: 'ℹ️',
+            title: context.l10n.about,
+            subtitle: context.l10n.madeWithLove,
+            onTap: () {
+              context.pushNamed(Routes.aboutScreen);
             },
           ),
         ],

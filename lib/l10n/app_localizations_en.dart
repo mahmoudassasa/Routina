@@ -1163,4 +1163,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wrongEmail => 'Wrong email? Go back and try again';
+
+  @override
+  String get about => 'About';
+
+  @override
+  String appVersion(Object version) {
+    return 'Version $version';
+  }
+
+  @override
+  String get madeWithLove => 'Made with ❤️ by Nilient';
+
+  @override
+  String get rateApp => 'Rate the App';
+
+  @override
+  String get rateAppSubtitle => 'Love Routina? Leave us a review ⭐';
+
+  @override
+  String get shareApp => 'Share the App';
+
+  @override
+  String get shareAppSubtitle => 'Help others build better habits';
+
+  @override
+  String get shareAppMessage =>
+      'Check out Routina — a beautiful habit tracker app! https://play.google.com/store/apps/details?id=com.routina.app';
+
+  @override
+  String get appName => 'Routina';
 }

@@ -5,6 +5,7 @@ import 'package:routina/features/analyze_screen/logic/cubit/ai_analysis_cubit.da
 import 'package:routina/features/analyze_screen/ui/widgets/ai_analysis_full_screen.dart';
 import 'package:routina/features/habit_tracker_screen/ui/premium_analytics_screen.dart';
 import 'package:routina/features/habit_tracker_screen/ui/strategic_goals_screen.dart';
+import 'package:routina/features/profile_screen/ui/widgets/about_screen.dart';
 import 'package:routina/features/help_support/ui/help_support_screen.dart';
 import 'package:routina/features/privacy_policy/ui/privacy_policy_screen.dart';
 import 'package:routina/features/bottom_navigation_bar/ui/main_navigation_bar.dart';
@@ -94,17 +95,19 @@ class AppRouter {
             child: const AiAnalysisFullScreen(),
           ),
         );
-case Routes.strategicGoalsScreen:
-  final habits = settings.arguments as List<Map<String, dynamic>>;
-  return MaterialPageRoute(
-    builder: (_) => StrategicGoalsScreen(habits: habits),
-  );
+      case Routes.strategicGoalsScreen:
+        final habits = settings.arguments as List<Map<String, dynamic>>;
+        return MaterialPageRoute(
+          builder: (_) => StrategicGoalsScreen(habits: habits),
+        );
 
-case Routes.premiumAnalyticsScreen:
-  final habits = settings.arguments as List<Map<String, dynamic>>;
-  return MaterialPageRoute(
-    builder: (_) => PremiumAnalyticsScreen(habits: habits),
-  );
+      case Routes.premiumAnalyticsScreen:
+        final habits = settings.arguments as List<Map<String, dynamic>>;
+        return MaterialPageRoute(
+          builder: (_) => PremiumAnalyticsScreen(habits: habits),
+        );
+      case Routes.aboutScreen:
+        return MaterialPageRoute(builder: (_) => const AboutScreen());
       default:
         return null;
     }

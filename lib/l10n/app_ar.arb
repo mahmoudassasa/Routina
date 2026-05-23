@@ -384,5 +384,15 @@
   "unnamedHabit": "عادة بدون اسم",
   "emailAlreadyInUse": "هذا البريد الإلكتروني مسجل بالفعل.",
   "weakPassword": "كلمة المرور ضعيفة جداً. استخدم 6 أحرف على الأقل.",
-  "wrongEmail": "بريد خاطئ؟ عُد وحاول مجدداً."
+  "wrongEmail": "بريد خاطئ؟ عُد وحاول مجدداً.",
+  "about": "عن التطبيق",
+  "appVersion": "الإصدار {version}",
+  "@appVersion": {"placeholders": {"version": {}}},
+  "madeWithLove": "صُنع بـ ❤️ بواسطة نيليينت",
+  "rateApp": "قيّم التطبيق",
+  "rateAppSubtitle": "أعجبك روتينا؟ اترك لنا تقييماً ⭐",
+  "shareApp": "شارك التطبيق",
+  "shareAppSubtitle": "ساعد الآخرين في بناء عادات أفضل",
+  "shareAppMessage": "جرب روتينا — تطبيق جميل لتتبع العادات! https://play.google.com/store/apps/details?id=com.routina.app",
+  "appName": "روتينا"
 }

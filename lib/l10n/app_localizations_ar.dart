@@ -1150,4 +1150,34 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get wrongEmail => 'بريد خاطئ؟ عُد وحاول مجدداً.';
+
+  @override
+  String get about => 'عن التطبيق';
+
+  @override
+  String appVersion(Object version) {
+    return 'الإصدار $version';
+  }
+
+  @override
+  String get madeWithLove => 'صُنع بـ ❤️ بواسطة نيليينت';
+
+  @override
+  String get rateApp => 'قيّم التطبيق';
+
+  @override
+  String get rateAppSubtitle => 'أعجبك روتينا؟ اترك لنا تقييماً ⭐';
+
+  @override
+  String get shareApp => 'شارك التطبيق';
+
+  @override
+  String get shareAppSubtitle => 'ساعد الآخرين في بناء عادات أفضل';
+
+  @override
+  String get shareAppMessage =>
+      'جرب روتينا — تطبيق جميل لتتبع العادات! https://play.google.com/store/apps/details?id=com.routina.app';
+
+  @override
+  String get appName => 'روتينا';
 }

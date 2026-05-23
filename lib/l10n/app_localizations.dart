@@ -2239,6 +2239,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Wrong email? Go back and try again'**
   String get wrongEmail;
+
+  /// No description provided for @about.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get about;
+
+  /// No description provided for @appVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String appVersion(Object version);
+
+  /// No description provided for @madeWithLove.
+  ///
+  /// In en, this message translates to:
+  /// **'Made with ❤️ by Nilient'**
+  String get madeWithLove;
+
+  /// No description provided for @rateApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate the App'**
+  String get rateApp;
+
+  /// No description provided for @rateAppSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Love Routina? Leave us a review ⭐'**
+  String get rateAppSubtitle;
+
+  /// No description provided for @shareApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Share the App'**
+  String get shareApp;
+
+  /// No description provided for @shareAppSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Help others build better habits'**
+  String get shareAppSubtitle;
+
+  /// No description provided for @shareAppMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Check out Routina — a beautiful habit tracker app! https://play.google.com/store/apps/details?id=com.routina.app'**
+  String get shareAppMessage;
+
+  /// No description provided for @appName.
+  ///
+  /// In en, this message translates to:
+  /// **'Routina'**
+  String get appName;
 }
 
 class _AppLocalizationsDelegate

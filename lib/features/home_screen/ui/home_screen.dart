@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:routina/core/theaming/app_colors.dart';
+import 'package:routina/core/widgets/ad_banner_widget.dart';
+import 'package:routina/core/widgets/ad_interstitial_service.dart';
 import 'package:routina/features/home_screen/ui/widgets/habits_list.dart';
 import 'package:routina/features/home_screen/ui/widgets/home_header.dart';
 
@@ -11,6 +13,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final AdInterstitialService _interstitialService = AdInterstitialService();
+
+  @override
+  void initState() {
+    super.initState();
+    _interstitialService.load();
+    _interstitialService.handleAppOpenCount(context);
+  }
+
+  @override
+  void dispose() {
+    _interstitialService.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +50,12 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
+        bottomNavigationBar: const AdBannerWidget(),
         body: SafeArea(
           child: Column(
             children: [
               const HomeHeader(),
               Expanded(child: HabitsList()),
-
             ],
           ),
         ),

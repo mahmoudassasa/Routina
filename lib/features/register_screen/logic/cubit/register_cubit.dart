@@ -14,10 +14,9 @@ class RegisterCubit extends Cubit<RegisterState> {
   final supabase = Supabase.instance.client;
 
   /// Pick image from gallery
-  Future<void> pickImage() async {
-    emit(state.copyWith(imageStatus: ImageUploadStatus.picking));
-
-    final picked = await _picker.pickImage(source: ImageSource.gallery);
+  Future<void> pickImage({ImageSource source = ImageSource.gallery}) async {
+  emit(state.copyWith(imageStatus: ImageUploadStatus.picking));
+  final picked = await _picker.pickImage(source: source);
 
     if (picked != null) {
       emit(

@@ -736,17 +736,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String goodMorning(Object name) {
-    return 'Good Morning, $name! 👋';
+    return 'Good Morning, $name!';
   }
 
   @override
   String goodAfternoon(Object name) {
-    return 'Good Afternoon, $name! ☀️';
+    return 'Good Afternoon, $name!';
   }
 
   @override
   String goodEvening(Object name) {
-    return 'Good Evening, $name! 🌙';
+    return 'Good Evening, $name!';
   }
 
   @override
@@ -1193,4 +1193,59 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get appName => 'Routina';
+
+  @override
+  String get deleteAccount => 'Delete Account';
+
+  @override
+  String get deleteAccountSubtitle => 'Permanently remove your data';
+
+  @override
+  String get deleteAccountWarning =>
+      'This will permanently delete your account, habits, and all associated data. This action cannot be undone.';
+
+  @override
+  String get userMismatch => 'Account mismatch';
+
+  @override
+  String get operationCancelled => 'Operation cancelled';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get emailHint => 'Enter your email';
+
+  @override
+  String get passwordHint => 'Enter your password';
+
+  @override
+  String get editProfile => 'Edit Profile';
+
+  @override
+  String get accountInformation => 'Account Information';
+
+  @override
+  String get name => 'Name';
+
+  @override
+  String get phoneNumber => 'Phone Number';
+
+  @override
+  String get dateOfBirth => 'Date of Birth';
+
+  @override
+  String get notAdded => 'Not Added';
+
+  @override
+  String get takePhoto => 'Take Photo';
+
+  @override
+  String get chooseFromGallery => 'Choose from Gallery';
+
+  @override
+  String get removePhoto => 'Remove Photo';
+
+  @override
+  String get editName => 'Edit Name';
 }

@@ -13,7 +13,8 @@ class Routes {
   static const String helpSupportScreen = '/helpSupportScreen';
   static const String aiAnalysisFullScreen = '/aiAnalysisFullScreen';
   static const String privacyPolicyScreen = '/privacyPolicyScreen';
-  static const String strategicGoalsScreen = '/strategicGoalsScreen'; 
-  static const String premiumAnalyticsScreen = '/premiumAnalyticsScreen'; 
+  static const String strategicGoalsScreen = '/strategicGoalsScreen';
+  static const String premiumAnalyticsScreen = '/premiumAnalyticsScreen';
   static const aboutScreen = '/aboutScreen';
+  static const accountInformationScreen = '/accountInformationScreen';
 }

@@ -39,22 +39,21 @@ class ProfileScreenUserPicture extends StatelessWidget {
       width: 120.w,
       height: 120.w,
       decoration: BoxDecoration(
-  shape: BoxShape.circle,
-  color: isDark ? AppColors.darkSurface : Colors.white,
-  border: Border.all(
-    color: isDark ? AppColors.darkBackground : Colors.white,
-    width: 4.w, 
-  ),
-  boxShadow: [
-    BoxShadow(
-      color: Colors.black.withValues(alpha:0.1),
-      blurRadius: 12.w,
-      offset: Offset(0, 4.h),
-    ),
-  ],
-),
-     
-     
+        shape: BoxShape.circle,
+        color: isDark ? AppColors.darkSurface : Colors.white,
+        border: Border.all(
+          color: isDark ? AppColors.darkBackground : Colors.white,
+          width: 4.w,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.1),
+            blurRadius: 12.w,
+            offset: Offset(0, 4.h),
+          ),
+        ],
+      ),
+
       child: ClipOval(
         child: isLocal
             ? Image.asset(source, fit: BoxFit.cover)

@@ -115,7 +115,11 @@ class _RoutinaAppState extends State<RoutinaApp> {
 
         if (snapshot.hasData) {
           final user = snapshot.data!;
-          if (user.emailVerified) {
+          final isGoogleUser = user.providerData.any(
+            (p) => p.providerId == 'google.com',
+          );
+
+          if (user.emailVerified || isGoogleUser) {
             return const MainNavigationBar();
           } else {
             FirebaseAuth.instance.signOut();

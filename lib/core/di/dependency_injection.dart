@@ -4,8 +4,10 @@ import 'package:routina/core/services/google_sign_in_service.dart';
 
 import 'package:routina/features/login_screen/data/repos/login_repo.dart';
 import 'package:routina/features/login_screen/logic/cubit/login_cubit.dart';
+import 'package:routina/features/profile_screen/logic/cubit/delete_account_cubit.dart';
 
 final getIt = GetIt.instance;
+
 
 Future<void> setupGetIt() async {
   getIt.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
@@ -17,4 +19,5 @@ Future<void> setupGetIt() async {
       getIt<GoogleSignInService>(),
     ),
   );
+  getIt.registerFactory(() => DeleteAccountCubit());
 }

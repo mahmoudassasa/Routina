@@ -725,17 +725,17 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String goodMorning(Object name) {
-    return 'صباح الخير، $name! 👋';
+    return 'صباح الخير، $name!';
   }
 
   @override
   String goodAfternoon(Object name) {
-    return 'يوم سعيد، $name! ☀️';
+    return 'يوم سعيد، $name!';
   }
 
   @override
   String goodEvening(Object name) {
-    return 'مساء الخير، $name! 🌙';
+    return 'مساء الخير، $name!';
   }
 
   @override
@@ -1180,4 +1180,59 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get appName => 'روتينا';
+
+  @override
+  String get deleteAccount => 'حذف الحساب';
+
+  @override
+  String get deleteAccountSubtitle => 'إزالة بياناتك نهائياً';
+
+  @override
+  String get deleteAccountWarning =>
+      'سيتم حذف حسابك وعاداتك وجميع بياناتك بشكل نهائي. لا يمكن التراجع عن هذا الإجراء.';
+
+  @override
+  String get userMismatch => 'الحساب غير متطابق، حاول مرة أخرى';
+
+  @override
+  String get operationCancelled => 'تم إلغاء العملية';
+
+  @override
+  String get email => 'البريد الإلكتروني';
+
+  @override
+  String get emailHint => 'أدخل بريدك الإلكتروني';
+
+  @override
+  String get passwordHint => 'أدخل كلمة المرور';
+
+  @override
+  String get editProfile => 'تعديل الملف الشخصي';
+
+  @override
+  String get accountInformation => 'معلومات الحساب';
+
+  @override
+  String get name => 'الاسم';
+
+  @override
+  String get phoneNumber => 'رقم الهاتف';
+
+  @override
+  String get dateOfBirth => 'تاريخ الميلاد';
+
+  @override
+  String get notAdded => 'غير مضاف';
+
+  @override
+  String get takePhoto => 'التقاط صورة';
+
+  @override
+  String get chooseFromGallery => 'اختيار من المعرض';
+
+  @override
+  String get removePhoto => 'إزالة الصورة';
+
+  @override
+  String get editName => 'تعديل الاسم';
 }

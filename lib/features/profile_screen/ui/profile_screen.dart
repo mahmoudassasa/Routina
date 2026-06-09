@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/routing/routes.dart';
 import 'package:routina/core/theaming/app_colors.dart';
+import 'package:routina/core/widgets/ad_banner_widget.dart';
 import 'package:routina/core/widgets/logout_button/cubit/logout_cubit.dart';
 import 'package:routina/core/widgets/logout_button/cubit/logout_state.dart';
 import 'package:routina/core/widgets/logout_button/ui/logout_dialog.dart';
@@ -13,7 +13,7 @@ import 'package:routina/features/profile_screen/logic/cubit/profile_state.dart';
 import 'package:routina/features/profile_screen/ui/widgets/profile_screen_header_section.dart';
 import 'package:routina/features/profile_screen/ui/widgets/profile_screen_logout_button.dart';
 import 'package:routina/features/profile_screen/ui/widgets/profile_screen_settings_options.dart';
-import 'package:routina/features/profile_screen/ui/widgets/profile_screen_user_details.dart';
+import 'package:routina/features/profile_screen/ui/widgets/profile_screen_edit_user_details.dart';
 import 'package:routina/features/profile_screen/ui/widgets/profile_screen_user_state_cards.dart';
 import 'package:routina/features/profile_screen/ui/widgets/profile_shimmer.dart';
 
@@ -29,6 +29,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     context.read<ProfileCubit>().loadUserData();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -77,20 +82,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         child: Scaffold(
           backgroundColor: Colors.transparent,
+          bottomNavigationBar: const AdBannerWidget(),
           body: SafeArea(
             child: BlocBuilder<ProfileCubit, ProfileState>(
               builder: (context, state) {
-                // Check the 'loading' boolean from your ProfileState
                 if (state.loading) {
                   return const ProfileShimmer();
                 }
-
                 return SingleChildScrollView(
                   child: Column(
                     children: [
                       const ProfileHeaderSection(),
-                      SizedBox(height: 10.h),
-                      const ProfileScreenUserDetails(),
+                      verticalSpace(30),
+                      const ProfileScreenEditUserDetails(),
                       const ProfileScreenUserStateCards(),
                       verticalSpace(40),
                       const ProfileScreenSettingsOptions(),
@@ -98,7 +102,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ProfileLogoutButton(
                         onTap: () => showLogoutDialog(context),
                       ),
-
                       verticalSpace(30),
                     ],
                   ),

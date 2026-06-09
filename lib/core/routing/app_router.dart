@@ -5,6 +5,7 @@ import 'package:routina/features/analyze_screen/logic/cubit/ai_analysis_cubit.da
 import 'package:routina/features/analyze_screen/ui/widgets/ai_analysis_full_screen.dart';
 import 'package:routina/features/habit_tracker_screen/ui/premium_analytics_screen.dart';
 import 'package:routina/features/habit_tracker_screen/ui/strategic_goals_screen.dart';
+import 'package:routina/features/profile_screen/logic/cubit/profile_cubit.dart';
 import 'package:routina/features/profile_screen/ui/widgets/about_screen.dart';
 import 'package:routina/features/help_support/ui/help_support_screen.dart';
 import 'package:routina/features/privacy_policy/ui/privacy_policy_screen.dart';
@@ -19,6 +20,7 @@ import 'package:routina/features/habit_tracker_screen/ui/widgets/habit_progress_
 import 'package:routina/features/home_screen/logic/cubit/home_cubit.dart';
 import 'package:routina/features/login_screen/logic/cubit/login_cubit.dart';
 import 'package:routina/features/login_screen/ui/login_screen.dart';
+import 'package:routina/features/profile_screen/ui/widgets/account_information_screen.dart';
 import 'package:routina/features/register_screen/logic/cubit/register_cubit.dart';
 import 'package:routina/features/register_screen/ui/register_screen.dart';
 import '../../features/onboarding_screen/ui/onboarding_screen.dart';
@@ -108,6 +110,14 @@ class AppRouter {
         );
       case Routes.aboutScreen:
         return MaterialPageRoute(builder: (_) => const AboutScreen());
+      case Routes.accountInformationScreen:
+        final profileCubit = settings.arguments as ProfileCubit;
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: profileCubit,
+            child: const AccountInformationScreen(),
+          ),
+        );
       default:
         return null;
     }

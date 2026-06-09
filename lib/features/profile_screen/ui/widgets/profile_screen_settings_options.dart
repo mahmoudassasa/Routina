@@ -6,6 +6,7 @@ import 'package:routina/core/theaming/app_theme/logic/cubit/theme_cubit.dart';
 import 'package:routina/core/widgets/language_bottom_sheet.dart';
 import 'package:routina/features/home_screen/logic/cubit/home_cubit.dart';
 import 'package:routina/features/locale/logic/locale_cubit.dart';
+import 'package:routina/features/profile_screen/ui/widgets/delete_account_sheet.dart';
 import 'package:routina/features/profile_screen/ui/widgets/export_data_fun.dart';
 import 'package:routina/features/profile_screen/ui/widgets/profile_screen_settings_tile.dart';
 
@@ -88,6 +89,12 @@ class ProfileScreenSettingsOptions extends StatelessWidget {
             onTap: () {
               context.pushNamed(Routes.aboutScreen);
             },
+          ),
+          SettingsTile(
+            icon: '🗑️',
+            title: context.l10n.deleteAccount,
+            subtitle: context.l10n.deleteAccountSubtitle,
+            onTap: () => showDeleteAccountSheet(context),
           ),
         ],
       ),

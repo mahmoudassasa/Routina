@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 
@@ -36,13 +37,17 @@ class ForgotPasswordScreenLogo extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                '🔐', // Changed to lock/key for Password context
-                style: TextStyle(fontSize: 40.sp),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10.r),
+                child: Image.asset(
+                  'assets/icons/routina_icon.png',
+                  width: 40.w,
+                  height: 40.h,
+                ),
               ),
               horizontalSpace(12),
               Text(
-                'Routina',
+                context.l10n.appName,
                 style: TextStyle(
                   fontSize: 24.sp,
                   fontWeight: FontWeight.bold,

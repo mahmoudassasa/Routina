@@ -47,4 +47,5 @@ app.*.map.json
 
 *.env
 .env
-**/.env
+**/.envkey.properties
+*.jks

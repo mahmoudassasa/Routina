@@ -1,3 +1,11 @@
+import java.util.Properties
+import java.io.FileInputStream
+
+val keyProperties = Properties()
+val keyPropertiesFile = rootProject.file("key.properties")
+if (keyPropertiesFile.exists()) {
+    keyProperties.load(FileInputStream(keyPropertiesFile))
+}
 plugins {
     id("com.android.application")
     // START: FlutterFire Configuration
@@ -22,6 +30,14 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
+    signingConfigs {
+    create("release") {
+        keyAlias = keyProperties["keyAlias"] as String
+        keyPassword = keyProperties["keyPassword"] as String
+        storeFile = file(keyProperties["storeFile"] as String)
+        storePassword = keyProperties["storePassword"] as String
+    }
+}
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
@@ -37,7 +53,7 @@ android {
 
 buildTypes {
     release {
-        signingConfig = signingConfigs.getByName("debug")
+        signingConfig = signingConfigs.getByName("release")
 
         isMinifyEnabled = true
         isShrinkResources = true

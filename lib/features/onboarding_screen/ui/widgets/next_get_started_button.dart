@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/theaming/app_text_styles.dart';
@@ -23,9 +24,9 @@ class NextGetStartedButton extends StatelessWidget {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       width: double.infinity,
-      height: 58,
+      height: 58.h,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(18.r),
         // Premium Gradient effect
         gradient: LinearGradient(
           begin: Alignment.centerLeft,
@@ -47,7 +48,7 @@ class NextGetStartedButton extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: onPressed,
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(18.r),
           child: Center(
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
@@ -61,7 +62,7 @@ class NextGetStartedButton extends StatelessWidget {
                 isLastPage ? context.l10n.getStarted : context.l10n.next,
                 key: ValueKey<bool>(isLastPage),
                 style: AppTextStyles.labelLarge.copyWith(
-                  fontSize: 18,
+                  fontSize: 18.sp,
                   fontWeight: FontWeight.w800,
                   color: Colors.white, // White text looks better on gradients
                   letterSpacing: 1.1,

@@ -29,6 +29,12 @@ class _AboutScreenState extends State<AboutScreen>
   static const String _privacyPolicyUrl =
       'https://mellow-lokum-05a071.netlify.app/';
 
+  static const String _termsOfServiceUrl =
+      'https://idyllic-frangollo-bcbcc8.netlify.app/';
+
+  static const String _deleteAccountUrl =
+      'https://inquisitive-klepon-3b1a8d.netlify.app/';
+
   @override
   void initState() {
     super.initState();
@@ -213,6 +219,20 @@ class _AboutScreenState extends State<AboutScreen>
         subtitle: null,
         onTap: () => _showPrivacyOptions(),
       ),
+      _AboutItem(
+        icon: Icons.description_outlined,
+        iconColor: AppColors.primary,
+        title: context.l10n.termsOfService,
+        subtitle: null,
+        onTap: () => _launchUrl(_termsOfServiceUrl),
+      ),
+      _AboutItem(
+        icon: Icons.delete_outline_rounded,
+        iconColor: const Color(0xFFEF4444),
+        title: context.l10n.deleteAccount,
+        subtitle: null,
+        onTap: () => _launchUrl(_deleteAccountUrl),
+      ),
     ];
 
     return Container(
@@ -231,7 +251,7 @@ class _AboutScreenState extends State<AboutScreen>
               _buildActionTile(item),
               if (!isLast)
                 Divider(
-                  height: 1,
+                  height: 1.h,
                   thickness: 1,
                   color: _borderColor,
                   indent: 56.w,

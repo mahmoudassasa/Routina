@@ -26,27 +26,48 @@ class _GoalOptimizationScreenState extends State<GoalOptimizationScreen> {
   }
 
   Future<void> _load() async {
-    setState(() { _loading = true; _error = null; });
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
     try {
-      final result = await GeminiService().getGoalOptimization(habits: widget.habits);
-      if (mounted) setState(() { _result = result; _loading = false; });
+      final result = await GeminiService().getGoalOptimization(
+        habits: widget.habits,
+      );
+      if (mounted) {
+        setState(() {
+          _result = result;
+          _loading = false;
+        });
+      }
     } catch (e) {
-      if (mounted) setState(() { _error = e.toString(); _loading = false; });
+      if (mounted) {
+        setState(() {
+          _error = e.toString();
+          _loading = false;
+        });
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-     
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: isDark
-              ? [AppColors.darkBackgroundGradientStart, AppColors.darkBackgroundGradientEnd]
-              : [AppColors.backgroundGradientStart, AppColors.backgroundGradientEnd],
+              ? [
+                  AppColors.darkBackgroundGradientStart,
+                  AppColors.darkBackgroundGradientEnd,
+                ]
+              : [
+                  AppColors.backgroundGradientStart,
+                  AppColors.backgroundGradientEnd,
+                ],
         ),
       ),
       child: Scaffold(
@@ -56,22 +77,28 @@ class _GoalOptimizationScreenState extends State<GoalOptimizationScreen> {
           elevation: 0,
           leading: IconButton(
             onPressed: () => context.pop(),
-            icon: Icon(Icons.arrow_back_ios_new_rounded,
-                color: isDark ? Colors.white : Colors.black87),
+            icon: Icon(
+              Icons.arrow_back_ios_new_rounded,
+              color: isDark ? Colors.white : Colors.black87,
+            ),
           ),
-          title: Text(context.l10n.goalOptimization,
-              style: TextStyle(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.bold,
-                color: isDark ? Colors.white : Colors.black87,
-              )),
+          title: Text(
+            context.l10n.goalOptimization,
+            style: TextStyle(
+              fontSize: 18.sp,
+              fontWeight: FontWeight.bold,
+              color: isDark ? Colors.white : Colors.black87,
+            ),
+          ),
           centerTitle: true,
           actions: [
             if (!_loading)
               IconButton(
                 onPressed: _load,
-                icon: Icon(Icons.refresh_rounded,
-                    color: isDark ? Colors.white : Colors.black87),
+                icon: Icon(
+                  Icons.refresh_rounded,
+                  color: isDark ? Colors.white : Colors.black87,
+                ),
               ),
           ],
         ),
@@ -85,8 +112,8 @@ class _GoalOptimizationScreenState extends State<GoalOptimizationScreen> {
             child: _loading
                 ? _buildShimmer(isDark)
                 : _error != null
-                    ? _buildError(isDark)
-                    : _buildContent(isDark),
+                ? _buildError(isDark)
+                : _buildContent(isDark),
           ),
         ),
       ),
@@ -99,24 +126,25 @@ class _GoalOptimizationScreenState extends State<GoalOptimizationScreen> {
       highlightColor: isDark ? Colors.grey[700]! : Colors.grey[100]!,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: List.generate(30, (i) => Padding(
-          padding: EdgeInsets.only(bottom: 12.h),
-          child: Container(
-            width: i % 3 == 2 ? 0.6.sw : double.infinity,
-            height: 14.h,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8.r),
+        children: List.generate(
+          30,
+          (i) => Padding(
+            padding: EdgeInsets.only(bottom: 12.h),
+            child: Container(
+              width: i % 3 == 2 ? 0.6.sw : double.infinity,
+              height: 14.h,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8.r),
+              ),
             ),
           ),
-        )),
+        ),
       ),
     );
   }
 
   Widget _buildError(bool isDark) {
-         
-
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -124,18 +152,22 @@ class _GoalOptimizationScreenState extends State<GoalOptimizationScreen> {
           verticalSpace(60),
           Icon(Icons.error_outline, size: 64.sp, color: Colors.redAccent),
           verticalSpace(16),
-          Text(context.l10n.failedToLoadOptimization,
-              style: TextStyle(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.bold,
-                color: isDark ? Colors.white : Colors.black87,
-              )),
+          Text(
+            context.l10n.failedToLoadOptimization,
+            style: TextStyle(
+              fontSize: 16.sp,
+              fontWeight: FontWeight.bold,
+              color: isDark ? Colors.white : Colors.black87,
+            ),
+          ),
           verticalSpace(8),
-          Text(context.l10n.pullDownToRetry,
-              style: TextStyle(
-                fontSize: 14.sp,
-                color: isDark ? Colors.grey[400] : Colors.grey[600],
-              )),
+          Text(
+            context.l10n.pullDownToRetry,
+            style: TextStyle(
+              fontSize: 14.sp,
+              color: isDark ? Colors.grey[400] : Colors.grey[600],
+            ),
+          ),
         ],
       ),
     );
@@ -164,34 +196,42 @@ class _GoalOptimizationScreenState extends State<GoalOptimizationScreen> {
                   color: AppColors.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12.r),
                 ),
-                child: Center(child: Text('🎯', style: TextStyle(fontSize: 24.sp))),
+                child: Center(
+                  child: Text('🎯', style: TextStyle(fontSize: 24.sp)),
+                ),
               ),
               horizontalSpace(12),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Goal Optimization',
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.bold,
-                        color: isDark ? Colors.white : Colors.black87,
-                      )),
-                  Text('Powered by Gemini',
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        color: isDark ? Colors.grey[400] : Colors.grey[600],
-                      )),
+                  Text(
+                    'Goal Optimization',
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                      color: isDark ? Colors.white : Colors.black87,
+                    ),
+                  ),
+                  Text(
+                    'Powered by Gemini',
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      color: isDark ? Colors.grey[400] : Colors.grey[600],
+                    ),
+                  ),
                 ],
               ),
             ],
           ),
           verticalSpace(20),
-          Text(_result ?? '',
-              style: TextStyle(
-                fontSize: 15.sp,
-                height: 1.6,
-                color: isDark ? Colors.grey[300] : Colors.grey[800],
-              )),
+          Text(
+            _result ?? '',
+            style: TextStyle(
+              fontSize: 15.sp,
+              height: 1.6.h,
+              color: isDark ? Colors.grey[300] : Colors.grey[800],
+            ),
+          ),
         ],
       ),
     );

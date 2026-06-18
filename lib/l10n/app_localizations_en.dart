@@ -904,7 +904,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get privacy5Content =>
-      'You have the right to access, correct, or delete your personal data at any time. You can delete your account and all associated data directly from the app settings. For any privacy-related requests, contact us at dev.egy01@gmail.com.';
+      'You have the right to access, correct, or delete your personal data at any time. You can delete your account and all associated data directly from the app settings. For any privacy-related requests, contact us at nilient.software.2026@gmail.com.';
 
   @override
   String get privacy6Title => '6. Children\'s Privacy';
@@ -925,7 +925,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get privacy8Content =>
-      'If you have any questions about this Privacy Policy or our data practices, please contact us at dev.egy01@gmail.com. We aim to respond to all inquiries within 48 hours.';
+      'If you have any questions about this Privacy Policy or our data practices, please contact us at nilient.software.2026@gmail.com. We aim to respond to all inquiries within 48 hours.';
 
   @override
   String get currentStreak => 'Current Streak';
@@ -1248,4 +1248,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get editName => 'Edit Name';
+
+  @override
+  String get termsOfService => 'Terms of Service';
+
+  @override
+  String get bySigningUpYouAgreeTo => 'By signing up, you agree to our';
+
+  @override
+  String get and => 'and';
 }

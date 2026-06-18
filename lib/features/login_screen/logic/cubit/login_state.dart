@@ -7,9 +7,10 @@ class LoginState {
   final String? errorCode;
   const LoginState({
     this.status = LoginStatus.initial,
-    this.errorMessage, this.errorCode,
+    this.errorMessage,
+    this.errorCode,
   });
-  
+
   LoginState copyWith({
     LoginStatus? status,
     String? errorMessage,
@@ -21,5 +22,4 @@ class LoginState {
       errorCode: errorCode ?? this.errorCode,
     );
   }
-  
 }

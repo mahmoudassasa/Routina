@@ -21,10 +21,14 @@ class _SecondaryButton extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18.r),
         border: Border.all(
-          color: isDark ? Colors.white24 : AppColors.primary.withValues(alpha: 0.5),
-          width: 1.5,
+          color: isDark
+              ? Colors.white24
+              : AppColors.primary.withValues(alpha: 0.5),
+          width: 1.5.w,
         ),
-        color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.transparent,
+        color: isDark
+            ? Colors.white.withValues(alpha: 0.05)
+            : Colors.transparent,
       ),
       child: Material(
         color: Colors.transparent,

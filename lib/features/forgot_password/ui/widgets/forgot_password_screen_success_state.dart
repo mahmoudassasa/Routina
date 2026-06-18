@@ -14,20 +14,21 @@ class ForgotPasswordScreenSuccessState extends StatelessWidget {
       height: 100.w,
       decoration: BoxDecoration(
         // In dark mode, we use a deep green or a subtle primary tint
-        color: isDark 
-            ? Colors.greenAccent.withValues(alpha: 0.1) 
+        color: isDark
+            ? Colors.greenAccent.withValues(alpha: 0.1)
             : AppColors.successLight,
         shape: BoxShape.circle,
         border: Border.all(
-          color: isDark 
-              ? Colors.greenAccent.withValues(alpha: 0.2) 
+          color: isDark
+              ? Colors.greenAccent.withValues(alpha: 0.2)
               : Colors.transparent,
-          width: 2,
+          width: 2.w,
         ),
         boxShadow: [
           BoxShadow(
-            color: (isDark ? Colors.greenAccent : AppColors.success)
-                .withValues(alpha: isDark ? 0.2 : 0.1),
+            color: (isDark ? Colors.greenAccent : AppColors.success).withValues(
+              alpha: isDark ? 0.2 : 0.1,
+            ),
             blurRadius: 30,
             spreadRadius: 5,
             offset: const Offset(0, 10),

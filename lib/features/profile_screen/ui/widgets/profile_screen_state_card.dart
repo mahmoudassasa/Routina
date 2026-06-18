@@ -24,7 +24,6 @@ class StatCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: isDark ? AppColors.darkSurface : AppColors.surface,
         borderRadius: BorderRadius.circular(16.r), // Use .r
-
         // ...The Shadow and Border are as they are...
       ),
       child: Column(
@@ -36,12 +35,13 @@ class StatCard extends StatelessWidget {
             value,
             style: TextStyle(
               fontSize: 16
+                  .sp
                   .sp, // I made it a little smaller in case the number is too large
               fontWeight: FontWeight.bold,
               color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
             ),
           ),
-          verticalSpace(4), 
+          verticalSpace(4),
           Text(
             title,
             style: TextStyle(

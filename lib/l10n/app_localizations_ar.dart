@@ -893,7 +893,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get privacy5Content =>
-      'يحق لك الوصول إلى بياناتك الشخصية أو تصحيحها أو حذفها في أي وقت. يمكنك حذف حسابك وجميع البيانات المرتبطة به مباشرةً من إعدادات التطبيق. للتواصل بشأن أي طلبات تتعلق بالخصوصية، راسلنا على dev.egy01@gmail.com.';
+      'يحق لك الوصول إلى بياناتك الشخصية أو تصحيحها أو حذفها في أي وقت. يمكنك حذف حسابك وجميع البيانات المرتبطة به مباشرةً من إعدادات التطبيق. للتواصل بشأن أي طلبات تتعلق بالخصوصية، راسلنا على nilient.software.2026@gmail.com.';
 
   @override
   String get privacy6Title => '6. خصوصية الأطفال';
@@ -914,7 +914,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get privacy8Content =>
-      'إذا كان لديك أي أسئلة حول سياسة الخصوصية أو ممارساتنا في التعامل مع البيانات، تواصل معنا على dev.egy01@gmail.com. نهدف للرد على جميع الاستفسارات خلال 48 ساعة.';
+      'إذا كان لديك أي أسئلة حول سياسة الخصوصية أو ممارساتنا في التعامل مع البيانات، تواصل معنا على nilient.software.2026@gmail.com. نهدف للرد على جميع الاستفسارات خلال 48 ساعة.';
 
   @override
   String get currentStreak => 'الاستمرارية الحالية';
@@ -1235,4 +1235,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get editName => 'تعديل الاسم';
+
+  @override
+  String get termsOfService => 'شروط الخدمة';
+
+  @override
+  String get bySigningUpYouAgreeTo => 'بالتسجيل، أنت توافق على';
+
+  @override
+  String get and => 'و';
 }

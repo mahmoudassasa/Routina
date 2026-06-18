@@ -16,10 +16,12 @@ class ProfileScreenUserStateCards extends StatelessWidget {
       builder: (context, state) {
         // We can show dummy data while loading or use specific values from state
         // Assuming your ProfileState will eventually have these fields
-      final currentStreak = "${state.currentStreakCount ?? 0} ${context.l10n.days}";
-final totalHabits = "${state.totalHabitsCount ?? 0} ${context.l10n.active}";
-final completionRate = state.completionRate ?? "0%";
-final bestStreak = "${state.bestStreakCount ?? 0} ${context.l10n.days}";
+        final currentStreak =
+            "${state.currentStreakCount ?? 0} ${context.l10n.days}";
+        final totalHabits =
+            "${state.totalHabitsCount ?? 0} ${context.l10n.active}";
+        final completionRate = state.completionRate ?? "0%";
+        final bestStreak = "${state.bestStreakCount ?? 0} ${context.l10n.days}";
 
         return Column(
           children: [

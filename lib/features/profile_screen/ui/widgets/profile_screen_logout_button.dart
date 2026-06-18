@@ -46,7 +46,7 @@ class ProfileLogoutButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20.r),
                 border: Border.all(
                   color: AppColors.error.withValues(alpha: isDark ? 0.15 : 0.1),
-                  width: 1.2,
+                  width: 1.2.w,
                 ),
               ),
               child: Row(

@@ -19,7 +19,7 @@ extension PrivacySection on PrivacyPolicyScreen {
                 height: 36.w,
                 decoration: BoxDecoration(
                   color: isDark
-                      ? AppColors.primaryDark.withValues(alpha:0.2)
+                      ? AppColors.primaryDark.withValues(alpha: 0.2)
                       : AppColors.primaryLighter,
                   borderRadius: BorderRadius.circular(10.r),
                 ),
@@ -30,7 +30,9 @@ extension PrivacySection on PrivacyPolicyScreen {
                 child: Text(
                   title,
                   style: AppTextStyles.titleMedium.copyWith(
-                    color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+                    color: isDark
+                        ? AppColors.darkTextPrimary
+                        : AppColors.textPrimary,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -43,8 +45,10 @@ extension PrivacySection on PrivacyPolicyScreen {
             child: Text(
               content,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
-                height: 1.6,
+                color: isDark
+                    ? AppColors.darkTextSecondary
+                    : AppColors.textSecondary,
+                height: 1.6.h,
               ),
             ),
           ),

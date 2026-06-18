@@ -179,7 +179,6 @@ class AccountInformationScreen extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // الأيقونة في الـ start (يمين في RTL أوتوماتيك)
             Container(
               width: 42.w,
               height: 42.w,
@@ -210,7 +209,6 @@ class AccountInformationScreen extends StatelessWidget {
                       color: isDark
                           ? AppColors.darkTextPrimary
                           : AppColors.textPrimary,
-                      // ← ضيف ده للإيميل بس
                       fontSize: isEmail ? 14.sp : null,
                     ),
                     overflow: isEmail ? TextOverflow.ellipsis : null,
@@ -220,7 +218,6 @@ class AccountInformationScreen extends StatelessWidget {
               ),
             ),
 
-            // السهم في الـ ed (شمال في RTL أوتوماتيك)
             if (editable) ...[
               horizontalSpace(8),
               Icon(

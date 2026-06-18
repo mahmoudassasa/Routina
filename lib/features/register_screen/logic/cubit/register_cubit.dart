@@ -13,10 +13,9 @@ class RegisterCubit extends Cubit<RegisterState> {
   final ImagePicker _picker = ImagePicker();
   final supabase = Supabase.instance.client;
 
-  /// Pick image from gallery
   Future<void> pickImage({ImageSource source = ImageSource.gallery}) async {
-  emit(state.copyWith(imageStatus: ImageUploadStatus.picking));
-  final picked = await _picker.pickImage(source: source);
+    emit(state.copyWith(imageStatus: ImageUploadStatus.picking));
+    final picked = await _picker.pickImage(source: source);
 
     if (picked != null) {
       emit(
@@ -30,7 +29,6 @@ class RegisterCubit extends Cubit<RegisterState> {
     }
   }
 
-  /// Upload image to Supabase
   Future<String?> uploadImage(String uid) async {
     if (state.localImage == null) return null;
 
@@ -69,7 +67,6 @@ class RegisterCubit extends Cubit<RegisterState> {
     }
   }
 
-  /// Full register process
   Future<void> register(String name, String email, String password) async {
     emit(state.copyWith(status: RegisterStatus.loading));
 
@@ -91,6 +88,12 @@ class RegisterCubit extends Cubit<RegisterState> {
         'imageUrl': imageUrl,
         'createdAt': DateTime.now(),
       });
+
+      await supabase.from('user_premium').upsert({
+        'user_id': uid,
+        'is_premium': false,
+        'premium_until': null,
+      }, onConflict: 'user_id');
 
       emit(state.copyWith(status: RegisterStatus.success));
     } on FirebaseAuthException catch (e) {

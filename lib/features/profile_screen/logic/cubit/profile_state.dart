@@ -49,7 +49,14 @@ class ProfileState extends Equatable {
 
   @override
   List<Object?> get props => [
-        loading, name, email, imageUrl, errorMessage,
-        completionRate, currentStreakCount, totalHabitsCount, bestStreakCount,
-      ];
+    loading,
+    name,
+    email,
+    imageUrl,
+    errorMessage,
+    completionRate,
+    currentStreakCount,
+    totalHabitsCount,
+    bestStreakCount,
+  ];
 }

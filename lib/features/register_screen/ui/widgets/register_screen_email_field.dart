@@ -17,14 +17,12 @@ class RegisterScreenEmailField extends StatelessWidget {
       keyboardType: TextInputType.emailAddress,
       style: TextStyle(color: isDark ? Colors.white : AppColors.textPrimary),
       decoration: InputDecoration(
-        labelText: context.l10n.emailAddress, 
+        labelText: context.l10n.emailAddress,
         labelStyle: TextStyle(
           color: isDark ? Colors.white60 : AppColors.textSecondary,
         ),
-        hintText: context.l10n.enterEmail, 
-        hintStyle: TextStyle(
-          color: isDark ? Colors.white30 : Colors.grey[400],
-        ),
+        hintText: context.l10n.enterEmail,
+        hintStyle: TextStyle(color: isDark ? Colors.white30 : Colors.grey[400]),
         prefixIcon: Icon(
           Icons.email_outlined,
           color: isDark ? AppColors.primaryLight : AppColors.primary,

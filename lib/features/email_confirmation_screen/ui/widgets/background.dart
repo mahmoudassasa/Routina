@@ -14,7 +14,9 @@ class _Background extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            isDark ? const Color(0xFF1A1A1A) : AppColors.backgroundGradientStart,
+            isDark
+                ? const Color(0xFF1A1A1A)
+                : AppColors.backgroundGradientStart,
             isDark ? Colors.black : AppColors.backgroundGradientEnd,
           ],
         ),

@@ -37,7 +37,7 @@ class AIFeatureCard extends StatelessWidget {
           ],
           border: Border.all(
             color: isDark ? AppColors.darkBorder : AppColors.border,
-            width: 0.5,
+            width: 0.5.w,
           ),
         ),
         child: Row(
@@ -47,13 +47,13 @@ class AIFeatureCard extends StatelessWidget {
               height: 48.w,
               decoration: BoxDecoration(
                 color: AppColors.primary.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(24),
+                borderRadius: BorderRadius.circular(24.r),
               ),
               child: Center(
-                child: Text(icon, style: const TextStyle(fontSize: 24)),
+                child: Text(icon, style:  TextStyle(fontSize: 24.sp)),
               ),
             ),
-             horizontalSpace(16),
+            horizontalSpace(16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,18 +61,18 @@ class AIFeatureCard extends StatelessWidget {
                   Text(
                     title,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w600,
                       color: isDark
                           ? AppColors.darkTextPrimary
                           : AppColors.textPrimary,
                     ),
                   ),
-                   verticalSpace(4), 
+                  verticalSpace(4),
                   Text(
                     description,
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       color: isDark
                           ? AppColors.darkTextSecondary
                           : AppColors.textSecondary,

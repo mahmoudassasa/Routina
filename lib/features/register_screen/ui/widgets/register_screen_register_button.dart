@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/theaming/app_text_styles.dart';
@@ -28,15 +29,18 @@ class RegisterScreenRegisterButton extends StatelessWidget {
 
         return Container(
           width: double.infinity,
-          height: 58,
+          height: 58.h,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: BorderRadius.circular(18.r),
             gradient: LinearGradient(
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
               colors: isDark
                   ? [AppColors.primary, AppColors.primary.withBlue(255)]
-                  : [AppColors.primary, AppColors.primary.withValues(alpha: 0.85)],
+                  : [
+                      AppColors.primary,
+                      AppColors.primary.withValues(alpha: 0.85),
+                    ],
             ),
             boxShadow: [
               BoxShadow(
@@ -53,17 +57,17 @@ class RegisterScreenRegisterButton extends StatelessWidget {
                   ? null
                   : () {
                       context.read<RegisterCubit>().register(
-                            nameController.text.trim(),
-                            emailController.text.trim(),
-                            passwordController.text.trim(),
-                          );
+                        nameController.text.trim(),
+                        emailController.text.trim(),
+                        passwordController.text.trim(),
+                      );
                     },
-              borderRadius: BorderRadius.circular(18),
+              borderRadius: BorderRadius.circular(18.r),
               child: Center(
                 child: isLoading
-                    ? const SizedBox(
-                        width: 24,
-                        height: 24,
+                    ?  SizedBox(
+                        width: 24.w,
+                        height: 24.h,
                         child: CircularProgressIndicator(
                           color: Colors.white,
                           strokeWidth: 2.5,

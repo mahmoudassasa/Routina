@@ -94,7 +94,7 @@ class _PremiumFeatureBottomSheetContent extends StatelessWidget {
             style: TextStyle(
               fontSize: 14.sp,
               color: isDark ? Colors.grey[400] : Colors.grey[600],
-              height: 1.5,
+              height: 1.5.h,
             ),
             textAlign: TextAlign.center,
           ),

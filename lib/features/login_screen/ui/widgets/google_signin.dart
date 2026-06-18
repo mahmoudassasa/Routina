@@ -18,7 +18,7 @@ class GoogleSignin extends StatelessWidget {
       child: OutlinedButton.icon(
         onPressed: () => context.read<LoginCubit>().signInWithGoogle(),
         icon: SvgPicture.asset(
-          'assets/icons/google.svg', 
+          'assets/icons/google.svg',
           width: 20.w,
           height: 20.w,
         ),
@@ -31,7 +31,7 @@ class GoogleSignin extends StatelessWidget {
           ),
         ),
         style: OutlinedButton.styleFrom(
-           minimumSize: Size(double.infinity, 52.h),
+          minimumSize: Size(double.infinity, 52.h),
           side: BorderSide(
             color: isDark ? AppColors.darkBorder : AppColors.border,
           ),

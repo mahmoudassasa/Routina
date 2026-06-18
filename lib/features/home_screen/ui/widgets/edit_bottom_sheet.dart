@@ -6,9 +6,7 @@ extension EditBottomSheet on HabitCard {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => CreateHabitBottomSheet(
-        habitToEdit: habit,
-      ),
+      builder: (context) => CreateHabitBottomSheet(habitToEdit: habit),
     );
   }
 }

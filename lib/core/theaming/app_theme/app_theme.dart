@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/theaming/app_text_styles.dart';
-
 
 class AppTheme {
   static ThemeData get lightTheme {
@@ -20,7 +20,7 @@ class AppTheme {
         error: AppColors.error,
         onError: AppColors.textWhite,
       ),
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         backgroundColor: AppColors.background,
         foregroundColor: AppColors.textPrimary,
         elevation: 0,
@@ -28,7 +28,7 @@ class AppTheme {
         scrolledUnderElevation: 0,
         titleTextStyle: TextStyle(
           color: AppColors.textPrimary,
-          fontSize: 20,
+          fontSize: 20.sp,
           fontWeight: FontWeight.bold,
           fontFamily: 'Inter',
         ),
@@ -37,38 +37,37 @@ class AppTheme {
         color: AppColors.surface,
         shadowColor: AppColors.textLight.withValues(alpha: 0.1),
         elevation: 2,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.r),
+        ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
           foregroundColor: AppColors.textWhite,
           elevation: 0,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 14.h),
           textStyle: AppTextStyles.buttonMedium.copyWith(inherit: true),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(12.r),
           ),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.backgroundLight,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 12,
-        ),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12.r),
           borderSide: const BorderSide(color: AppColors.border),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12.r),
           borderSide: const BorderSide(color: AppColors.border),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+          borderRadius: BorderRadius.circular(12.r),
+          borderSide: BorderSide(color: AppColors.primary, width: 1.5.w),
         ),
       ),
     );
@@ -90,7 +89,7 @@ class AppTheme {
         error: AppColors.error,
         onError: AppColors.textWhite,
       ),
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         backgroundColor: AppColors.darkBackground,
         foregroundColor: AppColors.darkTextPrimary,
         elevation: 0,
@@ -98,7 +97,7 @@ class AppTheme {
         scrolledUnderElevation: 0,
         titleTextStyle: TextStyle(
           color: AppColors.darkTextPrimary,
-          fontSize: 20,
+          fontSize: 20.sp,
           fontWeight: FontWeight.bold,
           fontFamily: 'Inter',
         ),
@@ -108,8 +107,8 @@ class AppTheme {
         shadowColor: Colors.black.withValues(alpha: 0.3),
         elevation: 2,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-          side: const BorderSide(color: AppColors.darkBorder, width: 0.5),
+          borderRadius: BorderRadius.circular(12.r),
+          side:  BorderSide(color: AppColors.darkBorder, width: 0.5.w),
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -117,31 +116,28 @@ class AppTheme {
           backgroundColor: AppColors.primary,
           foregroundColor: AppColors.textWhite,
           elevation: 0,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 14.h),
           textStyle: AppTextStyles.buttonMedium.copyWith(inherit: true),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(12.r),
           ),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.darkBackgroundLight,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 12,
-        ),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12.r),
           borderSide: const BorderSide(color: AppColors.darkBorder),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12.r),
           borderSide: const BorderSide(color: AppColors.darkBorder),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+          borderRadius: BorderRadius.circular(12.r),
+          borderSide:  BorderSide(color: AppColors.primary, width: 1.5.w),
         ),
       ),
       textTheme: TextTheme(

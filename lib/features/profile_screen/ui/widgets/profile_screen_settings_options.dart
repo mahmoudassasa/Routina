@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/routing/routes.dart';
 import 'package:routina/core/theaming/app_theme/logic/cubit/theme_cubit.dart';
@@ -16,7 +17,7 @@ class ProfileScreenSettingsOptions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: EdgeInsets.symmetric(horizontal: 24.w),
       child: Column(
         children: [
           //Notifications Settings

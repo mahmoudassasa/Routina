@@ -254,7 +254,7 @@ class _DeleteAccountSheetState extends State<_DeleteAccountSheet> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.r),
-          borderSide: const BorderSide(color: AppColors.error, width: 1.5),
+          borderSide:  BorderSide(color: AppColors.error, width: 1.5.w),
         ),
         contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
       ),

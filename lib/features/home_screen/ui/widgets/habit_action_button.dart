@@ -67,7 +67,7 @@ class HabitActionButton extends StatelessWidget {
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.1,
-                    height: 1.1,
+                    height: 1.1.h,
                     leadingDistribution: TextLeadingDistribution.even,
                   ),
                 ),

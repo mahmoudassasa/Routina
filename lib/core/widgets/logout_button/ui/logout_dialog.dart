@@ -64,7 +64,7 @@ Future<void> showLogoutDialog(BuildContext context) async {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 15.sp,
-                          height: 1.5,
+                          height: 1.5.h,
                           color: Theme.of(context).brightness == Brightness.dark
                               ? AppColors.darkTextSecondary
                               : AppColors.textSecondary,

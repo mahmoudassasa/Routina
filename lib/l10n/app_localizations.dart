@@ -1757,7 +1757,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacy5Content.
   ///
   /// In en, this message translates to:
-  /// **'You have the right to access, correct, or delete your personal data at any time. You can delete your account and all associated data directly from the app settings. For any privacy-related requests, contact us at dev.egy01@gmail.com.'**
+  /// **'You have the right to access, correct, or delete your personal data at any time. You can delete your account and all associated data directly from the app settings. For any privacy-related requests, contact us at nilient.software.2026@gmail.com.'**
   String get privacy5Content;
 
   /// No description provided for @privacy6Title.
@@ -1793,7 +1793,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacy8Content.
   ///
   /// In en, this message translates to:
-  /// **'If you have any questions about this Privacy Policy or our data practices, please contact us at dev.egy01@gmail.com. We aim to respond to all inquiries within 48 hours.'**
+  /// **'If you have any questions about this Privacy Policy or our data practices, please contact us at nilient.software.2026@gmail.com. We aim to respond to all inquiries within 48 hours.'**
   String get privacy8Content;
 
   /// No description provided for @currentStreak.
@@ -2401,6 +2401,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Edit Name'**
   String get editName;
+
+  /// No description provided for @termsOfService.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Service'**
+  String get termsOfService;
+
+  /// No description provided for @bySigningUpYouAgreeTo.
+  ///
+  /// In en, this message translates to:
+  /// **'By signing up, you agree to our'**
+  String get bySigningUpYouAgreeTo;
+
+  /// No description provided for @and.
+  ///
+  /// In en, this message translates to:
+  /// **'and'**
+  String get and;
 }
 
 class _AppLocalizationsDelegate

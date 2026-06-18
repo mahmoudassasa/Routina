@@ -18,7 +18,9 @@ class _MainContentCard extends StatelessWidget {
               color: isDark ? AppColors.darkSurface : AppColors.surface,
               borderRadius: BorderRadius.circular(28.r),
               border: Border.all(
-                color: isDark ? Colors.white.withValues(alpha: 0.08) : Colors.transparent,
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.08)
+                    : Colors.transparent,
               ),
               boxShadow: [
                 BoxShadow(

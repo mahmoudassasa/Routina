@@ -1,12 +1,13 @@
 import 'dart:io';
 
 enum RegisterStatus { initial, loading, success, error }
+
 enum ImageUploadStatus { initial, picking, uploading, success, error }
 
 class RegisterState {
   final RegisterStatus status;
   final String? errorMessage;
-  final File? localImage;//Chosen image from device
+  final File? localImage; //Chosen image from device
   final String? imageUrl; //Upload link from  Supabase
   final ImageUploadStatus imageStatus;
   final String? errorCode;

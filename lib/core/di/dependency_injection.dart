@@ -8,16 +8,14 @@ import 'package:routina/features/profile_screen/logic/cubit/delete_account_cubit
 
 final getIt = GetIt.instance;
 
-
 Future<void> setupGetIt() async {
   getIt.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
-  getIt.registerLazySingleton<LoginRepo>(() => LoginRepo(getIt<FirebaseAuth>()));
-  getIt.registerLazySingleton<GoogleSignInService>(() => GoogleSignInService()); 
+  getIt.registerLazySingleton<LoginRepo>(
+    () => LoginRepo(getIt<FirebaseAuth>()),
+  );
+  getIt.registerLazySingleton<GoogleSignInService>(() => GoogleSignInService());
   getIt.registerFactory<LoginCubit>(
-    () => LoginCubit(
-      getIt<LoginRepo>(),
-      getIt<GoogleSignInService>(),
-    ),
+    () => LoginCubit(getIt<LoginRepo>(), getIt<GoogleSignInService>()),
   );
   getIt.registerFactory(() => DeleteAccountCubit());
 }

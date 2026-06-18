@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 
 class AnalyzeScreenAiAnalysisLogo extends StatelessWidget {
@@ -9,8 +10,8 @@ class AnalyzeScreenAiAnalysisLogo extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      width: 120,
-      height: 120,
+      width: 120.w,
+      height: 120.h,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         gradient: const LinearGradient(
@@ -36,13 +37,13 @@ class AnalyzeScreenAiAnalysisLogo extends StatelessWidget {
         ],
         border: Border.all(
           color: Colors.white.withValues(alpha: 0.2),
-          width: 2,
+          width: 2.w,
         ),
       ),
-      child: const Center(
+      child:  Center(
         child: Text(
           '🤖',
-          style: TextStyle(fontSize: 56), // Slightly larger for impact
+          style: TextStyle(fontSize: 56.sp), // Slightly larger for impact
         ),
       ),
     );

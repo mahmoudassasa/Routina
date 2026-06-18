@@ -10,7 +10,9 @@ class _EmailIcon extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.primary.withValues(alpha: 0.1) : AppColors.primary.withValues(alpha: 0.05),
+        color: isDark
+            ? AppColors.primary.withValues(alpha: 0.1)
+            : AppColors.primary.withValues(alpha: 0.05),
         shape: BoxShape.circle,
       ),
       child: Icon(

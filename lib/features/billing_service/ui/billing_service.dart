@@ -9,10 +9,14 @@ class BillingService {
 
   final InAppPurchase _iap = InAppPurchase.instance;
   final SupabaseClient _supabase = Supabase.instance.client;
+  
+  String? _firebaseUserId;
 
   StreamSubscription<List<PurchaseDetails>>? _purchaseSubscription;
 
-  // ─── Initialise & listen ───────────────────────────────────────────────────
+  void setFirebaseUserId(String? uid) {
+    _firebaseUserId = uid;
+  }
 
   Stream<List<PurchaseDetails>> get purchaseStream => _iap.purchaseStream;
 
@@ -23,16 +27,12 @@ class BillingService {
     return response.productDetails;
   }
 
-  // ─── Purchase ──────────────────────────────────────────────────────────────
-
   Future<void> buySubscription(ProductDetails product) async {
     final param = PurchaseParam(productDetails: product);
     await _iap.buyNonConsumable(purchaseParam: param);
   }
 
   Future<void> restorePurchases() => _iap.restorePurchases();
-
-  // ─── Verify & complete ────────────────────────────────────────────────────
 
   Future<bool> verifyAndComplete(PurchaseDetails details) async {
     if (details.status == PurchaseStatus.purchased ||
@@ -49,39 +49,50 @@ class BillingService {
     return false;
   }
 
-  // ─── Supabase sync ────────────────────────────────────────────────────────
-
   Future<void> _syncPremiumToSupabase(PurchaseDetails details) async {
-    final userId = _supabase.auth.currentUser?.id;
+    final userId = _firebaseUserId;
     if (userId == null) return;
 
     final until = _calcExpiry(details.productID);
-    await _supabase.from('users').update({
-      'is_premium': true,
-      'premium_until': until.toIso8601String(),
-    }).eq('id', userId);
+    
+    try {
+      await _supabase
+          .from('user_premium')
+          .upsert({
+            'user_id': userId,
+            'is_premium': true,
+            'premium_until': until.toIso8601String(),
+          }, onConflict: 'user_id');
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Future<void> clearPremiumInSupabase() async {
-    final userId = _supabase.auth.currentUser?.id;
+    final userId = _firebaseUserId;
     if (userId == null) return;
-    await _supabase.from('users').update({
-      'is_premium': false,
-      'premium_until': null,
-    }).eq('id', userId);
+    
+    await _supabase
+        .from('user_premium')
+        .update({'is_premium': false, 'premium_until': null})
+        .eq('user_id', userId);
   }
 
   Future<({bool isPremium, DateTime? until})> fetchPremiumStatus() async {
-    final userId = _supabase.auth.currentUser?.id;
-    if (userId == null) return (isPremium: false, until: null);
+    final userId = _firebaseUserId;
+    if (userId == null) {
+      return (isPremium: false, until: null);
+    }
 
     final row = await _supabase
-        .from('users')
+        .from('user_premium')
         .select('is_premium, premium_until')
-        .eq('id', userId)
+        .eq('user_id', userId)
         .maybeSingle();
 
-    if (row == null) return (isPremium: false, until: null);
+    if (row == null) {
+      return (isPremium: false, until: null);
+    }
 
     final isPremium = row['is_premium'] as bool? ?? false;
     final untilStr = row['premium_until'] as String?;
@@ -91,10 +102,9 @@ class BillingService {
       await clearPremiumInSupabase();
       return (isPremium: false, until: null);
     }
+    
     return (isPremium: isPremium, until: until);
   }
-
-  // ─── Helpers ──────────────────────────────────────────────────────────────
 
   DateTime _calcExpiry(String productId) {
     final now = DateTime.now();

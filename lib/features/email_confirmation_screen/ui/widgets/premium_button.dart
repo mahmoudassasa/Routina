@@ -28,8 +28,11 @@ class _PremiumButton extends StatelessWidget {
           colors: isDisabled
               ? [Colors.grey.shade600, Colors.grey.shade700]
               : (isDark
-                  ? [AppColors.primary, AppColors.primary.withBlue(255)]
-                  : [AppColors.primary, AppColors.primary.withValues(alpha: 0.85)]),
+                    ? [AppColors.primary, AppColors.primary.withBlue(255)]
+                    : [
+                        AppColors.primary,
+                        AppColors.primary.withValues(alpha: 0.85),
+                      ]),
         ),
         boxShadow: [
           if (!isDisabled)
@@ -50,11 +53,17 @@ class _PremiumButton extends StatelessWidget {
                 ? SizedBox(
                     width: 24.w,
                     height: 24.w,
-                    child: const CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5),
+                    child: const CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 2.5,
+                    ),
                   )
-                : Text(label, style: AppTextStyles.font18WhiteExtraBold.copyWith(
-                    color: isDisabled ? Colors.white60 : Colors.white,
-                  )),
+                : Text(
+                    label,
+                    style: AppTextStyles.font18WhiteExtraBold.copyWith(
+                      color: isDisabled ? Colors.white60 : Colors.white,
+                    ),
+                  ),
           ),
         ),
       ),

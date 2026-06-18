@@ -37,7 +37,7 @@ class ReminderTimePickerTile extends StatelessWidget {
             color: selectedTime != null
                 ? selectedColor.withValues(alpha: 0.4)
                 : Colors.grey.withValues(alpha: 0.3),
-            width: 1.5,
+            width: 1.5.w,
           ),
         ),
         child: Row(
@@ -46,9 +46,7 @@ class ReminderTimePickerTile extends StatelessWidget {
               selectedTime != null
                   ? Icons.notifications_active_rounded
                   : Icons.notifications_none_rounded,
-              color: selectedTime != null
-                  ? selectedColor
-                  : Colors.grey,
+              color: selectedTime != null ? selectedColor : Colors.grey,
               size: 22.sp,
             ),
             horizontalSpace(12),
@@ -59,9 +57,7 @@ class ReminderTimePickerTile extends StatelessWidget {
                     : context.l10n.setReminderOptional,
                 style: TextStyle(
                   fontSize: 14.sp,
-                  color: selectedTime != null
-                      ? selectedColor
-                      : Colors.grey,
+                  color: selectedTime != null ? selectedColor : Colors.grey,
                   fontWeight: selectedTime != null
                       ? FontWeight.w600
                       : FontWeight.normal,

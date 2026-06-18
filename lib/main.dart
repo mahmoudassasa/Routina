@@ -30,11 +30,11 @@ void main() async {
     url: dotenv.env['SUPABASE_URL']!,
     anonKey: dotenv.env['SUPABASE_KEY']!,
   );
- await FirebaseAppCheck.instance.activate(
-  providerAndroid: kReleaseMode
-      ? const AndroidPlayIntegrityProvider()
-      : const AndroidDebugProvider(),
-);
+  await FirebaseAppCheck.instance.activate(
+    providerAndroid: kReleaseMode
+        ? const AndroidPlayIntegrityProvider()
+        : const AndroidDebugProvider(),
+  );
   await MobileAds.instance.initialize();
   await setupGetIt();
   runApp(

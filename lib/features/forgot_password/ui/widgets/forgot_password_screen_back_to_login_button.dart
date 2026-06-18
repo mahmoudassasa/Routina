@@ -24,7 +24,7 @@ class ForgotPasswordScreenBackToLoginButton extends StatelessWidget {
           color: isDark
               ? Colors.white12
               : AppColors.primary.withValues(alpha: 0.2),
-          width: 1.5,
+          width: 1.5.w,
         ),
         color: isDark
             ? Colors.white.withValues(alpha: 0.03)

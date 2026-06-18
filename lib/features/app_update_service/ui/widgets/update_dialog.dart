@@ -12,7 +12,7 @@ class UpdateDialog extends StatelessWidget {
   static Future<void> show(BuildContext context) {
     return showDialog(
       context: context,
-      barrierDismissible: false, 
+      barrierDismissible: false,
       builder: (_) => const UpdateDialog(),
     );
   }
@@ -20,10 +20,9 @@ class UpdateDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-     
 
     return PopScope(
-      canPop: false, 
+      canPop: false,
       child: AlertDialog(
         backgroundColor: isDark ? AppColors.darkSurface : Colors.white,
         shape: RoundedRectangleBorder(

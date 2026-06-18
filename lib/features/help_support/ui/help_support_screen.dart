@@ -59,7 +59,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
     setState(() => _expandedFaqIndex = index);
   }
 
-  static const String _supportEmail = 'dev.egy01@gmail.com';
+  static const String _supportEmail = 'nilient.software.2026@gmail.com';
   static const String _whatsappNumber = '+201152461600';
   static const String _telegramUsername = 'mahmoud_assasa';
   static const String _discordInvite = 'https://discord.com/channels/@3ma97';

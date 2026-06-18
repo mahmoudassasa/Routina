@@ -34,5 +34,11 @@ class BillingState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [status, isPremium, premiumUntil, errorMessage, isRestoring];
+  List<Object?> get props => [
+    status,
+    isPremium,
+    premiumUntil,
+    errorMessage,
+    isRestoring,
+  ];
 }

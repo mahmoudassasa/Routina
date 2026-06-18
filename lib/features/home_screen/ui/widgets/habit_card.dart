@@ -56,7 +56,7 @@ class HabitCard extends StatelessWidget {
     return Dismissible(
       key: Key(habit['id'].toString()),
       direction: DismissDirection.endToStart,
-      background: _buildDismissibleBackground (context),
+      background: _buildDismissibleBackground(context),
       confirmDismiss: (direction) async {
         return await _showDeleteConfirmationDialog(context, habit['title']);
       },
@@ -107,7 +107,7 @@ class HabitCard extends StatelessWidget {
                               color: isDark ? Colors.white : Colors.black87,
                             ),
                           ),
-                          verticalSpace(2), 
+                          verticalSpace(2),
                           Text(
                             context.l10n.weeklyGoal((progress * 100).toInt()),
                             style: TextStyle(
@@ -134,13 +134,13 @@ class HabitCard extends StatelessWidget {
                   ],
                 ),
 
-                verticalSpace(24), 
+                verticalSpace(24),
                 HabitProgressBar(
                   progress: progress,
                   color: habitColor,
                   isDark: isDark,
                 ),
-                verticalSpace(24), 
+                verticalSpace(24),
                 HabitWeekStrip(
                   frequency: frequency,
                   weekProgress: weekProgress,
@@ -148,7 +148,7 @@ class HabitCard extends StatelessWidget {
                   isDark: isDark,
                   habitId: habit['id'],
                 ),
-                verticalSpace(24), 
+                verticalSpace(24),
 
                 HabitActionButton(
                   isActionable: isActionable,
@@ -156,12 +156,10 @@ class HabitCard extends StatelessWidget {
                   habitColor: habitColor,
                   isDark: isDark,
                   onPressed: () => context.read<HomeCubit>().toggleDay(
-                      habit['id'],
-                      targetIndex,
-                    ),
+                    habit['id'],
+                    targetIndex,
+                  ),
                 ),
-            
-            
               ],
             ),
           ),

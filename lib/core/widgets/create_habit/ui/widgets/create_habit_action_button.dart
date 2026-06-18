@@ -27,9 +27,7 @@ class CreateHabitActionButton extends StatelessWidget {
         color: selectedColor,
         boxShadow: [
           BoxShadow(
-            color: selectedColor.withValues(
-              alpha: isDark ? 0.4 : 0.25,
-            ),
+            color: selectedColor.withValues(alpha: isDark ? 0.4 : 0.25),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -51,13 +49,15 @@ class CreateHabitActionButton extends StatelessWidget {
                 ),
                 horizontalSpace(8),
                 Text(
-                    isEditMode ? context.l10n.saveChanges : context.l10n.createHabit,
+                  isEditMode
+                      ? context.l10n.saveChanges
+                      : context.l10n.createHabit,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.1,
-                    height: 1.1,
+                    height: 1.1.h,
                     leadingDistribution: TextLeadingDistribution.even,
                   ),
                 ),

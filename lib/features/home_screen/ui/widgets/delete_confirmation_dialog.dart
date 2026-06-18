@@ -24,7 +24,7 @@ extension DeleteConfirmationDialog on HabitCard {
             ),
           ),
           content: Text(
-          context.l10n.deleteHabitConfirm(habitTitle),
+            context.l10n.deleteHabitConfirm(habitTitle),
             style: TextStyle(
               fontSize: 15.sp,
               color: isDark ? Colors.grey[400] : Colors.grey[700],

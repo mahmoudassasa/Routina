@@ -61,7 +61,7 @@ class HomeEmptyState extends StatelessWidget {
                     color: isDark
                         ? AppColors.darkTextSecondary
                         : AppColors.textSecondary,
-                    height: 1.6,
+                    height: 1.6.h,
                   ),
                 ),
               ),

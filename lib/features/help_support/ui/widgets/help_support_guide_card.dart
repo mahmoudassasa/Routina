@@ -29,9 +29,12 @@ extension _HelpSupportGuideCard on _HelpSupportScreenState {
         ),
         iconColor: AppColors.primary,
         collapsedIconColor: _iconSubtle,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
-        collapsedShape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.r),
+        ),
+        collapsedShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.r),
+        ),
         children: [
           Padding(
             padding: EdgeInsets.only(

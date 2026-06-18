@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/features/login_screen/logic/cubit/login_cubit.dart';
@@ -25,9 +26,9 @@ class LoginButton extends StatelessWidget {
 
         return Container(
           width: double.infinity,
-          height: 58,
+          height: 58.h,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: BorderRadius.circular(18.r),
             gradient: LinearGradient(
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
@@ -64,12 +65,12 @@ class LoginButton extends StatelessWidget {
                       }
                       context.read<LoginCubit>().login(email, password);
                     },
-              borderRadius: BorderRadius.circular(18),
+              borderRadius: BorderRadius.circular(18.r),
               child: Center(
                 child: isLoading
-                    ? const SizedBox(
-                        width: 24,
-                        height: 24,
+                    ?  SizedBox(
+                        width: 24.w,
+                        height: 24.h,
                         child: CircularProgressIndicator(
                           color: Colors.white,
                           strokeWidth: 2.5,
@@ -77,9 +78,9 @@ class LoginButton extends StatelessWidget {
                       )
                     : Text(
                         context.l10n.login,
-                        style: const TextStyle(
+                        style:  TextStyle(
                           color: Colors.white,
-                          fontSize: 18,
+                          fontSize: 18.sp,
                           fontWeight: FontWeight.w800,
                           letterSpacing: 1.1,
                         ),

@@ -7,10 +7,7 @@ import 'package:routina/features/profile_screen/ui/profile_screen.dart';
 class ScreenSelector extends StatelessWidget {
   final int currentIndex;
 
-  const ScreenSelector({
-    super.key,
-    required this.currentIndex,
-  });
+  const ScreenSelector({super.key, required this.currentIndex});
 
   int _getScreenIndex(int navIndex) {
     if (navIndex < 2) return navIndex;

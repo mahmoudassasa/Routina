@@ -17,20 +17,18 @@ class HomeHeader extends StatelessWidget {
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, profileState) {
         final firstName = _getFirstName(profileState.name);
-        
+
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
             decoration: BoxDecoration(
-              color: isDark
-                  ? AppColors.darkSurface
-                  : AppColors.surface,
+              color: isDark ? AppColors.darkSurface : AppColors.surface,
               borderRadius: BorderRadius.circular(16.r),
               border: isDark
                   ? Border.all(
                       color: AppColors.darkBorder.withValues(alpha: 0.4),
-                      width: 1,
+                      width: 1.w,
                     )
                   : null,
               boxShadow: [
@@ -75,12 +73,10 @@ class HomeHeader extends StatelessWidget {
                             color: isDark
                                 ? AppColors.darkTextPrimary
                                 : AppColors.textPrimary,
-                            height: 1.3,
+                            height: 1.3.h,
                           ),
                           children: [
-                            TextSpan(
-                              text: _getGreetingPrefix(context),
-                            ),
+                            TextSpan(text: _getGreetingPrefix(context)),
                             TextSpan(text: ' '),
                             TextSpan(
                               text: firstName ?? context.l10n.unknownUser,
@@ -106,7 +102,7 @@ class HomeHeader extends StatelessWidget {
                           color: isDark
                               ? AppColors.darkTextSecondary
                               : AppColors.textSecondary,
-                          height: 1.3,
+                          height: 1.3.h,
                         ),
                       ),
                     ],
@@ -127,8 +123,12 @@ class HomeHeader extends StatelessWidget {
 
   String _getGreetingPrefix(BuildContext context) {
     final hour = DateTime.now().hour;
-    if (hour < 12) return context.l10n.goodMorning('').replaceAll('!', '').trim();
-    if (hour < 17) return context.l10n.goodAfternoon('').replaceAll('!', '').trim();
+    if (hour < 12) {
+      return context.l10n.goodMorning('').replaceAll('!', '').trim();
+    }
+    if (hour < 17) {
+      return context.l10n.goodAfternoon('').replaceAll('!', '').trim();
+    }
     return context.l10n.goodEvening('').replaceAll('!', '').trim();
   }
 

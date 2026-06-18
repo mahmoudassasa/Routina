@@ -76,7 +76,7 @@ extension _HelpSupportForms on _HelpSupportScreenState {
         children: [
           _inputField(
             controller: _contactNameController,
-            label: context.l10n.yourName, 
+            label: context.l10n.yourName,
             hint: context.l10n.yourNameHint,
           ),
           verticalSpace(12),
@@ -123,7 +123,7 @@ extension _HelpSupportForms on _HelpSupportScreenState {
             subtitle: context.l10n.privacyPolicySubtitle,
             onTap: () => context.pushNamed(Routes.privacyPolicyScreen),
           ),
-          Divider(height: 1, color: _borderColor),
+          Divider(height: 1.h, color: _borderColor),
           _legalTile(
             icon: Icons.open_in_new_rounded,
             title: context.l10n.privacyPolicyWeb,
@@ -221,10 +221,9 @@ extension _HelpSupportForms on _HelpSupportScreenState {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.r),
-          borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+          borderSide:  BorderSide(color: AppColors.primary, width: 1.5.w),
         ),
-        contentPadding:
-            EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
       ),
     );
   }

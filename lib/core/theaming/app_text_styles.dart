@@ -21,153 +21,152 @@ class AppTextStyles {
     letterSpacing: 1.2,
   );
   static TextStyle headlineMediumAccent = TextStyle(
-    fontSize: 20,
+    fontSize: 20.sp,
     fontWeight: FontWeight.w600,
     color: AppColors.accent,
-    height: 1.3,
+    height: 1.3.h,
     inherit: true,
   );
 
-  // ... Keep the rest of your class
   // Display Styles
-  static const TextStyle displayLarge = TextStyle(
-    fontSize: 32,
+  static TextStyle displayLarge = TextStyle(
+    fontSize: 32.sp,
     fontWeight: FontWeight.bold,
     color: AppColors.textPrimary,
-    height: 1.2,
+    height: 1.2.h,
     inherit: true,
   );
 
-  static const TextStyle displayMedium = TextStyle(
-    fontSize: 28,
+  static TextStyle displayMedium = TextStyle(
+    fontSize: 28.sp,
     fontWeight: FontWeight.bold,
     color: AppColors.textPrimary,
-    height: 1.2,
+    height: 1.2.h,
     inherit: true,
   );
 
-  static const TextStyle displaySmall = TextStyle(
-    fontSize: 24,
+  static TextStyle displaySmall = TextStyle(
+    fontSize: 24.sp,
     fontWeight: FontWeight.w600,
     color: AppColors.textPrimary,
-    height: 1.3,
+    height: 1.3.h,
     inherit: true,
   );
 
   // Headline Styles
-  static const TextStyle headlineLarge = TextStyle(
-    fontSize: 22,
+  static TextStyle headlineLarge = TextStyle(
+    fontSize: 22.sp,
     fontWeight: FontWeight.w600,
     color: AppColors.textPrimary,
-    height: 1.3,
+    height: 1.3.h,
     inherit: true,
   );
 
-  static const TextStyle headlineMedium = TextStyle(
-    fontSize: 20,
+  static TextStyle headlineMedium = TextStyle(
+    fontSize: 20.sp,
     fontWeight: FontWeight.w600,
     color: AppColors.textPrimary,
-    height: 1.3,
+    height: 1.3.h,
     inherit: true,
   );
 
-  static const TextStyle headlineSmall = TextStyle(
-    fontSize: 18,
+  static TextStyle headlineSmall = TextStyle(
+    fontSize: 18.sp,
     fontWeight: FontWeight.w600,
     color: AppColors.textPrimary,
-    height: 1.4,
+    height: 1.4.h,
     inherit: true,
   );
 
   // Title Styles
-  static const TextStyle titleLarge = TextStyle(
-    fontSize: 16,
+  static TextStyle titleLarge = TextStyle(
+    fontSize: 16.sp,
     fontWeight: FontWeight.w600,
     color: AppColors.textPrimary,
-    height: 1.4,
+    height: 1.4.h,
     inherit: true,
   );
 
-  static const TextStyle titleMedium = TextStyle(
-    fontSize: 14,
+  static TextStyle titleMedium = TextStyle(
+    fontSize: 14.sp,
     fontWeight: FontWeight.w500,
     color: AppColors.textPrimary,
-    height: 1.4,
+    height: 1.4.h,
     inherit: true,
   );
 
-  static const TextStyle titleSmall = TextStyle(
-    fontSize: 12,
+  static TextStyle titleSmall = TextStyle(
+    fontSize: 12.sp,
     fontWeight: FontWeight.w500,
     color: AppColors.textPrimary,
-    height: 1.4,
+    height: 1.4.h,
     inherit: true,
   );
 
   // Body Styles
-  static const TextStyle bodyLarge = TextStyle(
-    fontSize: 16,
+  static TextStyle bodyLarge = TextStyle(
+    fontSize: 16.sp,
     fontWeight: FontWeight.normal,
     color: AppColors.textPrimary,
-    height: 1.5,
+    height: 1.5.h,
     inherit: true,
   );
 
-  static const TextStyle bodyMedium = TextStyle(
-    fontSize: 14,
+  static TextStyle bodyMedium = TextStyle(
+    fontSize: 14.sp,
     fontWeight: FontWeight.normal,
     color: AppColors.textPrimary,
-    height: 1.5,
+    height: 1.5.h,
     inherit: true,
   );
 
-  static const TextStyle bodySmall = TextStyle(
-    fontSize: 12,
+  static TextStyle bodySmall = TextStyle(
+    fontSize: 12.sp,
     fontWeight: FontWeight.normal,
     color: AppColors.textSecondary,
-    height: 1.5,
+    height: 1.5.h,
     inherit: true,
   );
 
   // Label Styles
-  static const TextStyle labelLarge = TextStyle(
-    fontSize: 14,
+  static TextStyle labelLarge = TextStyle(
+    fontSize: 14.sp,
     fontWeight: FontWeight.w500,
     color: AppColors.textPrimary,
-    height: 1.4,
+    height: 1.4.h,
     inherit: true,
   );
 
-  static const TextStyle labelMedium = TextStyle(
-    fontSize: 12,
+  static TextStyle labelMedium = TextStyle(
+    fontSize: 12.sp,
     fontWeight: FontWeight.w500,
     color: AppColors.textSecondary,
-    height: 1.4,
+    height: 1.4.h,
     inherit: true,
   );
 
-  static const TextStyle labelSmall = TextStyle(
-    fontSize: 10,
+  static TextStyle labelSmall = TextStyle(
+    fontSize: 10.sp,
     fontWeight: FontWeight.w500,
     color: AppColors.textSecondary,
-    height: 1.4,
+    height: 1.4.h,
     inherit: true,
   );
 
   // Button Styles
-  static const TextStyle buttonLarge = TextStyle(
-    fontSize: 16,
+  static TextStyle buttonLarge = TextStyle(
+    fontSize: 16.sp,
     fontWeight: FontWeight.w600,
     color: AppColors.textWhite,
-    height: 1.2,
+    height: 1.2.h,
     inherit: true,
   );
 
-  static const TextStyle buttonMedium = TextStyle(
-    fontSize: 14,
+  static TextStyle buttonMedium = TextStyle(
+    fontSize: 14.sp,
     fontWeight: FontWeight.w600,
     color: AppColors.textWhite,
-    height: 1.2,
+    height: 1.2.h,
     inherit: true,
   );
 

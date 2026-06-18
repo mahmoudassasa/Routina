@@ -34,7 +34,6 @@ class _LockedOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     
     return GestureDetector(
       onTap: () => _openPaywall(context),
       child: Container(
@@ -68,8 +67,9 @@ class _LockedOverlay extends StatelessWidget {
             SizedBox(height: 6.h),
             Text(
               reason,
-              style: AppTextStyles.font14WhiteRegular
-                  .copyWith(color: Colors.white54),
+              style: AppTextStyles.font14WhiteRegular.copyWith(
+                color: Colors.white54,
+              ),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 18.h),
@@ -84,8 +84,10 @@ class _LockedOverlay extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12.r),
                   ),
                 ),
-                child:
-                    Text(context.l10n.upgradeToPremium, style: AppTextStyles.font14WhiteRegular),
+                child: Text(
+                  context.l10n.upgradeToPremium,
+                  style: AppTextStyles.font14WhiteRegular,
+                ),
               ),
             ),
           ],
@@ -94,12 +96,12 @@ class _LockedOverlay extends StatelessWidget {
     );
   }
 
-void _openPaywall(BuildContext context) {
-  context.push(
-    BlocProvider(
-      create: (_) => BillingCubit()..init(),
-      child: const PaywallScreen(),
-    ),
-  );
-}
+  void _openPaywall(BuildContext context) {
+    context.push(
+      BlocProvider(
+        create: (_) => BillingCubit()..init(),
+        child: const PaywallScreen(),
+      ),
+    );
+  }
 }

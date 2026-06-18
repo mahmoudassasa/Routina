@@ -3,8 +3,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HabitService {
   HabitService()
-      : _supabase = Supabase.instance.client,
-        _firebaseAuth = FirebaseAuth.instance;
+    : _supabase = Supabase.instance.client,
+      _firebaseAuth = FirebaseAuth.instance;
 
   final SupabaseClient _supabase;
   final FirebaseAuth _firebaseAuth;
@@ -34,8 +34,9 @@ class HabitService {
 
   Map<String, dynamic> _mapRowToHabit(Map<String, dynamic> row) {
     final frequency = _normalizeBoolList(_parseBoolList(row['frequency']));
-    final weekProgress =
-        _normalizeBoolList(_parseBoolList(row['week_progress']));
+    final weekProgress = _normalizeBoolList(
+      _parseBoolList(row['week_progress']),
+    );
 
     return {
       'id': row['id'],
@@ -124,12 +125,15 @@ class HabitService {
     required int colorValue,
     required List<bool> days,
   }) async {
-    await _supabase.from(_tableName).update({
-      'title': title,
-      'icon': iconKey,
-      'color': colorValue,
-      'frequency': _normalizeBoolList(days),
-    }).eq('id', habitId);
+    await _supabase
+        .from(_tableName)
+        .update({
+          'title': title,
+          'icon': iconKey,
+          'color': colorValue,
+          'frequency': _normalizeBoolList(days),
+        })
+        .eq('id', habitId);
   }
 
   Future<void> deleteHabit(int habitId) async {

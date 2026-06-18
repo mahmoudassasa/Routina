@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MainAlertDialog extends StatelessWidget {
   final Widget dialogTitle;
@@ -18,9 +19,7 @@ class MainAlertDialog extends StatelessWidget {
       title: dialogTitle,
       content: dialogContent,
       actions: dialogActions,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
     );
   }
 }

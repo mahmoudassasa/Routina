@@ -16,7 +16,6 @@ class PaywallScreen extends StatefulWidget {
 }
 
 class _PaywallScreenState extends State<PaywallScreen> {
-  
   List<ProductDetails> _products = [];
   bool _loadingProducts = true;
   String? _selectedId;
@@ -42,7 +41,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
 
   @override
   Widget build(BuildContext context) {
-     
     return Scaffold(
       backgroundColor: AppColors.darkBackground,
       body: SafeArea(
@@ -58,7 +56,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
   }
 
   Widget _buildHeader(BuildContext context) {
-     
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
       child: Row(
@@ -74,7 +71,9 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   ? null
                   : () => context.read<BillingCubit>().restore(),
               child: Text(
-                state.isRestoring ? context.l10n.restoring : context.l10n.restore,
+                state.isRestoring
+                    ? context.l10n.restoring
+                    : context.l10n.restore,
                 style: AppTextStyles.font14WhiteRegular.copyWith(
                   color: AppColors.primaryLight,
                 ),
@@ -87,7 +86,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
   }
 
   Widget _buildContent() {
-     
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(horizontal: 24.w),
       child: Column(
@@ -96,7 +94,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
           _buildCrownIcon(),
           SizedBox(height: 20.h),
           Text(
-              context.l10n.routinaPremium,
+            context.l10n.routinaPremium,
 
             style: AppTextStyles.font24WhiteBold,
             textAlign: TextAlign.center,
@@ -127,19 +125,34 @@ class _PaywallScreenState extends State<PaywallScreen> {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: AppColors.darkSurface,
-        border: Border.all(color: AppColors.primary, width: 2),
+        border: Border.all(color: AppColors.primary, width: 2.w),
       ),
-      child: Icon(Icons.workspace_premium, color: AppColors.primary, size: 36.r),
+      child: Icon(
+        Icons.workspace_premium,
+        color: AppColors.primary,
+        size: 36.r,
+      ),
     );
   }
 
   Widget _buildFeatureList() {
-   
-final features = [
-  (Icons.analytics_outlined, context.l10n.featureAiAnalysis, context.l10n.featureAiAnalysisDesc),
-  (Icons.all_inclusive, context.l10n.featureUnlimitedHabits, context.l10n.featureUnlimitedHabitsDesc),
-  (Icons.support_agent_outlined, context.l10n.featurePrioritySupport, context.l10n.featurePrioritySupportDesc),
-];
+    final features = [
+      (
+        Icons.analytics_outlined,
+        context.l10n.featureAiAnalysis,
+        context.l10n.featureAiAnalysisDesc,
+      ),
+      (
+        Icons.all_inclusive,
+        context.l10n.featureUnlimitedHabits,
+        context.l10n.featureUnlimitedHabitsDesc,
+      ),
+      (
+        Icons.support_agent_outlined,
+        context.l10n.featurePrioritySupport,
+        context.l10n.featurePrioritySupportDesc,
+      ),
+    ];
     return Column(
       children: features.map((f) => _featureRow(f.$1, f.$2, f.$3)).toList(),
     );
@@ -165,9 +178,12 @@ final features = [
             children: [
               Text(title, style: AppTextStyles.font16WhiteMedium),
               SizedBox(height: 2.h),
-              Text(subtitle,
-                  style: AppTextStyles.font14WhiteRegular
-                      .copyWith(color: Colors.white38)),
+              Text(
+                subtitle,
+                style: AppTextStyles.font14WhiteRegular.copyWith(
+                  color: Colors.white38,
+                ),
+              ),
             ],
           ),
         ],
@@ -192,20 +208,19 @@ final features = [
   }
 
   Widget _buildProductCards() {
-     
     if (_products.isEmpty) {
-      return Text(context.l10n.productsUnavailable,
-          style: AppTextStyles.font14WhiteRegular.copyWith(color: Colors.white38));
+      return Text(
+        context.l10n.productsUnavailable,
+        style: AppTextStyles.font14WhiteRegular.copyWith(color: Colors.white38),
+      );
     }
-    return Column(
-      children: _products.map((p) => _productCard(p)).toList(),
-    );
+    return Column(children: _products.map((p) => _productCard(p)).toList());
   }
 
   Widget _productCard(ProductDetails product) {
     final isSelected = _selectedId == product.id;
     final isYearly = product.id == BillingService.yearlyId;
-     
+
     return GestureDetector(
       onTap: () => setState(() => _selectedId = product.id),
       child: AnimatedContainer(
@@ -233,7 +248,7 @@ final features = [
                 color: isSelected ? AppColors.primary : Colors.transparent,
                 border: Border.all(
                   color: isSelected ? AppColors.primary : Colors.white38,
-                  width: 2,
+                  width: 2.w,
                 ),
               ),
               child: isSelected
@@ -255,13 +270,17 @@ final features = [
                         SizedBox(width: 8.w),
                         Container(
                           padding: EdgeInsets.symmetric(
-                              horizontal: 8.w, vertical: 2.h),
+                            horizontal: 8.w,
+                            vertical: 2.h,
+                          ),
                           decoration: BoxDecoration(
                             color: AppColors.accent,
                             borderRadius: BorderRadius.circular(20.r),
                           ),
-                          child: Text(context.l10n.bestValue,
-                              style: AppTextStyles.font12WhiteRegular),
+                          child: Text(
+                            context.l10n.bestValue,
+                            style: AppTextStyles.font12WhiteRegular,
+                          ),
                         ),
                       ],
                     ],
@@ -269,10 +288,11 @@ final features = [
                   SizedBox(height: 4.h),
                   Text(
                     isYearly
-      ? '${product.price} ${context.l10n.perYear}'
-      : '${product.price} ${context.l10n.perMonth}',
-                    style: AppTextStyles.font14WhiteRegular
-                        .copyWith(color: Colors.white54),
+                        ? '${product.price} ${context.l10n.perYear}'
+                        : '${product.price} ${context.l10n.perMonth}',
+                    style: AppTextStyles.font14WhiteRegular.copyWith(
+                      color: Colors.white54,
+                    ),
                   ),
                 ],
               ),
@@ -284,7 +304,6 @@ final features = [
   }
 
   Widget _buildFooter(BuildContext context) {
-     
     return Padding(
       padding: EdgeInsets.fromLTRB(24.w, 0, 24.w, 24.h),
       child: Column(
@@ -296,7 +315,9 @@ final features = [
               } else if (state.status == BillingStatus.error) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text(state.errorMessage ?? context.l10n.somethingWentWrong),
+                    content: Text(
+                      state.errorMessage ?? context.l10n.somethingWentWrong,
+                    ),
                     backgroundColor: Colors.red,
                   ),
                 );
@@ -332,7 +353,10 @@ final features = [
                             strokeWidth: 2,
                           ),
                         )
-                      : Text(context.l10n.continueText, style: AppTextStyles.font16WhiteMedium),
+                      : Text(
+                          context.l10n.continueText,
+                          style: AppTextStyles.font16WhiteMedium,
+                        ),
                 ),
               );
             },
@@ -340,8 +364,9 @@ final features = [
           SizedBox(height: 12.h),
           Text(
             context.l10n.cancelAnytime,
-            style: AppTextStyles.font12WhiteRegular
-                .copyWith(color: Colors.white30),
+            style: AppTextStyles.font12WhiteRegular.copyWith(
+              color: Colors.white30,
+            ),
           ),
         ],
       ),

@@ -33,7 +33,7 @@ class _MainNavigationBarState extends State<MainNavigationBar> {
         BlocProvider(create: (_) => ProfileCubit()..loadUserData()),
         BlocProvider(create: (_) => LogoutCubit()),
         BlocProvider(create: (_) => AiAnalysisCubit()),
-        BlocProvider(create: (_) => BillingCubit()..init()),
+        BlocProvider(create: (_) => BillingCubit()),
       ],
       child: Builder(
         builder: (context) {
@@ -65,8 +65,6 @@ class _MainNavigationBarState extends State<MainNavigationBar> {
                 );
               },
               onCenterLongPress: () {
-                 
-
                 final habits = context.read<HomeCubit>().state.habits;
                 if (habits.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(

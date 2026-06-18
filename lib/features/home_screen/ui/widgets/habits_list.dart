@@ -14,43 +14,55 @@ class HabitsList extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return  BlocBuilder<HomeCubit, HomeState>(
-  builder: (context, state) {
-    return RefreshIndicator(
-      onRefresh: () => context.read<HomeCubit>().loadHabits(isRefresh: true),
+    return BlocBuilder<HomeCubit, HomeState>(
+      builder: (context, state) {
+        return RefreshIndicator(
+          onRefresh: () =>
+              context.read<HomeCubit>().loadHabits(isRefresh: true),
 
-      child: Builder(
-        builder: (_) {
-          if (state.status == HomeStatus.loading) {
-            return _buildScrollableList(
-              child: ListView.builder(
+          child: Builder(
+            builder: (_) {
+              if (state.status == HomeStatus.loading) {
+                return _buildScrollableList(
+                  child: ListView.builder(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 20.w,
+                      vertical: 10.h,
+                    ),
+                    itemCount: 3,
+                    itemBuilder: (context, index) => _buildShimmerItem(isDark),
+                  ),
+                );
+              }
+
+              if (state.habits.isEmpty) {
+                return const HomeEmptyState();
+              }
+
+              return ListView.builder(
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-                itemCount: 3,
-                itemBuilder: (context, index) => _buildShimmerItem(isDark),
-              ),
-            );
-          }
-
-        if (state.habits.isEmpty) {
-  return const HomeEmptyState();
-}
-
-          return ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-            physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
-            itemCount: state.habits.length,
-            itemBuilder: (context, index) => HabitCard(habit: state.habits[index]),
-          );
-        },
-      ),
+                physics: const AlwaysScrollableScrollPhysics(
+                  parent: BouncingScrollPhysics(),
+                ),
+                itemCount: state.habits.length,
+                itemBuilder: (context, index) =>
+                    HabitCard(habit: state.habits[index]),
+              );
+            },
+          ),
+        );
+      },
     );
-  },
-);
   }
 
   Widget _buildScrollableList({required Widget child}) {
     return SizedBox.expand(
-      child: child is ListView ? child : ListView(physics: const AlwaysScrollableScrollPhysics(), children: [child]),
+      child: child is ListView
+          ? child
+          : ListView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              children: [child],
+            ),
     );
   }
 
@@ -61,7 +73,10 @@ class HabitsList extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.only(bottom: 20.h),
         height: 200.h,
-        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(24.r)),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(24.r),
+        ),
       ),
     );
   }

@@ -55,12 +55,28 @@ class _ProfileHeaderSectionState extends State<ProfileHeaderSection>
                       end: Alignment.bottomRight,
                       colors: isDark
                           ? [
-                              Color.lerp(AppColors.darkBackground, AppColors.primaryDark, _controller.value)!,
-                              Color.lerp(AppColors.darkBackgroundLight, AppColors.primary, _controller.value)!,
+                              Color.lerp(
+                                AppColors.darkBackground,
+                                AppColors.primaryDark,
+                                _controller.value,
+                              )!,
+                              Color.lerp(
+                                AppColors.darkBackgroundLight,
+                                AppColors.primary,
+                                _controller.value,
+                              )!,
                             ]
                           : [
-                              Color.lerp(AppColors.primaryLight, AppColors.accentLight, _controller.value)!,
-                              Color.lerp(AppColors.primary, AppColors.accent, _controller.value)!,
+                              Color.lerp(
+                                AppColors.primaryLight,
+                                AppColors.accentLight,
+                                _controller.value,
+                              )!,
+                              Color.lerp(
+                                AppColors.primary,
+                                AppColors.accent,
+                                _controller.value,
+                              )!,
                             ],
                     ),
                     borderRadius: BorderRadius.only(
@@ -69,7 +85,7 @@ class _ProfileHeaderSectionState extends State<ProfileHeaderSection>
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha:0.1),
+                        color: Colors.black.withValues(alpha: 0.1),
                         blurRadius: 25,
                         offset: const Offset(0, 10),
                       ),
@@ -81,9 +97,7 @@ class _ProfileHeaderSectionState extends State<ProfileHeaderSection>
           ),
 
           Positioned.fill(
-            child: CustomPaint(
-              painter: WavePainter(_controller.value, isDark),
-            ),
+            child: CustomPaint(painter: WavePainter(_controller.value, isDark)),
           ),
 
           Positioned(
@@ -101,15 +115,15 @@ class _ProfileHeaderSectionState extends State<ProfileHeaderSection>
                       shape: BoxShape.circle,
                       border: Border.all(
                         color: isDark
-                            ? AppColors.primaryLight.withValues(alpha:0.3)
-                            : AppColors.accent.withValues(alpha:0.7),
-                        width: 2,
+                            ? AppColors.primaryLight.withValues(alpha: 0.3)
+                            : AppColors.accent.withValues(alpha: 0.7),
+                        width: 2.w,
                       ),
                       boxShadow: [
                         BoxShadow(
                           color: isDark
-                              ? AppColors.primary.withValues(alpha:0.25)
-                              : AppColors.accent.withValues(alpha:0.25),
+                              ? AppColors.primary.withValues(alpha: 0.25)
+                              : AppColors.accent.withValues(alpha: 0.25),
                           blurRadius: 22,
                           spreadRadius: 2,
                         ),
@@ -143,8 +157,8 @@ class WavePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = isDark
-          ? AppColors.primary.withValues(alpha:0.08)
-          : AppColors.accent.withValues(alpha:0.08)
+          ? AppColors.primary.withValues(alpha: 0.08)
+          : AppColors.accent.withValues(alpha: 0.08)
       ..style = PaintingStyle.fill;
 
     final path = Path();
@@ -153,8 +167,10 @@ class WavePainter extends CustomPainter {
 
     path.moveTo(0, size.height);
     for (double x = 0; x <= size.width; x++) {
-      double y = size.height -
-          waveHeight * math.sin((x / waveLength * 2 * math.pi) + progress * 2 * math.pi);
+      double y =
+          size.height -
+          waveHeight *
+              math.sin((x / waveLength * 2 * math.pi) + progress * 2 * math.pi);
       path.lineTo(x, y);
     }
     path.lineTo(size.width, size.height);

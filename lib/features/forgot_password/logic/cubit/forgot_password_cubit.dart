@@ -7,7 +7,12 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
 
   Future<void> sendResetPasswordEmail(String email) async {
     if (email.isEmpty) {
-      emit(state.copyWith(status: ForgotPasswordStatus.error, errorMessage: "Please enter your email"));
+      emit(
+        state.copyWith(
+          status: ForgotPasswordStatus.error,
+          errorMessage: "Please enter your email",
+        ),
+      );
       return;
     }
 
@@ -15,19 +20,33 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
 
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email.trim());
-      
+
       // Heartfelt delay to ensure the user sees our premium loading animation
       await Future.delayed(const Duration(milliseconds: 1200));
-      
+
       emit(state.copyWith(status: ForgotPasswordStatus.success));
     } on FirebaseAuthException catch (e) {
       String message = "An error occurred. Please try again.";
-      if (e.code == 'user-not-found') message = "No user found with this email.";
-      if (e.code == 'invalid-email') message = "The email address is not valid.";
-      
-      emit(state.copyWith(status: ForgotPasswordStatus.error, errorMessage: message));
+      if (e.code == 'user-not-found') {
+        message = "No user found with this email.";
+      }
+      if (e.code == 'invalid-email') {
+        message = "The email address is not valid.";
+      }
+
+      emit(
+        state.copyWith(
+          status: ForgotPasswordStatus.error,
+          errorMessage: message,
+        ),
+      );
     } catch (e) {
-      emit(state.copyWith(status: ForgotPasswordStatus.error, errorMessage: e.toString()));
+      emit(
+        state.copyWith(
+          status: ForgotPasswordStatus.error,
+          errorMessage: e.toString(),
+        ),
+      );
     }
   }
 }

@@ -24,7 +24,11 @@ extension HeaderCard on PrivacyPolicyScreen {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.shield_rounded, color: AppColors.primary, size: 32.sp),
+          Image.asset(
+            'assets/icons/routina_icon.png',
+            width: 60.w,
+            height: 60.h,
+          ),
           verticalSpace(12),
           Text(
             context.l10n.yourPrivacyMatters,

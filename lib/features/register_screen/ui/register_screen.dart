@@ -6,7 +6,6 @@ import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/routing/routes.dart';
 import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/theaming/app_theme/logic/cubit/theme_cubit.dart';
-import 'package:routina/core/widgets/language_bottom_sheet.dart';
 import 'package:routina/features/locale/logic/locale_cubit.dart';
 import 'package:routina/features/register_screen/logic/cubit/register_cubit.dart';
 import 'package:routina/features/register_screen/logic/cubit/register_state.dart';
@@ -18,6 +17,7 @@ import 'package:routina/features/register_screen/ui/widgets/register_screen_regi
 import 'package:routina/features/register_screen/ui/widgets/register_screen_texts.dart';
 import 'package:routina/features/register_screen/ui/widgets/register_screen_logo.dart';
 import 'package:routina/features/register_screen/ui/widgets/register_screen_user_picture.dart';
+import 'package:routina/features/register_screen/ui/widgets/terms_of_service.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -50,106 +50,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     };
   }
 
-  void _showPreferencesSheet(BuildContext context, bool isDark) {
-    final themeCubit = context.read<ThemeCubit>();
-    final localeCubit = context.read<LocaleCubit>();
-    final darkModeLabel = context.l10n.darkMode;
-    final languageLabel = context.l10n.language;
-
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (_) => MultiBlocProvider(
-        providers: [
-          BlocProvider.value(value: themeCubit),
-          BlocProvider.value(value: localeCubit),
-        ],
-        child: Container(
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            color: isDark ? AppColors.darkSurface : AppColors.surface,
-            borderRadius:
-                const BorderRadius.vertical(top: Radius.circular(24)),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: isDark ? AppColors.darkBorder : AppColors.border,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-              const SizedBox(height: 20),
-              BlocBuilder<ThemeCubit, ThemeState>(
-                builder: (context, state) {
-                  return ListTile(
-                    leading: Icon(
-                      state.isDarkMode
-                          ? Icons.light_mode_rounded
-                          : Icons.dark_mode_rounded,
-                      color: AppColors.primary,
-                    ),
-                    title: Text(
-                      darkModeLabel,
-                      style: TextStyle(
-                        color: isDark
-                            ? AppColors.darkTextPrimary
-                            : AppColors.textPrimary,
-                      ),
-                    ),
-                    trailing: Switch(
-                      value: state.isDarkMode,
-                      activeThumbColor: AppColors.primary,
-                      onChanged: (_) =>
-                          context.read<ThemeCubit>().toggleTheme(),
-                    ),
-                  );
-                },
-              ),
-              const Divider(),
-              ListTile(
-                leading: const Icon(
-                  Icons.language_rounded,
-                  color: AppColors.primary,
-                ),
-                title: Text(
-                  languageLabel,
-                  style: TextStyle(
-                    color: isDark
-                        ? AppColors.darkTextPrimary
-                        : AppColors.textPrimary,
-                  ),
-                ),
-                trailing: Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  size: 16,
-                  color: isDark
-                      ? AppColors.darkTextSecondary
-                      : AppColors.textSecondary,
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                  showModalBottomSheet(
-                    context: context,
-                    backgroundColor: Colors.transparent,
-                    builder: (_) => BlocProvider.value(
-                      value: localeCubit,
-                      child: LanguageBottomSheet(),
-                    ),
-                  );
-                },
-              ),
-              const SizedBox(height: 8),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -176,8 +76,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: BlocListener<RegisterCubit, RegisterState>(
               listener: (context, state) {
                 if (state.status == RegisterStatus.success) {
-                  context
-                      .pushReplacementNamed(Routes.emailConfirmationScreen);
+                  context.pushReplacementNamed(Routes.emailConfirmationScreen);
                 } else if (state.status == RegisterStatus.error) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -219,6 +118,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           passwordController: _passwordController,
                         ),
                         verticalSpace(24),
+                        termsAndConditionsText(context),
                         const RegisterScreenLoginLink(),
                         verticalSpace(20),
                       ],
@@ -244,7 +144,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       : AppColors.primary.withValues(alpha: 0.5),
                 ),
               ),
-              onPressed: () => _showPreferencesSheet(context, isDark),
+              onPressed: () => context.showPreferencesSheet(
+                themeCubit: context.read<ThemeCubit>(),
+                localeCubit: context.read<LocaleCubit>(),
+              ),
               child: Icon(
                 Icons.tune_rounded,
                 color: isDark ? Colors.white70 : AppColors.primary,

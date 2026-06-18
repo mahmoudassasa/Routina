@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 class MainDialog extends StatelessWidget {
@@ -8,10 +6,6 @@ class MainDialog extends StatelessWidget {
   const MainDialog({super.key, required this.dialogContent});
   @override
   Widget build(BuildContext context) {
-    
-    return Dialog(child: dialogContent
-    
-    );
+    return Dialog(child: dialogContent);
   }
-  
 }

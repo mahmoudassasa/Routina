@@ -64,7 +64,7 @@ class HabitTrackerScreenContent extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: isDark ? Colors.grey[400] : Colors.grey[600],
-                      height: 1.4,
+                      height: 1.4.h,
                     ),
                     textAlign: TextAlign.center,
                   ),

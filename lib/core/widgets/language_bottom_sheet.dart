@@ -24,7 +24,8 @@ class LanguageBottomSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: 40.w, height: 4.h,
+            width: 40.w,
+            height: 4.h,
             decoration: BoxDecoration(
               color: Colors.grey[400],
               borderRadius: BorderRadius.circular(2.r),
@@ -40,17 +41,37 @@ class LanguageBottomSheet extends StatelessWidget {
             ),
           ),
           verticalSpace(20),
-          _langTile(context, 'English', '🇬🇧', const Locale('en'), current, isDark),
+          _langTile(
+            context,
+            'English',
+            '🇬🇧',
+            const Locale('en'),
+            current,
+            isDark,
+          ),
           verticalSpace(12),
-          _langTile(context, 'العربية', '🇸🇦', const Locale('ar'), current, isDark),
+          _langTile(
+            context,
+            'العربية',
+            '🇸🇦',
+            const Locale('ar'),
+            current,
+            isDark,
+          ),
           verticalSpace(24),
         ],
       ),
     );
   }
 
-  Widget _langTile(BuildContext context, String label, String flag,
-      Locale locale, Locale current, bool isDark) {
+  Widget _langTile(
+    BuildContext context,
+    String label,
+    String flag,
+    Locale locale,
+    Locale current,
+    bool isDark,
+  ) {
     final isSelected = current == locale;
     return GestureDetector(
       onTap: () {
@@ -62,7 +83,9 @@ class LanguageBottomSheet extends StatelessWidget {
         decoration: BoxDecoration(
           color: isSelected
               ? AppColors.primary.withValues(alpha: 0.1)
-              : (isDark ? AppColors.darkBackgroundLight : AppColors.surfaceLight),
+              : (isDark
+                    ? AppColors.darkBackgroundLight
+                    : AppColors.surfaceLight),
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(
             color: isSelected ? AppColors.primary : Colors.transparent,
@@ -79,7 +102,9 @@ class LanguageBottomSheet extends StatelessWidget {
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 color: isSelected
                     ? AppColors.primary
-                    : (isDark ? AppColors.darkTextPrimary : AppColors.textPrimary),
+                    : (isDark
+                          ? AppColors.darkTextPrimary
+                          : AppColors.textPrimary),
               ),
             ),
             const Spacer(),

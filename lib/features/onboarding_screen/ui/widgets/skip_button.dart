@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/theaming/app_text_styles.dart';
@@ -15,7 +16,7 @@ class SkipButton extends StatelessWidget {
     return Align(
       alignment: Alignment.topRight,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.0.h),
         child: TextButton(
           onPressed: onPressed,
           style: TextButton.styleFrom(
@@ -24,7 +25,7 @@ class SkipButton extends StatelessWidget {
                 ? AppColors.primaryLight
                 : AppColors.primary,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(20.r),
             ),
           ),
           child: Text(

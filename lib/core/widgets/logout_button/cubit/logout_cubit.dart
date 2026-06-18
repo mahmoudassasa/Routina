@@ -17,10 +17,9 @@ class LogoutCubit extends Cubit<LogoutState> {
 
       emit(state.copyWith(status: LogoutStatus.success));
     } catch (e) {
-      emit(state.copyWith(
-        status: LogoutStatus.error,
-        errorMessage: e.toString(),
-      ));
+      emit(
+        state.copyWith(status: LogoutStatus.error, errorMessage: e.toString()),
+      );
     }
   }
 

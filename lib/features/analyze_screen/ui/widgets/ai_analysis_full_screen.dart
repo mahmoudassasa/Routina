@@ -15,7 +15,7 @@ class AiAnalysisFullScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-     
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -281,7 +281,7 @@ class AiAnalysisFullScreen extends StatelessWidget {
                             state.analysis!,
                             style: TextStyle(
                               fontSize: 15.sp,
-                              height: 1.6,
+                              height: 1.6.h,
                               color: isDark
                                   ? Colors.grey[300]
                                   : Colors.grey[800],

@@ -79,7 +79,8 @@ class PremiumAnalyticsScreen extends StatelessWidget {
                   Expanded(
                     child: _MetricCard(
                       isDark: isDark,
-label: context.l10n.avgCompletion,                      value: '${(avgCompletion * 100).toInt()}%',
+                      label: context.l10n.avgCompletion,
+                      value: '${(avgCompletion * 100).toInt()}%',
                       icon: '📊',
                       color: AppColors.primary,
                     ),
@@ -88,7 +89,8 @@ label: context.l10n.avgCompletion,                      value: '${(avgCompletion
                   Expanded(
                     child: _MetricCard(
                       isDark: isDark,
-label: context.l10n.totalHabits,                      value: '${habits.length}',
+                      label: context.l10n.totalHabits,
+                      value: '${habits.length}',
                       icon: '📋',
                       color: Colors.amber,
                     ),
@@ -101,7 +103,8 @@ label: context.l10n.totalHabits,                      value: '${habits.length}',
                   Expanded(
                     child: _MetricCard(
                       isDark: isDark,
-label: context.l10n.bestStreak,                      value: '${best?['streak'] ?? 0}d',
+                      label: context.l10n.bestStreak,
+                      value: '${best?['streak'] ?? 0}d',
                       icon: '🔥',
                       color: Colors.orange,
                     ),
@@ -110,7 +113,8 @@ label: context.l10n.bestStreak,                      value: '${best?['streak'] ?
                   Expanded(
                     child: _MetricCard(
                       isDark: isDark,
-label: context.l10n.needsFocus,                      value: worst?['title'] as String? ?? '-',
+                      label: context.l10n.needsFocus,
+                      value: worst?['title'] as String? ?? '-',
                       icon: '⚡',
                       color: Colors.redAccent,
                       small: true,
@@ -122,14 +126,20 @@ label: context.l10n.needsFocus,                      value: worst?['title'] as S
 
               // Best habit
               if (best != null) ...[
-                _SectionTitle(title: context.l10n.bestPerforming, isDark: isDark),
+                _SectionTitle(
+                  title: context.l10n.bestPerforming,
+                  isDark: isDark,
+                ),
                 verticalSpace(12),
                 _HabitInsightCard(habit: best, isDark: isDark, highlight: true),
                 verticalSpace(24),
               ],
 
               // All habits breakdown
-              _SectionTitle(title: context.l10n.completionBreakdown, isDark: isDark),
+              _SectionTitle(
+                title: context.l10n.completionBreakdown,
+                isDark: isDark,
+              ),
               verticalSpace(12),
               ...habits.map(
                 (habit) => Padding(
@@ -349,7 +359,10 @@ class _HabitInsightCard extends StatelessWidget {
                 ),
                 verticalSpace(4),
                 Text(
-                  context.l10n.dayStreak(streak.toString(), (progress * 100).toInt().toString()),
+                  context.l10n.dayStreak(
+                    streak.toString(),
+                    (progress * 100).toInt().toString(),
+                  ),
                   style: TextStyle(
                     fontSize: 12.sp,
                     color: isDark ? Colors.grey[400] : Colors.grey[600],

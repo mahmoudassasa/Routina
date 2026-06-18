@@ -14,48 +14,49 @@ class AnalyzeScreenAiAnalysisResult extends StatelessWidget {
     return const SizedBox.shrink();
   }
 
-static void showAnalysisSheet(BuildContext context, AiAnalysisState state) {
-  final isDark = Theme.of(context).brightness == Brightness.dark;
+  static void showAnalysisSheet(BuildContext context, AiAnalysisState state) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    backgroundColor: Colors.transparent,
-    builder: (context) => DraggableScrollableSheet(
-      initialChildSize: 0.6,
-      minChildSize: 0.4,
-      maxChildSize: 0.9,
-      builder: (context, scrollController) => Container(
-        padding: EdgeInsets.symmetric(horizontal: 24.w),
-        decoration: BoxDecoration(
-          color: isDark ? const Color(0xFF1A1C23) : Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(28.r)),
-        ),
-        child: ListView(
-          controller: scrollController,
-          children: [
-            verticalSpace(12),
-            Center(
-              child: Container(
-                width: 40.w,
-                height: 4.h,
-                decoration: BoxDecoration(
-                  color: isDark ? Colors.grey[800] : Colors.grey[300],
-                  borderRadius: BorderRadius.circular(10.r),
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => DraggableScrollableSheet(
+        initialChildSize: 0.6,
+        minChildSize: 0.4,
+        maxChildSize: 0.9,
+        builder: (context, scrollController) => Container(
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          decoration: BoxDecoration(
+            color: isDark ? const Color(0xFF1A1C23) : Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(28.r)),
+          ),
+          child: ListView(
+            controller: scrollController,
+            children: [
+              verticalSpace(12),
+              Center(
+                child: Container(
+                  width: 40.w,
+                  height: 4.h,
+                  decoration: BoxDecoration(
+                    color: isDark ? Colors.grey[800] : Colors.grey[300],
+                    borderRadius: BorderRadius.circular(10.r),
+                  ),
                 ),
               ),
-            ),
-            verticalSpace(24),
-            _buildHeader(isDark),
-            verticalSpace(24),
-            _buildContent(state, isDark),
-            verticalSpace(24),
-          ],
+              verticalSpace(24),
+              _buildHeader(isDark),
+              verticalSpace(24),
+              _buildContent(state, isDark),
+              verticalSpace(24),
+            ],
+          ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
+
   static Widget _buildHeader(bool isDark) {
     return Row(
       children: [
@@ -66,7 +67,9 @@ static void showAnalysisSheet(BuildContext context, AiAnalysisState state) {
             color: AppColors.primary.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(16.r),
           ),
-          child: Center(child: Text('✨', style: TextStyle(fontSize: 28.sp))),
+          child: Center(
+            child: Text('✨', style: TextStyle(fontSize: 28.sp)),
+          ),
         ),
         horizontalSpace(16),
         Column(
@@ -100,9 +103,9 @@ static void showAnalysisSheet(BuildContext context, AiAnalysisState state) {
         child: const CircularProgressIndicator(color: AppColors.primary),
       );
     }
-    
+
     if (state.status == AiAnalysisStatus.error) {
-       return Text(state.errorMessage ?? 'Error occurred');
+      return Text(state.errorMessage ?? 'Error occurred');
     }
 
     return Container(
@@ -116,7 +119,7 @@ static void showAnalysisSheet(BuildContext context, AiAnalysisState state) {
         state.analysis ?? '',
         style: TextStyle(
           fontSize: 14.sp,
-          height: 1.6,
+          height: 1.6.h,
           color: isDark ? Colors.grey[300] : Colors.grey[800],
         ),
       ),

@@ -12,7 +12,6 @@ class SharedPrefHelper {
   /// Removes a value from SharedPreferences with given [key].
 
   static removeData(String key) async {
-
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     await sharedPreferences.remove(key);
@@ -21,7 +20,6 @@ class SharedPrefHelper {
   /// Removes all keys and values in the SharedPreferences
 
   static clearAllData() async {
-
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     await sharedPreferences.clear();
@@ -31,7 +29,6 @@ class SharedPrefHelper {
 
   static setData(String key, value) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-
 
     switch (value.runtimeType) {
       case String:
@@ -61,7 +58,6 @@ class SharedPrefHelper {
 
   /// Gets a bool value from SharedPreferences with given [key].
   static getBool(String key) async {
-
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     return sharedPreferences.getBool(key) ?? false;
@@ -69,7 +65,6 @@ class SharedPrefHelper {
 
   /// Gets a double value from SharedPreferences with given [key].
   static getDouble(String key) async {
-
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     return sharedPreferences.getDouble(key) ?? 0.0;
@@ -77,7 +72,6 @@ class SharedPrefHelper {
 
   /// Gets an int value from SharedPreferences with given [key].
   static getInt(String key) async {
-
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     return sharedPreferences.getInt(key) ?? 0;
@@ -85,7 +79,6 @@ class SharedPrefHelper {
 
   /// Gets an String value from SharedPreferences with given [key].
   static getString(String key) async {
-
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     return sharedPreferences.getString(key) ?? '';
@@ -95,7 +88,7 @@ class SharedPrefHelper {
   static setSecuredString(String key, String value) async {
     // Create storage
     const flutterSecureStorage = FlutterSecureStorage();
-  
+
     // Write value
     await flutterSecureStorage.write(key: key, value: value);
   }

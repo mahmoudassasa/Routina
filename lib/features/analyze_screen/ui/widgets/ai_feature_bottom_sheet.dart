@@ -36,7 +36,6 @@ class _AiFeatureBottomSheetContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-     
 
     return Container(
       constraints: BoxConstraints(maxHeight: 0.8.sh),
@@ -61,7 +60,7 @@ class _AiFeatureBottomSheetContent extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.r),
             ),
           ),
-          verticalSpace(24), 
+          verticalSpace(24),
           Row(
             children: [
               Container(
@@ -88,7 +87,7 @@ class _AiFeatureBottomSheetContent extends StatelessWidget {
               ),
             ],
           ),
-          verticalSpace(24), 
+          verticalSpace(24),
           Flexible(
             child: SingleChildScrollView(
               child: FutureBuilder<String>(
@@ -97,8 +96,10 @@ class _AiFeatureBottomSheetContent extends StatelessWidget {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Column(
                       children: [
-                        const CircularProgressIndicator(color: AppColors.primary),
-                        verticalSpace(16), 
+                        const CircularProgressIndicator(
+                          color: AppColors.primary,
+                        ),
+                        verticalSpace(16),
                         Text(
                           context.l10n.generatingInsights,
                           style: TextStyle(
@@ -113,8 +114,12 @@ class _AiFeatureBottomSheetContent extends StatelessWidget {
                   if (snapshot.hasError) {
                     return Column(
                       children: [
-                        Icon(Icons.error_outline, size: 48.sp, color: Colors.red),
-                        verticalSpace(16), 
+                        Icon(
+                          Icons.error_outline,
+                          size: 48.sp,
+                          color: Colors.red,
+                        ),
+                        verticalSpace(16),
                         Text(
                           context.l10n.failedToGenerate,
                           style: TextStyle(fontSize: 16.sp, color: Colors.red),
@@ -134,7 +139,7 @@ class _AiFeatureBottomSheetContent extends StatelessWidget {
                       snapshot.data ?? 'No insights',
                       style: TextStyle(
                         fontSize: 14.sp,
-                        height: 1.6,
+                        height: 1.6.h,
                         color: isDark ? Colors.grey[300] : Colors.grey[800],
                       ),
                     ),

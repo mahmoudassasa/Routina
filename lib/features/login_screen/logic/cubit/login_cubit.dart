@@ -1,15 +1,33 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:routina/core/services/google_sign_in_service.dart';
 import 'package:routina/features/login_screen/data/repos/login_repo.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   final LoginRepo _loginRepo;
   final GoogleSignInService _googleSignInService;
+  final supabase = Supabase.instance.client;
 
   LoginCubit(this._loginRepo, this._googleSignInService)
     : super(const LoginState());
+  Future<void> _ensurePremiumRecord(String uid) async {
+    final existing = await supabase
+        .from('user_premium')
+        .select('user_id')
+        .eq('user_id', uid)
+        .maybeSingle();
+
+    if (existing == null) {
+      await supabase.from('user_premium').insert({
+        'user_id': uid,
+        'is_premium': false,
+        'premium_until': null,
+      });
+    }
+  }
+
   Future<void> signInWithGoogle() async {
     emit(state.copyWith(status: LoginStatus.loading));
     try {
@@ -18,6 +36,10 @@ class LoginCubit extends Cubit<LoginState> {
         emit(state.copyWith(status: LoginStatus.initial));
         return;
       }
+
+      final uid = credential.user!.uid;
+      await _ensurePremiumRecord(uid);
+
       emit(state.copyWith(status: LoginStatus.success));
     } catch (e) {
       emit(
@@ -32,26 +54,25 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> login(String email, String password) async {
     emit(state.copyWith(status: LoginStatus.loading));
     try {
-      UserCredential credential = await _loginRepo.signIn(
+      firebase.UserCredential credential = await _loginRepo.signIn(
         email.trim(),
         password.trim(),
       );
-      User? user = credential.user;
+      firebase.User? user = credential.user;
 
       if (user != null && !user.emailVerified) {
         await _loginRepo.signOut();
-        await FirebaseAuth.instance.signOut();
-        emit(
-          state.copyWith(
-            status: LoginStatus.error,
-            errorCode: 'pleaseVerifyEmail', // ← code بدل message
-          ),
-        );
+        await firebase.FirebaseAuth.instance.signOut();
+        emit(state.copyWith(status: LoginStatus.error));
         return;
       }
 
+      if (user != null) {
+        await _ensurePremiumRecord(user.uid);
+      }
+
       emit(state.copyWith(status: LoginStatus.success));
-    } on FirebaseAuthException catch (e) {
+    } on firebase.FirebaseAuthException catch (e) {
       final code = switch (e.code) {
         'invalid-email' => 'invalidEmail',
         'user-not-found' => 'userNotFound',

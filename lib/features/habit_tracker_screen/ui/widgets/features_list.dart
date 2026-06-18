@@ -23,11 +23,7 @@ class _FeaturesList extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
-                Icons.star_rounded,
-                color: Colors.amber,
-                size: 20.sp,
-              ),
+              Icon(Icons.star_rounded, color: Colors.amber, size: 20.sp),
               horizontalSpace(8),
               Text(
                 context.l10n.whatYoullGet,
@@ -67,7 +63,7 @@ class _FeaturesList extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 14.sp,
                         color: isDark ? Colors.grey[300] : Colors.grey[700],
-                        height: 1.4,
+                        height: 1.4.h,
                       ),
                     ),
                   ),

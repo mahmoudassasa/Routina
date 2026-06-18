@@ -24,23 +24,22 @@ class HabitProgressChartsScreen extends StatelessWidget {
     double avgCompletion = habits.isEmpty
         ? 0
         : habits
-                .map((h) => (h['progress'] as num).toDouble())
-                .reduce((a, b) => a + b) /
-            habits.length;
+                  .map((h) => (h['progress'] as num).toDouble())
+                  .reduce((a, b) => a + b) /
+              habits.length;
 
     // 2. Calculate Total Streaks
     int totalStreaks = habits.isEmpty
         ? 0
-        : habits
-            .map((h) => (h['streak'] as int? ?? 0))
-            .reduce((a, b) => a + b);
+        : habits.map((h) => (h['streak'] as int? ?? 0)).reduce((a, b) => a + b);
 
     return Scaffold(
-      backgroundColor:
-          isDark ? const Color(0xFF13151A) : const Color(0xFFF8F9FB),
+      backgroundColor: isDark
+          ? const Color(0xFF13151A)
+          : const Color(0xFFF8F9FB),
       appBar: AppBar(
         title: Text(
-context.l10n.habitAnalytics,
+          context.l10n.progressCharts,
           style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -60,9 +59,9 @@ context.l10n.habitAnalytics,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildSectionTitle(isDark, context.l10n.weeklyActivity),
-                  verticalSpace(12), 
+                  verticalSpace(12),
                   _buildWeeklyHeatmap(isDark, habits, context),
-                  verticalSpace(24), 
+                  verticalSpace(24),
                   Row(
                     children: [
                       Expanded(
@@ -86,9 +85,12 @@ context.l10n.habitAnalytics,
                       ),
                     ],
                   ),
-                  verticalSpace(24), 
-                  _buildSectionTitle(isDark, context.l10n.individualPerformance),
-                  verticalSpace(12), 
+                  verticalSpace(24),
+                  _buildSectionTitle(
+                    isDark,
+                    context.l10n.individualPerformance,
+                  ),
+                  verticalSpace(12),
                   ...habits.map((habit) {
                     return _buildHabitProgressLine(
                       isDark,
@@ -97,13 +99,12 @@ context.l10n.habitAnalytics,
                       Color(habit['color'] as int),
                     );
                   }),
-                  verticalSpace(32), 
-                  _buildInsightBox(isDark, avgCompletion,context),
-                  verticalSpace(24), 
+                  verticalSpace(32),
+                  _buildInsightBox(isDark, avgCompletion, context),
+                  verticalSpace(24),
                 ],
               ),
             ),
     );
   }
-
 }

@@ -7,11 +7,7 @@ class CenterActionButton extends StatelessWidget {
   final VoidCallback onTap;
   final VoidCallback? onLongPress;
 
-  const CenterActionButton({
-    super.key,
-    required this.onTap,
-    this.onLongPress,
-  });
+  const CenterActionButton({super.key, required this.onTap, this.onLongPress});
 
   @override
   Widget build(BuildContext context) {

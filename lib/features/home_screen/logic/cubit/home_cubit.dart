@@ -14,33 +14,34 @@ class HomeCubit extends Cubit<HomeState> {
 
   // ── Load ───────────────────────────────────────────────────────────────
 
-Future<void> loadHabits({bool isRefresh = false}) async {
-  if (isClosed) return;
-  emit(state.copyWith(status: HomeStatus.loading));
-
-  await Future.delayed(const Duration(seconds: 2));
-  if (isClosed) return; // ← بعد الـ delay مباشرة
-
-  try {
-    final habits = await _habitService.fetchHabitsForCurrentUser();
+  Future<void> loadHabits({bool isRefresh = false}) async {
     if (isClosed) return;
-    
-    final checkedHabits = await _checkAndResetIfNeeded(habits);
-    if (isClosed) return;
+    emit(state.copyWith(status: HomeStatus.loading));
 
-    final sortedHabits = List<Map<String, dynamic>>.from(checkedHabits)
-      ..sort((a, b) {
-        final dateA = DateTime.parse(a[HabitKeys.lastSeenDate].toString());
-        final dateB = DateTime.parse(b[HabitKeys.lastSeenDate].toString());
-        return dateB.compareTo(dateA);
-      });
+    await Future.delayed(const Duration(seconds: 2));
 
-    emit(state.copyWith(status: HomeStatus.loaded, habits: sortedHabits));
-  } catch (e) {
-    if (isClosed) return;
-    emit(state.copyWith(status: HomeStatus.error, errorMessage: e.toString()));
+    try {
+      final habits = await _habitService.fetchHabitsForCurrentUser();
+      if (isClosed) return;
+
+      final checkedHabits = await _checkAndResetIfNeeded(habits);
+      if (isClosed) return;
+
+      final sortedHabits = List<Map<String, dynamic>>.from(checkedHabits)
+        ..sort((a, b) {
+          final dateA = DateTime.parse(a[HabitKeys.lastSeenDate].toString());
+          final dateB = DateTime.parse(b[HabitKeys.lastSeenDate].toString());
+          return dateB.compareTo(dateA);
+        });
+
+      emit(state.copyWith(status: HomeStatus.loaded, habits: sortedHabits));
+    } catch (e) {
+      if (isClosed) return;
+      emit(
+        state.copyWith(status: HomeStatus.error, errorMessage: e.toString()),
+      );
+    }
   }
-}
   // ── Reset logic ────────────────────────────────────────────────────────
 
   Future<List<Map<String, dynamic>>> _checkAndResetIfNeeded(
@@ -162,7 +163,9 @@ Future<void> loadHabits({bool isRefresh = false}) async {
       return createdHabit[HabitKeys.id] as int?;
     } catch (e) {
       await loadHabits();
-      emit(state.copyWith(status: HomeStatus.error, errorMessage: e.toString()));
+      emit(
+        state.copyWith(status: HomeStatus.error, errorMessage: e.toString()),
+      );
       return null;
     }
   }

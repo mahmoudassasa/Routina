@@ -15,6 +15,7 @@ import 'package:routina/features/forgot_password/ui/widgets/forgot_password_scre
 import 'package:routina/features/forgot_password/ui/widgets/forgot_password_screen_success_state_texts.dart';
 import 'package:routina/features/forgot_password/ui/widgets/forgot_password_screen_texts.dart';
 import 'package:routina/features/forgot_password/ui/widgets/send_reset_email_button.dart';
+import 'package:routina/features/locale/logic/locale_cubit.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -51,7 +52,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    isDark ? const Color(0xFF1A1A1A) : AppColors.backgroundGradientStart,
+                    isDark
+                        ? const Color(0xFF1A1A1A)
+                        : AppColors.backgroundGradientStart,
                     isDark ? Colors.black : AppColors.backgroundGradientEnd,
                   ],
                 ),
@@ -71,7 +74,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         verticalSpace(24),
                         const ForgotPasswordScreenTexts(),
                         verticalSpace(48),
-                        ForgotPasswordScreenEmailField(emailController: _emailController),
+                        ForgotPasswordScreenEmailField(
+                          emailController: _emailController,
+                        ),
                         verticalSpace(24),
                         SendResetEmailButton(
                           emailController: _emailController,
@@ -83,11 +88,14 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         ),
                         verticalSpace(24),
                         TextButton(
-                          onPressed: () => context.pushReplacementNamed(Routes.loginScreen),
+                          onPressed: () =>
+                              context.pushReplacementNamed(Routes.loginScreen),
                           child: Text(
                             context.l10n.backToLogin,
                             style: AppTextStyles.labelLarge.copyWith(
-                              color: isDark ? AppColors.primaryLight : AppColors.primary,
+                              color: isDark
+                                  ? AppColors.primaryLight
+                                  : AppColors.primary,
                             ),
                           ),
                         ),
@@ -97,13 +105,17 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         Text(
                           context.l10n.emailSent,
                           style: AppTextStyles.displayMedium.copyWith(
-                            color: isDark ? Colors.white : AppColors.textPrimary,
+                            color: isDark
+                                ? Colors.white
+                                : AppColors.textPrimary,
                             fontSize: 28.sp, // Ensuring ScreenUtil
                           ),
                           textAlign: TextAlign.center,
                         ),
                         verticalSpace(8),
-                        ForgotPasswordScreenSuccessStateTexts(emailController: _emailController),
+                        ForgotPasswordScreenSuccessStateTexts(
+                          emailController: _emailController,
+                        ),
                         verticalSpace(32),
                         const ForgotPasswordScreenBackToLoginButton(),
                       ],
@@ -116,29 +128,29 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
             // 3. Floating Theme Toggle
             Positioned(
-              top: 50.h,
-              left: 20.w,
-              child: BlocBuilder<ThemeCubit, ThemeState>(
-                builder: (context, state) {
-                  return FloatingActionButton.small(
-                    heroTag: 'themeToggleForgot',
-                    elevation: 0,
-                    backgroundColor: isDark 
-                        ? Colors.white10 
-                        : AppColors.primary.withValues(alpha: 0.1),
-                    shape: CircleBorder(
-                      side: BorderSide(
-                        color: isDark ? Colors.white24 : AppColors.primary.withValues(alpha: 0.5),
-                      ),
-                    ),
-                    onPressed: () => context.read<ThemeCubit>().toggleTheme(),
-                    child: Icon(
-                      isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
-                      color: isDark ? Colors.amber[400] : AppColors.primary,
-                      size: 20.sp,
-                    ),
-                  );
-                },
+              top: 50,
+              left: 20,
+              child: FloatingActionButton.small(
+                heroTag: 'settingsOnboarding',
+                elevation: 0,
+                backgroundColor: isDark
+                    ? Colors.white10
+                    : AppColors.primary.withValues(alpha: 0.1),
+                shape: CircleBorder(
+                  side: BorderSide(
+                    color: isDark
+                        ? Colors.white24
+                        : AppColors.primary.withValues(alpha: 0.5),
+                  ),
+                ),
+                onPressed: () => context.showPreferencesSheet(
+                  themeCubit: context.read<ThemeCubit>(),
+                  localeCubit: context.read<LocaleCubit>(),
+                ),
+                child: Icon(
+                  Icons.tune_rounded,
+                  color: isDark ? Colors.white70 : AppColors.primary,
+                ),
               ),
             ),
           ],

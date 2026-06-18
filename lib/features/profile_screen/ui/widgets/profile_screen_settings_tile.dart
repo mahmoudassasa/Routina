@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 
 class SettingsTile extends StatelessWidget {
@@ -20,26 +21,26 @@ class SettingsTile extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 8),
+      margin: EdgeInsets.only(bottom: 8.h),
       child: ListTile(
         leading: Container(
-          width: 40,
-          height: 40,
+          width: 40.w,
+          height: 40.h,
           decoration: BoxDecoration(
             color: AppColors.primary.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(20.r),
           ),
           child: Center(
             child: Text(
               icon,
-              style: const TextStyle(fontSize: 20),
+              style:  TextStyle(fontSize: 20.sp),
             ),
           ),
         ),
         title: Text(
           title,
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w600,
             color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
           ),
@@ -47,7 +48,7 @@ class SettingsTile extends StatelessWidget {
         subtitle: Text(
           subtitle,
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 14.sp,
             color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
           ),
         ),
@@ -57,7 +58,7 @@ class SettingsTile extends StatelessWidget {
         ),
         onTap: onTap,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12.r),
         ),
         // Switch tile color based on theme
         tileColor: isDark ? AppColors.darkSurface : AppColors.surface,

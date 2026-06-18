@@ -47,50 +47,46 @@ class EmailConfirmationScreen extends StatelessWidget {
     );
   }
 
-void _handleStateListeners(BuildContext context, EmailVerificationState state) {
-  final l10n = context.l10n;
+  void _handleStateListeners(
+    BuildContext context,
+    EmailVerificationState state,
+  ) {
+    final l10n = context.l10n;
 
-  if (state is EmailVerificationEmailSent) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(l10n.verificationEmailSent),
-      ),
-    );
+    if (state is EmailVerificationEmailSent) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.verificationEmailSent)));
+    }
+
+    if (state is EmailVerificationVerified) {
+      _SuccessDialog.show(context);
+      Future.delayed(const Duration(seconds: 2), () {
+        if (context.mounted) {
+          context.pop();
+          context.pushReplacementNamed(Routes.loginScreen);
+        }
+      });
+    }
+
+    if (state is EmailVerificationNotVerified) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.emailNotVerified)));
+    }
+
+    if (state is EmailVerificationError) {
+      final msg = switch (state.message) {
+        'send_error' => l10n.sendEmailError,
+        'check_error' => l10n.checkVerificationError,
+        _ => l10n.somethingWentWrong,
+      };
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(msg), backgroundColor: Colors.red));
+    }
   }
-
-  if (state is EmailVerificationVerified) {
-    _SuccessDialog.show(context);
-    Future.delayed(const Duration(seconds: 2), () {
-      if (context.mounted) {
-        context.pop();
-        context.pushReplacementNamed(Routes.loginScreen);
-      }
-    });
-  }
-
-  if (state is EmailVerificationNotVerified) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(l10n.emailNotVerified),
-      ),
-    );
-  }
-
-  if (state is EmailVerificationError) {
-    final msg = switch (state.message) {
-      'send_error' => l10n.sendEmailError,
-      'check_error' => l10n.checkVerificationError,
-      _ => l10n.somethingWentWrong,
-    };
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(msg),
-        backgroundColor: Colors.red,
-      ),
-    );
-  }
-}
 
   Widget _buildBody(
     BuildContext context,
@@ -142,21 +138,18 @@ void _handleStateListeners(BuildContext context, EmailVerificationState state) {
 
         verticalSpace(16),
 
-TextButton(
-  onPressed: () async {
-    await FirebaseAuth.instance.currentUser?.delete();
-    if (context.mounted) {
-      context.pushReplacementNamed(Routes.registerScreen);
-    }
-  },
-  child: Text(
-    context.l10n.wrongEmail,
-    style: TextStyle(
-      color: Colors.redAccent,
-      fontSize: 14.sp,
-    ),
-  ),
-),
+        TextButton(
+          onPressed: () async {
+            await FirebaseAuth.instance.currentUser?.delete();
+            if (context.mounted) {
+              context.pushReplacementNamed(Routes.registerScreen);
+            }
+          },
+          child: Text(
+            context.l10n.wrongEmail,
+            style: TextStyle(color: Colors.redAccent, fontSize: 14.sp),
+          ),
+        ),
       ],
     );
   }

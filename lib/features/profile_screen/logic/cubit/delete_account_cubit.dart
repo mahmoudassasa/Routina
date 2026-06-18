@@ -38,10 +38,8 @@ class DeleteAccountCubit extends Cubit<DeleteAccountState> {
       // Step 3: Delete Supabase Storage (profile image)
       await _deleteSupabaseImage(uid);
 
-      // Step 4: Delete Firestore user doc — قبل Firebase Auth
       await _firestore.collection('users').doc(uid).delete();
 
-      // Step 5: Delete Firebase Auth — آخر حاجة
       await user.delete();
 
       emit(state.copyWith(status: DeleteAccountStatus.success));
@@ -86,21 +84,20 @@ class DeleteAccountCubit extends Cubit<DeleteAccountState> {
     }
   }
 
-Future<void> _deleteSupabaseImage(String uid) async {
-  try {
-    final files = await _supabase.storage.from('users').list();
-    
-    final userFiles = files
-        .where((f) => f.name.startsWith('$uid-profile-'))
-        .map((f) => f.name)
-        .toList();
-    
-    
-    if (userFiles.isNotEmpty) {
-      await _supabase.storage.from('users').remove(userFiles);
+  Future<void> _deleteSupabaseImage(String uid) async {
+    try {
+      final files = await _supabase.storage.from('users').list();
+
+      final userFiles = files
+          .where((f) => f.name.startsWith('$uid-profile-'))
+          .map((f) => f.name)
+          .toList();
+
+      if (userFiles.isNotEmpty) {
+        await _supabase.storage.from('users').remove(userFiles);
+      }
+    } catch (e) {
+      // Log the error but don't fail the whole deletion process
     }
-  } catch (e) {
-    // Log the error but don't fail the whole deletion process
   }
-}
 }

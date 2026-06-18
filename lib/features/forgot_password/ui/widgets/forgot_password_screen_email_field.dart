@@ -49,7 +49,7 @@ class ForgotPasswordScreenEmailField extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16.r),
-          borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+          borderSide:  BorderSide(color: AppColors.primary, width: 1.5.w),
         ),
         contentPadding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 20.w),
       ),

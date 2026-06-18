@@ -53,7 +53,7 @@ class _SmartSuggestionsScreenState extends State<SmartSuggestionsScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-     
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -145,7 +145,6 @@ class _SmartSuggestionsScreenState extends State<SmartSuggestionsScreen> {
   }
 
   Widget _buildError(bool isDark) {
-     
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -175,7 +174,6 @@ class _SmartSuggestionsScreenState extends State<SmartSuggestionsScreen> {
   }
 
   Widget _buildContent(bool isDark) {
-     
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(20.w),
@@ -230,7 +228,7 @@ class _SmartSuggestionsScreenState extends State<SmartSuggestionsScreen> {
             _result ?? '',
             style: TextStyle(
               fontSize: 15.sp,
-              height: 1.6,
+              height: 1.6.h,
               color: isDark ? Colors.grey[300] : Colors.grey[800],
             ),
           ),

@@ -1,4 +1,5 @@
 import 'package:firebase_app_check/firebase_app_check.dart';
+import 'package:firebase_auth/firebase_auth.dart'; 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -19,24 +20,40 @@ import 'routina_app.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
+  
   final prefs = await SharedPreferences.getInstance();
   final bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
+  
   await notify.initNotifications();
   await notify.requestNotificationPermissions();
   tz.initializeTimeZones();
   await ScreenUtil.ensureScreenSize();
   await Firebase.initializeApp();
+
   await Supabase.initialize(
     url: dotenv.env['SUPABASE_URL']!,
-    anonKey: dotenv.env['SUPABASE_KEY']!,
+    publishableKey : dotenv.env['SUPABASE_KEY']!,
+    accessToken: () async {
+      final currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser != null) {
+        final token = await currentUser.getIdToken(true); // Forces token refresh
+        print("Supabase Access Token: $token");
+        return token;
+      }
+      print("Supabase Access Token: No current user");
+      return null;
+    },
   );
+
   await FirebaseAppCheck.instance.activate(
     providerAndroid: kReleaseMode
         ? const AndroidPlayIntegrityProvider()
         : const AndroidDebugProvider(),
   );
+  
   await MobileAds.instance.initialize();
   await setupGetIt();
+
   runApp(
     BlocProvider(
       create: (context) => ThemeCubit(),

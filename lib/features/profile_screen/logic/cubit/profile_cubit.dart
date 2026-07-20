@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:routina/features/home_screen/data/habit_service.dart';
 import 'package:routina/features/profile_screen/logic/cubit/profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
@@ -21,7 +22,6 @@ class ProfileCubit extends Cubit<ProfileState> {
       final user = FirebaseAuth.instance.currentUser;
       if (user == null) throw Exception('User not authenticated');
 
-      // 1. Fetch User Data from Firebase Firestore
       final userDoc = await FirebaseFirestore.instance
           .collection('users')
           .doc(user.uid)
@@ -30,13 +30,9 @@ class ProfileCubit extends Cubit<ProfileState> {
       if (!userDoc.exists) throw Exception('User document not found');
       final userData = userDoc.data()!;
 
-      // 2. Fetch Habits Data from Supabase
-      final List<dynamic> habits = await _supabase
-          .from('habits')
-          .select()
-          .eq('user_id', user.uid);
+      final habits = await HabitService().fetchHabitsForCurrentUser();
       if (isClosed) return;
-      // --- Calculations ---
+
       int total = habits.length;
       int bestStreak = 0;
       int currentActiveStreak = 0;
@@ -46,7 +42,6 @@ class ProfileCubit extends Cubit<ProfileState> {
         int streak = habit['streak'] as int? ?? 0;
         totalProgress += (habit['progress'] as num? ?? 0).toDouble();
         if (streak > bestStreak) bestStreak = streak;
-
         if (streak > currentActiveStreak) currentActiveStreak = streak;
       }
 

@@ -4,7 +4,7 @@ import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/widgets/create_habit/ui/create_habit_bottom_sheet.dart';
 import 'package:routina/core/widgets/logout_button/cubit/logout_cubit.dart';
-import 'package:routina/features/analyze_screen/logic/cubit/ai_analysis_cubit.dart';
+import 'package:routina/features/analyze_screen/logic/cubit/analytics_cubit.dart';
 import 'package:routina/features/analyze_screen/ui/widgets/quick_ai_analysis_sheet.dart';
 import 'package:routina/features/billing_service/logic/cubit/billing_cubit.dart';
 import 'package:routina/features/billing_service/ui/widgets/paywall_screen.dart';
@@ -32,8 +32,13 @@ class _MainNavigationBarState extends State<MainNavigationBar> {
         BlocProvider(create: (_) => HomeCubit()..loadHabits()),
         BlocProvider(create: (_) => ProfileCubit()..loadUserData()),
         BlocProvider(create: (_) => LogoutCubit()),
-        BlocProvider(create: (_) => AiAnalysisCubit()),
-        BlocProvider(create: (_) => BillingCubit()),
+        BlocProvider(create: (_) => BillingCubit()..init()),
+        BlocProvider(
+          create: (context) => AnalyticsCubit(
+            homeCubit: context.read<HomeCubit>(),
+            billingCubit: context.read<BillingCubit>(),
+          ),
+        ),
       ],
       child: Builder(
         builder: (context) {
@@ -47,7 +52,7 @@ class _MainNavigationBarState extends State<MainNavigationBar> {
                 final billingState = context.read<BillingCubit>().state;
                 final habitsCount = homeCubit.state.habits.length;
 
-                // Premium gate: free users limited to 3 habits
+                // Premium gate: free users limited to 5 habits
                 if (!billingState.isPremium &&
                     habitsCount >= _freeHabitsLimit) {
                   _showPaywall(context);
@@ -76,8 +81,8 @@ class _MainNavigationBarState extends State<MainNavigationBar> {
                   );
                   return;
                 }
-                final aiCubit = context.read<AiAnalysisCubit>();
-                aiCubit.analyzeHabits(habits);
+                final analyticsCubit = context.read<AnalyticsCubit>();
+                analyticsCubit.fetchGeminiInsights('overall');
                 showQuickAiAnalysisSheet(context);
               },
             ),

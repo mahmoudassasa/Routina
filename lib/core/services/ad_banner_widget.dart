@@ -14,10 +14,11 @@ class AdBannerWidget extends StatefulWidget {
 class _AdBannerWidgetState extends State<AdBannerWidget> {
   BannerAd? _bannerAd;
   bool _isBannerLoaded = false;
-  bool _hasCheckedPremium = false;
   static String get _bannerId => dotenv.get('ADMOB_BANNER_ID');
 
   void _loadBanner() {
+    if (_bannerAd != null || _isBannerLoaded) return;
+
     _bannerAd = BannerAd(
       adUnitId: _bannerId,
       size: AdSize.banner,
@@ -26,7 +27,10 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
         onAdLoaded: (_) {
           if (mounted) setState(() => _isBannerLoaded = true);
         },
-        onAdFailedToLoad: (ad, error) => ad.dispose(),
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          _bannerAd = null;
+        },
       ),
     )..load();
   }
@@ -39,22 +43,24 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BillingCubit, BillingState>(
-      builder: (context, state) {
-        if (state.status == BillingStatus.loading) {
-          return const SizedBox.shrink();
-        }
-
-        if (!state.isPremium && !_hasCheckedPremium) {
-          _hasCheckedPremium = true;
+    return BlocConsumer<BillingCubit, BillingState>(
+      listenWhen: (previous, current) => previous.isPremium != current.isPremium,
+      listener: (context, state) {
+        if (!state.isPremium && state.status != BillingStatus.loading) {
           _loadBanner();
         }
-
-        if (state.isPremium) {
+      },
+      builder: (context, state) {
+        if (state.status == BillingStatus.loading || state.isPremium) {
           return const SizedBox.shrink();
         }
 
-        if (!_isBannerLoaded) {
+        if (!_isBannerLoaded && _bannerAd == null) {
+          WidgetsBinding.instance.addPostFrameCallback((_) => _loadBanner());
+          return const SizedBox.shrink();
+        }
+
+        if (!_isBannerLoaded || _bannerAd == null) {
           return const SizedBox.shrink();
         }
 

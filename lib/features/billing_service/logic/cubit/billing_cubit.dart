@@ -1,14 +1,17 @@
+// lib/features/billing_service/logic/cubit/billing_cubit.dart
 import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:routina/core/services/premium_service.dart';
 import 'package:routina/features/billing_service/ui/billing_service.dart';
 
 part 'billing_state.dart';
 
 class BillingCubit extends Cubit<BillingState> {
   final BillingService _service;
+  final PremiumService _premiumService = PremiumService();
   StreamSubscription<List<PurchaseDetails>>? _purchaseSub;
 
   BillingCubit({BillingService? service})
@@ -16,7 +19,6 @@ class BillingCubit extends Cubit<BillingState> {
         super(const BillingState()) {
     _listenToPurchases();
     init();
-    
   }
 
   Future<void> init() async {
@@ -34,15 +36,22 @@ class BillingCubit extends Cubit<BillingState> {
   }
 
   Future<void> _refreshPremiumStatus() async {
+    if (isClosed) return;
     emit(state.copyWith(status: BillingStatus.loading));
     try {
-      final result = await _service.fetchPremiumStatus();
+      final data = await _premiumService.fetchPremiumStatus();
+      final isPremium = data['is_premium'] as bool? ?? false;
+      final untilStr = data['premium_until'] as String?;
+      final expiresAt = untilStr != null ? DateTime.tryParse(untilStr) : null;
+
+      if (isClosed) return;
       emit(state.copyWith(
-        status: result.isPremium ? BillingStatus.active : BillingStatus.expired,
-        isPremium: result.isPremium,
-        premiumUntil: result.until,
+        status: isPremium ? BillingStatus.active : BillingStatus.expired,
+        isPremium: isPremium,
+        premiumUntil: expiresAt,
       ));
     } catch (e) {
+      if (isClosed) return;
       emit(state.copyWith(
         status: BillingStatus.error,
         errorMessage: e.toString(),
@@ -85,13 +94,8 @@ class BillingCubit extends Cubit<BillingState> {
         for (final purchase in purchases) {
           final success = await _service.verifyAndComplete(purchase);
           if (success) {
-            final result = await _service.fetchPremiumStatus();
-            emit(state.copyWith(
-              status: BillingStatus.active,
-              isPremium: true,
-              premiumUntil: result.until,
-              isRestoring: false,
-            ));
+            await _refreshPremiumStatus();
+            emit(state.copyWith(isRestoring: false));
           } else if (purchase.status == PurchaseStatus.error) {
             emit(state.copyWith(
               status: BillingStatus.error,

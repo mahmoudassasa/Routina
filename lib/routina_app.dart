@@ -76,7 +76,7 @@ class _RoutinaAppState extends State<RoutinaApp> {
                 debugShowCheckedModeBanner: false,
                 theme: AppTheme.lightTheme,
                 darkTheme: AppTheme.darkTheme,
-                themeMode: themeState.themeMode,
+                themeMode:  themeState.themeMode,
                 locale: locale,
                 localizationsDelegates: const [
                   AppLocalizations.delegate,

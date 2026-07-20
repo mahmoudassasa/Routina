@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:routina/core/theaming/app_colors.dart';
-import 'package:routina/core/widgets/ad_banner_widget.dart';
+import 'package:routina/core/services/ad_banner_widget.dart';
 import 'package:routina/features/habit_tracker_screen/ui/widgets/habit_tracker_screen_content.dart';
 import 'package:routina/features/habit_tracker_screen/ui/widgets/habit_tracker_screen_header.dart';
 

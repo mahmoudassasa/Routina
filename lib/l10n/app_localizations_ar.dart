@@ -63,8 +63,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get failedToLoadOptimization => 'فشل تحميل تحسين الأهداف';
 
   @override
-  String get quotaExceeded =>
-      'تم الوصول للحد اليومي للذكاء الاصطناعي. حاول غداً.';
+  String get quotaExceeded => 'انتهت حصتك اليومية. حاول مجدداً غداً.';
 
   @override
   String get aiBusy => 'الذكاء الاصطناعي مشغول الآن. حاول مجدداً بعد قليل.';
@@ -88,7 +87,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get whatYoullGet => 'ما ستحصل عليه:';
 
   @override
-  String get upgradeToPremium => 'الترقية للخطة المتقدمة';
+  String get upgradeToPremium => 'الترقية إلى البريميوم';
 
   @override
   String get maybeLater => 'ربما لاحقاً';
@@ -287,7 +286,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get strategicGoalsCard => 'الأهداف الاستراتيجية';
 
   @override
-  String get strategicGoalsCardDesc => 'حدد المراحل وتتبع الإنجازات';
+  String get strategicGoalsCardDesc => 'حدد المراهل وتتبع الإنجازات';
 
   @override
   String get premiumAnalytics => 'تحليلات مميزة';
@@ -319,7 +318,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get bestStreak => 'أفضل استمرارية';
 
   @override
-  String get needsFocus => 'يحتاج إلى تركيز';
+  String get needsFocus => 'يحتاج تركيز';
 
   @override
   String get bestPerforming => '🏆 الأفضل أداءً';
@@ -559,7 +558,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'نعم. عند إنشاء العادة أو تعديلها، اختر أيام الأسبوع التي تريد تفعيل العادة فيها. الأيام غير المحددة تُعدّ أيام راحة.';
 
   @override
-  String get faqProgressResetQuestion => 'لماذا تمت إعادة تعيين تقدمي؟';
+  String get faqProgressResetQuestion => 'لماذا تمت إعادة تعيين تقدمي？';
 
   @override
   String get faqProgressResetAnswer =>
@@ -696,7 +695,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get markAsDone => 'تم الإنجاز';
 
   @override
-  String get completedToday => 'مكتملة اليوم';
+  String get completedToday => 'المنجز اليوم';
 
   @override
   String get restDay => 'يوم راحة';
@@ -816,7 +815,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get noInternetDesc => 'يرجى التحقق من اتصالك\nوالمحاولة مجدداً.';
 
   @override
-  String get tryAgain => 'حاول مجدداً';
+  String get tryAgain => 'حاولة مجدداً';
 
   @override
   String get skip => 'تخطي';
@@ -842,7 +841,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'راقب عاداتك اليومية وشاهد تحسّنك مع مرور الوقت';
 
   @override
-  String get onboarding3Title => 'ابقَ متحفزاً';
+  String get onboarding3Title => 'بقَ متحفزاً';
 
   @override
   String get onboarding3Subtitle =>
@@ -923,7 +922,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get totalHabitsLabel => 'إجمالي العادات';
 
   @override
-  String get completionRate => 'معدل الإنجاز';
+  String get completionRate => 'نسبة الإنجاز';
 
   @override
   String get bestStreakLabel => 'أفضل سلسلة';
@@ -1244,4 +1243,123 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get and => 'و';
+
+  @override
+  String get phonePlaceholder => 'رقم الهاتف';
+
+  @override
+  String get phoneRequired => 'رقم الهاتف مطلوب';
+
+  @override
+  String get phoneInvalid => 'رقم الهاتف غير صحيح';
+
+  @override
+  String get birthDatePlaceholder => 'تاريخ الميلاد (YYYY-MM-DD)';
+
+  @override
+  String get dobRequired => 'تاريخ الميلاد مطلوب';
+
+  @override
+  String get orContinueWith => 'أو المتابعة باستخدام';
+
+  @override
+  String get google => 'جوجل';
+
+  @override
+  String get freePlan => 'خطة مجانية';
+
+  @override
+  String get activeMember => 'عضو نشط';
+
+  @override
+  String expiresOn(String date) {
+    return 'ينتهي في $date';
+  }
+
+  @override
+  String planRenewsOn(String date) {
+    return 'يُجدد في $date';
+  }
+
+  @override
+  String get optional => 'اختياري';
+
+  @override
+  String get remainingRequests => 'الطلبات المتبقية';
+
+  @override
+  String get rateLimited => 'تم تجاوز حد الطلبات. يرجى الانتظار قليلاً.';
+
+  @override
+  String get tryAgainLater => 'حاول مرة أخرى لاحقاً';
+
+  @override
+  String get unlockMoreAnalysis => 'احصل على تحليلات غير محدودة';
+
+  @override
+  String get unlockMoreAnalysisDesc =>
+      'احصل على تحليلات ذكاء اصطناعي غير محدودة ورؤى متقدمة مع Routina Premium.';
+
+  @override
+  String get daily30Requests => '30 طلب تحليل ذكاء اصطناعي يومياً';
+
+  @override
+  String get advancedInsights => 'رؤى وتوصيات متقدمة';
+
+  @override
+  String get prioritySupport => 'دعم أولوي';
+
+  @override
+  String get advancedStats => 'إحصائيات متقدمة';
+
+  @override
+  String get advancedStatistics => 'التحليلات المتقدمة';
+
+  @override
+  String get needsImprovement => 'يحتاج للتحسين';
+
+  @override
+  String get colorDistribution => 'توزيع الألوان';
+
+  @override
+  String get generateInsights => 'توليد الرؤى';
+
+  @override
+  String get premiumTools => 'أدوات مميزة';
+
+  @override
+  String get consistencyScore => 'درجة الانتظام';
+
+  @override
+  String get milestoneProgress => 'تقدم الأهداف';
+
+  @override
+  String get thisWeek => 'هذا الأسبوع';
+
+  @override
+  String get goalOnTrack => 'في الطريق الصحيح لتحقيق هدفك!';
+
+  @override
+  String get goalNeedsStart => 'ابدأ هذا الأسبوع لبناء الزخم';
+
+  @override
+  String goalProjection(Object weeks) {
+    return 'بهذا المعدل، ~$weeks أسابيع للوصول للانتظام الكامل';
+  }
+
+  @override
+  String get tipExcellent => 'انتظام ممتاز! استمر بنفس الزخم.';
+
+  @override
+  String tipFocusAreas(Object count) {
+    return '$count عادات محتاجة اهتمام إضافي الأسبوع ده';
+  }
+
+  @override
+  String get smartSuggestionsPremiumDesc =>
+      'احصل على نصائح شخصية وقابلة للتنفيذ لتحسين التزامك وبناء روتين أقوى.';
+
+  @override
+  String get goalOptimizationPremiumDesc =>
+      'احصل على نصائح تخطيط استراتيجي، ترتيب الأولويات، وأهداف أسبوعية لتحسين أهدافك.';
 }

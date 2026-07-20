@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:routina/features/home_screen/data/habit_service.dart';
 
 part 'delete_account_state.dart';
 
@@ -29,13 +30,10 @@ class DeleteAccountCubit extends Cubit<DeleteAccountState> {
 
       final uid = user.uid;
 
-      // Step 1: Re-authenticate
       await _reauthenticate(user: user, email: email, password: password);
 
-      // Step 2: Delete Supabase habits
-      await _supabase.from('habits').delete().eq('user_id', uid);
+      await HabitService().deleteAllHabits();
 
-      // Step 3: Delete Supabase Storage (profile image)
       await _deleteSupabaseImage(uid);
 
       await _firestore.collection('users').doc(uid).delete();

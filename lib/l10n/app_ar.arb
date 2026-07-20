@@ -93,13 +93,17 @@
   "progressCharts": "مخططات التقدم",
   "progressChartsDesc": "تصورات تفاعلية أسبوعية وشهرية",
   "strategicGoalsCard": "الأهداف الاستراتيجية",
-  "strategicGoalsCardDesc": "حدد المراحل وتتبع الإنجازات",
+  "strategicGoalsCardDesc": "حدد المراهل وتتبع الإنجازات",
   "premiumAnalytics": "تحليلات مميزة",
   "premiumAnalyticsDesc": "بيانات متقدمة للمستخدمين المتميزين",
   "noHabitsYet": "لا توجد عادات بعد",
   "noHabitsYetDesc": "أضف عادات أولاً لتحديد أهداف استراتيجية",
   "nextMilestone": "المرحلة التالية: {days} يوم",
-  "@nextMilestone": {"placeholders": {"days": {}}},
+  "@nextMilestone": {
+    "placeholders": {
+      "days": {}
+    }
+  },
   "eliteInsights": "تحليلات متقدمة",
   "avgCompletion": "متوسط الإنجاز",
   "totalHabits": "إجمالي العادات",
@@ -110,7 +114,12 @@
   "priorityFocus": "🎯 التركيز الأولوي",
   "allHabitsOnTrack": "🎉 كل العادات على المسار الصحيح!",
   "dayStreak": "{streak} يوم التزام • {percent}% مكتمل",
-  "@dayStreak": {"placeholders": {"streak": {}, "percent": {}}},
+  "@dayStreak": {
+    "placeholders": {
+      "streak": {},
+      "percent": {}
+    }
+  },
   "habitTracker": "متتبع العادات",
   "habitTrackerDesc": "عرض تفصيلي لتقدمك",
   "upgradeToPremiumTitle": "فتح المزايا المتقدمة",
@@ -125,12 +134,21 @@
   "smartTimeOfDaySuggestions": "اقتراحات ذكية لأوقات اليوم",
   "priorityHabitFocus": "التركيز على العادات المهمة",
   "streakBadge": "🔥 {streak} يوم التزام",
+  "@streakBadge": {
+    "placeholders": {
+      "streak": {}
+    }
+  },
   "weeklyActivity": "النشاط الأسبوعي",
   "avgProgress": "متوسط التقدم",
   "totalStreaks": "إجمالي السلاسل",
   "individualPerformance": "الأداء الفردي",
   "totalStreaksDays": "{days} يوم",
-  "@totalStreaksDays": {"placeholders": {"days": {}}},
+  "@totalStreaksDays": {
+    "placeholders": {
+      "days": {}
+    }
+  },
   "insightGreat": "أداؤك رائع! استمراريتك فوق المتوسط.",
   "insightKeepGoing": "استمر! الخطوات الصغيرة تقود لتغييرات كبيرة.",
   "habitAnalytics": "تحليل العادات",
@@ -182,7 +200,7 @@
   "faqReminderAnswer": "عند إنشاء عادة جديدة، اضغط على أيقونة الجرس لضبط تذكير يومي. يمكنك أيضاً تحديث التذكيرات عند تعديل عادة موجودة.",
   "faqChangeDaysQuestion": "هل يمكنني تغيير أيام تكرار العادة؟",
   "faqChangeDaysAnswer": "نعم. عند إنشاء العادة أو تعديلها، اختر أيام الأسبوع التي تريد تفعيل العادة فيها. الأيام غير المحددة تُعدّ أيام راحة.",
-  "faqProgressResetQuestion": "لماذا تمت إعادة تعيين تقدمي؟",
+  "faqProgressResetQuestion": "لماذا تمت إعادة تعيين تقدمي？",
   "faqProgressResetAnswer": "يُعاد تعيين التقدم إذا فاتتك إتمام عادة في يوم مجدول. تتحقق روتينا من الأيام الفائتة تلقائياً عند فتح التطبيق.",
   "faqPrivacyQuestion": "هل بياناتي خاصة؟",
   "faqPrivacyAnswer": "نعم. يتم تخزين بياناتك بأمان ولا يمكن الوصول إليها إلا من حسابك. لقطات الشاشة محظورة داخل التطبيق لحماية خصوصيتك.",
@@ -230,20 +248,44 @@
   "restDay": "يوم راحة",
   "deleteHabit": "حذف العادة؟",
   "deleteHabitConfirm": "هل أنت متأكد من حذف \"{title}\"؟ لا يمكن التراجع عن هذا الإجراء.",
-  "@deleteHabitConfirm": {"placeholders": {"title": {}}},
+  "@deleteHabitConfirm": {
+    "placeholders": {
+      "title": {}
+    }
+  },
   "cancel": "إلغاء",
   "delete": "حذف",
   "habitDeleted": "تم حذف {title}",
-  "@habitDeleted": {"placeholders": {"title": {}}},
+  "@habitDeleted": {
+    "placeholders": {
+      "title": {}
+    }
+  },
   "readyToBuildHabits": "هل أنت مستعد لبناء عاداتك؟",
   "goodMorning": "صباح الخير، {name}!",
-  "@goodMorning": {"placeholders": {"name": {}}},
+  "@goodMorning": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "goodAfternoon": "يوم سعيد، {name}!",
-  "@goodAfternoon": {"placeholders": {"name": {}}},
+  "@goodAfternoon": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "goodEvening": "مساء الخير، {name}!",
-  "@goodEvening": {"placeholders": {"name": {}}},
+  "@goodEvening": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "weeklyGoal": "{percent}% الهدف الأسبوعي",
-  "@weeklyGoal": {"placeholders": {"percent": {}}},
+  "@weeklyGoal": {
+    "placeholders": {
+      "percent": {}
+    }
+  },
   "loginError": "خطأ في تسجيل الدخول",
   "ok": "حسناً",
   "welcomeBack": "أهلاً بعودتك",
@@ -265,10 +307,14 @@
   "userDisabled": "هذا الحساب موقوف 🚫",
   "loginFailed": "فشل تسجيل الدخول، حاول مجدداً.",
   "unexpectedError": "خطأ غير متوقع: {error}",
-  "@unexpectedError": {"placeholders": {"error": {}}},
+  "@unexpectedError": {
+    "placeholders": {
+      "error": {}
+    }
+  },
   "noInternetConnection": "لا يوجد اتصال بالإنترنت",
   "noInternetDesc": "يرجى التحقق من اتصالك\nوالمحاولة مجدداً.",
-  "tryAgain": "حاول مجدداً",
+  "tryAgain": "حاولة مجدداً",
   "skip": "تخطي",
   "next": "التالي",
   "getStarted": "ابدأ الآن",
@@ -276,34 +322,26 @@
   "onboarding1Subtitle": "ابنِ عادات أفضل مع متتبع جميل وسهل الاستخدام",
   "onboarding2Title": "تتبع تقدمك",
   "onboarding2Subtitle": "راقب عاداتك اليومية وشاهد تحسّنك مع مرور الوقت",
-  "onboarding3Title": "ابقَ متحفزاً",
+  "onboarding3Title": "بقَ متحفزاً",
   "onboarding3Subtitle": "احصل على رؤى مدعومة بالذكاء الاصطناعي وتوصيات مخصصة",
   "privacyPolicyTitle": "سياسة الخصوصية",
   "yourPrivacyMatters": "خصوصيتك تهمنا",
   "lastUpdated": "آخر تحديث: أبريل 2026",
   "copyright": "© 2026 Routina. جميع الحقوق محفوظة.",
-
   "privacy1Title": "1. المعلومات التي نجمعها",
   "privacy1Content": "تجمع روتينا فقط المعلومات الضرورية لتقديم خدمة تتبع العادات. يشمل ذلك بريدك الإلكتروني للمصادقة، وبيانات العادات التي تنشئها في التطبيق، وتحليلات الاستخدام الأساسية لتحسين تجربتك.",
-
   "privacy2Title": "2. كيف نستخدم بياناتك",
   "privacy2Content": "تُستخدم بياناتك فقط لتشغيل ميزات روتينا، بما في ذلك تتبع العادات وتحليل التقدم والرؤى المدعومة بالذكاء الاصطناعي. لا نبيع معلوماتك الشخصية أو نؤجرها أو نشاركها مع أطراف ثالثة لأغراض تسويقية.",
-
   "privacy3Title": "3. أمان البيانات",
   "privacy3Content": "نستخدم معايير أمان متوافقة مع المعايير الصناعية تشمل Firebase Authentication وSupabase مع أمان على مستوى الصفوف (RLS) لحماية بياناتك. جميع البيانات مشفرة أثناء النقل وفي حالة السكون.",
-
   "privacy4Title": "4. ميزات الذكاء الاصطناعي",
   "privacy4Content": "تستخدم ميزة تحليل الذكاء الاصطناعي في روتينا Google Gemini لمعالجة بيانات عاداتك. تتم هذه المعالجة بشكل آمن ولا يتم تخزين بياناتك أو استخدامها لتدريب نماذج الذكاء الاصطناعي.",
-
   "privacy5Title": "5. حقوقك",
   "privacy5Content": "يحق لك الوصول إلى بياناتك الشخصية أو تصحيحها أو حذفها في أي وقت. يمكنك حذف حسابك وجميع البيانات المرتبطة به مباشرةً من إعدادات التطبيق. للتواصل بشأن أي طلبات تتعلق بالخصوصية، راسلنا على nilient.software.2026@gmail.com.",
-
   "privacy6Title": "6. خصوصية الأطفال",
   "privacy6Content": "روتينا غير موجهة للأطفال دون سن 13 عاماً. لا نجمع معلومات شخصية من الأطفال عن قصد. إذا كنت تعتقد أن طفلاً قدّم لنا معلومات شخصية، يرجى التواصل معنا فوراً.",
-
   "privacy7Title": "7. التغييرات على هذه السياسة",
   "privacy7Content": "قد نحدّث سياسة الخصوصية هذه من وقت لآخر. سنبلغك بأي تغييرات جوهرية عبر التطبيق أو البريد الإلكتروني. استمرار استخدام روتينا بعد التغييرات يُعدّ قبولاً للسياسة المحدّثة.",
-
   "privacy8Title": "8. تواصل معنا",
   "privacy8Content": "إذا كان لديك أي أسئلة حول سياسة الخصوصية أو ممارساتنا في التعامل مع البيانات، تواصل معنا على nilient.software.2026@gmail.com. نهدف للرد على جميع الاستفسارات خلال 48 ساعة.",
   "currentStreak": "الاستمرارية الحالية",
@@ -329,7 +367,11 @@
   "noHabitsToExport": "لا توجد عادات للتصدير بعد!",
   "preparingData": "جارٍ تجهيز البيانات...",
   "exportError": "خطأ: {error}",
-  "@exportError": {"placeholders": {"error": {}}},
+  "@exportError": {
+    "placeholders": {
+      "error": {}
+    }
+  },
   "unknownUser": "مستخدم غير معروف",
   "noEmail": "لا يوجد بريد",
   "language": "اللغة",
@@ -357,11 +399,23 @@
   "reminderOff": "التذكير متوقف",
   "enableNotificationsMsg": "يرجى تفعيل الإشعارات من إعدادات النظام",
   "reminderSetFor": "تم ضبط التذكير عند {time}",
-  "@reminderSetFor": {"placeholders": {"time": {}}},
+  "@reminderSetFor": {
+    "placeholders": {
+      "time": {}
+    }
+  },
   "remindMeOf": "ذكّرني بـ {title}",
-  "@remindMeOf": {"placeholders": {"title": {}}},
+  "@remindMeOf": {
+    "placeholders": {
+      "title": {}
+    }
+  },
   "notificationTitle": "روتينا: حان وقت {title}! 🚀",
-  "@notificationTitle": {"placeholders": {"title": {}}},
+  "@notificationTitle": {
+    "placeholders": {
+      "title": {}
+    }
+  },
   "notificationBody": "حافظ على استمراريتك! حان وقت إتمام هذه العادة.",
   "setDailyReminder": "ضبط تذكير يومي",
   "habitTitle": "عنوان العادة",
@@ -369,10 +423,14 @@
   "colorLabel": "اللون",
   "frequencyLabel": "التكرار",
   "reminderAtTime": "تذكير عند {time}",
-  "@reminderAtTime": {"placeholders": {"time": {}}},
+  "@reminderAtTime": {
+    "placeholders": {
+      "time": {}
+    }
+  },
   "setReminderOptional": "اضبط تذكيراً (اختياري)",
   "saveChanges": "حفظ التغييرات",
-  "createHabit": "إنشاء عادة",  
+  "createHabit": "إنشاء عادة",
   "noHabitsYetTitle": "لا توجد عادات بعد",
   "noHabitsYetEmptyDesc": "ابدأ ببناء أول عادة لك وتتبع تقدمك كل يوم.",
   "addFirstHabit": "أضف أول عادة لك",
@@ -387,7 +445,11 @@
   "wrongEmail": "بريد خاطئ؟ عُد وحاول مجدداً.",
   "about": "عن التطبيق",
   "appVersion": "الإصدار {version}",
-  "@appVersion": {"placeholders": {"version": {}}},
+  "@appVersion": {
+    "placeholders": {
+      "version": {}
+    }
+  },
   "madeWithLove": "صُنع بـ ❤️ بواسطة نيليينت",
   "rateApp": "قيّم التطبيق",
   "rateAppSubtitle": "أعجبك روتينا؟ اترك لنا تقييماً ⭐",
@@ -415,5 +477,66 @@
   "editName": "تعديل الاسم",
   "termsOfService": "شروط الخدمة",
   "bySigningUpYouAgreeTo": "بالتسجيل، أنت توافق على",
-  "and": "و"
+  "and": "و",
+  "phonePlaceholder": "رقم الهاتف",
+  "phoneRequired": "رقم الهاتف مطلوب",
+  "phoneInvalid": "رقم الهاتف غير صحيح",
+  "birthDatePlaceholder": "تاريخ الميلاد (YYYY-MM-DD)",
+  "dobRequired": "تاريخ الميلاد مطلوب",
+  "orContinueWith": "أو المتابعة باستخدام",
+  "google": "جوجل",
+  "freePlan": "خطة مجانية",
+  "activeMember": "عضو نشط",
+  "expiresOn": "ينتهي في {date}",
+  "@expiresOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "planRenewsOn": "يُجدد في {date}",
+  "@planRenewsOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "phonePlaceholder": "رقم الهاتف",
+  "optional": "اختياري",
+  "phoneRequired": "رقم الهاتف مطلوب",
+
+  "remainingRequests": "الطلبات المتبقية اليوم",
+  "rateLimited": "لقد وصلت إلى حد الطلبات. يرجى الانتظار قليلاً.",
+  "tryAgainLater": "حاول مرة أخرى لاحقاً",
+  "upgradeToPremium": "الترقية إلى البريميوم",
+  "unlockMoreAnalysis": "احصل على تحليلات غير محدودة",
+  "unlockMoreAnalysisDesc": "احصل على تحليلات ذكاء اصطناعي غير محدودة ورؤى متقدمة مع Routina Premium.",
+  "daily30Requests": "30 طلب تحليل ذكاء اصطناعي يومياً",
+  "advancedInsights": "رؤى وتوصيات متقدمة",
+  "prioritySupport": "دعم أولوي",
+  "advancedStats": "إحصائيات متقدمة",
+  "advancedStatistics": "التحليلات المتقدمة",
+  "completedToday": "المنجز اليوم",
+  "completionRate": "نسبة الإنجاز",
+  "needsImprovement": "يحتاج للتحسين",
+  "colorDistribution": "توزيع الألوان",
+  "generateInsights": "توليد الرؤى",
+  "remainingRequests": "الطلبات المتبقية",
+  "rateLimited": "تم تجاوز حد الطلبات. يرجى الانتظار قليلاً.",
+  "quotaExceeded": "انتهت حصتك اليومية. حاول مجدداً غداً.",
+  "premiumTools": "أدوات مميزة",
+  "consistencyScore": "درجة الانتظام",
+  "milestoneProgress": "تقدم الأهداف",
+  "thisWeek": "هذا الأسبوع",
+  "needsFocus": "يحتاج تركيز",
+  "goalOnTrack": "في الطريق الصحيح لتحقيق هدفك!",
+  "goalNeedsStart": "ابدأ هذا الأسبوع لبناء الزخم",
+  "goalProjection": "بهذا المعدل، ~{weeks} أسابيع للوصول للانتظام الكامل",
+  "tipExcellent": "انتظام ممتاز! استمر بنفس الزخم.",
+  "tipFocusAreas": "{count} عادات محتاجة اهتمام إضافي الأسبوع ده",
+  "smartSuggestionsPremiumDesc": "احصل على نصائح شخصية وقابلة للتنفيذ لتحسين التزامك وبناء روتين أقوى.",
+  "goalOptimizationPremiumDesc": "احصل على نصائح تخطيط استراتيجي، ترتيب الأولويات، وأهداف أسبوعية لتحسين أهدافك."
+
 }

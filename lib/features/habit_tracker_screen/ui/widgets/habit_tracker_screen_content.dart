@@ -93,12 +93,11 @@ class HabitTrackerScreenContent extends StatelessWidget {
                   ),
 
                   verticalSpace(16),
-                  // Strategic Goals
+
                   FeaturePreviewCard(
                     icon: '🎯',
                     title: context.l10n.strategicGoalsCard,
                     description: context.l10n.strategicGoalsCardDesc,
-                    // Strategic Goals
                     onTap: () {
                       final isPremium = context
                           .read<BillingCubit>()
@@ -128,12 +127,10 @@ class HabitTrackerScreenContent extends StatelessWidget {
 
                   verticalSpace(16),
 
-                  // Premium Analytics
                   FeaturePreviewCard(
                     icon: '💎',
                     title: context.l10n.premiumAnalytics,
                     description: context.l10n.premiumAnalyticsDesc,
-                    // Premium Analytics
                     onTap: () {
                       final isPremium = context
                           .read<BillingCubit>()

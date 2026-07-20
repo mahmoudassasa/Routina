@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:routina/core/di/dependency_injection.dart';
-import 'package:routina/features/analyze_screen/logic/cubit/ai_analysis_cubit.dart';
-import 'package:routina/features/analyze_screen/ui/widgets/ai_analysis_full_screen.dart';
-import 'package:routina/features/habit_tracker_screen/ui/premium_analytics_screen.dart';
-import 'package:routina/features/habit_tracker_screen/ui/strategic_goals_screen.dart';
+import 'package:routina/features/analyze_screen/logic/cubit/analytics_cubit.dart';
+import 'package:routina/features/billing_service/logic/cubit/billing_cubit.dart';
+import 'package:routina/features/billing_service/ui/widgets/paywall_screen.dart';
+import 'package:routina/features/habit_tracker_screen/ui/widgets/premium_analytics_screen.dart';
+import 'package:routina/features/habit_tracker_screen/ui/widgets/strategic_goals_screen.dart';
 import 'package:routina/features/profile_screen/logic/cubit/profile_cubit.dart';
 import 'package:routina/features/profile_screen/ui/widgets/about_screen.dart';
 import 'package:routina/features/help_support/ui/help_support_screen.dart';
@@ -51,7 +52,19 @@ class AppRouter {
       case Routes.habitTrackerScreen:
         return MaterialPageRoute(builder: (__) => const HabitTrackerScreen());
       case Routes.analyzeScreen:
-        return MaterialPageRoute(builder: (__) => const AnalyzeScreen());
+        final args = settings.arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider.value(value: args['homeCubit'] as HomeCubit),
+              BlocProvider.value(value: args['billingCubit'] as BillingCubit),
+              BlocProvider.value(
+                value: args['analyticsCubit'] as AnalyticsCubit,
+              ),
+            ],
+            child: const AnalyzeScreen(),
+          ),
+        );
       case Routes.mainNavigationBar:
         return MaterialPageRoute(builder: (_) => const MainNavigationBar());
 
@@ -83,31 +96,39 @@ class AppRouter {
       case Routes.privacyPolicyScreen:
         return MaterialPageRoute(builder: (_) => const PrivacyPolicyScreen());
 
-      case Routes.aiAnalysisFullScreen:
-        final args = settings.arguments as Map<String, dynamic>;
-        final aiCubit = args['aiCubit'] as AiAnalysisCubit;
-        final homeCubit = args['homeCubit'] as HomeCubit;
+    case Routes.strategicGoalsScreen:
+  final args = settings.arguments;
+  final List<Map<String, dynamic>> habits;
+  if (args is List<Map<String, dynamic>>) {
+    habits = args;
+  } else if (args is Map<String, dynamic> && args['habits'] != null) {
+    habits = (args['habits'] as List).cast<Map<String, dynamic>>();
+  } else {
+    habits = [];
+  }
+  return MaterialPageRoute(
+    builder: (_) => BlocProvider(
+      create: (_) => BillingCubit()..init(),
+      child: StrategicGoalsScreen(habits: habits),
+    ),
+  );
 
-        return MaterialPageRoute(
-          builder: (_) => MultiBlocProvider(
-            providers: [
-              BlocProvider.value(value: aiCubit),
-              BlocProvider.value(value: homeCubit),
-            ],
-            child: const AiAnalysisFullScreen(),
-          ),
-        );
-      case Routes.strategicGoalsScreen:
-        final habits = settings.arguments as List<Map<String, dynamic>>;
-        return MaterialPageRoute(
-          builder: (_) => StrategicGoalsScreen(habits: habits),
-        );
-
-      case Routes.premiumAnalyticsScreen:
-        final habits = settings.arguments as List<Map<String, dynamic>>;
-        return MaterialPageRoute(
-          builder: (_) => PremiumAnalyticsScreen(habits: habits),
-        );
+case Routes.premiumAnalyticsScreen:
+  final args = settings.arguments;
+  final List<Map<String, dynamic>> habits;
+  if (args is List<Map<String, dynamic>>) {
+    habits = args;
+  } else if (args is Map<String, dynamic> && args['habits'] != null) {
+    habits = (args['habits'] as List).cast<Map<String, dynamic>>();
+  } else {
+    habits = [];
+  }
+  return MaterialPageRoute(
+    builder: (_) => BlocProvider(
+      create: (_) => BillingCubit()..init(),
+      child: PremiumAnalyticsScreen(habits: habits),
+    ),
+  );
       case Routes.aboutScreen:
         return MaterialPageRoute(builder: (_) => const AboutScreen());
       case Routes.accountInformationScreen:
@@ -116,6 +137,13 @@ class AppRouter {
           builder: (_) => BlocProvider.value(
             value: profileCubit,
             child: const AccountInformationScreen(),
+          ),
+        );
+      case Routes.paywallScreen:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => BillingCubit()..init(),
+            child: const PaywallScreen(),
           ),
         );
       default:

@@ -203,7 +203,7 @@ abstract class AppLocalizations {
   /// No description provided for @quotaExceeded.
   ///
   /// In en, this message translates to:
-  /// **'Daily AI limit reached. Try again tomorrow.'**
+  /// **'Daily quota exceeded. Try again tomorrow.'**
   String get quotaExceeded;
 
   /// No description provided for @aiBusy.
@@ -1289,13 +1289,13 @@ abstract class AppLocalizations {
   /// No description provided for @guideRemindersStep4.
   ///
   /// In en, this message translates to:
-  /// **'Pick your preferred hour and minute'**
+  /// **'Choose the appropriate hour and minute'**
   String get guideRemindersStep4;
 
   /// No description provided for @guideRemindersStep5.
   ///
   /// In en, this message translates to:
-  /// **'Save the habit — you\'ll get a daily notification at that time'**
+  /// **'Save the habit — you will get a daily notification at that time'**
   String get guideRemindersStep5;
 
   /// No description provided for @guideEditingTitle.
@@ -1307,7 +1307,7 @@ abstract class AppLocalizations {
   /// No description provided for @guideEditingStep1.
   ///
   /// In en, this message translates to:
-  /// **'On the Home screen, tap on any habit card'**
+  /// **'On the home screen, tap any habit card'**
   String get guideEditingStep1;
 
   /// No description provided for @guideEditingStep2.
@@ -1331,7 +1331,7 @@ abstract class AppLocalizations {
   /// No description provided for @guideEditingStep5.
   ///
   /// In en, this message translates to:
-  /// **'Tap Save to apply your changes'**
+  /// **'Tap Save to apply the changes'**
   String get guideEditingStep5;
 
   /// No description provided for @guideAiTitle.
@@ -1343,13 +1343,13 @@ abstract class AppLocalizations {
   /// No description provided for @guideAiStep1.
   ///
   /// In en, this message translates to:
-  /// **'Navigate to the Analyze tab'**
+  /// **'Navigate to the Analysis tab'**
   String get guideAiStep1;
 
   /// No description provided for @guideAiStep2.
   ///
   /// In en, this message translates to:
-  /// **'Tap \"Overall Analysis\" to start'**
+  /// **'Tap \"Overall Analysis\" to begin'**
   String get guideAiStep2;
 
   /// No description provided for @guideAiStep3.
@@ -1361,13 +1361,13 @@ abstract class AppLocalizations {
   /// No description provided for @guideAiStep4.
   ///
   /// In en, this message translates to:
-  /// **'Read your personalized insights and recommendations'**
+  /// **'Read your tailored insights and recommendations'**
   String get guideAiStep4;
 
   /// No description provided for @guideAiStep5.
   ///
   /// In en, this message translates to:
-  /// **'Or long press the + button for a quick summary anywhere'**
+  /// **'Or long press + for a quick summary anywhere'**
   String get guideAiStep5;
 
   /// No description provided for @guideDeletingTitle.
@@ -1379,25 +1379,25 @@ abstract class AppLocalizations {
   /// No description provided for @guideDeletingStep1.
   ///
   /// In en, this message translates to:
-  /// **'On the Home screen, swipe left on a habit card'**
+  /// **'On the home screen, swipe the card left'**
   String get guideDeletingStep1;
 
   /// No description provided for @guideDeletingStep2.
   ///
   /// In en, this message translates to:
-  /// **'A delete option will appear'**
+  /// **'The delete option will appear'**
   String get guideDeletingStep2;
 
   /// No description provided for @guideDeletingStep3.
   ///
   /// In en, this message translates to:
-  /// **'Confirm to permanently remove the habit'**
+  /// **'Confirm deletion to permanently remove the habit'**
   String get guideDeletingStep3;
 
   /// No description provided for @guideDeletingStep4.
   ///
   /// In en, this message translates to:
-  /// **'All progress and streak data will be deleted'**
+  /// **'All progress data and streaks will be cleared'**
   String get guideDeletingStep4;
 
   /// No description provided for @markAsDone.
@@ -1415,7 +1415,7 @@ abstract class AppLocalizations {
   /// No description provided for @restDay.
   ///
   /// In en, this message translates to:
-  /// **'Rest Day'**
+  /// **'Rest day'**
   String get restDay;
 
   /// No description provided for @deleteHabit.
@@ -1445,7 +1445,7 @@ abstract class AppLocalizations {
   /// No description provided for @habitDeleted.
   ///
   /// In en, this message translates to:
-  /// **'{title} deleted'**
+  /// **'Deleted {title}'**
   String habitDeleted(Object title);
 
   /// No description provided for @readyToBuildHabits.
@@ -1457,19 +1457,19 @@ abstract class AppLocalizations {
   /// No description provided for @goodMorning.
   ///
   /// In en, this message translates to:
-  /// **'Good Morning, {name}!'**
+  /// **'Good morning, {name}!'**
   String goodMorning(Object name);
 
   /// No description provided for @goodAfternoon.
   ///
   /// In en, this message translates to:
-  /// **'Good Afternoon, {name}!'**
+  /// **'Good afternoon, {name}!'**
   String goodAfternoon(Object name);
 
   /// No description provided for @goodEvening.
   ///
   /// In en, this message translates to:
-  /// **'Good Evening, {name}!'**
+  /// **'Good evening, {name}!'**
   String goodEvening(Object name);
 
   /// No description provided for @weeklyGoal.
@@ -1499,7 +1499,7 @@ abstract class AppLocalizations {
   /// No description provided for @loginSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Sign in to continue tracking your habits'**
+  /// **'Log in to continue tracking your habits'**
   String get loginSubtitle;
 
   /// No description provided for @password.
@@ -1511,13 +1511,13 @@ abstract class AppLocalizations {
   /// No description provided for @login.
   ///
   /// In en, this message translates to:
-  /// **'Login'**
+  /// **'Log In'**
   String get login;
 
   /// No description provided for @missingCredentials.
   ///
   /// In en, this message translates to:
-  /// **'Missing credentials'**
+  /// **'Please enter your credentials'**
   String get missingCredentials;
 
   /// No description provided for @continueWithGoogle.
@@ -1547,19 +1547,19 @@ abstract class AppLocalizations {
   /// No description provided for @googleSignInFailed.
   ///
   /// In en, this message translates to:
-  /// **'Google Sign-In failed. Please try again.'**
+  /// **'Google sign in failed. Please try again.'**
   String get googleSignInFailed;
 
   /// No description provided for @invalidEmail.
   ///
   /// In en, this message translates to:
-  /// **'Invalid email format 📧'**
+  /// **'Invalid email address format 📧'**
   String get invalidEmail;
 
   /// No description provided for @userNotFound.
   ///
   /// In en, this message translates to:
-  /// **'No user found with this email ❗'**
+  /// **'No account found with this email ❗'**
   String get userNotFound;
 
   /// No description provided for @wrongPassword.
@@ -1571,7 +1571,7 @@ abstract class AppLocalizations {
   /// No description provided for @invalidCredential.
   ///
   /// In en, this message translates to:
-  /// **'Incorrect email or password ⚠️'**
+  /// **'The email or password is incorrect ⚠️'**
   String get invalidCredential;
 
   /// No description provided for @missingPassword.
@@ -1601,7 +1601,7 @@ abstract class AppLocalizations {
   /// No description provided for @unexpectedError.
   ///
   /// In en, this message translates to:
-  /// **'Unexpected Error: {error}'**
+  /// **'Unexpected error: {error}'**
   String unexpectedError(Object error);
 
   /// No description provided for @noInternetConnection.
@@ -1649,7 +1649,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboarding1Subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Build better habits with our beautiful and intuitive tracker'**
+  /// **'Build better habits with a beautiful and easy-to-use tracker'**
   String get onboarding1Subtitle;
 
   /// No description provided for @onboarding2Title.
@@ -1661,7 +1661,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboarding2Subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Monitor your daily habits and see your improvements over time'**
+  /// **'Monitor your daily routines and watch your improvement over time'**
   String get onboarding2Subtitle;
 
   /// No description provided for @onboarding3Title.
@@ -1709,7 +1709,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacy1Content.
   ///
   /// In en, this message translates to:
-  /// **'Routina collects only the information necessary to provide our habit tracking service. This includes your email address for authentication, habit data you create within the app, and basic usage analytics to improve your experience.'**
+  /// **'Routina only collects information necessary to provide the habit tracking service. This includes your authentication email, habit data you create in the app, and basic usage analytics to improve your experience.'**
   String get privacy1Content;
 
   /// No description provided for @privacy2Title.
@@ -1721,7 +1721,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacy2Content.
   ///
   /// In en, this message translates to:
-  /// **'Your data is used solely to power the features of Routina, including habit tracking, progress analysis, and AI-powered insights. We do not sell, rent, or share your personal information with third parties for marketing purposes.'**
+  /// **'Your data is only used to power Routina features, including habit tracking, progress analysis, and AI-driven insights. We do not sell, rent, or share your personal information with third parties for marketing purposes.'**
   String get privacy2Content;
 
   /// No description provided for @privacy3Title.
@@ -1733,7 +1733,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacy3Content.
   ///
   /// In en, this message translates to:
-  /// **'We use industry-standard security measures including Firebase Authentication and Supabase with Row Level Security (RLS) to protect your data. All data is encrypted in transit and at rest.'**
+  /// **'We use industry-standard security measures including Firebase Authentication and Supabase with Row Level Security (RLS) to protect your data. All data is encrypted during transit and at rest.'**
   String get privacy3Content;
 
   /// No description provided for @privacy4Title.
@@ -1745,7 +1745,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacy4Content.
   ///
   /// In en, this message translates to:
-  /// **'The AI analysis feature in Routina uses Google Gemini to process your habit data. This processing is done securely and your data is not stored or used to train AI models. AI responses are generated in real-time and not retained by third parties.'**
+  /// **'Routina\'s AI analysis feature uses Google Gemini to process your habit data. This processing is done securely, and your data is not stored or used to train AI models.'**
   String get privacy4Content;
 
   /// No description provided for @privacy5Title.
@@ -1757,7 +1757,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacy5Content.
   ///
   /// In en, this message translates to:
-  /// **'You have the right to access, correct, or delete your personal data at any time. You can delete your account and all associated data directly from the app settings. For any privacy-related requests, contact us at nilient.software.2026@gmail.com.'**
+  /// **'You have the right to access, correct, or delete your personal data at any time. You can delete your account and all associated data directly from the app settings. For any privacy requests, contact us at nilient.software.2026@gmail.com.'**
   String get privacy5Content;
 
   /// No description provided for @privacy6Title.
@@ -1769,7 +1769,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacy6Content.
   ///
   /// In en, this message translates to:
-  /// **'Routina is not directed at children under the age of 13. We do not knowingly collect personal information from children. If you believe a child has provided us with personal information, please contact us immediately.'**
+  /// **'Routina is not intended for children under the age of 13. We do not knowingly collect personal information from children. If you believe a child has provided us with personal info, please contact us immediately.'**
   String get privacy6Content;
 
   /// No description provided for @privacy7Title.
@@ -1781,7 +1781,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacy7Content.
   ///
   /// In en, this message translates to:
-  /// **'We may update this Privacy Policy from time to time. We will notify you of any significant changes through the app or via email. Continued use of Routina after changes constitutes acceptance of the updated policy.'**
+  /// **'We may update this Privacy Policy from time to time. We will notify you of any material changes via the app or email. Continued use of Routina after updates constitutes acceptance of the modified policy.'**
   String get privacy7Content;
 
   /// No description provided for @privacy8Title.
@@ -1793,7 +1793,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacy8Content.
   ///
   /// In en, this message translates to:
-  /// **'If you have any questions about this Privacy Policy or our data practices, please contact us at nilient.software.2026@gmail.com. We aim to respond to all inquiries within 48 hours.'**
+  /// **'If you have any questions about this Privacy Policy or our data practices, contact us at nilient.software.2026@gmail.com. We aim to respond to all inquiries within 48 hours.'**
   String get privacy8Content;
 
   /// No description provided for @currentStreak.
@@ -1829,7 +1829,7 @@ abstract class AppLocalizations {
   /// No description provided for @manageReminders.
   ///
   /// In en, this message translates to:
-  /// **'Manage your reminders'**
+  /// **'Manage Reminders'**
   String get manageReminders;
 
   /// No description provided for @darkMode.
@@ -1877,25 +1877,25 @@ abstract class AppLocalizations {
   /// No description provided for @leavingSoSoon.
   ///
   /// In en, this message translates to:
-  /// **'Leaving So Soon?'**
+  /// **'Leaving so soon?'**
   String get leavingSoSoon;
 
   /// No description provided for @seeYouSoon.
   ///
   /// In en, this message translates to:
-  /// **'See You Soon!'**
+  /// **'See you soon!'**
   String get seeYouSoon;
 
   /// No description provided for @logoutConfirmMsg.
   ///
   /// In en, this message translates to:
-  /// **'We love having you here! Are you sure you want to sign out?'**
+  /// **'We love having you around! Are you sure you want to log out?'**
   String get logoutConfirmMsg;
 
   /// No description provided for @logoutProcessMsg.
   ///
   /// In en, this message translates to:
-  /// **'We\'re making sure everything is saved for you. 💙'**
+  /// **'Making sure everything is saved for you. 💙'**
   String get logoutProcessMsg;
 
   /// No description provided for @stayWithUs.
@@ -1907,7 +1907,7 @@ abstract class AppLocalizations {
   /// No description provided for @yesLogOut.
   ///
   /// In en, this message translates to:
-  /// **'Yes, Log Out'**
+  /// **'Yes, log out'**
   String get yesLogOut;
 
   /// No description provided for @logoutFailed.
@@ -1961,13 +1961,13 @@ abstract class AppLocalizations {
   /// No description provided for @days.
   ///
   /// In en, this message translates to:
-  /// **'days'**
+  /// **'Days'**
   String get days;
 
   /// No description provided for @active.
   ///
   /// In en, this message translates to:
-  /// **'active'**
+  /// **'Active Habit'**
   String get active;
 
   /// No description provided for @createAccount.
@@ -2027,7 +2027,7 @@ abstract class AppLocalizations {
   /// No description provided for @registerError.
   ///
   /// In en, this message translates to:
-  /// **'Registration failed'**
+  /// **'Account creation failed'**
   String get registerError;
 
   /// No description provided for @alreadyHaveAccount.
@@ -2039,7 +2039,7 @@ abstract class AppLocalizations {
   /// No description provided for @loginLink.
   ///
   /// In en, this message translates to:
-  /// **'Login'**
+  /// **'Log In'**
   String get loginLink;
 
   /// No description provided for @enterEmail.
@@ -2057,7 +2057,7 @@ abstract class AppLocalizations {
   /// No description provided for @emailInvalid.
   ///
   /// In en, this message translates to:
-  /// **'Please enter a valid email'**
+  /// **'Please enter a valid email address'**
   String get emailInvalid;
 
   /// No description provided for @habitReminders.
@@ -2069,19 +2069,19 @@ abstract class AppLocalizations {
   /// No description provided for @noHabitsFound.
   ///
   /// In en, this message translates to:
-  /// **'No habits found to schedule'**
+  /// **'No habits found to schedule reminders for'**
   String get noHabitsFound;
 
   /// No description provided for @reminderActive.
   ///
   /// In en, this message translates to:
-  /// **'Reminder is active'**
+  /// **'Reminder Active'**
   String get reminderActive;
 
   /// No description provided for @reminderOff.
   ///
   /// In en, this message translates to:
-  /// **'Reminder is off'**
+  /// **'Reminder Off'**
   String get reminderOff;
 
   /// No description provided for @enableNotificationsMsg.
@@ -2111,13 +2111,13 @@ abstract class AppLocalizations {
   /// No description provided for @notificationBody.
   ///
   /// In en, this message translates to:
-  /// **'Stay consistent! It is time to complete this habit.'**
+  /// **'Keep the momentum going! Time to complete this habit.'**
   String get notificationBody;
 
   /// No description provided for @setDailyReminder.
   ///
   /// In en, this message translates to:
-  /// **'Set daily reminder'**
+  /// **'Set Daily Reminder'**
   String get setDailyReminder;
 
   /// No description provided for @habitTitle.
@@ -2171,7 +2171,7 @@ abstract class AppLocalizations {
   /// No description provided for @noHabitsYetTitle.
   ///
   /// In en, this message translates to:
-  /// **'No Habits Yet'**
+  /// **'No habits yet'**
   String get noHabitsYetTitle;
 
   /// No description provided for @noHabitsYetEmptyDesc.
@@ -2183,31 +2183,31 @@ abstract class AppLocalizations {
   /// No description provided for @addFirstHabit.
   ///
   /// In en, this message translates to:
-  /// **'Add Your First Habit'**
+  /// **'Add your first habit'**
   String get addFirstHabit;
 
   /// No description provided for @passwordLowercase.
   ///
   /// In en, this message translates to:
-  /// **'At least 1 lowercase letter'**
+  /// **'At least one lowercase letter'**
   String get passwordLowercase;
 
   /// No description provided for @passwordUppercase.
   ///
   /// In en, this message translates to:
-  /// **'At least 1 uppercase letter'**
+  /// **'At least one uppercase letter'**
   String get passwordUppercase;
 
   /// No description provided for @passwordSpecial.
   ///
   /// In en, this message translates to:
-  /// **'At least 1 special character'**
+  /// **'At least one special character'**
   String get passwordSpecial;
 
   /// No description provided for @passwordNumber.
   ///
   /// In en, this message translates to:
-  /// **'At least 1 number'**
+  /// **'At least one number'**
   String get passwordNumber;
 
   /// No description provided for @passwordMinLength.
@@ -2219,25 +2219,25 @@ abstract class AppLocalizations {
   /// No description provided for @unnamedHabit.
   ///
   /// In en, this message translates to:
-  /// **'Unnamed Habit'**
+  /// **'Unnamed habit'**
   String get unnamedHabit;
 
   /// No description provided for @emailAlreadyInUse.
   ///
   /// In en, this message translates to:
-  /// **'This email is already registered.'**
+  /// **'This email address is already registered.'**
   String get emailAlreadyInUse;
 
   /// No description provided for @weakPassword.
   ///
   /// In en, this message translates to:
-  /// **'Password is too weak. Use at least 6 characters.'**
+  /// **'The password is too weak. Use at least 6 characters.'**
   String get weakPassword;
 
   /// No description provided for @wrongEmail.
   ///
   /// In en, this message translates to:
-  /// **'Wrong email? Go back and try again'**
+  /// **'Wrong email? Go back and try again.'**
   String get wrongEmail;
 
   /// No description provided for @about.
@@ -2261,19 +2261,19 @@ abstract class AppLocalizations {
   /// No description provided for @rateApp.
   ///
   /// In en, this message translates to:
-  /// **'Rate the App'**
+  /// **'Rate App'**
   String get rateApp;
 
   /// No description provided for @rateAppSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Love Routina? Leave us a review ⭐'**
+  /// **'Loving Routina? Leave us a review ⭐'**
   String get rateAppSubtitle;
 
   /// No description provided for @shareApp.
   ///
   /// In en, this message translates to:
-  /// **'Share the App'**
+  /// **'Share App'**
   String get shareApp;
 
   /// No description provided for @shareAppSubtitle.
@@ -2285,7 +2285,7 @@ abstract class AppLocalizations {
   /// No description provided for @shareAppMessage.
   ///
   /// In en, this message translates to:
-  /// **'Check out Routina — a beautiful habit tracker app! https://play.google.com/store/apps/details?id=com.routina.app'**
+  /// **'Try Routina — a beautiful habit tracking app! https://play.google.com/store/apps/details?id=com.routina.app'**
   String get shareAppMessage;
 
   /// No description provided for @appName.
@@ -2309,13 +2309,13 @@ abstract class AppLocalizations {
   /// No description provided for @deleteAccountWarning.
   ///
   /// In en, this message translates to:
-  /// **'This will permanently delete your account, habits, and all associated data. This action cannot be undone.'**
+  /// **'Your account, habits, and all data will be permanently deleted. This action cannot be undone.'**
   String get deleteAccountWarning;
 
   /// No description provided for @userMismatch.
   ///
   /// In en, this message translates to:
-  /// **'Account mismatch'**
+  /// **'Account mismatch, please try again'**
   String get userMismatch;
 
   /// No description provided for @operationCancelled.
@@ -2375,7 +2375,7 @@ abstract class AppLocalizations {
   /// No description provided for @notAdded.
   ///
   /// In en, this message translates to:
-  /// **'Not Added'**
+  /// **'Not added'**
   String get notAdded;
 
   /// No description provided for @takePhoto.
@@ -2411,7 +2411,7 @@ abstract class AppLocalizations {
   /// No description provided for @bySigningUpYouAgreeTo.
   ///
   /// In en, this message translates to:
-  /// **'By signing up, you agree to our'**
+  /// **'By signing up, you agree to the'**
   String get bySigningUpYouAgreeTo;
 
   /// No description provided for @and.
@@ -2419,6 +2419,222 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'and'**
   String get and;
+
+  /// No description provided for @phonePlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number'**
+  String get phonePlaceholder;
+
+  /// No description provided for @phoneRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number is required'**
+  String get phoneRequired;
+
+  /// No description provided for @phoneInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid phone number'**
+  String get phoneInvalid;
+
+  /// No description provided for @birthDatePlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Date of Birth (YYYY-MM-DD)'**
+  String get birthDatePlaceholder;
+
+  /// No description provided for @dobRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Date of birth is required'**
+  String get dobRequired;
+
+  /// No description provided for @orContinueWith.
+  ///
+  /// In en, this message translates to:
+  /// **'Or continue with'**
+  String get orContinueWith;
+
+  /// No description provided for @google.
+  ///
+  /// In en, this message translates to:
+  /// **'Google'**
+  String get google;
+
+  /// No description provided for @freePlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Free Plan'**
+  String get freePlan;
+
+  /// No description provided for @activeMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Member'**
+  String get activeMember;
+
+  /// No description provided for @expiresOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires on {date}'**
+  String expiresOn(String date);
+
+  /// No description provided for @planRenewsOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Renews on {date}'**
+  String planRenewsOn(String date);
+
+  /// No description provided for @optional.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get optional;
+
+  /// No description provided for @remainingRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining Requests'**
+  String get remainingRequests;
+
+  /// No description provided for @rateLimited.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate limit reached. Please wait.'**
+  String get rateLimited;
+
+  /// No description provided for @tryAgainLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again later'**
+  String get tryAgainLater;
+
+  /// No description provided for @unlockMoreAnalysis.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock More Analysis'**
+  String get unlockMoreAnalysis;
+
+  /// No description provided for @unlockMoreAnalysisDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Get unlimited AI analysis and advanced insights with Routina Premium.'**
+  String get unlockMoreAnalysisDesc;
+
+  /// No description provided for @daily30Requests.
+  ///
+  /// In en, this message translates to:
+  /// **'30 AI analysis requests per day'**
+  String get daily30Requests;
+
+  /// No description provided for @advancedInsights.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced insights and recommendations'**
+  String get advancedInsights;
+
+  /// No description provided for @prioritySupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Priority support'**
+  String get prioritySupport;
+
+  /// No description provided for @advancedStats.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced Stats'**
+  String get advancedStats;
+
+  /// No description provided for @advancedStatistics.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced Statistics'**
+  String get advancedStatistics;
+
+  /// No description provided for @needsImprovement.
+  ///
+  /// In en, this message translates to:
+  /// **'Needs Improvement'**
+  String get needsImprovement;
+
+  /// No description provided for @colorDistribution.
+  ///
+  /// In en, this message translates to:
+  /// **'Color Distribution'**
+  String get colorDistribution;
+
+  /// No description provided for @generateInsights.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate Insights'**
+  String get generateInsights;
+
+  /// No description provided for @premiumTools.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium Tools'**
+  String get premiumTools;
+
+  /// No description provided for @consistencyScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Consistency Score'**
+  String get consistencyScore;
+
+  /// No description provided for @milestoneProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Milestone Progress'**
+  String get milestoneProgress;
+
+  /// No description provided for @thisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'this week'**
+  String get thisWeek;
+
+  /// No description provided for @goalOnTrack.
+  ///
+  /// In en, this message translates to:
+  /// **'On track to reach your goal!'**
+  String get goalOnTrack;
+
+  /// No description provided for @goalNeedsStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start this week to build momentum'**
+  String get goalNeedsStart;
+
+  /// No description provided for @goalProjection.
+  ///
+  /// In en, this message translates to:
+  /// **'At this rate, ~{weeks} weeks to full consistency'**
+  String goalProjection(Object weeks);
+
+  /// No description provided for @tipExcellent.
+  ///
+  /// In en, this message translates to:
+  /// **'Excellent consistency! Keep up the momentum.'**
+  String get tipExcellent;
+
+  /// No description provided for @tipFocusAreas.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} habits need extra attention this week'**
+  String tipFocusAreas(Object count);
+
+  /// No description provided for @smartSuggestionsPremiumDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Get personalized, actionable tips to improve your consistency and build stronger routines.'**
+  String get smartSuggestionsPremiumDesc;
+
+  /// No description provided for @goalOptimizationPremiumDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Get strategic planning advice, priority ranking, and weekly milestones to optimize your goals.'**
+  String get goalOptimizationPremiumDesc;
 }
 
 class _AppLocalizationsDelegate

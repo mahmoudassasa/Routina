@@ -32,6 +32,15 @@ android {
             storePassword = keyProperties["storePassword"] as String
         }
     }
+    signingConfigs {
+    create("release") {
+        keyAlias = keyProperties["keyAlias"] as String
+        keyPassword = keyProperties["keyPassword"] as String
+        storeFile = file(keyProperties["storeFile"] as String)
+        storePassword = keyProperties["storePassword"] as String
+    }
+}
+
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.routina.app"

@@ -4,10 +4,11 @@ import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/routing/routes.dart';
 import 'package:routina/core/theaming/app_colors.dart';
-import 'package:routina/core/widgets/ad_banner_widget.dart';
+import 'package:routina/core/services/ad_banner_widget.dart';
 import 'package:routina/core/widgets/logout_button/cubit/logout_cubit.dart';
 import 'package:routina/core/widgets/logout_button/cubit/logout_state.dart';
 import 'package:routina/core/widgets/logout_button/ui/logout_dialog.dart';
+import 'package:routina/features/billing_service/ui/widgets/premium_status_card.dart';
 import 'package:routina/features/profile_screen/logic/cubit/profile_cubit.dart';
 import 'package:routina/features/profile_screen/logic/cubit/profile_state.dart';
 import 'package:routina/features/profile_screen/ui/widgets/profile_screen_header_section.dart';
@@ -93,8 +94,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Column(
                     children: [
                       const ProfileHeaderSection(),
-                      verticalSpace(30),
+
+                      verticalSpace(20),
                       const ProfileScreenEditUserDetails(),
+                      const PremiumStatusCard(),
+                      verticalSpace(20),
+
                       const ProfileScreenUserStateCards(),
                       verticalSpace(40),
                       const ProfileScreenSettingsOptions(),

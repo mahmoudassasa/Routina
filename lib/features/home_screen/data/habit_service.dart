@@ -1,20 +1,45 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class HabitService {
-  HabitService()
-    : _supabase = Supabase.instance.client,
-      _firebaseAuth = FirebaseAuth.instance;
+  HabitService() : _firebaseAuth = FirebaseAuth.instance;
 
-  final SupabaseClient _supabase;
   final FirebaseAuth _firebaseAuth;
 
-  static const String _tableName = 'habits';
+  static const String _functionUrl =
+      'https://gvqgliulacfmhscswyid.supabase.co/functions/v1/verified-habits';
 
-  Future<String> _currentUserId() async {
+  Future<String> _idToken() async {
     final user = _firebaseAuth.currentUser;
     if (user == null) throw Exception('User is not logged in');
-    return user.uid;
+    final token = await user.getIdToken();
+    if (token == null) throw Exception('Failed to get Firebase ID token');
+    return token;
+  }
+
+  Future<Map<String, dynamic>> _call(
+    String action,
+    Map<String, dynamic> payload,
+  ) async {
+    final token = await _idToken();
+
+    final response = await http.post(
+      Uri.parse(_functionUrl),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({'action': action, 'payload': payload}),
+    );
+
+    final body = jsonDecode(response.body) as Map<String, dynamic>;
+
+    if (response.statusCode != 200 || body['success'] != true) {
+      throw Exception(body['error']?.toString() ?? 'Request failed (${response.statusCode})');
+    }
+
+    return body;
   }
 
   List<bool> _parseBoolList(dynamic value) {
@@ -52,14 +77,10 @@ class HabitService {
   }
 
   Future<List<Map<String, dynamic>>> fetchHabitsForCurrentUser() async {
-    final userId = await _currentUserId();
-    final response = await _supabase
-        .from(_tableName)
-        .select()
-        .eq('user_id', userId)
-        .order('created_at');
-
-    return (response as List)
+    final result = await _call('get_habits', {});
+    if (result['data'] == null) return [];
+    final data = result['data'] as List;
+    return data
         .map((item) => _mapRowToHabit(item as Map<String, dynamic>))
         .toList();
   }
@@ -70,29 +91,13 @@ class HabitService {
     required int colorValue,
     required List<bool> days,
   }) async {
-    final userId = await _currentUserId();
-    final frequency = _normalizeBoolList(days);
-    final today = DateTime.now();
-    final todayStr =
-        '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
-
-    final response = await _supabase
-        .from(_tableName)
-        .insert({
-          'user_id': userId,
-          'title': title,
-          'icon': iconKey,
-          'color': colorValue,
-          'frequency': frequency,
-          'week_progress': List<bool>.filled(7, false),
-          'progress': 0.0,
-          'streak': 0,
-          'last_seen_date': todayStr,
-        })
-        .select()
-        .single();
-
-    return _mapRowToHabit(response);
+    final result = await _call('add_habit', {
+      'title': title,
+      'iconKey': iconKey,
+      'colorValue': colorValue,
+      'days': _normalizeBoolList(days),
+    });
+    return _mapRowToHabit(result['data'] as Map<String, dynamic>);
   }
 
   Future<void> updateHabitProgress({
@@ -104,18 +109,19 @@ class HabitService {
     DateTime? lastSeenDate,
   }) async {
     final payload = <String, dynamic>{
+      'habitId': habitId,
       'frequency': _normalizeBoolList(frequency),
-      'week_progress': _normalizeBoolList(weekProgress),
+      'weekProgress': _normalizeBoolList(weekProgress),
       'progress': progress,
       'streak': streak,
     };
 
     if (lastSeenDate != null) {
-      payload['last_seen_date'] =
+      payload['lastSeenDate'] =
           '${lastSeenDate.year}-${lastSeenDate.month.toString().padLeft(2, '0')}-${lastSeenDate.day.toString().padLeft(2, '0')}';
     }
 
-    await _supabase.from(_tableName).update(payload).eq('id', habitId);
+    await _call('update_progress', payload);
   }
 
   Future<void> updateHabit({
@@ -125,18 +131,20 @@ class HabitService {
     required int colorValue,
     required List<bool> days,
   }) async {
-    await _supabase
-        .from(_tableName)
-        .update({
-          'title': title,
-          'icon': iconKey,
-          'color': colorValue,
-          'frequency': _normalizeBoolList(days),
-        })
-        .eq('id', habitId);
+    await _call('update_habit', {
+      'habitId': habitId,
+      'title': title,
+      'iconKey': iconKey,
+      'colorValue': colorValue,
+      'days': _normalizeBoolList(days),
+    });
   }
 
   Future<void> deleteHabit(int habitId) async {
-    await _supabase.from(_tableName).delete().eq('id', habitId);
+    await _call('delete_habit', {'habitId': habitId});
+  }
+
+  Future<void> deleteAllHabits() async {
+    await _call('delete_all_habits', {});
   }
 }

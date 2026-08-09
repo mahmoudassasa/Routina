@@ -49,3 +49,9 @@ app.*.map.json
 .env
 **/.envkey.properties
 *.jks
+
+# Memory Heap Dumps
+*.hprof
+
+# Android Build Reports
+android/build/

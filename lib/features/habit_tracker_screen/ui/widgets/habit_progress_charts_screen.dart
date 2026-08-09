@@ -4,13 +4,6 @@ import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 
-part 'section_title.dart';
-part 'weekly_heatmap.dart';
-part 'metric_card.dart';
-part 'habit_progress_line.dart';
-part 'insight_box.dart';
-part 'empty_state.dart';
-
 class HabitProgressChartsScreen extends StatelessWidget {
   final List<Map<String, dynamic>> habits;
 
@@ -20,23 +13,15 @@ class HabitProgressChartsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    // 1. Calculate Average Progress
-    double avgCompletion = habits.isEmpty
-        ? 0
-        : habits
-                  .map((h) => (h['progress'] as num).toDouble())
-                  .reduce((a, b) => a + b) /
-              habits.length;
-
-    // 2. Calculate Total Streaks
-    int totalStreaks = habits.isEmpty
+    final avgCompletion = habits.isEmpty
+        ? 0.0
+        : habits.map((h) => (h['progress'] as num).toDouble()).reduce((a, b) => a + b) / habits.length;
+    final totalStreaks = habits.isEmpty
         ? 0
         : habits.map((h) => (h['streak'] as int? ?? 0)).reduce((a, b) => a + b);
 
     return Scaffold(
-      backgroundColor: isDark
-          ? const Color(0xFF13151A)
-          : const Color(0xFFF8F9FB),
+      backgroundColor: isDark ? AppColors.darkBackground : AppColors.background,
       appBar: AppBar(
         title: Text(
           context.l10n.progressCharts,
@@ -53,14 +38,13 @@ class HabitProgressChartsScreen extends StatelessWidget {
       body: habits.isEmpty
           ? _buildEmptyState(isDark, context)
           : SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildSectionTitle(isDark, context.l10n.weeklyActivity),
                   verticalSpace(12),
-                  _buildWeeklyHeatmap(isDark, habits, context),
+                  _buildWeeklyHeatmap(isDark),
                   verticalSpace(24),
                   Row(
                     children: [
@@ -78,7 +62,7 @@ class HabitProgressChartsScreen extends StatelessWidget {
                         child: _buildMetricCard(
                           isDark,
                           context.l10n.totalStreaks,
-                          context.l10n.totalStreaksDays(totalStreaks),
+                          '$totalStreaks ${context.l10n.days}',
                           Icons.local_fire_department,
                           Colors.orange,
                         ),
@@ -86,25 +70,227 @@ class HabitProgressChartsScreen extends StatelessWidget {
                     ],
                   ),
                   verticalSpace(24),
-                  _buildSectionTitle(
-                    isDark,
-                    context.l10n.individualPerformance,
-                  ),
+                  _buildSectionTitle(isDark, context.l10n.individualPerformance),
                   verticalSpace(12),
-                  ...habits.map((habit) {
-                    return _buildHabitProgressLine(
-                      isDark,
-                      habit['title'] ?? 'Habit',
-                      (habit['progress'] as num).toDouble(),
-                      Color(habit['color'] as int),
-                    );
-                  }),
+                  ...habits.map((habit) => _buildHabitProgressLine(
+                        isDark,
+                        habit['title'] ?? 'Habit',
+                        (habit['progress'] as num).toDouble(),
+                        Color(habit['color'] as int),
+                      )),
                   verticalSpace(32),
                   _buildInsightBox(isDark, avgCompletion, context),
                   verticalSpace(24),
                 ],
               ),
             ),
+    );
+  }
+
+  // ─── Empty State ──────────────────────────────────────────────────────
+
+  Widget _buildEmptyState(bool isDark, BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('📊', style: TextStyle(fontSize: 64.sp)),
+          verticalSpace(16),
+          Text(
+            context.l10n.noHabitsYet,
+            style: TextStyle(
+              fontSize: 18.sp,
+              fontWeight: FontWeight.bold,
+              color: isDark ? Colors.white : Colors.black87,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ─── Section Title ──────────────────────────────────────────────────
+
+  Widget _buildSectionTitle(bool isDark, String title) {
+    return Text(
+      title,
+      style: TextStyle(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.bold,
+        color: isDark ? Colors.white : Colors.black87,
+      ),
+    );
+  }
+
+  // ─── Weekly Heatmap ──────────────────────────────────────────────────
+
+  Widget _buildWeeklyHeatmap(bool isDark) {
+    final days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    List<double> dailyActivity = List.filled(7, 0.0);
+    for (int i = 0; i < 7; i++) {
+      int completedCount = 0;
+      for (var habit in habits) {
+        final weekProgress = List<bool>.from(
+          habit['weekProgress'] ?? List.filled(7, false),
+        );
+        if (weekProgress[i]) completedCount++;
+      }
+      dailyActivity[i] = habits.isEmpty ? 0 : completedCount / habits.length;
+    }
+
+    return Container(
+      padding: EdgeInsets.all(16.w),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.darkSurface : Colors.white,
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(
+          color: isDark ? AppColors.darkBorder : Colors.grey.shade200,
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: List.generate(7, (index) {
+          return Column(
+            children: [
+              Container(
+                width: 32.w,
+                height: 32.w,
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withValues(
+                    alpha: dailyActivity[index].clamp(0.1, 1.0),
+                  ),
+                  borderRadius: BorderRadius.circular(8.r),
+                ),
+                child: dailyActivity[index] >= 0.5
+                    ? Icon(Icons.check, size: 16.sp, color: Colors.white)
+                    : null,
+              ),
+              verticalSpace(8),
+              Text(
+                days[index],
+                style: TextStyle(
+                  fontSize: 11.sp,
+                  color: isDark ? Colors.grey[500] : Colors.grey[600],
+                ),
+              ),
+            ],
+          );
+        }),
+      ),
+    );
+  }
+
+  // ─── Metric Card ─────────────────────────────────────────────────────
+
+  Widget _buildMetricCard(bool isDark, String label, String value, IconData icon, Color color) {
+    return Container(
+      padding: EdgeInsets.all(16.w),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.darkSurface : Colors.white,
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(
+          color: isDark ? AppColors.darkBorder : Colors.grey.shade200,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: color, size: 24.sp),
+          verticalSpace(12),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 18.sp,
+              fontWeight: FontWeight.bold,
+              color: isDark ? Colors.white : Colors.black87,
+            ),
+          ),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 11.sp,
+              color: isDark ? Colors.grey[400] : Colors.grey[600],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ─── Habit Progress Line ─────────────────────────────────────────────
+
+  Widget _buildHabitProgressLine(bool isDark, String name, double progress, Color color) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 16.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                name,
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: isDark ? Colors.white70 : Colors.black87,
+                ),
+              ),
+              Text(
+                '${(progress * 100).toInt()}%',
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.bold,
+                  color: color,
+                ),
+              ),
+            ],
+          ),
+          verticalSpace(8),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10.r),
+            child: LinearProgressIndicator(
+              value: progress,
+              minHeight: 7.h,
+              backgroundColor: isDark ? Colors.grey[800] : Colors.grey[200],
+              valueColor: AlwaysStoppedAnimation<Color>(color),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ─── Insight Box ─────────────────────────────────────────────────────
+
+  Widget _buildInsightBox(bool isDark, double avgProgress, BuildContext context) {
+    final message = avgProgress > 0.5
+        ? context.l10n.insightGreat
+        : context.l10n.insightKeepGoing;
+    return Container(
+      padding: EdgeInsets.all(16.w),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: isDark
+              ? [Colors.indigo.shade900, Colors.blueAccent.shade700]
+              : [Colors.blue.shade50, Colors.blue.shade100],
+        ),
+        borderRadius: BorderRadius.circular(16.r),
+      ),
+      child: Row(
+        children: [
+          Text('💡', style: TextStyle(fontSize: 24.sp)),
+          horizontalSpace(16),
+          Expanded(
+            child: Text(
+              message,
+              style: TextStyle(
+                fontSize: 13.sp,
+                color: isDark ? Colors.white : Colors.blue.shade900,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

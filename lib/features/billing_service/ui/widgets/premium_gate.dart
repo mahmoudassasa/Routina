@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/helpers/extension.dart';
+import 'package:routina/core/helpers/spacing.dart';
+import 'package:routina/core/theaming/app_colors.dart';
+import 'package:routina/core/theaming/app_text_styles.dart';
 import 'package:routina/features/billing_service/logic/cubit/billing_cubit.dart';
 import 'package:routina/features/billing_service/ui/widgets/paywall_screen.dart';
-import '../../../../../core/theaming/app_colors.dart';
-import '../../../../../core/theaming/app_text_styles.dart';
 
 class PremiumGate extends StatelessWidget {
   final Widget child;
@@ -59,12 +60,12 @@ class _LockedOverlay extends StatelessWidget {
                 size: 28.r,
               ),
             ),
-            SizedBox(height: 14.h),
+            verticalSpace(14),
             Text(
               context.l10n.premiumFeature,
               style: AppTextStyles.font16WhiteMedium,
             ),
-            SizedBox(height: 6.h),
+            verticalSpace(6),
             Text(
               reason,
               style: AppTextStyles.font14WhiteRegular.copyWith(
@@ -72,7 +73,7 @@ class _LockedOverlay extends StatelessWidget {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 18.h),
+            verticalSpace(18),
             SizedBox(
               width: double.infinity,
               height: 46.h,

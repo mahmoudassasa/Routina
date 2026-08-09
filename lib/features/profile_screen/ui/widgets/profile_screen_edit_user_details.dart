@@ -39,17 +39,32 @@ class ProfileScreenEditUserDetails extends StatelessWidget {
 
         return Column(
           children: [
-            Text(
-              state.name ?? context.l10n.unknownUser,
-              style: AppTextStyles.displaySmall.copyWith(
-                color: isDark
-                    ? AppColors.darkTextPrimary
-                    : AppColors.textPrimary,
-              ),
+            // ─── الاسم مع العلامة الزرقاء ──────────────
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  state.name ?? context.l10n.unknownUser,
+                  style: AppTextStyles.displaySmall.copyWith(
+                    color: isDark
+                        ? AppColors.darkTextPrimary
+                        : AppColors.textPrimary,
+                  ),
+                ),
+                if (state.profileCompleted) ...[
+                  horizontalSpace(8),
+                  Icon(
+                    Icons.verified_rounded,
+                    color: Colors.blue.shade600,
+                    size: 22.sp,
+                  ),
+                ],
+              ],
             ),
 
             verticalSpace(10),
 
+            // ─── زر تعديل الملف ────────────────────────
             GestureDetector(
               onTap: () {
                 context.pushNamed(
@@ -87,6 +102,62 @@ class ProfileScreenEditUserDetails extends StatelessWidget {
                 ),
               ),
             ),
+
+            verticalSpace(12),
+
+            // ─── إشعار إكمال الملف ──────────────────────
+            if (!state.profileCompleted)
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 20.w),
+                padding: EdgeInsets.all(12.w),
+                decoration: BoxDecoration(
+                  color: Colors.amber.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(14.r),
+                  border: Border.all(
+                    color: Colors.amber.withValues(alpha: 0.3),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.info_outline,
+                      color: Colors.amber.shade700,
+                      size: 18.sp,
+                    ),
+                    horizontalSpace(10),
+                    Expanded(
+                      child: Text(
+                        context.l10n.completeProfileToGetBadge,
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          color: isDark ? Colors.white70 : Colors.black87,
+                        ),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        context.pushNamed(
+                          Routes.accountInformationScreen,
+                          arguments: context.read<ProfileCubit>(),
+                        );
+                      },
+                      style: TextButton.styleFrom(
+                        foregroundColor: AppColors.primary,
+                        padding: EdgeInsets.symmetric(horizontal: 8.w),
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      child: Text(
+                        context.l10n.completeNow,
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
 
             verticalSpace(40),
           ],

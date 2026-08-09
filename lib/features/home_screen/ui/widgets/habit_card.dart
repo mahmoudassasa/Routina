@@ -122,7 +122,7 @@ class HabitCard extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      onPressed: () => _showEditBottomSheet(context),
+                      onPressed: () => _showEditBottomSheet(context, habit),
                       icon: Icon(
                         Icons.edit_outlined,
                         color: isDark ? Colors.grey[400] : Colors.grey[600],

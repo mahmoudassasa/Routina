@@ -119,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         emailController: _emailController,
                         passwordController: _passwordController,
                       ),
-                      verticalSpace(16),
+                      verticalSpace(30),
                       GoogleSignin(),
                       verticalSpace(16),
                       const ForgotPassword(),

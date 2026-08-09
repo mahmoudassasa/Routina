@@ -21,17 +21,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
   // Generating a unique integer ID from the habit ID
   int fastHash(String uuid) => uuid.hashCode.abs();
 
-  @override
-  void initState() {
-    super.initState();
-    _loadAllScheduledNotifications();
-  }
+@override
+void initState() {
+  super.initState();
+  _loadAllScheduledNotifications();
+}
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _loadAllScheduledNotifications();
-  }
 
   Future<void> _loadAllScheduledNotifications() async {
     final List<PendingNotificationRequest> pendingRequests =

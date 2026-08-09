@@ -99,7 +99,11 @@
   "noHabitsYet": "No habits yet",
   "noHabitsYetDesc": "Add habits first to set strategic goals",
   "nextMilestone": "Next milestone: {days} days",
-  "@nextMilestone": {"placeholders": {"days": {}}},
+  "@nextMilestone": {
+    "placeholders": {
+      "days": {}
+    }
+  },
   "eliteInsights": "Elite Insights",
   "avgCompletion": "Avg Completion",
   "totalHabits": "Total Habits",
@@ -110,7 +114,12 @@
   "priorityFocus": "🎯 Priority Focus",
   "allHabitsOnTrack": "🎉 All habits on track!",
   "dayStreak": "{streak} day streak • {percent}% complete",
-  "@dayStreak": {"placeholders": {"streak": {}, "percent": {}}},
+  "@dayStreak": {
+    "placeholders": {
+      "streak": {},
+      "percent": {}
+    }
+  },
   "habitTracker": "Habit Tracker",
   "habitTrackerDesc": "Detailed view of your progress",
   "upgradeToPremiumTitle": "Upgrade to Premium",
@@ -125,12 +134,21 @@
   "smartTimeOfDaySuggestions": "Smart time-of-day suggestions",
   "priorityHabitFocus": "Priority habit focus",
   "streakBadge": "🔥 {streak} days",
+  "@streakBadge": {
+    "placeholders": {
+      "streak": {}
+    }
+  },
   "weeklyActivity": "Weekly Activity",
   "avgProgress": "Avg. Progress",
   "totalStreaks": "Total Streaks",
   "individualPerformance": "Individual Performance",
   "totalStreaksDays": "{days} Days",
-  "@totalStreaksDays": {"placeholders": {"days": {}}},
+  "@totalStreaksDays": {
+    "placeholders": {
+      "days": {}
+    }
+  },
   "insightGreat": "You're doing great! Your consistency is above average.",
   "insightKeepGoing": "Keep going! Small steps lead to big changes.",
   "habitAnalytics": "Habit Analytics",
@@ -206,66 +224,94 @@
   "guideRemindersStep1": "Tap the + button to open the Add Habit sheet",
   "guideRemindersStep2": "Fill in the habit name and schedule",
   "guideRemindersStep3": "Tap the bell icon to enable a reminder",
-  "guideRemindersStep4": "Pick your preferred hour and minute",
-  "guideRemindersStep5": "Save the habit — you'll get a daily notification at that time",
+  "guideRemindersStep4": "Choose the appropriate hour and minute",
+  "guideRemindersStep5": "Save the habit — you will get a daily notification at that time",
   "guideEditingTitle": "Editing a Habit",
-  "guideEditingStep1": "On the Home screen, tap on any habit card",
+  "guideEditingStep1": "On the home screen, tap any habit card",
   "guideEditingStep2": "Update the name, icon, color, or schedule",
   "guideEditingStep3": "To change the reminder, tap the bell icon",
   "guideEditingStep4": "The old reminder will be replaced automatically",
-  "guideEditingStep5": "Tap Save to apply your changes",
+  "guideEditingStep5": "Tap Save to apply the changes",
   "guideAiTitle": "Using AI Analysis",
-  "guideAiStep1": "Navigate to the Analyze tab",
-  "guideAiStep2": "Tap \"Overall Analysis\" to start",
+  "guideAiStep1": "Navigate to the Analysis tab",
+  "guideAiStep2": "Tap \"Overall Analysis\" to begin",
   "guideAiStep3": "The AI will review your streaks and progress",
-  "guideAiStep4": "Read your personalized insights and recommendations",
-  "guideAiStep5": "Or long press the + button for a quick summary anywhere",
+  "guideAiStep4": "Read your tailored insights and recommendations",
+  "guideAiStep5": "Or long press + for a quick summary anywhere",
   "guideDeletingTitle": "Deleting a Habit",
-  "guideDeletingStep1": "On the Home screen, swipe left on a habit card",
-  "guideDeletingStep2": "A delete option will appear",
-  "guideDeletingStep3": "Confirm to permanently remove the habit",
-  "guideDeletingStep4": "All progress and streak data will be deleted",
+  "guideDeletingStep1": "On the home screen, swipe the card left",
+  "guideDeletingStep2": "The delete option will appear",
+  "guideDeletingStep3": "Confirm deletion to permanently remove the habit",
+  "guideDeletingStep4": "All progress data and streaks will be cleared",
   "markAsDone": "Mark as Done",
-  "completedToday": "Completed Today",
-  "restDay": "Rest Day",
+  "completedToday": "Completed today",
+  "restDay": "Rest day",
   "deleteHabit": "Delete Habit?",
   "deleteHabitConfirm": "Are you sure you want to delete \"{title}\"? This action cannot be undone.",
-  "@deleteHabitConfirm": {"placeholders": {"title": {}}},
+  "@deleteHabitConfirm": {
+    "placeholders": {
+      "title": {}
+    }
+  },
   "cancel": "Cancel",
   "delete": "Delete",
-  "habitDeleted": "{title} deleted",
-  "@habitDeleted": {"placeholders": {"title": {}}},
+  "habitDeleted": "Deleted {title}",
+  "@habitDeleted": {
+    "placeholders": {
+      "title": {}
+    }
+  },
   "readyToBuildHabits": "Ready to build your habits?",
-  "goodMorning": "Good Morning, {name}!",
-  "@goodMorning": {"placeholders": {"name": {}}},
-  "goodAfternoon": "Good Afternoon, {name}!",
-  "@goodAfternoon": {"placeholders": {"name": {}}},
-  "goodEvening": "Good Evening, {name}!",
-  "@goodEvening": {"placeholders": {"name": {}}},
+  "goodMorning": "Good morning, {name}!",
+  "@goodMorning": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "goodAfternoon": "Good afternoon, {name}!",
+  "@goodAfternoon": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "goodEvening": "Good evening, {name}!",
+  "@goodEvening": {
+    "placeholders": {
+      "name": {}
+    }
+  },
   "weeklyGoal": "{percent}% Weekly Goal",
-  "@weeklyGoal": {"placeholders": {"percent": {}}},
+  "@weeklyGoal": {
+    "placeholders": {
+      "percent": {}
+    }
+  },
   "loginError": "Login Error",
   "ok": "OK",
   "welcomeBack": "Welcome Back",
-  "loginSubtitle": "Sign in to continue tracking your habits",
+  "loginSubtitle": "Log in to continue tracking your habits",
   "password": "Password",
-  "login": "Login",
-  "missingCredentials": "Missing credentials",
+  "login": "Log In",
+  "missingCredentials": "Please enter your credentials",
   "continueWithGoogle": "Continue with Google",
   "dontHaveAccount": "Don't have an account? ",
   "signUp": "Sign Up",
   "pleaseVerifyEmail": "Please verify your email before logging in 🔒",
-  "googleSignInFailed": "Google Sign-In failed. Please try again.",
-  "invalidEmail": "Invalid email format 📧",
-  "userNotFound": "No user found with this email ❗",
+  "googleSignInFailed": "Google sign in failed. Please try again.",
+  "invalidEmail": "Invalid email address format 📧",
+  "userNotFound": "No account found with this email ❗",
   "wrongPassword": "Incorrect password 🔐",
-  "invalidCredential": "Incorrect email or password ⚠️",
+  "invalidCredential": "The email or password is incorrect ⚠️",
   "missingPassword": "Please enter your password 🔑",
   "tooManyRequests": "Too many attempts. Try again later ⏳",
   "userDisabled": "This account has been disabled 🚫",
   "loginFailed": "Login failed, please try again.",
-  "unexpectedError": "Unexpected Error: {error}",
-  "@unexpectedError": {"placeholders": {"error": {}}},
+  "unexpectedError": "Unexpected error: {error}",
+  "@unexpectedError": {
+    "placeholders": {
+      "error": {}
+    }
+  },
   "noInternetConnection": "No Internet Connection",
   "noInternetDesc": "Please check your connection\nand try again.",
   "tryAgain": "Try Again",
@@ -273,45 +319,37 @@
   "next": "Next",
   "getStarted": "Get Started",
   "onboarding1Title": "Welcome to Routina",
-  "onboarding1Subtitle": "Build better habits with our beautiful and intuitive tracker",
+  "onboarding1Subtitle": "Build better habits with a beautiful and easy-to-use tracker",
   "onboarding2Title": "Track Your Progress",
-  "onboarding2Subtitle": "Monitor your daily habits and see your improvements over time",
+  "onboarding2Subtitle": "Monitor your daily routines and watch your improvement over time",
   "onboarding3Title": "Stay Motivated",
   "onboarding3Subtitle": "Get AI-powered insights and personalized recommendations",
   "privacyPolicyTitle": "Privacy Policy",
   "yourPrivacyMatters": "Your Privacy Matters",
   "lastUpdated": "Last updated: April 2026",
   "copyright": "© 2026 Routina. All rights reserved.",
-
   "privacy1Title": "1. Information We Collect",
-  "privacy1Content": "Routina collects only the information necessary to provide our habit tracking service. This includes your email address for authentication, habit data you create within the app, and basic usage analytics to improve your experience.",
-
+  "privacy1Content": "Routina only collects information necessary to provide the habit tracking service. This includes your authentication email, habit data you create in the app, and basic usage analytics to improve your experience.",
   "privacy2Title": "2. How We Use Your Data",
-  "privacy2Content": "Your data is used solely to power the features of Routina, including habit tracking, progress analysis, and AI-powered insights. We do not sell, rent, or share your personal information with third parties for marketing purposes.",
-
+  "privacy2Content": "Your data is only used to power Routina features, including habit tracking, progress analysis, and AI-driven insights. We do not sell, rent, or share your personal information with third parties for marketing purposes.",
   "privacy3Title": "3. Data Security",
-  "privacy3Content": "We use industry-standard security measures including Firebase Authentication and Supabase with Row Level Security (RLS) to protect your data. All data is encrypted in transit and at rest.",
-
+  "privacy3Content": "We use industry-standard security measures including Firebase Authentication and Supabase with Row Level Security (RLS) to protect your data. All data is encrypted during transit and at rest.",
   "privacy4Title": "4. AI Features",
-  "privacy4Content": "The AI analysis feature in Routina uses Google Gemini to process your habit data. This processing is done securely and your data is not stored or used to train AI models. AI responses are generated in real-time and not retained by third parties.",
-
+  "privacy4Content": "Routina's AI analysis feature uses Google Gemini to process your habit data. This processing is done securely, and your data is not stored or used to train AI models.",
   "privacy5Title": "5. Your Rights",
-  "privacy5Content": "You have the right to access, correct, or delete your personal data at any time. You can delete your account and all associated data directly from the app settings. For any privacy-related requests, contact us at nilient.software.2026@gmail.com.",
-
+  "privacy5Content": "You have the right to access, correct, or delete your personal data at any time. You can delete your account and all associated data directly from the app settings. For any privacy requests, contact us at nilient.software.2026@gmail.com.",
   "privacy6Title": "6. Children's Privacy",
-  "privacy6Content": "Routina is not directed at children under the age of 13. We do not knowingly collect personal information from children. If you believe a child has provided us with personal information, please contact us immediately.",
-
+  "privacy6Content": "Routina is not intended for children under the age of 13. We do not knowingly collect personal information from children. If you believe a child has provided us with personal info, please contact us immediately.",
   "privacy7Title": "7. Changes to This Policy",
-  "privacy7Content": "We may update this Privacy Policy from time to time. We will notify you of any significant changes through the app or via email. Continued use of Routina after changes constitutes acceptance of the updated policy.",
-
+  "privacy7Content": "We may update this Privacy Policy from time to time. We will notify you of any material changes via the app or email. Continued use of Routina after updates constitutes acceptance of the modified policy.",
   "privacy8Title": "8. Contact Us",
-  "privacy8Content": "If you have any questions about this Privacy Policy or our data practices, please contact us at nilient.software.2026@gmail.com. We aim to respond to all inquiries within 48 hours.",
+  "privacy8Content": "If you have any questions about this Privacy Policy or our data practices, contact us at nilient.software.2026@gmail.com. We aim to respond to all inquiries within 48 hours.",
   "currentStreak": "Current Streak",
   "totalHabitsLabel": "Total Habits",
   "completionRate": "Completion Rate",
   "bestStreakLabel": "Best Streak",
   "notifications": "Notifications",
-  "manageReminders": "Manage your reminders",
+  "manageReminders": "Manage Reminders",
   "darkMode": "Dark Mode",
   "darkModeEnabled": "Enabled",
   "darkModeDisabled": "Disabled",
@@ -319,23 +357,27 @@
   "downloadHabitData": "Download your habit data",
   "getHelpContact": "Get help and contact us",
   "signOut": "Sign Out",
-  "leavingSoSoon": "Leaving So Soon?",
-  "seeYouSoon": "See You Soon!",
-  "logoutConfirmMsg": "We love having you here! Are you sure you want to sign out?",
-  "logoutProcessMsg": "We're making sure everything is saved for you. 💙",
+  "leavingSoSoon": "Leaving so soon?",
+  "seeYouSoon": "See you soon!",
+  "logoutConfirmMsg": "We love having you around! Are you sure you want to log out?",
+  "logoutProcessMsg": "Making sure everything is saved for you. 💙",
   "stayWithUs": "Stay with us",
-  "yesLogOut": "Yes, Log Out",
+  "yesLogOut": "Yes, log out",
   "logoutFailed": "Logout failed",
   "noHabitsToExport": "No habits to export yet!",
   "preparingData": "Preparing data...",
   "exportError": "Error: {error}",
-  "@exportError": {"placeholders": {"error": {}}},
+  "@exportError": {
+    "placeholders": {
+      "error": {}
+    }
+  },
   "unknownUser": "Unknown User",
   "noEmail": "No Email",
   "language": "Language",
   "languageSubtitle": "Switch between Arabic and English",
-  "days": "days",
-  "active": "active",
+  "days": "Days",
+  "active": "Active Habit",
   "createAccount": "Create Account",
   "registerSubtitle": "Join us and start building better habits",
   "fullName": "Full Name",
@@ -345,60 +387,80 @@
   "nameMinLength": "Name must be at least 3 characters",
   "passwordRequired": "Password is required",
   "passwordInvalid": "Password does not meet requirements",
-  "registerError": "Registration failed",
+  "registerError": "Account creation failed",
   "alreadyHaveAccount": "Already have an account? ",
-  "loginLink": "Login",
+  "loginLink": "Log In",
   "enterEmail": "Enter your email",
   "emailRequired": "Please enter your email",
-  "emailInvalid": "Please enter a valid email",
+  "emailInvalid": "Please enter a valid email address",
   "habitReminders": "Habit Reminders",
-  "noHabitsFound": "No habits found to schedule",
-  "reminderActive": "Reminder is active",
-  "reminderOff": "Reminder is off",
+  "noHabitsFound": "No habits found to schedule reminders for",
+  "reminderActive": "Reminder Active",
+  "reminderOff": "Reminder Off",
   "enableNotificationsMsg": "Please enable notifications from system settings",
   "reminderSetFor": "Reminder set for {time}",
-  "@reminderSetFor": {"placeholders": {"time": {}}},
+  "@reminderSetFor": {
+    "placeholders": {
+      "time": {}
+    }
+  },
   "remindMeOf": "Remind me of {title}",
-  "@remindMeOf": {"placeholders": {"title": {}}},
+  "@remindMeOf": {
+    "placeholders": {
+      "title": {}
+    }
+  },
   "notificationTitle": "Routina: Time for {title}! 🚀",
-  "@notificationTitle": {"placeholders": {"title": {}}},
-  "notificationBody": "Stay consistent! It is time to complete this habit.",
-  "setDailyReminder": "Set daily reminder",
+  "@notificationTitle": {
+    "placeholders": {
+      "title": {}
+    }
+  },
+  "notificationBody": "Keep the momentum going! Time to complete this habit.",
+  "setDailyReminder": "Set Daily Reminder",
   "habitTitle": "Habit Title",
   "iconLabel": "Icon",
   "colorLabel": "Color",
   "frequencyLabel": "Frequency",
   "reminderAtTime": "Reminder at {time}",
-  "@reminderAtTime": {"placeholders": {"time": {}}},
+  "@reminderAtTime": {
+    "placeholders": {
+      "time": {}
+    }
+  },
   "setReminderOptional": "Set a reminder (optional)",
   "saveChanges": "Save Changes",
   "createHabit": "Create Habit",
-  "noHabitsYetTitle": "No Habits Yet",
+  "noHabitsYetTitle": "No habits yet",
   "noHabitsYetEmptyDesc": "Start building your first habit and track your progress every day.",
-  "addFirstHabit": "Add Your First Habit",
-  "passwordLowercase": "At least 1 lowercase letter",
-  "passwordUppercase": "At least 1 uppercase letter",
-  "passwordSpecial": "At least 1 special character",
-  "passwordNumber": "At least 1 number",
+  "addFirstHabit": "Add your first habit",
+  "passwordLowercase": "At least one lowercase letter",
+  "passwordUppercase": "At least one uppercase letter",
+  "passwordSpecial": "At least one special character",
+  "passwordNumber": "At least one number",
   "passwordMinLength": "At least 8 characters",
-  "unnamedHabit": "Unnamed Habit",
-  "emailAlreadyInUse": "This email is already registered.",
-  "weakPassword": "Password is too weak. Use at least 6 characters.",
-  "wrongEmail": "Wrong email? Go back and try again",
+  "unnamedHabit": "Unnamed habit",
+  "emailAlreadyInUse": "This email address is already registered.",
+  "weakPassword": "The password is too weak. Use at least 6 characters.",
+  "wrongEmail": "Wrong email? Go back and try again.",
   "about": "About",
   "appVersion": "Version {version}",
-  "@appVersion": {"placeholders": {"version": {}}},
+  "@appVersion": {
+    "placeholders": {
+      "version": {}
+    }
+  },
   "madeWithLove": "Made with ❤️ by Nilient",
-  "rateApp": "Rate the App",
-  "rateAppSubtitle": "Love Routina? Leave us a review ⭐",
-  "shareApp": "Share the App",
+  "rateApp": "Rate App",
+  "rateAppSubtitle": "Loving Routina? Leave us a review ⭐",
+  "shareApp": "Share App",
   "shareAppSubtitle": "Help others build better habits",
-  "shareAppMessage": "Check out Routina — a beautiful habit tracker app! https://play.google.com/store/apps/details?id=com.routina.app",
+  "shareAppMessage": "Try Routina — a beautiful habit tracking app! https://play.google.com/store/apps/details?id=com.routina.app",
   "appName": "Routina",
   "deleteAccount": "Delete Account",
   "deleteAccountSubtitle": "Permanently remove your data",
-  "deleteAccountWarning": "This will permanently delete your account, habits, and all associated data. This action cannot be undone.",
-  "userMismatch": "Account mismatch",
+  "deleteAccountWarning": "Your account, habits, and all data will be permanently deleted. This action cannot be undone.",
+  "userMismatch": "Account mismatch, please try again",
   "operationCancelled": "Operation cancelled",
   "email": "Email",
   "emailHint": "Enter your email",
@@ -408,12 +470,105 @@
   "name": "Name",
   "phoneNumber": "Phone Number",
   "dateOfBirth": "Date of Birth",
-  "notAdded": "Not Added",
+  "notAdded": "Not added",
   "takePhoto": "Take Photo",
   "chooseFromGallery": "Choose from Gallery",
   "removePhoto": "Remove Photo",
   "editName": "Edit Name",
   "termsOfService": "Terms of Service",
-  "bySigningUpYouAgreeTo": "By signing up, you agree to our",
-  "and": "and"
+  "bySigningUpYouAgreeTo": "By signing up, you agree to the",
+  "and": "and",
+  "phonePlaceholder": "Phone number",
+  "phoneRequired": "Phone number is required",
+  "phoneInvalid": "Invalid phone number",
+  "birthDatePlaceholder": "Date of Birth (YYYY-MM-DD)",
+  "dobRequired": "Date of birth is required",
+  "orContinueWith": "Or continue with",
+  "google": "Google",
+  "freePlan": "Free Plan",
+  "activeMember": "Active Member",
+  "expiresOn": "Expires on {date}",
+  "@expiresOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "planRenewsOn": "Renews on {date}",
+  "@planRenewsOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "phonePlaceholder": "Phone number",
+  "optional": "Optional",
+  "phoneRequired": "Phone number is required",
+  "remainingRequests": "Remaining requests today",
+  "rateLimited": "You've reached the request limit. Please wait a moment.",
+  "tryAgainLater": "Try again later",
+  "upgradeToPremium": "Upgrade to Premium",
+  "unlockMoreAnalysis": "Unlock More Analysis",
+  "unlockMoreAnalysisDesc": "Get unlimited AI analysis and advanced insights with Routina Premium.",
+  "daily30Requests": "30 AI analysis requests per day",
+  "advancedInsights": "Advanced insights and recommendations",
+  "prioritySupport": "Priority support",
+  "advancedStats": "Advanced Stats",
+  "advancedStatistics": "Advanced Statistics",
+  "completedToday": "Completed Today",
+  "completionRate": "Completion Rate",
+  "needsImprovement": "Needs Improvement",
+  "colorDistribution": "Color Distribution",
+  "generateInsights": "Generate Insights",
+  "remainingRequests": "Remaining Requests",
+  "rateLimited": "Rate limit reached. Please wait.",
+  "quotaExceeded": "Daily quota exceeded. Try again tomorrow.",
+  "premiumTools": "Premium Tools",
+  "consistencyScore": "Consistency Score",
+  "milestoneProgress": "Milestone Progress",
+  "thisWeek": "this week",
+  "needsFocus": "Needs Focus",
+  "goalOnTrack": "On track to reach your goal!",
+  "goalNeedsStart": "Start this week to build momentum",
+  "goalProjection": "At this rate, ~{weeks} weeks to full consistency",
+  "tipExcellent": "Excellent consistency! Keep up the momentum.",
+  "tipFocusAreas": "{count} habits need extra attention this week",
+  "smartSuggestionsPremiumDesc": "Get personalized, actionable tips to improve your consistency and build stronger routines.",
+  "goalOptimizationPremiumDesc": "Get strategic planning advice, priority ranking, and weekly milestones to optimize your goals.",
+  "completeProfileToGetBadge": "Complete your profile to get the verified badge.",
+  "completeNow": "Complete Now",
+  "editPhone": "Edit Phone Number",
+  "enterPhoneNumber": "Enter phone number",
+  "editDateOfBirth": "Edit Date of Birth",
+  "enterDateOfBirth": "Enter date of birth (DD/MM/YYYY)",
+  "selectBirthDate": "Select Birth Date",
+  "enterVerificationCode": "Enter Verification Code",
+  "pleaseEnterPhoneFirst": "Please enter a phone number first",
+  "phoneAutoVerified": "Phone number automatically verified!",
+  "verificationFailed": "Verification failed: {error}",
+  "@verificationFailed": {
+  "placeholders": { "error": { "type": "String" } }
+  },
+  "phoneVerifiedSuccessfully": "Phone number verified successfully!",
+  "invalidCode": "Invalid code: {error}",
+  "@invalidCode": {
+  "placeholders": { "error": { "type": "String" } }
+  },
+  "verify": "Verify",
+  "verifyPhoneNumberTooltip": "Verify Phone Number",
+  "profileUpdatedSuccessfully": "Profile updated successfully",
+  "errorWithMessage": "Error: {error}",
+  "@errorWithMessage": {
+  "placeholders": { "error": { "type": "String" } }
+  },
+  "dobHint": "YYYY-MM-DD",
+  "phoneMustBeVerifiedBeforeSave": "Please verify your new phone number before saving",
+  "verified": "Verified",
+  "notVerified": "Not Verified",
+  "cancel": "Cancel",
+  "phoneAlreadyInUse": "This phone number is already linked to another account.",
+  "providerAlreadyLinked": "Your account is already linked with a phone number."
+
 }

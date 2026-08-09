@@ -3,10 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:routina/core/helpers/extension.dart';
+import 'package:routina/core/helpers/spacing.dart';
+import 'package:routina/core/theaming/app_colors.dart';
+import 'package:routina/core/theaming/app_text_styles.dart';
 import 'package:routina/features/billing_service/logic/cubit/billing_cubit.dart';
 import 'package:routina/features/billing_service/ui/billing_service.dart';
-import '../../../../core/theaming/app_colors.dart';
-import '../../../../core/theaming/app_text_styles.dart';
 
 class PaywallScreen extends StatefulWidget {
   const PaywallScreen({super.key});
@@ -90,29 +91,27 @@ class _PaywallScreenState extends State<PaywallScreen> {
       padding: EdgeInsets.symmetric(horizontal: 24.w),
       child: Column(
         children: [
-          SizedBox(height: 16.h),
+          verticalSpace(16),
           _buildCrownIcon(),
-          SizedBox(height: 20.h),
+          verticalSpace(20),
           Text(
             context.l10n.routinaPremium,
-
             style: AppTextStyles.font24WhiteBold,
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 8.h),
+          verticalSpace(8),
           Text(
             context.l10n.unlockPotential,
-
             style: AppTextStyles.font14WhiteRegular.copyWith(
               color: Colors.white54,
             ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 32.h),
+          verticalSpace(32),
           _buildFeatureList(),
-          SizedBox(height: 32.h),
+          verticalSpace(32),
           _loadingProducts ? _buildProductShimmer() : _buildProductCards(),
-          SizedBox(height: 24.h),
+          verticalSpace(24),
         ],
       ),
     );
@@ -172,19 +171,21 @@ class _PaywallScreenState extends State<PaywallScreen> {
             ),
             child: Icon(icon, color: AppColors.primary, size: 22.r),
           ),
-          SizedBox(width: 16.w),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(title, style: AppTextStyles.font16WhiteMedium),
-              SizedBox(height: 2.h),
-              Text(
-                subtitle,
-                style: AppTextStyles.font14WhiteRegular.copyWith(
-                  color: Colors.white38,
+          horizontalSpace(16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: AppTextStyles.font16WhiteMedium),
+                verticalSpace(2),
+                Text(
+                  subtitle,
+                  style: AppTextStyles.font14WhiteRegular.copyWith(
+                    color: Colors.white38,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
@@ -211,7 +212,9 @@ class _PaywallScreenState extends State<PaywallScreen> {
     if (_products.isEmpty) {
       return Text(
         context.l10n.productsUnavailable,
-        style: AppTextStyles.font14WhiteRegular.copyWith(color: Colors.white38),
+        style: AppTextStyles.font14WhiteRegular.copyWith(
+          color: Colors.white38,
+        ),
       );
     }
     return Column(children: _products.map((p) => _productCard(p)).toList());
@@ -255,7 +258,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   ? Icon(Icons.check, color: Colors.white, size: 14.r)
                   : null,
             ),
-            SizedBox(width: 14.w),
+            horizontalSpace(14),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -267,7 +270,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                         style: AppTextStyles.font16WhiteMedium,
                       ),
                       if (isYearly) ...[
-                        SizedBox(width: 8.w),
+                        horizontalSpace(8),
                         Container(
                           padding: EdgeInsets.symmetric(
                             horizontal: 8.w,
@@ -285,7 +288,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                       ],
                     ],
                   ),
-                  SizedBox(height: 4.h),
+                  verticalSpace(4),
                   Text(
                     isYearly
                         ? '${product.price} ${context.l10n.perYear}'
@@ -361,7 +364,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
               );
             },
           ),
-          SizedBox(height: 12.h),
+          verticalSpace(12),
           Text(
             context.l10n.cancelAnytime,
             style: AppTextStyles.font12WhiteRegular.copyWith(

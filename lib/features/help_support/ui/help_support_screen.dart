@@ -1,3 +1,4 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/helpers/spacing.dart';
@@ -222,6 +223,21 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
   void _showError(String msg) =>
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
 
+  // Reports a real user bug submission to Crashlytics as a NON-FATAL
+  // event (it doesn't crash the app, just logs it). Every real bug
+  // report a user sends now also shows up in the Firebase Console
+  // Crashlytics dashboard with full context — no separate "test crash"
+  // button needed, and nothing to remember to remove before release.
+  void _logBugReportToCrashlytics(String subject, String body) {
+    FirebaseCrashlytics.instance.log('User bug report: $subject');
+    FirebaseCrashlytics.instance.recordError(
+      Exception('User-reported bug: $subject'),
+      StackTrace.current,
+      reason: body,
+      fatal: false,
+    );
+  }
+
   void _submitBugReport() {
     final subject = _bugSubjectController.text.trim();
     final body = _bugBodyController.text.trim();
@@ -229,6 +245,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
       _showError(context.l10n.fillBothFields);
       return;
     }
+    _logBugReportToCrashlytics(subject, body);
     _launchEmail(subject: '[Bug] $subject', body: body);
   }
 

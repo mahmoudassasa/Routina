@@ -1,5 +1,8 @@
+// lib/features/billing_service/ui/billing_service.dart
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:routina/core/services/premium_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class BillingService {
@@ -9,10 +12,9 @@ class BillingService {
 
   final InAppPurchase _iap = InAppPurchase.instance;
   final SupabaseClient _supabase = Supabase.instance.client;
-  
-  String? _firebaseUserId;
+  final PremiumService _premiumService = PremiumService();
 
-  StreamSubscription<List<PurchaseDetails>>? _purchaseSubscription;
+  String? _firebaseUserId;
 
   void setFirebaseUserId(String? uid) {
     _firebaseUserId = uid;
@@ -34,86 +36,71 @@ class BillingService {
 
   Future<void> restorePurchases() => _iap.restorePurchases();
 
-  Future<bool> verifyAndComplete(PurchaseDetails details) async {
-    if (details.status == PurchaseStatus.purchased ||
-        details.status == PurchaseStatus.restored) {
-      if (details.pendingCompletePurchase) {
-        await _iap.completePurchase(details);
+  Future<bool> verifyAndComplete(PurchaseDetails purchase) async {
+    if (purchase.status == PurchaseStatus.pending) {
+      return false;
+    }
+
+    if (purchase.status == PurchaseStatus.purchased ||
+        purchase.status == PurchaseStatus.restored) {
+      try {
+        final token = purchase.verificationData.serverVerificationData;
+        final productId = purchase.productID;
+
+        final response = await _supabase.functions.invoke(
+          'verify-purchase',
+          body: {
+            'purchaseToken': token,
+            'subscriptionId': productId,
+            'userId': _firebaseUserId ?? FirebaseAuth.instance.currentUser?.uid,
+          },
+        );
+
+        if (response.status == 200 && response.data['success'] == true) {
+          if (purchase.pendingCompletePurchase) {
+            await _iap.completePurchase(purchase);
+          }
+          return true;
+        }
+        return false;
+      } catch (e) {
+        return false;
       }
-      await _syncPremiumToSupabase(details);
-      return true;
     }
-    if (details.pendingCompletePurchase) {
-      await _iap.completePurchase(details);
+
+    if (purchase.status == PurchaseStatus.error ||
+        purchase.status == PurchaseStatus.canceled) {
+      if (purchase.pendingCompletePurchase) {
+        await _iap.completePurchase(purchase);
+      }
     }
+
     return false;
   }
-
-  Future<void> _syncPremiumToSupabase(PurchaseDetails details) async {
-    final userId = _firebaseUserId;
-    if (userId == null) return;
-
-    final until = _calcExpiry(details.productID);
-    
+  Future<PremiumStatusResult> fetchPremiumStatus() async {
     try {
-      await _supabase
-          .from('user_premium')
-          .upsert({
-            'user_id': userId,
-            'is_premium': true,
-            'premium_until': until.toIso8601String(),
-          }, onConflict: 'user_id');
+      final data = await _premiumService.fetchPremiumStatus();
+      final isPremium = data['is_premium'] as bool? ?? false;
+      final untilStr = data['premium_until'] as String?;
+      final expiresAt = untilStr != null ? DateTime.tryParse(untilStr) : null;
+
+      return PremiumStatusResult(
+        isPremium: isPremium,
+        until: expiresAt,
+      );
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<void> clearPremiumInSupabase() async {
-    final userId = _firebaseUserId;
-    if (userId == null) return;
-    
-    await _supabase
-        .from('user_premium')
-        .update({'is_premium': false, 'premium_until': null})
-        .eq('user_id', userId);
-  }
-
-  Future<({bool isPremium, DateTime? until})> fetchPremiumStatus() async {
-    final userId = _firebaseUserId;
-    if (userId == null) {
-      return (isPremium: false, until: null);
-    }
-
-    final row = await _supabase
-        .from('user_premium')
-        .select('is_premium, premium_until')
-        .eq('user_id', userId)
-        .maybeSingle();
-
-    if (row == null) {
-      return (isPremium: false, until: null);
-    }
-
-    final isPremium = row['is_premium'] as bool? ?? false;
-    final untilStr = row['premium_until'] as String?;
-    final until = untilStr != null ? DateTime.tryParse(untilStr) : null;
-
-    if (isPremium && until != null && until.isBefore(DateTime.now())) {
-      await clearPremiumInSupabase();
-      return (isPremium: false, until: null);
-    }
-    
-    return (isPremium: isPremium, until: until);
-  }
-
-  DateTime _calcExpiry(String productId) {
-    final now = DateTime.now();
-    return productId == monthlyId
-        ? now.add(const Duration(days: 31))
-        : now.add(const Duration(days: 365));
-  }
-
   void dispose() {
-    _purchaseSubscription?.cancel();
+    // Safe placeholder
   }
+}
+
+class PremiumStatusResult {
+  final bool isPremium;
+  final DateTime? until;
+
+  PremiumStatusResult({required this.isPremium, this.until});
 }

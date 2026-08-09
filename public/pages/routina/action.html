@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Routina — Account Action</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0b0f17;
+      --card-bg: rgba(18, 24, 38, 0.85);
+      --border: rgba(255, 255, 255, 0.08);
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --text: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --success: #10b981;
+      --error: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.1) 0px, transparent 50%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 440px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+
+    .brand-logo {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 24px;
+      color: var(--text);
+    }
+
+    .brand-logo span {
+      color: var(--primary);
+    }
+
+    .status-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 20px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      font-size: 28px;
+    }
+
+    .status-icon.loading {
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      text-align: left;
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 14px;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    input[type="password"]:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px 20px;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .btn:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .error-message {
+      color: var(--error);
+      font-size: 13px;
+      margin-top: 8px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="brand-logo">Routina<span>.</span></div>
+
+    <!-- Loading State -->
+    <div id="state-loading">
+      <div class="status-icon loading"></div>
+      <h1>Processing Request</h1>
+      <p>Please wait while we process your request...</p>
+    </div>
+
+    <!-- Success State -->
+    <div id="state-success" class="hidden">
+      <div class="status-icon" style="color: var(--success); background: rgba(16, 185, 129, 0.1);">✓</div>
+      <h1 id="success-title">Action Completed</h1>
+      <p id="success-message">Your request was processed successfully.</p>
+    </div>
+
+    <!-- Error State -->
+    <div id="state-error" class="hidden">
+      <div class="status-icon" style="color: var(--error); background: rgba(239, 68, 68, 0.1);">✕</div>
+      <h1 id="error-title">Action Failed</h1>
+      <p id="error-message">This link is invalid or has expired. Please request a new link.</p>
+    </div>
+
+    <!-- Password Reset Form State -->
+    <div id="state-reset-password" class="hidden">
+      <h1>Reset Password</h1>
+      <p>Enter your new password below for your Routina account.</p>
+
+      <form id="reset-form" onsubmit="return false;">
+        <div class="form-group">
+          <label for="new-password">New Password</label>
+          <input type="password" id="new-password" placeholder="At least 6 characters" required minlength="6" />
+        </div>
+
+        <div class="form-group">
+          <label for="confirm-password">Confirm Password</label>
+          <input type="password" id="confirm-password" placeholder="Re-enter new password" required minlength="6" />
+          <div id="password-mismatch" class="error-message hidden">Passwords do not match.</div>
+        </div>
+
+        <button type="submit" id="reset-btn" class="btn">Save New Password</button>
+      </form>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { 
+      getAuth, 
+      applyActionCode, 
+      verifyPasswordResetCode, 
+      confirmPasswordReset,
+      checkActionCode
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCNcnMRsp2IgNxENUb9gKdMK9TGqwJv5Vs",
+      authDomain: "my-routina-app.firebaseapp.com",
+      projectId: "my-routina-app",
+      storageBucket: "my-routina-app.firebasestorage.app",
+      messagingSenderId: "370947315001",
+      appId: "1:370947315001:web:2eb7ab4e9590e6052804e8"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const mode = urlParams.get('mode');
+    const oobCode = urlParams.get('oobCode');
+
+    const stateLoading = document.getElementById('state-loading');
+    const stateSuccess = document.getElementById('state-success');
+    const stateError = document.getElementById('state-error');
+    const stateResetPassword = document.getElementById('state-reset-password');
+
+    const successTitle = document.getElementById('success-title');
+    const successMessage = document.getElementById('success-message');
+    const errorTitle = document.getElementById('error-title');
+    const errorMessage = document.getElementById('error-message');
+
+    function showState(element) {
+      stateLoading.classList.add('hidden');
+      stateSuccess.classList.add('hidden');
+      stateError.classList.add('hidden');
+      stateResetPassword.classList.add('hidden');
+      element.classList.remove('hidden');
+    }
+
+    function handleError(title, message) {
+      errorTitle.textContent = title;
+      errorMessage.textContent = message;
+      showState(stateError);
+    }
+
+    function handleSuccess(title, message) {
+      successTitle.textContent = title;
+      successMessage.textContent = message;
+      showState(stateSuccess);
+    }
+
+    if (!mode || !oobCode) {
+      handleError('Invalid Link', 'The URL link is incomplete or missing required parameters.');
+    } else {
+      switch (mode) {
+        case 'verifyEmail':
+          handleVerifyEmail(oobCode);
+          break;
+        case 'resetPassword':
+          handleResetPasswordFlow(oobCode);
+          break;
+        case 'recoverEmail':
+          handleRecoverEmail(oobCode);
+          break;
+        default:
+          handleError('Unsupported Action', 'The requested authentication mode is invalid.');
+      }
+    }
+
+    function handleVerifyEmail(code) {
+      applyActionCode(auth, code)
+        .then(() => {
+          handleSuccess(
+            'Email Verified!', 
+            'Your email address has been verified successfully. You can now return to the Routina app.'
+          );
+        })
+        .catch(() => {
+          handleError(
+            'Verification Failed', 
+            'This verification link is invalid, expired, or has already been used.'
+          );
+        });
+    }
+
+    function handleResetPasswordFlow(code) {
+      verifyPasswordResetCode(auth, code)
+        .then(() => {
+          showState(stateResetPassword);
+          setupPasswordResetForm(code);
+        })
+        .catch(() => {
+          handleError(
+            'Reset Link Expired', 
+            'This password reset link is invalid or has expired. Please request a new link from the app.'
+          );
+        });
+    }
+
+    function setupPasswordResetForm(code) {
+      const resetForm = document.getElementById('reset-form');
+      const newPasswordInput = document.getElementById('new-password');
+      const confirmPasswordInput = document.getElementById('confirm-password');
+      const passwordMismatch = document.getElementById('password-mismatch');
+      const resetBtn = document.getElementById('reset-btn');
+
+      resetForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        passwordMismatch.classList.add('hidden');
+
+        const newPass = newPasswordInput.value;
+        const confirmPass = confirmPasswordInput.value;
+
+        if (newPass !== confirmPass) {
+          passwordMismatch.classList.remove('hidden');
+          return;
+        }
+
+        resetBtn.disabled = true;
+        resetBtn.textContent = 'Updating...';
+
+        confirmPasswordReset(auth, code, newPass)
+          .then(() => {
+            handleSuccess(
+              'Password Reset Complete', 
+              'Your password has been changed successfully. You can now log in to Routina with your new password.'
+            );
+          })
+          .catch(() => {
+            resetBtn.disabled = false;
+            resetBtn.textContent = 'Save New Password';
+            handleError(
+              'Update Failed', 
+              'An error occurred while saving your new password. Please try again.'
+            );
+          });
+      });
+    }
+
+    function handleRecoverEmail(code) {
+      checkActionCode(auth, code)
+        .then(() => applyActionCode(auth, code))
+        .then(() => {
+          handleSuccess(
+            'Email Restored', 
+            'Your account email address has been restored to its previous value.'
+          );
+        })
+        .catch(() => {
+          handleError(
+            'Recovery Failed', 
+            'Unable to recover email. This link may be invalid or expired.'
+          );
+        });
+    }
+  </script>
+</body>
+</html>

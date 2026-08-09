@@ -62,7 +62,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get failedToLoadOptimization => 'Failed to load optimization';
 
   @override
-  String get quotaExceeded => 'Daily AI limit reached. Try again tomorrow.';
+  String get quotaExceeded => 'Daily quota exceeded. Try again tomorrow.';
 
   @override
   String get aiBusy => 'AI is busy right now. Please try again in a moment.';
@@ -641,17 +641,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get guideRemindersStep3 => 'Tap the bell icon to enable a reminder';
 
   @override
-  String get guideRemindersStep4 => 'Pick your preferred hour and minute';
+  String get guideRemindersStep4 => 'Choose the appropriate hour and minute';
 
   @override
   String get guideRemindersStep5 =>
-      'Save the habit — you\'ll get a daily notification at that time';
+      'Save the habit — you will get a daily notification at that time';
 
   @override
   String get guideEditingTitle => 'Editing a Habit';
 
   @override
-  String get guideEditingStep1 => 'On the Home screen, tap on any habit card';
+  String get guideEditingStep1 => 'On the home screen, tap any habit card';
 
   @override
   String get guideEditingStep2 => 'Update the name, icon, color, or schedule';
@@ -664,44 +664,42 @@ class AppLocalizationsEn extends AppLocalizations {
       'The old reminder will be replaced automatically';
 
   @override
-  String get guideEditingStep5 => 'Tap Save to apply your changes';
+  String get guideEditingStep5 => 'Tap Save to apply the changes';
 
   @override
   String get guideAiTitle => 'Using AI Analysis';
 
   @override
-  String get guideAiStep1 => 'Navigate to the Analyze tab';
+  String get guideAiStep1 => 'Navigate to the Analysis tab';
 
   @override
-  String get guideAiStep2 => 'Tap \"Overall Analysis\" to start';
+  String get guideAiStep2 => 'Tap \"Overall Analysis\" to begin';
 
   @override
   String get guideAiStep3 => 'The AI will review your streaks and progress';
 
   @override
-  String get guideAiStep4 =>
-      'Read your personalized insights and recommendations';
+  String get guideAiStep4 => 'Read your tailored insights and recommendations';
 
   @override
-  String get guideAiStep5 =>
-      'Or long press the + button for a quick summary anywhere';
+  String get guideAiStep5 => 'Or long press + for a quick summary anywhere';
 
   @override
   String get guideDeletingTitle => 'Deleting a Habit';
 
   @override
-  String get guideDeletingStep1 =>
-      'On the Home screen, swipe left on a habit card';
+  String get guideDeletingStep1 => 'On the home screen, swipe the card left';
 
   @override
-  String get guideDeletingStep2 => 'A delete option will appear';
+  String get guideDeletingStep2 => 'The delete option will appear';
 
   @override
-  String get guideDeletingStep3 => 'Confirm to permanently remove the habit';
+  String get guideDeletingStep3 =>
+      'Confirm deletion to permanently remove the habit';
 
   @override
   String get guideDeletingStep4 =>
-      'All progress and streak data will be deleted';
+      'All progress data and streaks will be cleared';
 
   @override
   String get markAsDone => 'Mark as Done';
@@ -710,7 +708,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get completedToday => 'Completed Today';
 
   @override
-  String get restDay => 'Rest Day';
+  String get restDay => 'Rest day';
 
   @override
   String get deleteHabit => 'Delete Habit?';
@@ -728,7 +726,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String habitDeleted(Object title) {
-    return '$title deleted';
+    return 'Deleted $title';
   }
 
   @override
@@ -736,17 +734,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String goodMorning(Object name) {
-    return 'Good Morning, $name!';
+    return 'Good morning, $name!';
   }
 
   @override
   String goodAfternoon(Object name) {
-    return 'Good Afternoon, $name!';
+    return 'Good afternoon, $name!';
   }
 
   @override
   String goodEvening(Object name) {
-    return 'Good Evening, $name!';
+    return 'Good evening, $name!';
   }
 
   @override
@@ -764,16 +762,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get welcomeBack => 'Welcome Back';
 
   @override
-  String get loginSubtitle => 'Sign in to continue tracking your habits';
+  String get loginSubtitle => 'Log in to continue tracking your habits';
 
   @override
   String get password => 'Password';
 
   @override
-  String get login => 'Login';
+  String get login => 'Log In';
 
   @override
-  String get missingCredentials => 'Missing credentials';
+  String get missingCredentials => 'Please enter your credentials';
 
   @override
   String get continueWithGoogle => 'Continue with Google';
@@ -789,19 +787,19 @@ class AppLocalizationsEn extends AppLocalizations {
       'Please verify your email before logging in 🔒';
 
   @override
-  String get googleSignInFailed => 'Google Sign-In failed. Please try again.';
+  String get googleSignInFailed => 'Google sign in failed. Please try again.';
 
   @override
-  String get invalidEmail => 'Invalid email format 📧';
+  String get invalidEmail => 'Invalid email address format 📧';
 
   @override
-  String get userNotFound => 'No user found with this email ❗';
+  String get userNotFound => 'No account found with this email ❗';
 
   @override
   String get wrongPassword => 'Incorrect password 🔐';
 
   @override
-  String get invalidCredential => 'Incorrect email or password ⚠️';
+  String get invalidCredential => 'The email or password is incorrect ⚠️';
 
   @override
   String get missingPassword => 'Please enter your password 🔑';
@@ -817,7 +815,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String unexpectedError(Object error) {
-    return 'Unexpected Error: $error';
+    return 'Unexpected error: $error';
   }
 
   @override
@@ -843,14 +841,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboarding1Subtitle =>
-      'Build better habits with our beautiful and intuitive tracker';
+      'Build better habits with a beautiful and easy-to-use tracker';
 
   @override
   String get onboarding2Title => 'Track Your Progress';
 
   @override
   String get onboarding2Subtitle =>
-      'Monitor your daily habits and see your improvements over time';
+      'Monitor your daily routines and watch your improvement over time';
 
   @override
   String get onboarding3Title => 'Stay Motivated';
@@ -876,56 +874,56 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get privacy1Content =>
-      'Routina collects only the information necessary to provide our habit tracking service. This includes your email address for authentication, habit data you create within the app, and basic usage analytics to improve your experience.';
+      'Routina only collects information necessary to provide the habit tracking service. This includes your authentication email, habit data you create in the app, and basic usage analytics to improve your experience.';
 
   @override
   String get privacy2Title => '2. How We Use Your Data';
 
   @override
   String get privacy2Content =>
-      'Your data is used solely to power the features of Routina, including habit tracking, progress analysis, and AI-powered insights. We do not sell, rent, or share your personal information with third parties for marketing purposes.';
+      'Your data is only used to power Routina features, including habit tracking, progress analysis, and AI-driven insights. We do not sell, rent, or share your personal information with third parties for marketing purposes.';
 
   @override
   String get privacy3Title => '3. Data Security';
 
   @override
   String get privacy3Content =>
-      'We use industry-standard security measures including Firebase Authentication and Supabase with Row Level Security (RLS) to protect your data. All data is encrypted in transit and at rest.';
+      'We use industry-standard security measures including Firebase Authentication and Supabase with Row Level Security (RLS) to protect your data. All data is encrypted during transit and at rest.';
 
   @override
   String get privacy4Title => '4. AI Features';
 
   @override
   String get privacy4Content =>
-      'The AI analysis feature in Routina uses Google Gemini to process your habit data. This processing is done securely and your data is not stored or used to train AI models. AI responses are generated in real-time and not retained by third parties.';
+      'Routina\'s AI analysis feature uses Google Gemini to process your habit data. This processing is done securely, and your data is not stored or used to train AI models.';
 
   @override
   String get privacy5Title => '5. Your Rights';
 
   @override
   String get privacy5Content =>
-      'You have the right to access, correct, or delete your personal data at any time. You can delete your account and all associated data directly from the app settings. For any privacy-related requests, contact us at nilient.software.2026@gmail.com.';
+      'You have the right to access, correct, or delete your personal data at any time. You can delete your account and all associated data directly from the app settings. For any privacy requests, contact us at nilient.software.2026@gmail.com.';
 
   @override
   String get privacy6Title => '6. Children\'s Privacy';
 
   @override
   String get privacy6Content =>
-      'Routina is not directed at children under the age of 13. We do not knowingly collect personal information from children. If you believe a child has provided us with personal information, please contact us immediately.';
+      'Routina is not intended for children under the age of 13. We do not knowingly collect personal information from children. If you believe a child has provided us with personal info, please contact us immediately.';
 
   @override
   String get privacy7Title => '7. Changes to This Policy';
 
   @override
   String get privacy7Content =>
-      'We may update this Privacy Policy from time to time. We will notify you of any significant changes through the app or via email. Continued use of Routina after changes constitutes acceptance of the updated policy.';
+      'We may update this Privacy Policy from time to time. We will notify you of any material changes via the app or email. Continued use of Routina after updates constitutes acceptance of the modified policy.';
 
   @override
   String get privacy8Title => '8. Contact Us';
 
   @override
   String get privacy8Content =>
-      'If you have any questions about this Privacy Policy or our data practices, please contact us at nilient.software.2026@gmail.com. We aim to respond to all inquiries within 48 hours.';
+      'If you have any questions about this Privacy Policy or our data practices, contact us at nilient.software.2026@gmail.com. We aim to respond to all inquiries within 48 hours.';
 
   @override
   String get currentStreak => 'Current Streak';
@@ -943,7 +941,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notifications => 'Notifications';
 
   @override
-  String get manageReminders => 'Manage your reminders';
+  String get manageReminders => 'Manage Reminders';
 
   @override
   String get darkMode => 'Dark Mode';
@@ -967,24 +965,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signOut => 'Sign Out';
 
   @override
-  String get leavingSoSoon => 'Leaving So Soon?';
+  String get leavingSoSoon => 'Leaving so soon?';
 
   @override
-  String get seeYouSoon => 'See You Soon!';
+  String get seeYouSoon => 'See you soon!';
 
   @override
   String get logoutConfirmMsg =>
-      'We love having you here! Are you sure you want to sign out?';
+      'We love having you around! Are you sure you want to log out?';
 
   @override
-  String get logoutProcessMsg =>
-      'We\'re making sure everything is saved for you. 💙';
+  String get logoutProcessMsg => 'Making sure everything is saved for you. 💙';
 
   @override
   String get stayWithUs => 'Stay with us';
 
   @override
-  String get yesLogOut => 'Yes, Log Out';
+  String get yesLogOut => 'Yes, log out';
 
   @override
   String get logoutFailed => 'Logout failed';
@@ -1013,10 +1010,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get languageSubtitle => 'Switch between Arabic and English';
 
   @override
-  String get days => 'days';
+  String get days => 'Days';
 
   @override
-  String get active => 'active';
+  String get active => 'Active Habit';
 
   @override
   String get createAccount => 'Create Account';
@@ -1046,13 +1043,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get passwordInvalid => 'Password does not meet requirements';
 
   @override
-  String get registerError => 'Registration failed';
+  String get registerError => 'Account creation failed';
 
   @override
   String get alreadyHaveAccount => 'Already have an account? ';
 
   @override
-  String get loginLink => 'Login';
+  String get loginLink => 'Log In';
 
   @override
   String get enterEmail => 'Enter your email';
@@ -1061,19 +1058,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get emailRequired => 'Please enter your email';
 
   @override
-  String get emailInvalid => 'Please enter a valid email';
+  String get emailInvalid => 'Please enter a valid email address';
 
   @override
   String get habitReminders => 'Habit Reminders';
 
   @override
-  String get noHabitsFound => 'No habits found to schedule';
+  String get noHabitsFound => 'No habits found to schedule reminders for';
 
   @override
-  String get reminderActive => 'Reminder is active';
+  String get reminderActive => 'Reminder Active';
 
   @override
-  String get reminderOff => 'Reminder is off';
+  String get reminderOff => 'Reminder Off';
 
   @override
   String get enableNotificationsMsg =>
@@ -1096,10 +1093,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notificationBody =>
-      'Stay consistent! It is time to complete this habit.';
+      'Keep the momentum going! Time to complete this habit.';
 
   @override
-  String get setDailyReminder => 'Set daily reminder';
+  String get setDailyReminder => 'Set Daily Reminder';
 
   @override
   String get habitTitle => 'Habit Title';
@@ -1128,41 +1125,42 @@ class AppLocalizationsEn extends AppLocalizations {
   String get createHabit => 'Create Habit';
 
   @override
-  String get noHabitsYetTitle => 'No Habits Yet';
+  String get noHabitsYetTitle => 'No habits yet';
 
   @override
   String get noHabitsYetEmptyDesc =>
       'Start building your first habit and track your progress every day.';
 
   @override
-  String get addFirstHabit => 'Add Your First Habit';
+  String get addFirstHabit => 'Add your first habit';
 
   @override
-  String get passwordLowercase => 'At least 1 lowercase letter';
+  String get passwordLowercase => 'At least one lowercase letter';
 
   @override
-  String get passwordUppercase => 'At least 1 uppercase letter';
+  String get passwordUppercase => 'At least one uppercase letter';
 
   @override
-  String get passwordSpecial => 'At least 1 special character';
+  String get passwordSpecial => 'At least one special character';
 
   @override
-  String get passwordNumber => 'At least 1 number';
+  String get passwordNumber => 'At least one number';
 
   @override
   String get passwordMinLength => 'At least 8 characters';
 
   @override
-  String get unnamedHabit => 'Unnamed Habit';
+  String get unnamedHabit => 'Unnamed habit';
 
   @override
-  String get emailAlreadyInUse => 'This email is already registered.';
+  String get emailAlreadyInUse => 'This email address is already registered.';
 
   @override
-  String get weakPassword => 'Password is too weak. Use at least 6 characters.';
+  String get weakPassword =>
+      'The password is too weak. Use at least 6 characters.';
 
   @override
-  String get wrongEmail => 'Wrong email? Go back and try again';
+  String get wrongEmail => 'Wrong email? Go back and try again.';
 
   @override
   String get about => 'About';
@@ -1176,20 +1174,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get madeWithLove => 'Made with ❤️ by Nilient';
 
   @override
-  String get rateApp => 'Rate the App';
+  String get rateApp => 'Rate App';
 
   @override
-  String get rateAppSubtitle => 'Love Routina? Leave us a review ⭐';
+  String get rateAppSubtitle => 'Loving Routina? Leave us a review ⭐';
 
   @override
-  String get shareApp => 'Share the App';
+  String get shareApp => 'Share App';
 
   @override
   String get shareAppSubtitle => 'Help others build better habits';
 
   @override
   String get shareAppMessage =>
-      'Check out Routina — a beautiful habit tracker app! https://play.google.com/store/apps/details?id=com.routina.app';
+      'Try Routina — a beautiful habit tracking app! https://play.google.com/store/apps/details?id=com.routina.app';
 
   @override
   String get appName => 'Routina';
@@ -1202,10 +1200,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deleteAccountWarning =>
-      'This will permanently delete your account, habits, and all associated data. This action cannot be undone.';
+      'Your account, habits, and all data will be permanently deleted. This action cannot be undone.';
 
   @override
-  String get userMismatch => 'Account mismatch';
+  String get userMismatch => 'Account mismatch, please try again';
 
   @override
   String get operationCancelled => 'Operation cancelled';
@@ -1235,7 +1233,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dateOfBirth => 'Date of Birth';
 
   @override
-  String get notAdded => 'Not Added';
+  String get notAdded => 'Not added';
 
   @override
   String get takePhoto => 'Take Photo';
@@ -1253,8 +1251,206 @@ class AppLocalizationsEn extends AppLocalizations {
   String get termsOfService => 'Terms of Service';
 
   @override
-  String get bySigningUpYouAgreeTo => 'By signing up, you agree to our';
+  String get bySigningUpYouAgreeTo => 'By signing up, you agree to the';
 
   @override
   String get and => 'and';
+
+  @override
+  String get phonePlaceholder => 'Phone number';
+
+  @override
+  String get phoneRequired => 'Phone number is required';
+
+  @override
+  String get phoneInvalid => 'Invalid phone number';
+
+  @override
+  String get birthDatePlaceholder => 'Date of Birth (YYYY-MM-DD)';
+
+  @override
+  String get dobRequired => 'Date of birth is required';
+
+  @override
+  String get orContinueWith => 'Or continue with';
+
+  @override
+  String get google => 'Google';
+
+  @override
+  String get freePlan => 'Free Plan';
+
+  @override
+  String get activeMember => 'Active Member';
+
+  @override
+  String expiresOn(String date) {
+    return 'Expires on $date';
+  }
+
+  @override
+  String planRenewsOn(String date) {
+    return 'Renews on $date';
+  }
+
+  @override
+  String get optional => 'Optional';
+
+  @override
+  String get remainingRequests => 'Remaining Requests';
+
+  @override
+  String get rateLimited => 'Rate limit reached. Please wait.';
+
+  @override
+  String get tryAgainLater => 'Try again later';
+
+  @override
+  String get unlockMoreAnalysis => 'Unlock More Analysis';
+
+  @override
+  String get unlockMoreAnalysisDesc =>
+      'Get unlimited AI analysis and advanced insights with Routina Premium.';
+
+  @override
+  String get daily30Requests => '30 AI analysis requests per day';
+
+  @override
+  String get advancedInsights => 'Advanced insights and recommendations';
+
+  @override
+  String get prioritySupport => 'Priority support';
+
+  @override
+  String get advancedStats => 'Advanced Stats';
+
+  @override
+  String get advancedStatistics => 'Advanced Statistics';
+
+  @override
+  String get needsImprovement => 'Needs Improvement';
+
+  @override
+  String get colorDistribution => 'Color Distribution';
+
+  @override
+  String get generateInsights => 'Generate Insights';
+
+  @override
+  String get premiumTools => 'Premium Tools';
+
+  @override
+  String get consistencyScore => 'Consistency Score';
+
+  @override
+  String get milestoneProgress => 'Milestone Progress';
+
+  @override
+  String get thisWeek => 'this week';
+
+  @override
+  String get goalOnTrack => 'On track to reach your goal!';
+
+  @override
+  String get goalNeedsStart => 'Start this week to build momentum';
+
+  @override
+  String goalProjection(Object weeks) {
+    return 'At this rate, ~$weeks weeks to full consistency';
+  }
+
+  @override
+  String get tipExcellent => 'Excellent consistency! Keep up the momentum.';
+
+  @override
+  String tipFocusAreas(Object count) {
+    return '$count habits need extra attention this week';
+  }
+
+  @override
+  String get smartSuggestionsPremiumDesc =>
+      'Get personalized, actionable tips to improve your consistency and build stronger routines.';
+
+  @override
+  String get goalOptimizationPremiumDesc =>
+      'Get strategic planning advice, priority ranking, and weekly milestones to optimize your goals.';
+
+  @override
+  String get completeProfileToGetBadge =>
+      'Complete your profile to get the verified badge.';
+
+  @override
+  String get completeNow => 'Complete Now';
+
+  @override
+  String get editPhone => 'Edit Phone Number';
+
+  @override
+  String get enterPhoneNumber => 'Enter phone number';
+
+  @override
+  String get editDateOfBirth => 'Edit Date of Birth';
+
+  @override
+  String get enterDateOfBirth => 'Enter date of birth (DD/MM/YYYY)';
+
+  @override
+  String get selectBirthDate => 'Select Birth Date';
+
+  @override
+  String get enterVerificationCode => 'Enter Verification Code';
+
+  @override
+  String get pleaseEnterPhoneFirst => 'Please enter a phone number first';
+
+  @override
+  String get phoneAutoVerified => 'Phone number automatically verified!';
+
+  @override
+  String verificationFailed(String error) {
+    return 'Verification failed: $error';
+  }
+
+  @override
+  String get phoneVerifiedSuccessfully => 'Phone number verified successfully!';
+
+  @override
+  String invalidCode(String error) {
+    return 'Invalid code: $error';
+  }
+
+  @override
+  String get verify => 'Verify';
+
+  @override
+  String get verifyPhoneNumberTooltip => 'Verify Phone Number';
+
+  @override
+  String get profileUpdatedSuccessfully => 'Profile updated successfully';
+
+  @override
+  String errorWithMessage(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get dobHint => 'YYYY-MM-DD';
+
+  @override
+  String get phoneMustBeVerifiedBeforeSave =>
+      'Please verify your new phone number before saving';
+
+  @override
+  String get verified => 'Verified';
+
+  @override
+  String get notVerified => 'Not Verified';
+
+  @override
+  String get phoneAlreadyInUse =>
+      'This phone number is already linked to another account.';
+
+  @override
+  String get providerAlreadyLinked =>
+      'Your account is already linked with a phone number.';
 }

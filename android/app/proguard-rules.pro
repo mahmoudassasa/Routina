@@ -1,31 +1,50 @@
-# Flutter
+# Flutter Wrapper and Plugins
+-keep class io.flutter.app.** { *; }
+-keep class io.flutter.plugin.** { *; }
+-keep class io.flutter.util.** { *; }
+-keep class io.flutter.view.** { *; }
 -keep class io.flutter.** { *; }
 -keep class io.flutter.plugins.** { *; }
+-dontwarn io.flutter.**
 
-# Firebase
+# Firebase and Google Play Services
 -keep class com.google.firebase.** { *; }
 -keep class com.google.android.gms.** { *; }
+-dontwarn com.google.firebase.**
+-dontwarn com.google.android.gms.**
 
-# Supabase (important)
--keep class io.supabase.** { *; }
+# Google Play Billing (In-App Purchase Fix)
+-keep class com.android.billingclient.** { *; }
+-dontwarn com.android.billingclient.**
 
-# Gson / JSON parsing
+# Google Mobile Ads (AdMob)
+-keep class com.google.android.gms.ads.** { *; }
+-dontwarn com.google.android.gms.ads.**
+
+# Play Core and Play Integrity
+-keep class com.google.android.play.core.** { *; }
+-dontwarn com.google.android.play.core.**
+
+# Gson and Serialization Attributes
 -keep class com.google.gson.** { *; }
--keepattributes Signature
+-keepattributes Signature, *Annotation*, EnclosingMethod, InnerClasses
 
-# Keep model classes (important models)
+# Application Specific Models
 -keep class com.routina.app.** { *; }
 
-# Remove logs
--assumenosideeffects class android.util.Log {
-    *;
-}
-# Kotlin
+# Kotlin and Coroutines
 -keep class kotlin.** { *; }
+-dontwarn kotlin.**
 -keepclassmembers class **$WhenMappings { *; }
-
-# Coroutines
 -keepnames class kotlinx.coroutines.internal.MainDispatcherFactory { *; }
+-dontwarn kotlinx.coroutines.**
 
--dontwarn com.google.android.play.core.**
--keep class com.google.android.play.core.** { *; }
+# Clean Log Removal for Release Build
+-assumenosideeffects class android.util.Log {
+    public static boolean isLoggable(java.lang.String, int);
+    public static int v(...);
+    public static int d(...);
+    public static int i(...);
+    public static int w(...);
+    public static int e(...);
+}

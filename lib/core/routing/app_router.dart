@@ -96,39 +96,39 @@ class AppRouter {
       case Routes.privacyPolicyScreen:
         return MaterialPageRoute(builder: (_) => const PrivacyPolicyScreen());
 
-    case Routes.strategicGoalsScreen:
-  final args = settings.arguments;
-  final List<Map<String, dynamic>> habits;
-  if (args is List<Map<String, dynamic>>) {
-    habits = args;
-  } else if (args is Map<String, dynamic> && args['habits'] != null) {
-    habits = (args['habits'] as List).cast<Map<String, dynamic>>();
-  } else {
-    habits = [];
-  }
-  return MaterialPageRoute(
-    builder: (_) => BlocProvider(
-      create: (_) => BillingCubit()..init(),
-      child: StrategicGoalsScreen(habits: habits),
-    ),
-  );
+      case Routes.strategicGoalsScreen:
+        final args = settings.arguments;
+        final List<Map<String, dynamic>> habits;
+        if (args is List<Map<String, dynamic>>) {
+          habits = args;
+        } else if (args is Map<String, dynamic> && args['habits'] != null) {
+          habits = (args['habits'] as List).cast<Map<String, dynamic>>();
+        } else {
+          habits = [];
+        }
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => BillingCubit()..init(),
+            child: StrategicGoalsScreen(habits: habits),
+          ),
+        );
 
-case Routes.premiumAnalyticsScreen:
-  final args = settings.arguments;
-  final List<Map<String, dynamic>> habits;
-  if (args is List<Map<String, dynamic>>) {
-    habits = args;
-  } else if (args is Map<String, dynamic> && args['habits'] != null) {
-    habits = (args['habits'] as List).cast<Map<String, dynamic>>();
-  } else {
-    habits = [];
-  }
-  return MaterialPageRoute(
-    builder: (_) => BlocProvider(
-      create: (_) => BillingCubit()..init(),
-      child: PremiumAnalyticsScreen(habits: habits),
-    ),
-  );
+      case Routes.premiumAnalyticsScreen:
+        final args = settings.arguments;
+        final List<Map<String, dynamic>> habits;
+        if (args is List<Map<String, dynamic>>) {
+          habits = args;
+        } else if (args is Map<String, dynamic> && args['habits'] != null) {
+          habits = (args['habits'] as List).cast<Map<String, dynamic>>();
+        } else {
+          habits = [];
+        }
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => BillingCubit()..init(),
+            child: PremiumAnalyticsScreen(habits: habits),
+          ),
+        );
       case Routes.aboutScreen:
         return MaterialPageRoute(builder: (_) => const AboutScreen());
       case Routes.accountInformationScreen:

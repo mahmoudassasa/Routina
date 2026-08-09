@@ -537,6 +537,39 @@
   "tipExcellent": "انتظام ممتاز! استمر بنفس الزخم.",
   "tipFocusAreas": "{count} عادات محتاجة اهتمام إضافي الأسبوع ده",
   "smartSuggestionsPremiumDesc": "احصل على نصائح شخصية وقابلة للتنفيذ لتحسين التزامك وبناء روتين أقوى.",
-  "goalOptimizationPremiumDesc": "احصل على نصائح تخطيط استراتيجي، ترتيب الأولويات، وأهداف أسبوعية لتحسين أهدافك."
+  "goalOptimizationPremiumDesc": "احصل على نصائح تخطيط استراتيجي، ترتيب الأولويات، وأهداف أسبوعية لتحسين أهدافك.",
+  "completeProfileToGetBadge": "أكمل ملفك الشخصي للحصول على علامة التوثيق.",
+  "completeNow": "أكمل الآن",
+  "editPhone": "تعديل رقم الهاتف",
+  "enterPhoneNumber": "أدخل رقم الهاتف",
+  "editDateOfBirth": "تعديل تاريخ الميلاد",
+  "enterDateOfBirth": "أدخل تاريخ الميلاد (يوم/شهر/سنة)",
+  "selectBirthDate": "اختر تاريخ الميلاد",
+  "enterVerificationCode": "أدخل كود التحقق",
+  "pleaseEnterPhoneFirst": "من فضلك أدخل رقم الهاتف أولاً",
+  "phoneAutoVerified": "تم التحقق من رقم الهاتف تلقائيًا!",
+  "verificationFailed": "فشل التحقق: {error}",
+  "@verificationFailed": {
+  "placeholders": { "error": { "type": "String" } }
+  },
+  "phoneVerifiedSuccessfully": "تم التحقق من رقم الهاتف بنجاح!",
+  "invalidCode": "كود غير صحيح: {error}",
+  "@invalidCode": {
+  "placeholders": { "error": { "type": "String" } }
+  },
+  "verify": "تحقق",
+  "verifyPhoneNumberTooltip": "تحقق من رقم الهاتف",
+  "profileUpdatedSuccessfully": "تم تحديث الملف الشخصي بنجاح",
+  "errorWithMessage": "خطأ: {error}",
+  "@errorWithMessage": {
+  "placeholders": { "error": { "type": "String" } }
+  },
+  "dobHint": "YYYY-MM-DD",
+  "phoneMustBeVerifiedBeforeSave": "من فضلك تحقق من رقم الهاتف الجديد قبل الحفظ",
+  "verified": "متحقق منه",
+  "notVerified": "غير متحقق منه",
+  "cancel": "إلغاء",
+  "phoneAlreadyInUse": "رقم الهاتف هذا مربوط بحساب آخر بالفعل.",
+  "providerAlreadyLinked": "حسابك مربوط بالفعل برقم هاتف."
 
 }

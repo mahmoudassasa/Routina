@@ -1362,4 +1362,81 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get goalOptimizationPremiumDesc =>
       'احصل على نصائح تخطيط استراتيجي، ترتيب الأولويات، وأهداف أسبوعية لتحسين أهدافك.';
+
+  @override
+  String get completeProfileToGetBadge =>
+      'أكمل ملفك الشخصي للحصول على علامة التوثيق.';
+
+  @override
+  String get completeNow => 'أكمل الآن';
+
+  @override
+  String get editPhone => 'تعديل رقم الهاتف';
+
+  @override
+  String get enterPhoneNumber => 'أدخل رقم الهاتف';
+
+  @override
+  String get editDateOfBirth => 'تعديل تاريخ الميلاد';
+
+  @override
+  String get enterDateOfBirth => 'أدخل تاريخ الميلاد (يوم/شهر/سنة)';
+
+  @override
+  String get selectBirthDate => 'اختر تاريخ الميلاد';
+
+  @override
+  String get enterVerificationCode => 'أدخل كود التحقق';
+
+  @override
+  String get pleaseEnterPhoneFirst => 'من فضلك أدخل رقم الهاتف أولاً';
+
+  @override
+  String get phoneAutoVerified => 'تم التحقق من رقم الهاتف تلقائيًا!';
+
+  @override
+  String verificationFailed(String error) {
+    return 'فشل التحقق: $error';
+  }
+
+  @override
+  String get phoneVerifiedSuccessfully => 'تم التحقق من رقم الهاتف بنجاح!';
+
+  @override
+  String invalidCode(String error) {
+    return 'كود غير صحيح: $error';
+  }
+
+  @override
+  String get verify => 'تحقق';
+
+  @override
+  String get verifyPhoneNumberTooltip => 'تحقق من رقم الهاتف';
+
+  @override
+  String get profileUpdatedSuccessfully => 'تم تحديث الملف الشخصي بنجاح';
+
+  @override
+  String errorWithMessage(String error) {
+    return 'خطأ: $error';
+  }
+
+  @override
+  String get dobHint => 'YYYY-MM-DD';
+
+  @override
+  String get phoneMustBeVerifiedBeforeSave =>
+      'من فضلك تحقق من رقم الهاتف الجديد قبل الحفظ';
+
+  @override
+  String get verified => 'متحقق منه';
+
+  @override
+  String get notVerified => 'غير متحقق منه';
+
+  @override
+  String get phoneAlreadyInUse => 'رقم الهاتف هذا مربوط بحساب آخر بالفعل.';
+
+  @override
+  String get providerAlreadyLinked => 'حسابك مربوط بالفعل برقم هاتف.';
 }

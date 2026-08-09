@@ -36,8 +36,11 @@ class BillingService {
 
   Future<void> restorePurchases() => _iap.restorePurchases();
 
-  // ✅ استخدام PremiumService بدلاً من الاتصال المباشر
   Future<bool> verifyAndComplete(PurchaseDetails purchase) async {
+    if (purchase.status == PurchaseStatus.pending) {
+      return false;
+    }
+
     if (purchase.status == PurchaseStatus.purchased ||
         purchase.status == PurchaseStatus.restored) {
       try {
@@ -48,7 +51,7 @@ class BillingService {
           'verify-purchase',
           body: {
             'purchaseToken': token,
-            'productId': productId,
+            'subscriptionId': productId,
             'userId': _firebaseUserId ?? FirebaseAuth.instance.currentUser?.uid,
           },
         );
@@ -65,12 +68,15 @@ class BillingService {
       }
     }
 
-    if (purchase.pendingCompletePurchase) {
-      await _iap.completePurchase(purchase);
+    if (purchase.status == PurchaseStatus.error ||
+        purchase.status == PurchaseStatus.canceled) {
+      if (purchase.pendingCompletePurchase) {
+        await _iap.completePurchase(purchase);
+      }
     }
+
     return false;
   }
-
   Future<PremiumStatusResult> fetchPremiumStatus() async {
     try {
       final data = await _premiumService.fetchPremiumStatus();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:routina/core/di/dependency_injection.dart';
 import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/widgets/create_habit/ui/create_habit_bottom_sheet.dart';
@@ -29,7 +30,7 @@ class _MainNavigationBarState extends State<MainNavigationBar> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => HomeCubit()..loadHabits()),
+        BlocProvider(create: (_) => getIt<HomeCubit>()..loadHabits()),
         BlocProvider(create: (_) => ProfileCubit()..loadUserData()),
         BlocProvider(create: (_) => LogoutCubit()),
         BlocProvider(create: (_) => BillingCubit()..init()),

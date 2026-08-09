@@ -536,6 +536,39 @@
   "tipExcellent": "Excellent consistency! Keep up the momentum.",
   "tipFocusAreas": "{count} habits need extra attention this week",
   "smartSuggestionsPremiumDesc": "Get personalized, actionable tips to improve your consistency and build stronger routines.",
-  "goalOptimizationPremiumDesc": "Get strategic planning advice, priority ranking, and weekly milestones to optimize your goals."
+  "goalOptimizationPremiumDesc": "Get strategic planning advice, priority ranking, and weekly milestones to optimize your goals.",
+  "completeProfileToGetBadge": "Complete your profile to get the verified badge.",
+  "completeNow": "Complete Now",
+  "editPhone": "Edit Phone Number",
+  "enterPhoneNumber": "Enter phone number",
+  "editDateOfBirth": "Edit Date of Birth",
+  "enterDateOfBirth": "Enter date of birth (DD/MM/YYYY)",
+  "selectBirthDate": "Select Birth Date",
+  "enterVerificationCode": "Enter Verification Code",
+  "pleaseEnterPhoneFirst": "Please enter a phone number first",
+  "phoneAutoVerified": "Phone number automatically verified!",
+  "verificationFailed": "Verification failed: {error}",
+  "@verificationFailed": {
+  "placeholders": { "error": { "type": "String" } }
+  },
+  "phoneVerifiedSuccessfully": "Phone number verified successfully!",
+  "invalidCode": "Invalid code: {error}",
+  "@invalidCode": {
+  "placeholders": { "error": { "type": "String" } }
+  },
+  "verify": "Verify",
+  "verifyPhoneNumberTooltip": "Verify Phone Number",
+  "profileUpdatedSuccessfully": "Profile updated successfully",
+  "errorWithMessage": "Error: {error}",
+  "@errorWithMessage": {
+  "placeholders": { "error": { "type": "String" } }
+  },
+  "dobHint": "YYYY-MM-DD",
+  "phoneMustBeVerifiedBeforeSave": "Please verify your new phone number before saving",
+  "verified": "Verified",
+  "notVerified": "Not Verified",
+  "cancel": "Cancel",
+  "phoneAlreadyInUse": "This phone number is already linked to another account.",
+  "providerAlreadyLinked": "Your account is already linked with a phone number."
 
 }

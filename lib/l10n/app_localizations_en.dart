@@ -1374,4 +1374,83 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get goalOptimizationPremiumDesc =>
       'Get strategic planning advice, priority ranking, and weekly milestones to optimize your goals.';
+
+  @override
+  String get completeProfileToGetBadge =>
+      'Complete your profile to get the verified badge.';
+
+  @override
+  String get completeNow => 'Complete Now';
+
+  @override
+  String get editPhone => 'Edit Phone Number';
+
+  @override
+  String get enterPhoneNumber => 'Enter phone number';
+
+  @override
+  String get editDateOfBirth => 'Edit Date of Birth';
+
+  @override
+  String get enterDateOfBirth => 'Enter date of birth (DD/MM/YYYY)';
+
+  @override
+  String get selectBirthDate => 'Select Birth Date';
+
+  @override
+  String get enterVerificationCode => 'Enter Verification Code';
+
+  @override
+  String get pleaseEnterPhoneFirst => 'Please enter a phone number first';
+
+  @override
+  String get phoneAutoVerified => 'Phone number automatically verified!';
+
+  @override
+  String verificationFailed(String error) {
+    return 'Verification failed: $error';
+  }
+
+  @override
+  String get phoneVerifiedSuccessfully => 'Phone number verified successfully!';
+
+  @override
+  String invalidCode(String error) {
+    return 'Invalid code: $error';
+  }
+
+  @override
+  String get verify => 'Verify';
+
+  @override
+  String get verifyPhoneNumberTooltip => 'Verify Phone Number';
+
+  @override
+  String get profileUpdatedSuccessfully => 'Profile updated successfully';
+
+  @override
+  String errorWithMessage(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get dobHint => 'YYYY-MM-DD';
+
+  @override
+  String get phoneMustBeVerifiedBeforeSave =>
+      'Please verify your new phone number before saving';
+
+  @override
+  String get verified => 'Verified';
+
+  @override
+  String get notVerified => 'Not Verified';
+
+  @override
+  String get phoneAlreadyInUse =>
+      'This phone number is already linked to another account.';
+
+  @override
+  String get providerAlreadyLinked =>
+      'Your account is already linked with a phone number.';
 }

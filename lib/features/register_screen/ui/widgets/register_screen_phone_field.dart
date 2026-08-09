@@ -24,83 +24,119 @@ class RegisterScreenPhoneField extends StatelessWidget {
 
     return Theme(
       data: Theme.of(context).copyWith(
-        canvasColor: isDark ? AppColors.darkBackgroundLight : Colors.white,
-      ),
-      child: InternationalPhoneNumberInput(
-        locale: Localizations.localeOf(context).languageCode,
-        onInputChanged: onInputChanged,
-        textFieldController: phoneController,
-        initialValue: phoneNumber,
-        autoValidateMode: AutovalidateMode.onUserInteraction,
-        selectorConfig: const SelectorConfig(
-          selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
-          setSelectorButtonAsPrefixIcon: true,
-          leadingPadding: 0,
-          trailingSpace: false,
-        ),
-        selectorTextStyle: TextStyle(
-          color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
-          fontSize: 13.sp,
-        ),
-        textStyle: TextStyle(
-          color: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
-          fontSize: 14.sp,
-        ),
-        searchBoxDecoration: InputDecoration(
-          hintText: 'Search country',
-          hintStyle: TextStyle(
-            color: isDark ? Colors.white38 : Colors.grey[500],
-            fontSize: 13.sp,
+        canvasColor: isDark ? AppColors.darkSurface : Colors.white,
+        bottomSheetTheme: BottomSheetThemeData(
+          backgroundColor: isDark ? AppColors.darkSurface : Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
           ),
-          prefixIcon: Icon(Icons.search, size: 20.w),
         ),
-        cursorColor: AppColors.primary,
-        formatInput: false,
-        keyboardType: const TextInputType.numberWithOptions(
-          signed: true,
-          decimal: true,
-        ),
-        inputDecoration: InputDecoration(
-          labelText: '${context.l10n.phonePlaceholder} (${context.l10n.optional})',
-          labelStyle: TextStyle(
-            color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+      ),
+      child: Directionality(
+        textDirection: TextDirection.ltr,
+        child: InternationalPhoneNumberInput(
+          locale: Localizations.localeOf(context).languageCode,
+          onInputChanged: onInputChanged,
+          textFieldController: phoneController,
+          initialValue: phoneNumber,
+          autoValidateMode: AutovalidateMode.onUserInteraction,
+          selectorConfig: SelectorConfig(
+            selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+            setSelectorButtonAsPrefixIcon: true,
+            leadingPadding: 12.w,
+            trailingSpace: false,
+          ),
+          selectorTextStyle: TextStyle(
+            color: isDark ? Colors.white : AppColors.textPrimary,
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w500,
+          ),
+          textStyle: TextStyle(
+            color: isDark ? Colors.white : AppColors.textPrimary,
             fontSize: 14.sp,
           ),
-          floatingLabelBehavior: FloatingLabelBehavior.auto,
-          fillColor: defaultFillColor,
-          filled: true,
-          contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.r),
-            borderSide: BorderSide(color: borderColor),
+          searchBoxDecoration: InputDecoration(
+            hintText: 'Search country...',
+            hintStyle: TextStyle(
+              color: isDark ? Colors.white30 : Colors.grey[400],
+              fontSize: 13.sp,
+            ),
+            prefixIcon: Icon(
+              Icons.search_rounded,
+              size: 20.w,
+              color: isDark ? AppColors.primaryLight : AppColors.primary,
+            ),
+            filled: true,
+            fillColor: isDark
+                ? Colors.white.withValues(alpha: 0.05)
+                : Colors.grey.withValues(alpha: 0.08),
+            contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(14.r),
+              borderSide: BorderSide.none,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(14.r),
+              borderSide: BorderSide.none,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(14.r),
+              borderSide: BorderSide(color: AppColors.primary, width: 1.5.w),
+            ),
           ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.r),
-            borderSide: BorderSide(color: borderColor),
+          cursorColor: AppColors.primary,
+          formatInput: false,
+          keyboardType: const TextInputType.numberWithOptions(
+            signed: true,
+            decimal: true,
           ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.r),
-            borderSide: BorderSide(color: AppColors.primary, width: 1.5.w),
+          inputDecoration: InputDecoration(
+            labelText: '${context.l10n.phonePlaceholder} (${context.l10n.optional})',
+            labelStyle: TextStyle(
+              color: isDark ? Colors.white60 : AppColors.textSecondary,
+              fontSize: 14.sp,
+            ),
+            floatingLabelBehavior: FloatingLabelBehavior.auto,
+            fillColor: defaultFillColor,
+            filled: true,
+            suffixIcon: Icon(
+              Icons.phone_outlined,
+              size: 20.sp,
+              color: isDark ? AppColors.primaryLight : AppColors.primary,
+            ),
+            contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16.r),
+              borderSide: BorderSide(color: borderColor),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16.r),
+              borderSide: BorderSide(color: borderColor),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16.r),
+              borderSide: BorderSide(color: AppColors.primary, width: 1.5.w),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16.r),
+              borderSide: const BorderSide(color: AppColors.error),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16.r),
+              borderSide: BorderSide(color: AppColors.error, width: 1.5.w),
+            ),
           ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.r),
-            borderSide: const BorderSide(color: AppColors.error),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.r),
-            borderSide: BorderSide(color: AppColors.error, width: 1.5.w),
-          ),
-        ),
-        validator: (value) {
-          if (value == null || value.trim().isEmpty) {
+          validator: (value) {
+            if (value == null || value.trim().isEmpty) {
+              return null;
+            }
+            final digits = value.trim().replaceAll(RegExp(r'[^\d]'), '');
+            if (digits.length < 8 || digits.length > 12) {
+              return context.l10n.phoneInvalid;
+            }
             return null;
-          }
-          final digits = value.trim().replaceAll(RegExp(r'[^\d]'), '');
-          if (digits.length < 8 || digits.length > 12) {
-            return context.l10n.phoneInvalid;
-          }
-          return null;
-        },
+          },
+        ),
       ),
     );
   }

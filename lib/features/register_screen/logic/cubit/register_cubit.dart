@@ -9,13 +9,21 @@ import 'package:routina/features/register_screen/logic/cubit/register_state.dart
 import 'package:supabase_flutter/supabase_flutter.dart' hide User;
 
 class RegisterCubit extends Cubit<RegisterState> {
-  RegisterCubit() : super(const RegisterState());
+  RegisterCubit({
+    ImagePicker? picker,
+    GoogleSignIn? googleSignIn,
+    PremiumService? premiumService,
+  })  : _picker = picker ?? ImagePicker(),
+        _googleSignIn = googleSignIn ?? GoogleSignIn(),
+        _premiumService = premiumService ?? PremiumService(),
+        super(const RegisterState());
 
-  final ImagePicker _picker = ImagePicker();
+  final ImagePicker _picker;
+  final GoogleSignIn _googleSignIn;
+  final PremiumService _premiumService;
   final _supabase = Supabase.instance.client;
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   Future<void> pickImage({ImageSource source = ImageSource.gallery}) async {
     emit(state.copyWith(imageStatus: ImageUploadStatus.picking));
@@ -85,27 +93,18 @@ class RegisterCubit extends Cubit<RegisterState> {
     String dob,
   ) async {
     emit(state.copyWith(status: RegisterStatus.loading));
-    String? uploadedFileName;
+    UserCredential? userCredential;
+    String? imageUrl;
 
     try {
-      final userCredential = await _auth.createUserWithEmailAndPassword(
+      userCredential = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
       final uid = userCredential.user!.uid;
 
-      if (state.localImage != null) {
-        uploadedFileName = "$uid-profile-${DateTime.now().millisecondsSinceEpoch}.jpg";
-        await _supabase.storage.from('users').upload(
-              uploadedFileName,
-              state.localImage!,
-              fileOptions: const FileOptions(contentType: 'image/jpeg'),
-            );
-      }
-
-      final imageUrl = uploadedFileName != null
-          ? _supabase.storage.from('users').getPublicUrl(uploadedFileName)
-          : _supabase.storage.from('users').getPublicUrl('unknown.png');
+      imageUrl = await uploadImage(uid);
+      imageUrl ??= _supabase.storage.from('users').getPublicUrl('unknown.png');
 
       await _firestore.collection('users').doc(uid).set({
         'uid': uid,
@@ -117,43 +116,43 @@ class RegisterCubit extends Cubit<RegisterState> {
         'createdAt': FieldValue.serverTimestamp(),
       });
 
-      // ✅ استخدام PremiumService بدلاً من الاتصال المباشر
-      await PremiumService().ensurePremiumRecord();
-
+      await _premiumService.ensurePremiumRecord();
       await userCredential.user!.sendEmailVerification();
 
       emit(state.copyWith(status: RegisterStatus.success));
-    } on FirebaseAuthException catch (e) {
-      emit(
-        state.copyWith(
-          status: RegisterStatus.error,
-          errorCode: _mapError(e.code),
-        ),
-      );
     } catch (e) {
-      if (_auth.currentUser != null) {
-        final uid = _auth.currentUser!.uid;
+      await _rollbackRegistration(userCredential?.user, imageUrl);
 
-        try {
-          await _auth.currentUser!.delete();
-        } catch (_) {}
+      final errorCode = (e is FirebaseAuthException)
+          ? _mapError(e.code)
+          : 'unexpectedError';
 
-        try {
-          await _firestore.collection('users').doc(uid).delete();
-        } catch (_) {}
-
-        if (uploadedFileName != null) {
-          try {
-            await _supabase.storage.from('users').remove([uploadedFileName]);
-          } catch (_) {}
-        }
-      }
       emit(
         state.copyWith(
           status: RegisterStatus.error,
-          errorCode: 'unexpectedError',
+          errorCode: errorCode,
         ),
       );
+    }
+  }
+
+  Future<void> _rollbackRegistration(User? user, String? imageUrl) async {
+    if (user == null) return;
+    final uid = user.uid;
+
+    try {
+      await user.delete();
+    } catch (_) {}
+
+    try {
+      await _firestore.collection('users').doc(uid).delete();
+    } catch (_) {}
+
+    if (imageUrl != null && imageUrl.contains(uid)) {
+      try {
+        final fileName = imageUrl.split('/').last;
+        await _supabase.storage.from('users').remove([fileName]);
+      } catch (_) {}
     }
   }
 
@@ -194,8 +193,7 @@ class RegisterCubit extends Cubit<RegisterState> {
           'createdAt': FieldValue.serverTimestamp(),
         }, SetOptions(merge: true));
 
-        // ✅ استخدام PremiumService بدلاً من الاتصال المباشر
-        await PremiumService().ensurePremiumRecord();
+        await _premiumService.ensurePremiumRecord();
 
         emit(state.copyWith(status: RegisterStatus.success));
       } else {

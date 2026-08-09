@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/services/ad_banner_widget.dart';
 import 'package:routina/core/services/ad_interstitial_service.dart';
+import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/features/home_screen/ui/widgets/habits_list.dart';
 import 'package:routina/features/home_screen/ui/widgets/home_header.dart';
+import 'package:routina/features/home_screen/ui/widgets/home_profile_completion_banner.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -55,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               const HomeHeader(),
+              const HomeProfileCompletionBanner(),
               Expanded(child: HabitsList()),
             ],
           ),

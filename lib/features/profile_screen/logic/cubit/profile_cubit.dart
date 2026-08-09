@@ -12,6 +12,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit() : super(const ProfileState());
 
   final _supabase = Supabase.instance.client;
+  final _picker = ImagePicker();
 
   Future<void> loadUserData() async {
     if (!isClosed) {
@@ -26,9 +27,27 @@ class ProfileCubit extends Cubit<ProfileState> {
           .collection('users')
           .doc(user.uid)
           .get();
+
       if (isClosed) return;
       if (!userDoc.exists) throw Exception('User document not found');
       final userData = userDoc.data()!;
+
+      final name = userData['name'] as String?;
+      final phone = userData['phone'] as String?;
+      final dob = userData['dob'] as String?;
+      final email = userData['email'] as String?;
+      
+      String? imageUrl = userData['imageUrl'] as String?;
+      if (imageUrl != null && imageUrl.contains('unknown.png')) {
+        imageUrl = null;
+      }
+
+      final phoneVerified = userData['phoneVerified'] as bool? ?? false;
+
+      final profileCompleted = (name?.isNotEmpty ?? false) &&
+          (phone?.isNotEmpty ?? false) &&
+          (dob?.isNotEmpty ?? false) &&
+          phoneVerified;
 
       final habits = await HabitService().fetchHabitsForCurrentUser();
       if (isClosed) return;
@@ -50,13 +69,17 @@ class ProfileCubit extends Cubit<ProfileState> {
         emit(
           state.copyWith(
             loading: false,
-            name: userData['name'] as String?,
-            email: userData['email'] as String?,
-            imageUrl: userData['imageUrl'] as String?,
+            name: name,
+            email: email,
+            imageUrl: imageUrl,
+            phone: phone,
+            dob: dob,
+            phoneVerified: phoneVerified,
             totalHabitsCount: total,
             currentStreakCount: currentActiveStreak,
             completionRate: "${avgCompletion.toInt()}%",
             bestStreakCount: bestStreak,
+            profileCompleted: profileCompleted,
           ),
         );
       }
@@ -67,7 +90,57 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
-  final _picker = ImagePicker();
+  Future<void> updateProfileData({
+    String? name,
+    String? phone,
+    String? dob,
+  }) async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) return;
+
+      emit(state.copyWith(loading: true));
+
+      final Map<String, dynamic> updateData = {};
+      if (name != null) updateData['name'] = name;
+      if (dob != null) updateData['dob'] = dob;
+
+      final phoneChanged = phone != null && phone != state.phone;
+      if (phone != null) updateData['phone'] = phone;
+      if (phoneChanged) updateData['phoneVerified'] = false;
+
+      if (updateData.isNotEmpty) {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .update(updateData);
+      }
+
+      await loadUserData();
+    } catch (e) {
+      if (!isClosed) {
+        emit(state.copyWith(loading: false, errorMessage: e.toString()));
+      }
+    }
+  }
+
+  Future<void> confirmPhoneVerified(String verifiedPhone) async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) return;
+
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+        'phone': verifiedPhone,
+        'phoneVerified': true,
+      });
+
+      await loadUserData();
+    } catch (e) {
+      if (!isClosed) {
+        emit(state.copyWith(errorMessage: e.toString()));
+      }
+    }
+  }
 
   Future<void> updateProfileImage({required ImageSource source}) async {
     try {
@@ -119,15 +192,12 @@ class ProfileCubit extends Cubit<ProfileState> {
 
       await _deleteSupabaseImage(user.uid);
 
-      const defaultUrl =
-          'https://gvqgliulacfmhscswyid.supabase.co/storage/v1/object/public/users/unknown.png';
-
-      await FirebaseFirestore.instance.collection('users').doc(user.uid).update(
-        {'imageUrl': defaultUrl},
-      );
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+        'imageUrl': null,
+      });
 
       if (!isClosed) {
-        emit(state.copyWith(loading: false, imageUrl: defaultUrl));
+        emit(state.copyWith(loading: false, imageUrl: null));
       }
     } catch (e) {
       if (!isClosed) {
@@ -150,23 +220,14 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   Future<void> updateName(String newName) async {
-    try {
-      final user = FirebaseAuth.instance.currentUser;
-      if (user == null) return;
+    await updateProfileData(name: newName);
+  }
 
-      emit(state.copyWith(loading: true));
+  Future<void> updatePhone(String newPhone) async {
+    await updateProfileData(phone: newPhone);
+  }
 
-      await FirebaseFirestore.instance.collection('users').doc(user.uid).update(
-        {'name': newName},
-      );
-
-      if (!isClosed) {
-        emit(state.copyWith(loading: false, name: newName));
-      }
-    } catch (e) {
-      if (!isClosed) {
-        emit(state.copyWith(loading: false, errorMessage: e.toString()));
-      }
-    }
+  Future<void> updateDob(String newDob) async {
+    await updateProfileData(dob: newDob);
   }
 }

@@ -1,16 +1,181 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
 import 'package:routina/core/theaming/app_text_styles.dart';
 import 'package:routina/features/profile_screen/logic/cubit/profile_cubit.dart';
 import 'package:routina/features/profile_screen/logic/cubit/profile_state.dart';
+import 'package:routina/features/profile_screen/ui/widgets/image_source_sheet.dart';
+import 'package:routina/features/profile_screen/ui/widgets/otp_verification_sheet.dart';
+import 'package:routina/features/profile_screen/ui/widgets/phone_verification_badge.dart';
+import 'package:routina/features/profile_screen/ui/widgets/profile_form_field.dart';
+import 'package:routina/features/profile_screen/ui/widgets/profile_header_image.dart';
 
-class AccountInformationScreen extends StatelessWidget {
+class AccountInformationScreen extends StatefulWidget {
   const AccountInformationScreen({super.key});
+
+  @override
+  State<AccountInformationScreen> createState() =>
+      _AccountInformationScreenState();
+}
+
+class _AccountInformationScreenState extends State<AccountInformationScreen> {
+  late TextEditingController _nameController;
+  late TextEditingController _phoneController;
+  late TextEditingController _dobController;
+  PhoneNumber _phoneNumber = PhoneNumber(isoCode: 'EG');
+  bool _isLoading = false;
+  String? _lastVerifiedPhone;
+  final ValueNotifier<int> _phoneEditTick = ValueNotifier(0);
+
+  @override
+  void initState() {
+    super.initState();
+    final state = context.read<ProfileCubit>().state;
+    _nameController = TextEditingController(text: state.name ?? '');
+    _phoneController = TextEditingController(text: state.phone ?? '');
+    _dobController = TextEditingController(text: state.dob ?? '');
+
+    if (state.phone != null && state.phone!.isNotEmpty) {
+      _phoneNumber = PhoneNumber(isoCode: 'EG', phoneNumber: state.phone);
+      if (state.phoneVerified) _lastVerifiedPhone = state.phone;
+    }
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _phoneController.dispose();
+    _dobController.dispose();
+    _phoneEditTick.dispose();
+    super.dispose();
+  }
+
+  bool _phoneIsVerified(ProfileState state) {
+    final current = _phoneNumber.phoneNumber ?? _phoneController.text.trim();
+    if (current.isEmpty) return false;
+    return (state.phoneVerified && current == state.phone) ||
+        current == _lastVerifiedPhone;
+  }
+
+  bool _phoneHasUnsavedChange(ProfileState state) {
+    final current = _phoneNumber.phoneNumber ?? _phoneController.text.trim();
+    return current.isNotEmpty && current != (state.phone ?? '');
+  }
+
+  bool _canSave(ProfileState state) {
+    final phoneChanged = _phoneHasUnsavedChange(state);
+    final verifiedNow = _phoneIsVerified(state);
+    final phoneOk = !phoneChanged || verifiedNow;
+    final nameChanged = _nameController.text.trim() != (state.name ?? '');
+    final dobChanged = _dobController.text.trim() != (state.dob ?? '');
+    return (nameChanged || dobChanged || phoneChanged) && phoneOk;
+  }
+
+  void _revertPhoneChange(ProfileState state) {
+    final savedPhone = state.phone ?? '';
+    setState(() {
+      _phoneController.text = savedPhone;
+      _phoneNumber = savedPhone.isNotEmpty
+          ? PhoneNumber(isoCode: 'EG', phoneNumber: savedPhone)
+          : PhoneNumber(isoCode: 'EG');
+      _lastVerifiedPhone = state.phoneVerified ? savedPhone : null;
+    });
+    _phoneEditTick.value++;
+  }
+
+  Future<void> _saveChanges() async {
+    final newPhone = _phoneNumber.phoneNumber ?? _phoneController.text.trim();
+    final state = context.read<ProfileCubit>().state;
+
+    if (!_canSave(state)) return;
+
+    setState(() => _isLoading = true);
+    try {
+      await context.read<ProfileCubit>().updateProfileData(
+        name: _nameController.text.trim(),
+        phone: newPhone,
+        dob: _dobController.text.trim(),
+      );
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.l10n.profileUpdatedSuccessfully)),
+      );
+      context.pop();
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(context.l10n.errorWithMessage(e.toString())),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _verifyPhoneNumber(BuildContext context) async {
+    final phone = _phoneNumber.phoneNumber ?? _phoneController.text.trim();
+    if (phone.isEmpty) return;
+
+    setState(() => _isLoading = true);
+    final cubit = context.read<ProfileCubit>();
+
+    try {
+      await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: phone,
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          try {
+            await FirebaseAuth.instance.currentUser?.linkWithCredential(
+              credential,
+            );
+          } on FirebaseAuthException catch (e) {
+            if (e.code != 'credential-already-in-use' &&
+                e.code != 'provider-already-linked') {
+              if (!mounted) return;
+              setState(() => _isLoading = false);
+              return;
+            }
+          }
+          await cubit.confirmPhoneVerified(phone);
+          if (!mounted) return;
+          setState(() {
+            _lastVerifiedPhone = phone;
+            _isLoading = false;
+          });
+          _phoneEditTick.value++;
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          if (!mounted) return;
+          setState(() => _isLoading = false);
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          if (!mounted) return;
+          setState(() => _isLoading = false);
+          showOtpVerificationSheet(
+            context,
+            verificationId: verificationId,
+            phone: phone,
+            cubit: cubit,
+            onSuccess: () {
+              if (!mounted) return;
+              setState(() => _lastVerifiedPhone = phone);
+              _phoneEditTick.value++;
+            },
+          );
+        },
+        codeAutoRetrievalTimeout: (_) {},
+      );
+    } catch (_) {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,414 +200,212 @@ class AccountInformationScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: BlocBuilder<ProfileCubit, ProfileState>(
+      body: BlocConsumer<ProfileCubit, ProfileState>(
+        listener: (context, state) {
+          if (_nameController.text != (state.name ?? '')) {
+            _nameController.text = state.name ?? '';
+          }
+          if (_phoneController.text != (state.phone ?? '')) {
+            _phoneController.text = state.phone ?? '';
+          }
+          if (_dobController.text != (state.dob ?? '')) {
+            _dobController.text = state.dob ?? '';
+          }
+        },
         builder: (context, state) {
           return SingleChildScrollView(
             padding: EdgeInsets.all(20.w),
             child: Column(
               children: [
-                // ── Profile Photo ──────────────────────────
-                Center(
-                  child: Stack(
-                    alignment: AlignmentDirectional.bottomEnd,
-                    children: [
-                      Container(
-                        width: 120.w,
-                        height: 120.w,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: AppColors.primary,
-                            width: 3.w,
-                          ),
-                        ),
-                        child: ClipOval(
-                          child:
-                              state.imageUrl != null &&
-                                  state.imageUrl!.isNotEmpty
-                              ? Image.network(
-                                  state.imageUrl!,
-                                  fit: BoxFit.cover,
-                                )
-                              : Image.asset(
-                                  'assets/images/unknown.png',
-                                  fit: BoxFit.cover,
-                                ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () => _showImagePickerBottomSheet(context),
-                        child: Container(
-                          padding: EdgeInsets.all(10.w),
-                          decoration: BoxDecoration(
-                            color: AppColors.primary,
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: isDark
-                                  ? AppColors.darkBackground
-                                  : AppColors.background,
-                              width: 2.w,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.2),
-                                blurRadius: 8,
-                              ),
-                            ],
-                          ),
-                          child: Icon(
-                            Icons.camera_alt_rounded,
-                            color: Colors.white,
-                            size: 18.sp,
-                          ),
-                        ),
-                      ),
-                    ],
+                ProfileHeaderImage(
+                  imageUrl: state.imageUrl,
+                  onTap: () => showImageSourceSheet(
+                    context,
+                    onCamera: () => context
+                        .read<ProfileCubit>()
+                        .updateProfileImage(source: ImageSource.camera),
+                    onGallery: () => context
+                        .read<ProfileCubit>()
+                        .updateProfileImage(source: ImageSource.gallery),
+                    onRemove: () =>
+                        context.read<ProfileCubit>().deleteProfileImage(),
                   ),
                 ),
-
-                verticalSpace(48),
-
-                // ── Information Cards ──────────────────────
-                _buildInfoTile(
-                  context,
+                verticalSpace(32),
+                ProfileEditableField(
                   icon: Icons.person_outline_rounded,
                   title: context.l10n.name,
-                  value: state.name ?? context.l10n.unknownUser,
-                  editable: true,
-                  onTap: () => _showEditNameSheet(context, state.name ?? ''),
+                  child: TextFormField(
+                    controller: _nameController,
+                    onChanged: (_) => _phoneEditTick.value++,
+                    style: TextStyle(
+                      color: isDark
+                          ? AppColors.darkTextPrimary
+                          : AppColors.textPrimary,
+                      fontSize: 14.sp,
+                    ),
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      isDense: true,
+                      contentPadding: EdgeInsets.zero,
+                    ),
+                  ),
                 ),
                 verticalSpace(14),
-
-                _buildInfoTile(
-                  context,
+                ProfileReadonlyField(
                   icon: Icons.email_outlined,
                   title: context.l10n.email,
                   value: state.email ?? context.l10n.noEmail,
-                  editable: false,
-                  isEmail: true,
                 ),
                 verticalSpace(14),
-
-                _buildInfoTile(
-                  context,
-                  icon: Icons.phone_outlined,
-                  title: context.l10n.phoneNumber,
-                  value: context.l10n.notAdded,
-                  editable: true,
-                  onTap: () {},
-                ),
-                verticalSpace(14),
-
-                _buildInfoTile(
-                  context,
+                ProfileEditableField(
                   icon: Icons.cake_outlined,
                   title: context.l10n.dateOfBirth,
-                  value: context.l10n.notAdded,
-                  editable: true,
-                  onTap: () {},
+                  child: TextFormField(
+                    controller: _dobController,
+                    readOnly: true,
+                    onTap: () async {
+                      final picked = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime.now(),
+                      );
+                      if (picked != null) {
+                        setState(() {
+                          _dobController.text =
+                              "${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}";
+                        });
+                      }
+                    },
+                    style: TextStyle(
+                      color: isDark
+                          ? AppColors.darkTextPrimary
+                          : AppColors.textPrimary,
+                      fontSize: 14.sp,
+                    ),
+                    decoration: InputDecoration(
+                      hintText: context.l10n.dobHint,
+                      border: InputBorder.none,
+                      isDense: true,
+                      contentPadding: EdgeInsets.zero,
+                    ),
+                  ),
+                ),
+                verticalSpace(14),
+                ProfileEditableField(
+                  icon: Icons.phone_outlined,
+                  title: context.l10n.phoneNumber,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8.w,
+                      vertical: 2.h,
+                    ),
+                    decoration: BoxDecoration(
+                      color: isDark
+                          ? AppColors.darkSurface.withValues(alpha: 0.5)
+                          : Colors.grey[100],
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
+                    child: Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: InternationalPhoneNumberInput(
+                        onInputChanged: (number) {
+                          _phoneNumber = number;
+                          _phoneEditTick.value++;
+                        },
+                        textFieldController: _phoneController,
+                        initialValue: _phoneNumber,
+                        spaceBetweenSelectorAndTextField: 0,
+                        selectorConfig: const SelectorConfig(
+                          selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                          useBottomSheetSafeArea: true,
+                          leadingPadding: 0,
+                          trailingSpace: false,
+                        ),
+                        ignoreBlank: false,
+                        autoValidateMode: AutovalidateMode.disabled,
+                        selectorTextStyle: TextStyle(
+                          color: isDark
+                              ? AppColors.darkTextPrimary
+                              : AppColors.textPrimary,
+                          fontSize: 14.sp,
+                        ),
+                        textStyle: TextStyle(
+                          color: isDark
+                              ? AppColors.darkTextPrimary
+                              : AppColors.textPrimary,
+                          fontSize: 14.sp,
+                        ),
+                        inputDecoration: const InputDecoration(
+                          filled: false,
+                          border: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          focusedErrorBorder: InputBorder.none,
+                          contentPadding: EdgeInsets.zero,
+                          isDense: true,
+                        ),
+                        formatInput: false, // Changed from true to false
+                        keyboardType: const TextInputType.numberWithOptions(
+                          signed: true,
+                          decimal: true,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                verticalSpace(8),
+                ValueListenableBuilder<int>(
+                  valueListenable: _phoneEditTick,
+                  builder: (context, _, __) => PhoneVerificationBadge(
+                    isVerified: _phoneIsVerified(state),
+                    isLoading: _isLoading,
+                    hasUnsavedChange: _phoneHasUnsavedChange(state),
+                    onVerify: () => _verifyPhoneNumber(context),
+                    onRevert: () => _revertPhoneChange(state),
+                  ),
+                ),
+                verticalSpace(32),
+                ValueListenableBuilder<int>(
+                  valueListenable: _phoneEditTick,
+                  builder: (context, _, __) {
+                    final canSave = _canSave(state) && !_isLoading;
+                    return SizedBox(
+                      width: double.infinity,
+                      height: 54.h,
+                      child: ElevatedButton(
+                        onPressed: canSave ? _saveChanges : null,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.r),
+                          ),
+                        ),
+                        child: _isLoading
+                            ? SizedBox(
+                                width: 22.sp,
+                                height: 22.sp,
+                                child: const CircularProgressIndicator(
+                                  strokeWidth: 2.5,
+                                  valueColor: AlwaysStoppedAnimation(
+                                    Colors.white,
+                                  ),
+                                ),
+                              )
+                            : Text(
+                                context.l10n.saveChanges,
+                                style: AppTextStyles.font16WhiteMedium,
+                              ),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildInfoTile(
-    BuildContext context, {
-    required IconData icon,
-    required String title,
-    required String value,
-    required bool editable,
-    bool isEmail = false,
-    VoidCallback? onTap,
-  }) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    return InkWell(
-      onTap: editable ? onTap : null,
-      borderRadius: BorderRadius.circular(18.r),
-      child: Container(
-        padding: EdgeInsets.all(18.w),
-        decoration: BoxDecoration(
-          color: isDark
-              ? (isEmail
-                    ? AppColors.darkSurface.withValues(alpha: 0.5)
-                    : AppColors.darkSurface)
-              : (isEmail ? Colors.grey[100]! : Colors.white),
-          borderRadius: BorderRadius.circular(18.r),
-          border: Border.all(
-            color: isDark ? AppColors.darkBorder : AppColors.border,
-          ),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 42.w,
-              height: 42.w,
-              decoration: BoxDecoration(
-                color: AppColors.primary.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(12.r),
-              ),
-              child: Icon(icon, color: AppColors.primary, size: 22.sp),
-            ),
-            horizontalSpace(14),
-
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: AppTextStyles.bodySmall.copyWith(
-                      color: isDark
-                          ? AppColors.darkTextSecondary
-                          : AppColors.textSecondary,
-                    ),
-                  ),
-                  verticalSpace(4),
-                  Text(
-                    value,
-                    style: AppTextStyles.titleLarge.copyWith(
-                      color: isDark
-                          ? AppColors.darkTextPrimary
-                          : AppColors.textPrimary,
-                      fontSize: isEmail ? 14.sp : null,
-                    ),
-                    overflow: isEmail ? TextOverflow.ellipsis : null,
-                    maxLines: isEmail ? 1 : null,
-                  ),
-                ],
-              ),
-            ),
-
-            if (editable) ...[
-              horizontalSpace(8),
-              Icon(
-                Icons.arrow_forward_ios_rounded,
-                size: 16.sp,
-                color: isDark
-                    ? AppColors.darkTextSecondary
-                    : AppColors.textSecondary,
-              ),
-            ],
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _showImagePickerBottomSheet(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (_) => Container(
-        padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 0),
-        decoration: BoxDecoration(
-          color: isDark ? AppColors.darkSurface : Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(28.r)),
-          border: Border.all(
-            color: isDark ? AppColors.darkBorder : AppColors.border,
-          ),
-        ),
-        child: SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 40.w,
-                height: 4.h,
-                margin: EdgeInsets.only(bottom: 20.h),
-                decoration: BoxDecoration(
-                  color: isDark ? Colors.white24 : Colors.black12,
-                  borderRadius: BorderRadius.circular(10.r),
-                ),
-              ),
-              _bottomSheetTile(
-                context,
-                icon: Icons.camera_alt_rounded,
-                title: context.l10n.takePhoto,
-                isDark: isDark,
-                onTap: () {
-                  Navigator.pop(context);
-                  context.read<ProfileCubit>().updateProfileImage(
-                    source: ImageSource.camera,
-                  );
-                },
-              ),
-              verticalSpace(12),
-              _bottomSheetTile(
-                context,
-                icon: Icons.photo_library_outlined,
-                title: context.l10n.chooseFromGallery,
-                isDark: isDark,
-                onTap: () {
-                  Navigator.pop(context);
-                  context.read<ProfileCubit>().updateProfileImage(
-                    source: ImageSource.gallery,
-                  );
-                },
-              ),
-              verticalSpace(12),
-              _bottomSheetTile(
-                context,
-                icon: Icons.delete_outline_rounded,
-                title: context.l10n.removePhoto,
-                isDark: isDark,
-                isDestructive: true,
-                onTap: () {
-                  Navigator.pop(context);
-                  context.read<ProfileCubit>().deleteProfileImage();
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _bottomSheetTile(
-    BuildContext context, {
-    required IconData icon,
-    required String title,
-    required bool isDark,
-    required VoidCallback onTap,
-    bool isDestructive = false,
-  }) {
-    final color = isDestructive ? Colors.red : AppColors.primary;
-
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(16.r),
-      child: Container(
-        width: double.infinity,
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16.r),
-          color: color.withValues(alpha: isDark ? 0.12 : 0.07),
-          border: Border.all(color: color.withValues(alpha: 0.2)),
-        ),
-        child: Row(
-          children: [
-            Icon(icon, color: color, size: 22.sp),
-            horizontalSpace(14),
-            Text(
-              title,
-              style: AppTextStyles.titleMedium.copyWith(color: color),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _showEditNameSheet(BuildContext context, String currentName) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final controller = TextEditingController(text: currentName);
-    final cubit = context.read<ProfileCubit>();
-
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (sheetContext) => Padding(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(sheetContext).viewInsets.bottom,
-        ),
-        child: Container(
-          padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 24.h),
-          decoration: BoxDecoration(
-            color: isDark ? AppColors.darkSurface : Colors.white,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(28.r)),
-            border: Border.all(
-              color: isDark ? AppColors.darkBorder : AppColors.border,
-            ),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Container(
-                  width: 40.w,
-                  height: 4.h,
-                  margin: EdgeInsets.only(bottom: 20.h),
-                  decoration: BoxDecoration(
-                    color: isDark ? Colors.white24 : Colors.black12,
-                    borderRadius: BorderRadius.circular(10.r),
-                  ),
-                ),
-              ),
-              Text(
-                context.l10n.editName,
-                style: AppTextStyles.headlineSmall.copyWith(
-                  color: isDark
-                      ? AppColors.darkTextPrimary
-                      : AppColors.textPrimary,
-                ),
-              ),
-              verticalSpace(16),
-              TextField(
-                controller: controller,
-                autofocus: true,
-                onTap: () {
-                  controller.selection = TextSelection.fromPosition(
-                    TextPosition(offset: controller.text.length),
-                  );
-                },
-                style: AppTextStyles.titleLarge.copyWith(
-                  color: isDark
-                      ? AppColors.darkTextPrimary
-                      : AppColors.textPrimary,
-                ),
-                decoration: InputDecoration(
-                  hintText: context.l10n.enterFullName,
-                  hintStyle: const TextStyle(color: Colors.grey),
-                  filled: true,
-                  fillColor: isDark
-                      ? Colors.black.withValues(alpha: 0.3)
-                      : Colors.grey[100],
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 16.w,
-                    vertical: 16.h,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16.r),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
-              verticalSpace(20),
-              SizedBox(
-                width: double.infinity,
-                height: 54.h,
-                child: ElevatedButton(
-                  onPressed: () {
-                    final newName = controller.text.trim();
-                    if (newName.isEmpty) return;
-                    Navigator.pop(sheetContext);
-                    cubit.updateName(newName);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.r),
-                    ),
-                  ),
-                  child: Text(
-                    context.l10n.saveChanges,
-                    style: AppTextStyles.font16WhiteMedium,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

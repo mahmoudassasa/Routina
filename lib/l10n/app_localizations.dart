@@ -2635,6 +2635,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Get strategic planning advice, priority ranking, and weekly milestones to optimize your goals.'**
   String get goalOptimizationPremiumDesc;
+
+  /// No description provided for @completeProfileToGetBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete your profile to get the verified badge.'**
+  String get completeProfileToGetBadge;
+
+  /// No description provided for @completeNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete Now'**
+  String get completeNow;
+
+  /// No description provided for @editPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Phone Number'**
+  String get editPhone;
+
+  /// No description provided for @enterPhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter phone number'**
+  String get enterPhoneNumber;
+
+  /// No description provided for @editDateOfBirth.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Date of Birth'**
+  String get editDateOfBirth;
+
+  /// No description provided for @enterDateOfBirth.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter date of birth (DD/MM/YYYY)'**
+  String get enterDateOfBirth;
+
+  /// No description provided for @selectBirthDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Birth Date'**
+  String get selectBirthDate;
+
+  /// No description provided for @enterVerificationCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Verification Code'**
+  String get enterVerificationCode;
+
+  /// No description provided for @pleaseEnterPhoneFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a phone number first'**
+  String get pleaseEnterPhoneFirst;
+
+  /// No description provided for @phoneAutoVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number automatically verified!'**
+  String get phoneAutoVerified;
+
+  /// No description provided for @verificationFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification failed: {error}'**
+  String verificationFailed(String error);
+
+  /// No description provided for @phoneVerifiedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number verified successfully!'**
+  String get phoneVerifiedSuccessfully;
+
+  /// No description provided for @invalidCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid code: {error}'**
+  String invalidCode(String error);
+
+  /// No description provided for @verify.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get verify;
+
+  /// No description provided for @verifyPhoneNumberTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify Phone Number'**
+  String get verifyPhoneNumberTooltip;
+
+  /// No description provided for @profileUpdatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile updated successfully'**
+  String get profileUpdatedSuccessfully;
+
+  /// No description provided for @errorWithMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String errorWithMessage(String error);
+
+  /// No description provided for @dobHint.
+  ///
+  /// In en, this message translates to:
+  /// **'YYYY-MM-DD'**
+  String get dobHint;
+
+  /// No description provided for @phoneMustBeVerifiedBeforeSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Please verify your new phone number before saving'**
+  String get phoneMustBeVerifiedBeforeSave;
+
+  /// No description provided for @verified.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified'**
+  String get verified;
+
+  /// No description provided for @notVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Not Verified'**
+  String get notVerified;
+
+  /// No description provided for @phoneAlreadyInUse.
+  ///
+  /// In en, this message translates to:
+  /// **'This phone number is already linked to another account.'**
+  String get phoneAlreadyInUse;
+
+  /// No description provided for @providerAlreadyLinked.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account is already linked with a phone number.'**
+  String get providerAlreadyLinked;
 }
 
 class _AppLocalizationsDelegate

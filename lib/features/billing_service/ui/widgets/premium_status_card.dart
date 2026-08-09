@@ -9,9 +9,6 @@ import 'package:routina/core/theaming/app_text_styles.dart';
 import 'package:routina/features/billing_service/logic/cubit/billing_cubit.dart';
 import 'package:routina/features/billing_service/ui/widgets/paywall_screen.dart';
 
-// Assuming verticalSpace and horizontalSpace are imported or defined globally, 
-// they are utilized below instead of raw SizedBoxes.
-
 class PremiumStatusCard extends StatelessWidget {
   const PremiumStatusCard({super.key});
 
@@ -101,8 +98,10 @@ class _PremiumStatusCardContentState extends State<_PremiumStatusCardContent>
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
     final borderColor = isDark ? AppColors.darkBorder : AppColors.border;
-    final textPrimary = isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
-    final textSecondary = isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
+    final textPrimary =
+        isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
+    final textSecondary =
+        isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -137,21 +136,19 @@ class _PremiumStatusCardContentState extends State<_PremiumStatusCardContent>
                   children: [
                     Text(
                       context.l10n.freePlan,
-                      style: TextStyle(
+                      style: AppTextStyles.titleMedium.copyWith(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w500,
                         color: textPrimary,
-                        fontFamily: 'Inter',
                       ),
                     ),
                     verticalSpace(2),
                     Text(
                       context.l10n.upgradeToPremium,
-                      style: TextStyle(
+                      style: AppTextStyles.bodySmall.copyWith(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w400,
                         color: textSecondary,
-                        fontFamily: 'Inter',
                       ),
                     ),
                   ],
@@ -228,11 +225,10 @@ class _PremiumStatusCardContentState extends State<_PremiumStatusCardContent>
                   children: [
                     Text(
                       context.l10n.routinaPremium,
-                      style: TextStyle(
+                      style: AppTextStyles.titleMedium.copyWith(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w700,
                         color: Colors.black87,
-                        fontFamily: 'Inter',
                       ),
                     ),
                     verticalSpace(2),
@@ -244,11 +240,10 @@ class _PremiumStatusCardContentState extends State<_PremiumStatusCardContent>
                               ).format(state.premiumUntil!),
                             )
                           : context.l10n.activeMember,
-                      style: TextStyle(
+                      style: AppTextStyles.bodySmall.copyWith(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w400,
                         color: Colors.black54,
-                        fontFamily: 'Inter',
                       ),
                     ),
                   ],
@@ -277,8 +272,10 @@ class _PlanDetailsSheet extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final surfaceColor = isDark ? AppColors.darkSurface : AppColors.surface;
     final borderColor = isDark ? AppColors.darkBorder : AppColors.border;
-    final textPrimary = isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
-    final textSecondary = isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
+    final textPrimary =
+        isDark ? AppColors.darkTextPrimary : AppColors.textPrimary;
+    final textSecondary =
+        isDark ? AppColors.darkTextSecondary : AppColors.textSecondary;
 
     return Container(
       padding: EdgeInsets.all(20.w),

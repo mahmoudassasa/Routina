@@ -14,21 +14,17 @@ class ProfileScreenUserStateCards extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
-        // We can show dummy data while loading or use specific values from state
-        // Assuming your ProfileState will eventually have these fields
-        final currentStreak =
-            "${state.currentStreakCount ?? 0} ${context.l10n.days}";
-        final totalHabits =
-            "${state.totalHabitsCount ?? 0} ${context.l10n.active}";
-        final completionRate = state.completionRate ?? "0%";
-        final bestStreak = "${state.bestStreakCount ?? 0} ${context.l10n.days}";
+        // الآن الحقول ليست nullable، لذا نستخدمها مباشرة
+        final currentStreak = "${state.currentStreakCount} ${context.l10n.days}";
+        final totalHabits = "${state.totalHabitsCount} ${context.l10n.active}";
+        final completionRate = state.completionRate;
+        final bestStreak = "${state.bestStreakCount} ${context.l10n.days}";
 
         return Column(
           children: [
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: Column(
-                // Column is internal because of the spaces between the rows
                 children: [
                   Row(
                     children: [

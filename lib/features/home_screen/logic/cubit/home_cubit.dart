@@ -1,14 +1,19 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:routina/core/helpers/habit_keys.dart';
+import 'package:routina/core/services/habits_cache_service.dart';
 import 'package:routina/features/home_screen/data/habit_service.dart';
 import 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit({HabitService? habitService})
-    : _habitService = habitService ?? HabitService(),
-      super(const HomeState());
+  HomeCubit({
+    HabitService? habitService,
+    required HabitsCacheService cacheService,
+  }) : _habitService = habitService ?? HabitService(),
+       _cacheService = cacheService,
+       super(const HomeState());
 
   final HabitService _habitService;
+  final HabitsCacheService _cacheService;
 
   int get _todayIndex => DateTime.now().weekday - 1;
 
@@ -16,9 +21,19 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future<void> loadHabits({bool isRefresh = false}) async {
     if (isClosed) return;
-    emit(state.copyWith(status: HomeStatus.loading));
 
-    await Future.delayed(const Duration(seconds: 2));
+    final cachedHabits = _cacheService.getCachedHabits();
+    final hasCachedData = cachedHabits != null && cachedHabits.isNotEmpty;
+
+    if (hasCachedData && !isRefresh) {
+      emit(state.copyWith(status: HomeStatus.loaded, habits: cachedHabits));
+
+      if (!_cacheService.isCacheStale()) {
+        return;
+      }
+    } else {
+      emit(state.copyWith(status: HomeStatus.loading));
+    }
 
     try {
       final habits = await _habitService.fetchHabitsForCurrentUser();
@@ -34,14 +49,22 @@ class HomeCubit extends Cubit<HomeState> {
           return dateB.compareTo(dateA);
         });
 
+      await _cacheService.saveHabits(sortedHabits);
+
       emit(state.copyWith(status: HomeStatus.loaded, habits: sortedHabits));
     } catch (e) {
       if (isClosed) return;
+
+      if (hasCachedData) {
+        return;
+      }
+
       emit(
         state.copyWith(status: HomeStatus.error, errorMessage: e.toString()),
       );
     }
   }
+
   // ── Reset logic ────────────────────────────────────────────────────────
 
   Future<List<Map<String, dynamic>>> _checkAndResetIfNeeded(
@@ -78,7 +101,7 @@ class HomeCubit extends Cubit<HomeState> {
       bool missedScheduledDay = false;
       for (int d = 1; d <= daysDiff; d++) {
         final missedDate = todayOnly.subtract(Duration(days: d));
-        final missedIndex = missedDate.weekday - 1; // 0=Mon … 6=Sun
+        final missedIndex = missedDate.weekday - 1;
         if (frequency[missedIndex] && !weekProgress[missedIndex]) {
           missedScheduledDay = true;
           break;
@@ -158,11 +181,12 @@ class HomeCubit extends Cubit<HomeState> {
         return habit;
       }).toList();
 
+      await _cacheService.saveHabits(finalHabits);
       emit(state.copyWith(status: HomeStatus.loaded, habits: finalHabits));
 
       return createdHabit[HabitKeys.id] as int?;
     } catch (e) {
-      await loadHabits();
+      await loadHabits(isRefresh: true);
       emit(
         state.copyWith(status: HomeStatus.error, errorMessage: e.toString()),
       );
@@ -235,6 +259,7 @@ class HomeCubit extends Cubit<HomeState> {
         return habit;
       }).toList();
 
+      await _cacheService.saveHabits(updatedList);
       emit(state.copyWith(habits: updatedList));
     } catch (e) {
       emit(
@@ -284,6 +309,7 @@ class HomeCubit extends Cubit<HomeState> {
       return habit;
     }).toList();
 
+    await _cacheService.saveHabits(updatedHabits);
     emit(state.copyWith(habits: updatedHabits));
 
     try {
@@ -300,7 +326,6 @@ class HomeCubit extends Cubit<HomeState> {
         lastSeenDate: DateTime.now(),
       );
     } catch (e) {
-      await loadHabits();
       emit(
         state.copyWith(
           status: HomeStatus.error,
@@ -318,10 +343,11 @@ class HomeCubit extends Cubit<HomeState> {
           .where((habit) => habit[HabitKeys.id] != habitId)
           .toList();
 
+      await _cacheService.saveHabits(updatedHabits);
       emit(state.copyWith(habits: updatedHabits));
       await _habitService.deleteHabit(habitId as int);
     } catch (e) {
-      await loadHabits();
+      await loadHabits(isRefresh: true);
       emit(
         state.copyWith(status: HomeStatus.error, errorMessage: e.toString()),
       );

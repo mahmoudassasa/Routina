@@ -18,52 +18,62 @@ class ProfileScreenUserPicture extends StatelessWidget {
           return SizedBox(
             width: 120.w,
             height: 120.w,
-            child: const Center(
-              child: CircularProgressIndicator(color: AppColors.primary),
+            child: Center(
+              child: CircularProgressIndicator(
+                strokeWidth: 3.w,
+                color: AppColors.primary,
+              ),
             ),
           );
         }
 
-        if (state.imageUrl != null && state.imageUrl!.isNotEmpty) {
-          return _buildImage(state.imageUrl!, isDark);
-        }
-
-        // Fallback to local asset
-        return _buildImage('assets/images/unknown.png', isDark, isLocal: true);
+        return Container(
+          width: 120.w,
+          height: 120.w,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.05)
+                : Colors.black.withValues(alpha: 0.03),
+            border: Border.all(
+              color: isDark ? Colors.white10 : Colors.black12,
+              width: 2.w,
+            ),
+          ),
+          child: ClipOval(
+            child: _buildImageContent(state.imageUrl, isDark),
+          ),
+        );
       },
     );
   }
 
-  Widget _buildImage(String source, bool isDark, {bool isLocal = false}) {
-    return Container(
-      width: 120.w,
-      height: 120.w,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: isDark ? AppColors.darkSurface : Colors.white,
-        border: Border.all(
-          color: isDark ? AppColors.darkBackground : Colors.white,
-          width: 4.w,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 12.w,
-            offset: Offset(0, 4.h),
-          ),
-        ],
-      ),
+  Widget _buildImageContent(String? imageUrl, bool isDark) {
+    if (imageUrl != null && imageUrl.isNotEmpty) {
+      return Image.network(
+        imageUrl,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) => _buildFallbackIcon(isDark),
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) return child;
+          return Center(
+            child: CircularProgressIndicator(
+              strokeWidth: 2.w,
+              color: AppColors.primary,
+            ),
+          );
+        },
+      );
+    }
 
-      child: ClipOval(
-        child: isLocal
-            ? Image.asset(source, fit: BoxFit.cover)
-            : Image.network(
-                source,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) =>
-                    Image.asset('assets/images/unknown.png', fit: BoxFit.cover),
-              ),
-      ),
+    return _buildFallbackIcon(isDark);
+  }
+
+  Widget _buildFallbackIcon(bool isDark) {
+    return Icon(
+      Icons.person_outline_rounded,
+      size: 60.sp,
+      color: isDark ? Colors.white30 : Colors.grey[400],
     );
   }
 }

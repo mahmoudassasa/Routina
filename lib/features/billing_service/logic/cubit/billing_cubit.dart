@@ -24,9 +24,9 @@ class BillingCubit extends Cubit<BillingState> {
   Future<void> init() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      _service.setFirebaseUserId(user.uid);
       await _refreshPremiumStatus();
     } else {
+      if (isClosed) return;
       emit(state.copyWith(
         status: BillingStatus.expired,
         isPremium: false,
@@ -60,10 +60,12 @@ class BillingCubit extends Cubit<BillingState> {
   }
 
   Future<void> subscribe(ProductDetails product) async {
+    if (isClosed) return;
     emit(state.copyWith(status: BillingStatus.loading));
     try {
       await _service.buySubscription(product);
     } catch (e) {
+      if (isClosed) return;
       emit(state.copyWith(
         status: BillingStatus.error,
         errorMessage: e.toString(),
@@ -72,14 +74,17 @@ class BillingCubit extends Cubit<BillingState> {
   }
 
   Future<void> restore() async {
+    if (isClosed) return;
     emit(state.copyWith(isRestoring: true));
     try {
       await _service.restorePurchases();
       await Future.delayed(const Duration(seconds: 5));
+      if (isClosed) return;
       if (state.isRestoring) {
         emit(state.copyWith(isRestoring: false));
       }
     } catch (e) {
+      if (isClosed) return;
       emit(state.copyWith(
         isRestoring: false,
         status: BillingStatus.error,
@@ -92,9 +97,15 @@ class BillingCubit extends Cubit<BillingState> {
     _purchaseSub = _service.purchaseStream.listen(
       (purchases) async {
         for (final purchase in purchases) {
+          if (isClosed) return;
+
           final success = await _service.verifyAndComplete(purchase);
+
+          if (isClosed) return;
+
           if (success) {
             await _refreshPremiumStatus();
+            if (isClosed) return;
             emit(state.copyWith(isRestoring: false));
           } else if (purchase.status == PurchaseStatus.error) {
             emit(state.copyWith(
@@ -106,6 +117,7 @@ class BillingCubit extends Cubit<BillingState> {
         }
       },
       onError: (e) {
+        if (isClosed) return;
         emit(state.copyWith(
           status: BillingStatus.error,
           errorMessage: e.toString(),

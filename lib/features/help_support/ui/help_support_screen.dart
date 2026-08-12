@@ -60,12 +60,12 @@ class _HelpSupportScreenState extends State<HelpSupportScreen>
     setState(() => _expandedFaqIndex = index);
   }
 
-  static const String _supportEmail = 'nilient.software.2026@gmail.com';
+  static const String _supportEmail = 'support@nilient.com';
   static const String _whatsappNumber = '+201152461600';
   static const String _telegramUsername = 'mahmoud_assasa';
   static const String _discordInvite = 'https://discord.com/channels/@3ma97';
   static const String _privacyPolicyUrl =
-      'https://mellow-lokum-05a071.netlify.app/';
+      'https://nilient.com/pages/routina/privacy-policy';
 
   List<_FaqItem> get _faqs => [
     _FaqItem(

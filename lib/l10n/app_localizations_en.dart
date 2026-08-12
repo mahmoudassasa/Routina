@@ -870,18 +870,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get copyright => '© 2026 Routina. All rights reserved.';
 
   @override
-  String get privacy1Title => '1. Information We Collect';
+  String get privacy1Title => 'Information We Collect';
 
   @override
   String get privacy1Content =>
-      'Routina only collects information necessary to provide the habit tracking service. This includes your authentication email, habit data you create in the app, and basic usage analytics to improve your experience.';
+      'We collect information you provide directly to us when you create an account or update your profile, including your name, email address, phone number, and date of birth.';
 
   @override
-  String get privacy2Title => '2. How We Use Your Data';
+  String get privacy2Title => 'How We Use Your Information';
 
   @override
   String get privacy2Content =>
-      'Your data is only used to power Routina features, including habit tracking, progress analysis, and AI-driven insights. We do not sell, rent, or share your personal information with third parties for marketing purposes.';
+      'We use your information to provide and improve our services, authenticate your account via phone number, verify age appropriateness based on your date of birth, send account notifications, and personalize your habit-tracking experience.';
 
   @override
   String get privacy3Title => '3. Data Security';
@@ -902,7 +902,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get privacy5Content =>
-      'You have the right to access, correct, or delete your personal data at any time. You can delete your account and all associated data directly from the app settings. For any privacy requests, contact us at nilient.software.2026@gmail.com.';
+      'You have the right to access, correct, or delete your personal data at any time. You can delete your account and all associated data directly from the app settings. For any privacy requests, contact us at support@nilient.com.';
 
   @override
   String get privacy6Title => '6. Children\'s Privacy';
@@ -923,7 +923,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get privacy8Content =>
-      'If you have any questions about this Privacy Policy or our data practices, contact us at nilient.software.2026@gmail.com. We aim to respond to all inquiries within 48 hours.';
+      'If you have any questions about this Privacy Policy or our data practices, contact us at support@nilient.com. We aim to respond to all inquiries within 48 hours.';
 
   @override
   String get currentStreak => 'Current Streak';

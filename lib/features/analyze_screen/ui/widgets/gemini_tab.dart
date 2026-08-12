@@ -14,11 +14,19 @@ class GeminiTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final state = context.watch<AnalyticsCubit>().state;
-    final cubit = context.read<AnalyticsCubit>();
+    final cubit = context.watch<AnalyticsCubit>();
+    final state = cubit.state;
+
+    final isThisTypeActive = state.geminiType == 'overall';
+    final effectiveStatus =
+        isThisTypeActive ? state.geminiStatus : GeminiStatus.idle;
+    final effectiveError = isThisTypeActive ? state.geminiError : null;
+    final displayedAnalysis = isThisTypeActive
+        ? state.geminiAnalysis
+        : cubit.cachedResultFor('overall');
 
     if (state.remainingDailyRequests <= 0 &&
-        state.geminiStatus != GeminiStatus.loaded) {
+        effectiveStatus != GeminiStatus.loaded) {
       return Center(
         child: Padding(
           padding: EdgeInsets.all(24.w),
@@ -33,7 +41,7 @@ class GeminiTab extends StatelessWidget {
       onRefresh: () async {
         cubit.fetchGeminiInsights('overall', forceRefresh: true);
         await cubit.stream.firstWhere(
-          (s) => s.geminiStatus != GeminiStatus.loading,
+          (s) => s.geminiType != 'overall' || s.geminiStatus != GeminiStatus.loading,
         );
       },
       child: SingleChildScrollView(
@@ -53,7 +61,7 @@ class GeminiTab extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                if (state.geminiStatus != GeminiStatus.loading)
+                if (effectiveStatus != GeminiStatus.loading)
                   IconButton(
                     onPressed: state.remainingDailyRequests <= 0
                         ? null
@@ -72,12 +80,12 @@ class GeminiTab extends StatelessWidget {
               ],
             ),
             verticalSpace(12),
-            if (state.geminiStatus == GeminiStatus.loading)
+            if (effectiveStatus == GeminiStatus.loading)
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 40.h),
                 child: const Center(child: CircularProgressIndicator()),
               ),
-            if (state.geminiStatus == GeminiStatus.error) ...[
+            if (effectiveStatus == GeminiStatus.error) ...[
               Container(
                 padding: EdgeInsets.all(14.w),
                 decoration: BoxDecoration(
@@ -90,9 +98,9 @@ class GeminiTab extends StatelessWidget {
                     horizontalSpace(10),
                     Expanded(
                       child: Text(
-                        state.geminiError == 'rate_limited'
+                        effectiveError == 'rate_limited'
                             ? context.l10n.rateLimited
-                            : state.geminiError == 'quota_exceeded'
+                            : effectiveError == 'quota_exceeded'
                             ? context.l10n.quotaExceeded
                             : context.l10n.somethingWentWrong,
                         style: TextStyle(
@@ -119,8 +127,7 @@ class GeminiTab extends StatelessWidget {
                 ),
               ),
             ],
-            if (state.geminiStatus == GeminiStatus.loaded &&
-                state.geminiAnalysis != null)
+            if (displayedAnalysis != null)
               Container(
                 padding: EdgeInsets.all(16.w),
                 decoration: BoxDecoration(
@@ -159,7 +166,7 @@ class GeminiTab extends StatelessWidget {
                     ),
                     verticalSpace(14),
                     Text(
-                      state.geminiAnalysis!,
+                      displayedAnalysis,
                       style: TextStyle(
                         fontSize: 13.sp,
                         height: 1.5.h,
@@ -177,7 +184,7 @@ class GeminiTab extends StatelessWidget {
                   ],
                 ),
               ),
-            if (state.geminiStatus == GeminiStatus.idle)
+            if (effectiveStatus == GeminiStatus.idle && displayedAnalysis == null)
               Center(
                 child: Column(
                   children: [

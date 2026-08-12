@@ -1,28 +1,30 @@
+import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+
 import 'package:routina/core/di/dependency_injection.dart';
 import 'package:routina/core/routing/app_router.dart';
-import 'package:routina/features/app_update_service/logic/cubit/update_cubit.dart';
-import 'package:routina/features/app_update_service/ui/app_update_service.dart';
-import 'package:routina/features/app_update_service/ui/widgets/update_dialog.dart';
-import 'package:routina/features/locale/logic/locale_cubit.dart';
-import 'package:routina/features/no_internet/ui/no_internet_screen.dart';
 import 'package:routina/core/theaming/app_theme/app_theme.dart';
 import 'package:routina/core/theaming/app_theme/logic/cubit/theme_cubit.dart';
+import 'package:routina/features/app_update_service/logic/cubit/update_cubit.dart';
+import 'package:routina/features/app_update_service/ui/widgets/update_dialog.dart';
 import 'package:routina/features/bottom_navigation_bar/ui/main_navigation_bar.dart';
+import 'package:routina/features/locale/logic/locale_cubit.dart';
 import 'package:routina/features/login_screen/logic/cubit/login_cubit.dart';
 import 'package:routina/features/login_screen/ui/login_screen.dart';
+import 'package:routina/features/no_internet/ui/no_internet_screen.dart';
 import 'package:routina/features/onboarding_screen/ui/onboarding_screen.dart';
 import 'package:routina/l10n/app_localizations.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 class RoutinaApp extends StatefulWidget {
   final AppRouter appRouter;
-  final bool isFirstTime; // Add this
+  final bool isFirstTime;
+
   const RoutinaApp({
     super.key,
     required this.appRouter,
@@ -37,28 +39,66 @@ class _RoutinaAppState extends State<RoutinaApp> {
   bool _hasInternet = true;
   bool _checkingInternet = true;
   final _navigatorKey = GlobalKey<NavigatorState>();
+  StreamSubscription<InternetStatus>? _internetSubscription;
 
   @override
   void initState() {
     super.initState();
-    _checkInternet();
-    _checkForUpdate();
-    InternetConnection().onStatusChange.listen((status) {
+    _checkInternetAndInit();
+
+    _internetSubscription = InternetConnection().onStatusChange.listen((status) {
       if (mounted) {
+        final connected = status == InternetStatus.connected;
         setState(() {
-          _hasInternet = status == InternetStatus.connected;
+          _hasInternet = connected;
         });
+        if (connected) {
+          _checkForUpdate();
+        }
       }
     });
   }
 
-  Future<void> _checkInternet() async {
+  @override
+  void dispose() {
+    _internetSubscription?.cancel();
+    super.dispose();
+  }
+
+  Future<void> _checkInternetAndInit() async {
     final hasInternet = await InternetConnection().hasInternetAccess;
     if (mounted) {
       setState(() {
         _hasInternet = hasInternet;
         _checkingInternet = false;
       });
+
+      if (hasInternet) {
+        _checkForUpdate();
+      }
+    }
+  }
+
+  Future<void> _checkForUpdate() async {
+    try {
+      final info = await PackageInfo.fromPlatform();
+      final currentVersion = info.version;
+
+      final cubit = getIt<UpdateCubit>();
+      await cubit.checkForUpdate(currentVersion);
+
+      if (cubit.state is UpdateRequired) {
+        final ctx = _navigatorKey.currentContext;
+        if (ctx != null && ctx.mounted) {
+          showDialog(
+            context: ctx,
+            barrierDismissible: false,
+            builder: (_) => const UpdateDialog(),
+          );
+        }
+      }
+    } catch (e) {
+      debugPrint('Update check failed: $e');
     }
   }
 
@@ -76,7 +116,7 @@ class _RoutinaAppState extends State<RoutinaApp> {
                 debugShowCheckedModeBanner: false,
                 theme: AppTheme.lightTheme,
                 darkTheme: AppTheme.darkTheme,
-                themeMode:  themeState.themeMode,
+                themeMode: themeState.themeMode,
                 locale: locale,
                 localizationsDelegates: const [
                   AppLocalizations.delegate,
@@ -101,10 +141,10 @@ class _RoutinaAppState extends State<RoutinaApp> {
     }
 
     if (!_hasInternet) {
-      return NoInternetScreen(onRetry: _checkInternet);
+      return NoInternetScreen(onRetry: _checkInternetAndInit);
     }
 
-    return StreamBuilder(
+    return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -140,29 +180,5 @@ class _RoutinaAppState extends State<RoutinaApp> {
         }
       },
     );
-  }
-
-  Future<void> _checkForUpdate() async {
-    try {
-      await Future.delayed(const Duration(seconds: 2));
-
-      final info = await PackageInfo.fromPlatform();
-      final currentVersion = info.version;
-      final cubit = UpdateCubit(AppUpdateService());
-      await cubit.checkForUpdate(currentVersion);
-
-      if (cubit.state is UpdateRequired) {
-        final ctx = _navigatorKey.currentContext;
-        if (ctx != null && ctx.mounted) {
-          showDialog(
-            context: ctx,
-            barrierDismissible: false,
-            builder: (_) => const UpdateDialog(),
-          );
-        }
-      }
-    } catch (e) {
-      debugPrint('Update check failed: $e');
-    }
   }
 }

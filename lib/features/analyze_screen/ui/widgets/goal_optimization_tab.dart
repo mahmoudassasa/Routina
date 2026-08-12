@@ -28,8 +28,8 @@ class _GoalOptimizationTabState extends State<GoalOptimizationTab>
       final cubit = context.read<AnalyticsCubit>();
       final state = cubit.state;
       if (state.isPremiumUser &&
-          (state.geminiStatus == GeminiStatus.idle ||
-              state.geminiType != 'goal')) {
+          !cubit.isLoadingType('goal') &&
+          cubit.cachedResultFor('goal') == null) {
         cubit.fetchGeminiInsights('goal');
       }
     });
@@ -39,7 +39,16 @@ class _GoalOptimizationTabState extends State<GoalOptimizationTab>
   Widget build(BuildContext context) {
     super.build(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final state = context.watch<AnalyticsCubit>().state;
+    final cubit = context.watch<AnalyticsCubit>();
+    final state = cubit.state;
+
+    final isThisTypeActive = state.geminiType == 'goal';
+    final effectiveStatus =
+        isThisTypeActive ? state.geminiStatus : GeminiStatus.idle;
+    final effectiveError = isThisTypeActive ? state.geminiError : null;
+    final displayedAnalysis = isThisTypeActive
+        ? state.geminiAnalysis
+        : cubit.cachedResultFor('goal');
 
     if (!state.isPremiumUser) {
       return Center(
@@ -95,7 +104,7 @@ class _GoalOptimizationTabState extends State<GoalOptimizationTab>
     }
 
     if (state.remainingDailyRequests <= 0 &&
-        state.geminiStatus != GeminiStatus.loaded) {
+        effectiveStatus != GeminiStatus.loaded) {
       return Center(
         child: Padding(
           padding: EdgeInsets.all(24.w),
@@ -111,7 +120,7 @@ class _GoalOptimizationTabState extends State<GoalOptimizationTab>
         final cubit = context.read<AnalyticsCubit>();
         cubit.fetchGeminiInsights('goal', forceRefresh: true);
         await cubit.stream.firstWhere(
-          (s) => s.geminiStatus != GeminiStatus.loading,
+          (s) => s.geminiType != 'goal' || s.geminiStatus != GeminiStatus.loading,
         );
       },
       child: SingleChildScrollView(
@@ -131,7 +140,7 @@ class _GoalOptimizationTabState extends State<GoalOptimizationTab>
                   ),
                 ),
                 const Spacer(),
-                if (state.geminiStatus != GeminiStatus.loading)
+                if (effectiveStatus != GeminiStatus.loading)
                   IconButton(
                     onPressed: state.remainingDailyRequests <= 0
                         ? null
@@ -151,12 +160,12 @@ class _GoalOptimizationTabState extends State<GoalOptimizationTab>
               ],
             ),
             verticalSpace(12),
-            if (state.geminiStatus == GeminiStatus.loading)
+            if (effectiveStatus == GeminiStatus.loading)
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 40.h),
                 child: const Center(child: CircularProgressIndicator()),
               ),
-            if (state.geminiStatus == GeminiStatus.error) ...[
+            if (effectiveStatus == GeminiStatus.error) ...[
               Container(
                 padding: EdgeInsets.all(14.w),
                 decoration: BoxDecoration(
@@ -169,9 +178,9 @@ class _GoalOptimizationTabState extends State<GoalOptimizationTab>
                     horizontalSpace(10),
                     Expanded(
                       child: Text(
-                        state.geminiError == 'rate_limited'
+                        effectiveError == 'rate_limited'
                             ? context.l10n.rateLimited
-                            : state.geminiError == 'quota_exceeded'
+                            : effectiveError == 'quota_exceeded'
                             ? context.l10n.quotaExceeded
                             : context.l10n.somethingWentWrong,
                         style: TextStyle(
@@ -201,8 +210,7 @@ class _GoalOptimizationTabState extends State<GoalOptimizationTab>
                 ),
               ),
             ],
-            if (state.geminiStatus == GeminiStatus.loaded &&
-                state.geminiAnalysis != null)
+            if (displayedAnalysis != null)
               Container(
                 padding: EdgeInsets.all(16.w),
                 decoration: BoxDecoration(
@@ -241,7 +249,7 @@ class _GoalOptimizationTabState extends State<GoalOptimizationTab>
                     ),
                     verticalSpace(14),
                     Text(
-                      state.geminiAnalysis!,
+                      displayedAnalysis,
                       style: TextStyle(
                         fontSize: 13.sp,
                         height: 1.5.h,

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:routina/core/services/gemini_service.dart';
@@ -9,7 +8,6 @@ import 'package:routina/features/billing_service/logic/cubit/billing_cubit.dart'
 import 'package:routina/features/home_screen/logic/cubit/home_cubit.dart';
 import 'package:routina/features/home_screen/logic/cubit/home_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AnalyticsCubit extends Cubit<AnalyticsState> {
   final GeminiService _geminiService;
@@ -18,6 +16,16 @@ class AnalyticsCubit extends Cubit<AnalyticsState> {
   final PremiumService _premiumService = PremiumService();
   late final StreamSubscription _homeSubscription;
   StreamSubscription? _billingSubscription;
+
+  // Tracks which types are currently in-flight independently of the
+  // shared state.geminiStatus field, so a 'goal' request is never
+  // silently dropped just because 'smart' happens to be loading.
+  final Set<String> _loadingTypes = {};
+
+  // Caches the last completed result per type so tabs can display
+  // their own analysis even after state.geminiType has moved on to
+  // a different type due to a concurrent request finishing later.
+  final Map<String, String> _cachedResults = {};
 
   AnalyticsCubit({
     required HomeCubit homeCubit,
@@ -55,6 +63,13 @@ class AnalyticsCubit extends Cubit<AnalyticsState> {
     _billingSubscription?.cancel();
     return super.close();
   }
+
+  /// Returns the cached result for [type], if any — useful for tabs
+  /// that need to redisplay their own result even after a different
+  /// type has since updated state.geminiType/geminiAnalysis.
+  String? cachedResultFor(String type) => _cachedResults[type];
+
+  bool isLoadingType(String type) => _loadingTypes.contains(type);
 
   void _computeLocalAnalytics(List<Map<String, dynamic>> habits) {
     if (isClosed) return;
@@ -146,48 +161,35 @@ class AnalyticsCubit extends Cubit<AnalyticsState> {
     return List.generate(7, (i) => FlSpot(i.toDouble(), 0.0));
   }
 
-  Future<void> _updateDailyLimit(bool isPremium) async {
-    if (isClosed) return;
-    final prefs = await SharedPreferences.getInstance();
-    final userId = FirebaseAuth.instance.currentUser?.uid ?? 'anonymous';
-    final key = 'gemini_daily_limit_${userId}_overall';
-    final today = DateTime.now().toIso8601String().substring(0, 10);
-    final storedDate = prefs.getString('${key}_date');
-
-    int remaining;
-    if (storedDate != today) {
-      remaining = isPremium ? 30 : 3;
-      await prefs.setString('${key}_date', today);
-      await prefs.setInt(key, 0);
-    } else {
-      final used = prefs.getInt(key) ?? 0;
-      final limit = isPremium ? 30 : 3;
-      remaining = max(0, limit - used);
-    }
-
+ Future<void> _updateDailyLimit(bool isPremium) async {
+  if (isClosed) return;
+  try {
+    final remaining = await _premiumService.getGeminiQuota();
     if (isClosed) return;
     emit(state.copyWith(remainingDailyRequests: remaining));
+  } catch (_) {
+    // Network hiccup — keep last known value instead of blocking the UI
   }
+}
 
-  Future<void> _decrementDailyLimit() async {
-    if (isClosed) return;
-    final prefs = await SharedPreferences.getInstance();
-    final userId = FirebaseAuth.instance.currentUser?.uid ?? 'anonymous';
-    final key = 'gemini_daily_limit_${userId}_overall';
-    final used = prefs.getInt(key) ?? 0;
-    await prefs.setInt(key, used + 1);
-    final isPremium = state.isPremiumUser;
-    final limit = isPremium ? 30 : 3;
-    final remaining = max(0, limit - (used + 1));
+Future<void> _decrementDailyLimit() async {
+  if (isClosed) return;
+  try {
+    final remaining = await _premiumService.incrementGeminiQuota();
     if (isClosed) return;
     emit(state.copyWith(remainingDailyRequests: remaining));
+  } catch (_) {
+    if (isClosed) return;
+    emit(state.copyWith(status: AnalyticsStatus.error));
   }
-
+}
   Future<void> fetchGeminiInsights(
     String type, {
     bool forceRefresh = false,
   }) async {
-    if (state.geminiStatus == GeminiStatus.loading) return;
+    // Per-type guard using the internal Set — 'goal' is no longer
+    // dropped just because 'smart' is currently loading.
+    if (_loadingTypes.contains(type)) return;
     if (isClosed) return;
 
     final userId = FirebaseAuth.instance.currentUser?.uid;
@@ -232,6 +234,8 @@ class AnalyticsCubit extends Cubit<AnalyticsState> {
       try {
         final cached = await _premiumService.getAnalysis(period: type);
         if (cached != null) {
+          _cachedResults[type] = cached;
+          if (isClosed) return;
           emit(
             state.copyWith(
               geminiStatus: GeminiStatus.loaded,
@@ -260,7 +264,11 @@ class AnalyticsCubit extends Cubit<AnalyticsState> {
       return;
     }
 
-    if (isClosed) return;
+    _loadingTypes.add(type);
+    if (isClosed) {
+      _loadingTypes.remove(type);
+      return;
+    }
     emit(
       state.copyWith(
         geminiStatus: GeminiStatus.loading,
@@ -278,6 +286,7 @@ class AnalyticsCubit extends Cubit<AnalyticsState> {
         forceRefresh: forceRefresh,
       );
 
+      _loadingTypes.remove(type);
       if (isClosed) return;
 
       if (!response.isFromCache) {
@@ -288,9 +297,11 @@ class AnalyticsCubit extends Cubit<AnalyticsState> {
             period: type,
           );
         } catch (saveError) {
-          print('Failed to save analysis to Supabase: $saveError');
+          throw Exception('Failed to save analysis: $saveError');
         }
       }
+
+      _cachedResults[type] = response.text;
 
       if (isClosed) return;
       emit(
@@ -302,6 +313,7 @@ class AnalyticsCubit extends Cubit<AnalyticsState> {
         ),
       );
     } catch (e) {
+      _loadingTypes.remove(type);
       if (isClosed) return;
       final errorMsg = e.toString().contains('rate_limited')
           ? 'rate_limited'

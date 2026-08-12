@@ -32,7 +32,7 @@ class _AnalyzeScreenState extends State<AnalyzeScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 5, vsync: this); // ← 5 تبويبات
+    _tabController = TabController(length: 5, vsync: this); 
   }
 
   @override
@@ -82,8 +82,8 @@ class _AnalyzeScreenState extends State<AnalyzeScreen>
                       OverallTab(),
                       AdvancedStatsTab(),
                       GeminiTab(),
-                      SmartSuggestionsTab(),      // ← جديد
-                      GoalOptimizationTab(),       // ← جديد
+                      SmartSuggestionsTab(),      
+                      GoalOptimizationTab(),       
                     ],
                   ),
                 ),

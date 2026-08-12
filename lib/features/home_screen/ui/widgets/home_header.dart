@@ -4,6 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:routina/core/helpers/extension.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
+import 'package:routina/features/billing_service/logic/cubit/billing_cubit.dart';
+import 'package:routina/features/home_screen/logic/cubit/home_cubit.dart';
+import 'package:routina/features/home_screen/logic/cubit/home_state.dart';
 import 'package:routina/features/profile_screen/logic/cubit/profile_cubit.dart';
 import 'package:routina/features/profile_screen/logic/cubit/profile_state.dart';
 
@@ -77,7 +80,7 @@ class HomeHeader extends StatelessWidget {
                           ),
                           children: [
                             TextSpan(text: _getGreetingPrefix(context)),
-                            TextSpan(text: ' '),
+                            const TextSpan(text: ' '),
                             TextSpan(
                               text: firstName ?? context.l10n.unknownUser,
                               style: TextStyle(
@@ -107,6 +110,71 @@ class HomeHeader extends StatelessWidget {
                       ),
                     ],
                   ),
+                ),
+                horizontalSpace(8),
+                // Status Badge
+                BlocBuilder<BillingCubit, BillingState>(
+                  builder: (context, billingState) {
+                    if (billingState.isPremium) {
+                      return Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10.w,
+                          vertical: 6.h,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.amber.withValues(alpha: 0.15),
+                          borderRadius: BorderRadius.circular(20.r),
+                          border: Border.all(
+                            color: Colors.amber,
+                            width: 1.w,
+                          ),
+                        ),
+                        child: Text(
+                          '∞',
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.amber[800],
+                          ),
+                        ),
+                      );
+                    }
+
+                    return BlocBuilder<HomeCubit, HomeState>(
+                      builder: (context, homeState) {
+                        final habitCount = homeState.habits.length;
+                        const maxFreeHabits = 5;
+                        final isFull = habitCount >= maxFreeHabits;
+
+                        return Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 10.w,
+                            vertical: 6.h,
+                          ),
+                          decoration: BoxDecoration(
+                            color: isFull
+                                ? Colors.orange.withValues(alpha: 0.15)
+                                : AppColors.primary.withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(20.r),
+                            border: Border.all(
+                              color: isFull
+                                  ? Colors.orange
+                                  : AppColors.primary.withValues(alpha: 0.3),
+                              width: 1.w,
+                            ),
+                          ),
+                          child: Text(
+                            '$habitCount/$maxFreeHabits',
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.bold,
+                              color: isFull ? Colors.orange : AppColors.primary,
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
                 ),
               ],
             ),

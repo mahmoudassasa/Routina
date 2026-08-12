@@ -68,14 +68,14 @@ extension PreferencesSheetX on BuildContext {
 }
 
 Future<void> openTermsOfService() async {
-  final uri = Uri.parse('https://idyllic-frangollo-bcbcc8.netlify.app');
+  final uri = Uri.parse('https://nilient.com/pages/routina/terms');
   if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
     throw Exception('Could not launch Terms of Service URL');
   }
 }
 
 Future<void> openPrivacyPolicy() async {
-  final uri = Uri.parse('https://mellow-lokum-05a071.netlify.app');
+  final uri = Uri.parse('https://nilient.com/pages/routina/privacy-policy');
   if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
     throw Exception('Could not launch Privacy Policy URL');
   }

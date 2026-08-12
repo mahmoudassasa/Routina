@@ -14,8 +14,8 @@ class ProfileScreenUserStateCards extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
-        // الآن الحقول ليست nullable، لذا نستخدمها مباشرة
-        final currentStreak = "${state.currentStreakCount} ${context.l10n.days}";
+        final currentStreak =
+            "${state.currentStreakCount} ${context.l10n.days}";
         final totalHabits = "${state.totalHabitsCount} ${context.l10n.active}";
         final completionRate = state.completionRate;
         final bestStreak = "${state.bestStreakCount} ${context.l10n.days}";

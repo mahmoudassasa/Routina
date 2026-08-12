@@ -57,8 +57,17 @@ class AiAnalysisFullScreen extends StatelessWidget {
         body: SafeArea(
           child: BlocBuilder<AnalyticsCubit, AnalyticsState>(
             builder: (context, state) {
+              final cubit = context.read<AnalyticsCubit>();
+              final isThisTypeActive = state.geminiType == 'overall';
+              final effectiveStatus =
+                  isThisTypeActive ? state.geminiStatus : GeminiStatus.idle;
+              final effectiveError = isThisTypeActive ? state.geminiError : null;
+              final displayedAnalysis = isThisTypeActive
+                  ? state.geminiAnalysis
+                  : cubit.cachedResultFor('overall');
+
               // Loading state
-              if (state.geminiStatus == GeminiStatus.loading) {
+              if (effectiveStatus == GeminiStatus.loading) {
                 return SingleChildScrollView(
                   padding: EdgeInsets.all(24.w),
                   child: Column(
@@ -141,7 +150,7 @@ class AiAnalysisFullScreen extends StatelessWidget {
               }
 
               // Error state
-              if (state.geminiStatus == GeminiStatus.error) {
+              if (effectiveStatus == GeminiStatus.error) {
                 return Center(
                   child: Padding(
                     padding: EdgeInsets.all(32.w),
@@ -164,11 +173,11 @@ class AiAnalysisFullScreen extends StatelessWidget {
                         ),
                         verticalSpace(12),
                         Text(
-                          state.geminiError == 'rate_limited'
+                          effectiveError == 'rate_limited'
                               ? context.l10n.rateLimited
-                              : state.geminiError == 'quota_exceeded'
+                              : effectiveError == 'quota_exceeded'
                               ? context.l10n.quotaExceeded
-                              : state.geminiError ?? context.l10n.somethingWentWrong,
+                              : effectiveError ?? context.l10n.somethingWentWrong,
                           style: TextStyle(
                             fontSize: 14.sp,
                             color: isDark ? Colors.grey[400] : Colors.grey[600],
@@ -178,7 +187,6 @@ class AiAnalysisFullScreen extends StatelessWidget {
                         verticalSpace(16),
                         ElevatedButton(
                           onPressed: () {
-                            final cubit = context.read<AnalyticsCubit>();
                             cubit.fetchGeminiInsights('overall', forceRefresh: true);
                           },
                           style: ElevatedButton.styleFrom(
@@ -194,17 +202,16 @@ class AiAnalysisFullScreen extends StatelessWidget {
               }
 
               // Success state with analysis
-              if (state.geminiStatus == GeminiStatus.loaded && state.geminiAnalysis != null) {
+              if (displayedAnalysis != null) {
                 return RefreshIndicator(
                   color: AppColors.primary,
                   backgroundColor: isDark ? AppColors.darkSurface : Colors.white,
                   onRefresh: () async {
                     final habits = context.read<HomeCubit>().state.habits;
                     if (habits.isNotEmpty) {
-                      final cubit = context.read<AnalyticsCubit>();
                       cubit.fetchGeminiInsights('overall', forceRefresh: true);
                       await cubit.stream.firstWhere(
-                        (s) => s.geminiStatus != GeminiStatus.loading,
+                        (s) => s.geminiType != 'overall' || s.geminiStatus != GeminiStatus.loading,
                       );
                     }
                   },
@@ -267,7 +274,7 @@ class AiAnalysisFullScreen extends StatelessWidget {
                           ),
                           verticalSpace(24),
                           Text(
-                            state.geminiAnalysis!,
+                            displayedAnalysis,
                             style: TextStyle(
                               fontSize: 15.sp,
                               height: 1.6.h,
@@ -307,7 +314,6 @@ class AiAnalysisFullScreen extends StatelessWidget {
                     verticalSpace(24),
                     ElevatedButton(
                       onPressed: () {
-                        final cubit = context.read<AnalyticsCubit>();
                         cubit.fetchGeminiInsights('overall');
                       },
                       style: ElevatedButton.styleFrom(

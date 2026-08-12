@@ -28,8 +28,8 @@ class _SmartSuggestionsTabState extends State<SmartSuggestionsTab>
       final cubit = context.read<AnalyticsCubit>();
       final state = cubit.state;
       if (state.isPremiumUser &&
-          (state.geminiStatus == GeminiStatus.idle ||
-              state.geminiType != 'smart')) {
+          !cubit.isLoadingType('smart') &&
+          cubit.cachedResultFor('smart') == null) {
         cubit.fetchGeminiInsights('smart');
       }
     });
@@ -39,7 +39,19 @@ class _SmartSuggestionsTabState extends State<SmartSuggestionsTab>
   Widget build(BuildContext context) {
     super.build(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final state = context.watch<AnalyticsCubit>().state;
+    final cubit = context.watch<AnalyticsCubit>();
+    final state = cubit.state;
+
+    // This tab only trusts state.geminiStatus/geminiAnalysis while
+    // state.geminiType == 'smart' — otherwise a concurrent 'goal'
+    // request could have overwritten these shared fields.
+    final isThisTypeActive = state.geminiType == 'smart';
+    final effectiveStatus =
+        isThisTypeActive ? state.geminiStatus : GeminiStatus.idle;
+    final effectiveError = isThisTypeActive ? state.geminiError : null;
+    final displayedAnalysis = isThisTypeActive
+        ? state.geminiAnalysis
+        : cubit.cachedResultFor('smart');
 
     if (!state.isPremiumUser) {
       return Center(
@@ -95,7 +107,7 @@ class _SmartSuggestionsTabState extends State<SmartSuggestionsTab>
     }
 
     if (state.remainingDailyRequests <= 0 &&
-        state.geminiStatus != GeminiStatus.loaded) {
+        effectiveStatus != GeminiStatus.loaded) {
       return Center(
         child: Padding(
           padding: EdgeInsets.all(24.w),
@@ -111,7 +123,7 @@ class _SmartSuggestionsTabState extends State<SmartSuggestionsTab>
         final cubit = context.read<AnalyticsCubit>();
         cubit.fetchGeminiInsights('smart', forceRefresh: true);
         await cubit.stream.firstWhere(
-          (s) => s.geminiStatus != GeminiStatus.loading,
+          (s) => s.geminiType != 'smart' || s.geminiStatus != GeminiStatus.loading,
         );
       },
       child: SingleChildScrollView(
@@ -131,7 +143,7 @@ class _SmartSuggestionsTabState extends State<SmartSuggestionsTab>
                   ),
                 ),
                 const Spacer(),
-                if (state.geminiStatus != GeminiStatus.loading)
+                if (effectiveStatus != GeminiStatus.loading)
                   IconButton(
                     onPressed: state.remainingDailyRequests <= 0
                         ? null
@@ -151,12 +163,12 @@ class _SmartSuggestionsTabState extends State<SmartSuggestionsTab>
               ],
             ),
             verticalSpace(12),
-            if (state.geminiStatus == GeminiStatus.loading)
+            if (effectiveStatus == GeminiStatus.loading)
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 40.h),
                 child: const Center(child: CircularProgressIndicator()),
               ),
-            if (state.geminiStatus == GeminiStatus.error) ...[
+            if (effectiveStatus == GeminiStatus.error) ...[
               Container(
                 padding: EdgeInsets.all(14.w),
                 decoration: BoxDecoration(
@@ -169,9 +181,9 @@ class _SmartSuggestionsTabState extends State<SmartSuggestionsTab>
                     horizontalSpace(10),
                     Expanded(
                       child: Text(
-                        state.geminiError == 'rate_limited'
+                        effectiveError == 'rate_limited'
                             ? context.l10n.rateLimited
-                            : state.geminiError == 'quota_exceeded'
+                            : effectiveError == 'quota_exceeded'
                             ? context.l10n.quotaExceeded
                             : context.l10n.somethingWentWrong,
                         style: TextStyle(
@@ -201,8 +213,7 @@ class _SmartSuggestionsTabState extends State<SmartSuggestionsTab>
                 ),
               ),
             ],
-            if (state.geminiStatus == GeminiStatus.loaded &&
-                state.geminiAnalysis != null)
+            if (displayedAnalysis != null)
               Container(
                 padding: EdgeInsets.all(16.w),
                 decoration: BoxDecoration(
@@ -241,7 +252,7 @@ class _SmartSuggestionsTabState extends State<SmartSuggestionsTab>
                     ),
                     verticalSpace(14),
                     Text(
-                      state.geminiAnalysis!,
+                      displayedAnalysis,
                       style: TextStyle(
                         fontSize: 13.sp,
                         height: 1.5.h,

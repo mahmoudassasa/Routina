@@ -46,7 +46,12 @@ class HomeCubit extends Cubit<HomeState> {
         ..sort((a, b) {
           final dateA = DateTime.parse(a[HabitKeys.lastSeenDate].toString());
           final dateB = DateTime.parse(b[HabitKeys.lastSeenDate].toString());
-          return dateB.compareTo(dateA);
+          final dateCompare = dateB.compareTo(dateA);
+          if (dateCompare != 0) return dateCompare;
+
+          final idA = (a[HabitKeys.id] as num?) ?? 0;
+          final idB = (b[HabitKeys.id] as num?) ?? 0;
+          return idB.compareTo(idA);
         });
 
       await _cacheService.saveHabits(sortedHabits);

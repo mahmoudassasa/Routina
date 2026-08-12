@@ -18,7 +18,7 @@ class AnalyticsState extends Equatable {
   final GeminiStatus geminiStatus;
   final String? geminiAnalysis;
   final String? geminiError;
-  final String? geminiType; // ✅ new field: 'overall', 'smart', 'goal'
+  final String? geminiType;
 
   final int remainingDailyRequests;
   final bool isPremiumUser;

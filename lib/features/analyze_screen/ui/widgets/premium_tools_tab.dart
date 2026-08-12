@@ -118,7 +118,8 @@ class _PremiumToolCardState extends State<_PremiumToolCard> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final state = context.watch<AnalyticsCubit>().state;
+    final cubit = context.watch<AnalyticsCubit>();
+    final state = cubit.state;
     final isThisTypeActive = _expanded;
 
     return Container(
@@ -192,7 +193,7 @@ class _PremiumToolCardState extends State<_PremiumToolCard> {
           if (isThisTypeActive)
             Padding(
               padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 16.w),
-              child: _buildExpandedContent(context, state, isDark),
+              child: _buildExpandedContent(context, cubit, state, isDark),
             ),
         ],
       ),
@@ -201,17 +202,26 @@ class _PremiumToolCardState extends State<_PremiumToolCard> {
 
   Widget _buildExpandedContent(
     BuildContext context,
+    AnalyticsCubit cubit,
     AnalyticsState state,
     bool isDark,
   ) {
-    if (state.geminiStatus == GeminiStatus.loading) {
+    final isThisTypeCurrent = state.geminiType == widget.type;
+    final effectiveStatus =
+        isThisTypeCurrent ? state.geminiStatus : GeminiStatus.idle;
+    final effectiveError = isThisTypeCurrent ? state.geminiError : null;
+    final displayedAnalysis = isThisTypeCurrent
+        ? state.geminiAnalysis
+        : cubit.cachedResultFor(widget.type);
+
+    if (effectiveStatus == GeminiStatus.loading) {
       return Padding(
         padding: EdgeInsets.symmetric(vertical: 20.h),
         child: const Center(child: CircularProgressIndicator()),
       );
     }
 
-    if (state.geminiStatus == GeminiStatus.error) {
+    if (effectiveStatus == GeminiStatus.error) {
       return Container(
         padding: EdgeInsets.all(12.w),
         decoration: BoxDecoration(
@@ -224,7 +234,7 @@ class _PremiumToolCardState extends State<_PremiumToolCard> {
             horizontalSpace(8),
             Expanded(
               child: Text(
-                state.geminiError == 'quota_exceeded'
+                effectiveError == 'quota_exceeded'
                     ? context.l10n.quotaExceeded
                     : context.l10n.somethingWentWrong,
                 style: TextStyle(
@@ -238,8 +248,7 @@ class _PremiumToolCardState extends State<_PremiumToolCard> {
       );
     }
 
-    if (state.geminiStatus == GeminiStatus.loaded &&
-        state.geminiAnalysis != null) {
+    if (displayedAnalysis != null) {
       return Container(
         width: double.infinity,
         padding: EdgeInsets.all(12.w),
@@ -248,7 +257,7 @@ class _PremiumToolCardState extends State<_PremiumToolCard> {
           borderRadius: BorderRadius.circular(10.r),
         ),
         child: Text(
-          state.geminiAnalysis!,
+          displayedAnalysis,
           style: TextStyle(
             fontSize: 13.sp,
             height: 1.5.h,

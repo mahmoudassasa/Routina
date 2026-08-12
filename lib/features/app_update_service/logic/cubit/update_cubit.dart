@@ -11,7 +11,7 @@ class UpdateCubit extends Cubit<UpdateState> {
   Future<void> checkForUpdate(String currentVersion) async {
     try {
       final minVersion = await _service.getMinVersion();
-      if (minVersion == null) return;
+      if (minVersion == null || minVersion.trim().isEmpty) return;
 
       if (_isOutdated(currentVersion, minVersion)) {
         emit(UpdateRequired(minVersion: minVersion));
@@ -19,17 +19,39 @@ class UpdateCubit extends Cubit<UpdateState> {
         emit(UpdateNotRequired());
       }
     } catch (_) {
-      emit(UpdateNotRequired()); // fail silently
+      emit(UpdateNotRequired()); // Fail silently on network or unexpected errors
     }
   }
 
   bool _isOutdated(String current, String min) {
-    final c = current.split('.').map(int.parse).toList();
-    final m = min.split('.').map(int.parse).toList();
-    for (int i = 0; i < 3; i++) {
-      if (c[i] < m[i]) return true;
-      if (c[i] > m[i]) return false;
+    try {
+      // Clean build numbers (e.g., "1.0.1+5" -> "1.0.1") and spaces
+      final cleanCurrent = current.split('+').first.trim();
+      final cleanMin = min.split('+').first.trim();
+
+      // Safely parse integers
+      final cParts = cleanCurrent
+          .split('.')
+          .map((e) => int.tryParse(e.trim()) ?? 0)
+          .toList();
+      final mParts = cleanMin
+          .split('.')
+          .map((e) => int.tryParse(e.trim()) ?? 0)
+          .toList();
+
+      final maxLength = cParts.length > mParts.length ? cParts.length : mParts.length;
+
+      for (int i = 0; i < maxLength; i++) {
+        final cVal = i < cParts.length ? cParts[i] : 0;
+        final mVal = i < mParts.length ? mParts[i] : 0;
+
+        if (cVal < mVal) return true;
+        if (cVal > mVal) return false;
+      }
+
+      return false;
+    } catch (_) {
+      return false;
     }
-    return false;
   }
 }

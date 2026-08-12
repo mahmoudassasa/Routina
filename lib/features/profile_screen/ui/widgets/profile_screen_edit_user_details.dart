@@ -39,7 +39,6 @@ class ProfileScreenEditUserDetails extends StatelessWidget {
 
         return Column(
           children: [
-            // ─── الاسم مع العلامة الزرقاء ──────────────
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -64,7 +63,6 @@ class ProfileScreenEditUserDetails extends StatelessWidget {
 
             verticalSpace(10),
 
-            // ─── زر تعديل الملف ────────────────────────
             GestureDetector(
               onTap: () {
                 context.pushNamed(
@@ -105,7 +103,6 @@ class ProfileScreenEditUserDetails extends StatelessWidget {
 
             verticalSpace(12),
 
-            // ─── إشعار إكمال الملف ──────────────────────
             if (!state.profileCompleted)
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 20.w),

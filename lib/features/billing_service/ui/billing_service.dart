@@ -1,6 +1,5 @@
 // lib/features/billing_service/ui/billing_service.dart
 import 'dart:async';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:routina/core/services/premium_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -13,12 +12,6 @@ class BillingService {
   final InAppPurchase _iap = InAppPurchase.instance;
   final SupabaseClient _supabase = Supabase.instance.client;
   final PremiumService _premiumService = PremiumService();
-
-  String? _firebaseUserId;
-
-  void setFirebaseUserId(String? uid) {
-    _firebaseUserId = uid;
-  }
 
   Stream<List<PurchaseDetails>> get purchaseStream => _iap.purchaseStream;
 
@@ -51,8 +44,7 @@ class BillingService {
           'verify-purchase',
           body: {
             'purchaseToken': token,
-            'subscriptionId': productId,
-            'userId': _firebaseUserId ?? FirebaseAuth.instance.currentUser?.uid,
+            'productId': productId,
           },
         );
 
@@ -77,6 +69,7 @@ class BillingService {
 
     return false;
   }
+
   Future<PremiumStatusResult> fetchPremiumStatus() async {
     try {
       final data = await _premiumService.fetchPremiumStatus();

@@ -55,7 +55,6 @@ class PremiumService {
       if (data == null) return null;
       return data['analysis_text'] as String?;
     } catch (e) {
-      print('PremiumService.getAnalysis error: $e');
       return null;
     }
   }
@@ -67,7 +66,18 @@ class PremiumService {
         'period': period,
       });
     } catch (e) {
-      print('PremiumService.saveAnalysis error: $e');
+      throw Exception('Failed to save analysis: $e');
     }
   }
+  Future<int> getGeminiQuota() async {
+  final result = await _call('get_gemini_quota', {});
+  final data = result['data'] as Map<String, dynamic>;
+  return data['remaining'] as int;
+}
+
+Future<int> incrementGeminiQuota() async {
+  final result = await _call('increment_gemini_quota', {});
+  final data = result['data'] as Map<String, dynamic>;
+  return data['remaining'] as int;
+}
 }

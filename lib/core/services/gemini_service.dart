@@ -28,35 +28,36 @@ class GeminiService {
     );
   }
 
- Future<String> _generateAnalysis({
-  required String type,
-  required List<Map<String, dynamic>> habits,
-}) async {
-  const maxRetries = 2;
-  const retryDelay = Duration(seconds: 2);
+  Future<String> _generateAnalysis({
+    required String type,
+    required List<Map<String, dynamic>> habits,
+  }) async {
+    const maxRetries = 2;
+    const retryDelay = Duration(seconds: 2);
 
-  for (int attempt = 0; attempt <= maxRetries; attempt++) {
-    try {
-      final prompt = _buildPrompt(type: type, habits: habits);
-      final content = [Content.text(prompt)];
-      final response = await _model.generateContent(content);
-      return response.text ?? 'Unable to generate analysis';
-    } catch (e) {
-      print('🔥 Gemini attempt $attempt failed: $e'); // ✅ معرفة الخطأ
-      final isRetryable = e.toString().contains('503') ||
-          e.toString().toLowerCase().contains('unavailable') ||
-          e.toString().toLowerCase().contains('high demand');
+    for (int attempt = 0; attempt <= maxRetries; attempt++) {
+      try {
+        final prompt = _buildPrompt(type: type, habits: habits);
+        final content = [Content.text(prompt)];
+        final response = await _model.generateContent(content);
+        return response.text ?? 'Unable to generate analysis';
+      } catch (e) {
+        final isRetryable =
+            e.toString().contains('503') ||
+            e.toString().toLowerCase().contains('unavailable') ||
+            e.toString().toLowerCase().contains('high demand');
 
-      if (isRetryable && attempt < maxRetries) {
-        await Future.delayed(retryDelay * (attempt + 1));
-        continue;
+        if (isRetryable && attempt < maxRetries) {
+          await Future.delayed(retryDelay * (attempt + 1));
+          continue;
+        }
+        throw _handleError(e);
       }
-      throw _handleError(e);
     }
+    throw Exception('failed: max retries exceeded');
   }
-  throw Exception('failed: max retries exceeded');
-}
-   // Builds the prompt text per analysis type. This is the ONLY place
+
+  // Builds the prompt text per analysis type. This is the ONLY place
   // that varies between overall/smart/goal — everything else
   // (caching, retry, quota, error handling) is shared.
   String _buildPrompt({
@@ -66,21 +67,23 @@ class GeminiService {
     switch (type) {
       case 'smart':
         // Build detailed weekly pattern data
-        final habitsDetail = habits.map((h) {
-          final title = h['title'];
-          final progress = ((h['progress'] ?? 0.0) * 100).toInt();
-          final streak = h['streak'] ?? 0;
-          final weekProgress = h['weekProgress'] as List?;
-          final days = weekProgress != null
-              ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-                  .asMap()
-                  .entries
-                  .where((e) => weekProgress[e.key] == true)
-                  .map((e) => e.value)
-                  .join(', ')
-              : 'none';
-          return '- $title: $progress% progress, $streak-day streak, active on $days.';
-        }).join('\n');
+        final habitsDetail = habits
+            .map((h) {
+              final title = h['title'];
+              final progress = ((h['progress'] ?? 0.0) * 100).toInt();
+              final streak = h['streak'] ?? 0;
+              final weekProgress = h['weekProgress'] as List?;
+              final days = weekProgress != null
+                  ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                        .asMap()
+                        .entries
+                        .where((e) => weekProgress[e.key] == true)
+                        .map((e) => e.value)
+                        .join(', ')
+                  : 'none';
+              return '- $title: $progress% progress, $streak-day streak, active on $days.';
+            })
+            .join('\n');
 
         return '''
 You are a habit improvement coach. Based on the weekly activity of these habits, provide **actionable smart suggestions** to boost consistency.
@@ -100,21 +103,23 @@ Respond in the same language as the habit names.
 
       case 'goal':
         // Build detailed progress and frequency data
-        final habitsDetail = habits.map((h) {
-          final title = h['title'];
-          final progress = ((h['progress'] ?? 0.0) * 100).toInt();
-          final streak = h['streak'] ?? 0;
-          final frequency = h['frequency'] as List?;
-          final activeDays = frequency != null
-              ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-                  .asMap()
-                  .entries
-                  .where((e) => frequency[e.key] == true)
-                  .map((e) => e.value)
-                  .join(', ')
-              : 'not set';
-          return '- $title: $progress% complete, $streak-day streak, scheduled on $activeDays.';
-        }).join('\n');
+        final habitsDetail = habits
+            .map((h) {
+              final title = h['title'];
+              final progress = ((h['progress'] ?? 0.0) * 100).toInt();
+              final streak = h['streak'] ?? 0;
+              final frequency = h['frequency'] as List?;
+              final activeDays = frequency != null
+                  ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                        .asMap()
+                        .entries
+                        .where((e) => frequency[e.key] == true)
+                        .map((e) => e.value)
+                        .join(', ')
+                  : 'not set';
+              return '- $title: $progress% complete, $streak-day streak, scheduled on $activeDays.';
+            })
+            .join('\n');
 
         return '''
 You are a strategic planner. Based on the current progress and scheduled frequency of these habits, propose a **goal optimization plan**.
@@ -158,6 +163,7 @@ Respond in the same language as the habit names above.
 ''';
     }
   }
+
   // Single cached entry point used by AnalyticsCubit for ALL types.
   // The cache key includes `type`, so overall/smart/goal are cached
   // separately — but they all draw from the same daily quota pool

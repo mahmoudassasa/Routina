@@ -27,13 +27,13 @@ class _AboutScreenState extends State<AboutScreen>
       'https://play.google.com/store/apps/details?id=com.routina.app';
 
   static const String _privacyPolicyUrl =
-      'https://mellow-lokum-05a071.netlify.app/';
+      'https://nilient.com/pages/routina/privacy-policy';
 
   static const String _termsOfServiceUrl =
-      'https://idyllic-frangollo-bcbcc8.netlify.app/';
+      'https://nilient.com/pages/routina/terms';
 
   static const String _deleteAccountUrl =
-      'https://inquisitive-klepon-3b1a8d.netlify.app/';
+      'https://nilient.com/pages/routina/delete-account';
 
   @override
   void initState() {

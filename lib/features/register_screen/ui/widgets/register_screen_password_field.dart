@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:routina/core/helpers/app_regex.dart';
 import 'package:routina/core/helpers/extension.dart';
+import 'package:routina/core/helpers/password_validations.dart';
 import 'package:routina/core/helpers/spacing.dart';
 import 'package:routina/core/theaming/app_colors.dart';
-import 'package:routina/core/helpers/password_validations.dart';
 
 class RegisterScreenPasswordfield extends StatefulWidget {
   final TextEditingController passwordController;
@@ -61,7 +61,7 @@ class _RegisterScreenPasswordfieldState
             ),
           ),
           validator: (value) {
-            if (value == null || value.isEmpty) {
+            if (value == null || value.trim().isEmpty) {
               return context.l10n.passwordRequired;
             }
             if (!AppRegex.isPasswordValid(value)) {
@@ -73,7 +73,6 @@ class _RegisterScreenPasswordfieldState
 
         verticalSpace(16),
 
-        // Validation UI with current password state
         PasswordValidations(
           hasUpperCase: AppRegex.hasUpperCase(password),
           hasLowerCase: AppRegex.hasLowerCase(password),

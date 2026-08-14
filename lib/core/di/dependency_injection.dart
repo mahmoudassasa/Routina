@@ -1,13 +1,15 @@
 import 'package:get_it/get_it.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:routina/core/services/google_sign_in_service.dart';
 import 'package:routina/core/services/habits_cache_service.dart';
 import 'package:routina/features/home_screen/logic/cubit/home_cubit.dart';
-
 import 'package:routina/features/login_screen/data/repos/login_repo.dart';
 import 'package:routina/features/login_screen/logic/cubit/login_cubit.dart';
 import 'package:routina/features/profile_screen/logic/cubit/delete_account_cubit.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:routina/features/app_update_service/ui/app_update_service.dart';
+import 'package:routina/features/app_update_service/logic/cubit/update_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -21,6 +23,11 @@ Future<void> setupGetIt() async {
     () => LoginCubit(getIt<LoginRepo>(), getIt<GoogleSignInService>()),
   );
   getIt.registerFactory(() => DeleteAccountCubit());
+
+  getIt.registerLazySingleton<AppUpdateService>(() => AppUpdateService());
+  getIt.registerFactory<UpdateCubit>(
+    () => UpdateCubit(getIt<AppUpdateService>()),
+  );
 
   final sharedPreferences = await SharedPreferences.getInstance();
   getIt.registerSingleton<SharedPreferences>(sharedPreferences);

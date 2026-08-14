@@ -222,13 +222,13 @@ class RegisterCubit extends Cubit<RegisterState> {
   }
 
   String _mapError(String code) {
-    return switch (code) {
-      'email-already-in-use' => 'emailAlreadyInUse',
-      'invalid-email' => 'invalidEmail',
-      'weak-password' => 'weakPassword',
-      'operation-not-allowed' => 'operationNotAllowed',
-      'network-request-failed' => 'networkError',
-      _ => 'unexpectedError',
-    };
-  }
+  return switch (code) {
+    'email-already-in-use' => 'emailAlreadyInUse',
+    'invalid-email' => 'invalidEmail',
+    'weak-password' => 'weakPassword',
+    'operation-not-allowed' => 'operationNotAllowed',
+    'network-request-failed' => 'networkError',
+    _ => 'unexpectedError',
+  };
+}
 }

@@ -99,18 +99,27 @@ class BillingCubit extends Cubit<BillingState> {
         for (final purchase in purchases) {
           if (isClosed) return;
 
-          final success = await _service.verifyAndComplete(purchase);
+          final result = await _service.verifyAndComplete(purchase);
 
           if (isClosed) return;
 
-          if (success) {
+          if (result.success) {
             await _refreshPremiumStatus();
             if (isClosed) return;
             emit(state.copyWith(isRestoring: false));
-          } else if (purchase.status == PurchaseStatus.error) {
+          } else if (purchase.status == PurchaseStatus.pending) {
+            // Still waiting on Google's side — leave status as-is,
+            // a later stream event will resolve this purchase.
+            continue;
+          } else {
+            // Purchase completed on Google's side but our server
+            // verification failed, or Google itself reported an error.
+            // Either way the UI must not stay stuck on loading.
             emit(state.copyWith(
               status: BillingStatus.error,
-              errorMessage: purchase.error?.message ?? 'Purchase failed',
+              errorMessage: result.errorMessage ??
+                  purchase.error?.message ??
+                  'Purchase verification failed',
               isRestoring: false,
             ));
           }

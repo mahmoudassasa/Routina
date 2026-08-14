@@ -1,8 +1,16 @@
-// lib/features/billing_service/ui/billing_service.dart
 import 'dart:async';
+import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:routina/core/services/premium_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+class VerifyPurchaseResult {
+  final bool success;
+  final String? errorMessage;
+
+  const VerifyPurchaseResult({required this.success, this.errorMessage});
+}
 
 class BillingService {
   static const String monthlyId = 'routina_premium_monthly';
@@ -29,9 +37,9 @@ class BillingService {
 
   Future<void> restorePurchases() => _iap.restorePurchases();
 
-  Future<bool> verifyAndComplete(PurchaseDetails purchase) async {
+  Future<VerifyPurchaseResult> verifyAndComplete(PurchaseDetails purchase) async {
     if (purchase.status == PurchaseStatus.pending) {
-      return false;
+      return const VerifyPurchaseResult(success: false, errorMessage: null);
     }
 
     if (purchase.status == PurchaseStatus.purchased ||
@@ -40,23 +48,60 @@ class BillingService {
         final token = purchase.verificationData.serverVerificationData;
         final productId = purchase.productID;
 
+        final idToken = await FirebaseAuth.instance.currentUser?.getIdToken();
+
         final response = await _supabase.functions.invoke(
           'verify-purchase',
+          headers: {
+            if (idToken != null) 'Authorization': 'Bearer $idToken',
+          },
           body: {
             'purchaseToken': token,
             'productId': productId,
           },
         );
 
-        if (response.status == 200 && response.data['success'] == true) {
+
+        final rawData = response.data;
+        final Map<String, dynamic> data = rawData is String
+            ? jsonDecode(rawData)
+            : Map<String, dynamic>.from(rawData as Map);
+
+        if (response.status == 200 && data['success'] == true) {
           if (purchase.pendingCompletePurchase) {
             await _iap.completePurchase(purchase);
           }
-          return true;
+          
+          await fetchPremiumStatus();
+
+          return const VerifyPurchaseResult(success: true);
         }
-        return false;
-      } catch (e) {
-        return false;
+
+        final serverError = data['error']?.toString();
+
+        return VerifyPurchaseResult(
+          success: false,
+          errorMessage: serverError ?? 'Verification failed (${response.status})',
+        );
+      } on FunctionException catch (e) {
+        String? errorMsg;
+        if (e.details is Map && e.details['error'] != null) {
+          errorMsg = e.details['error'].toString();
+        } else if (e.details is String) {
+          try {
+            final parsed = jsonDecode(e.details as String);
+            if (parsed is Map && parsed['error'] != null) {
+              errorMsg = parsed['error'].toString();
+            }
+          } catch (_) {}
+        }
+        return VerifyPurchaseResult(
+          success: false,
+          errorMessage: errorMsg ?? e.reasonPhrase ?? 'Verification failed',
+        );
+      // ignore: unused_catch_stack
+      } catch (e, stackTrace) {
+        return VerifyPurchaseResult(success: false, errorMessage: e.toString());
       }
     }
 
@@ -67,7 +112,7 @@ class BillingService {
       }
     }
 
-    return false;
+    return const VerifyPurchaseResult(success: false, errorMessage: null);
   }
 
   Future<PremiumStatusResult> fetchPremiumStatus() async {
@@ -86,9 +131,7 @@ class BillingService {
     }
   }
 
-  void dispose() {
-    // Safe placeholder
-  }
+  void dispose() {}
 }
 
 class PremiumStatusResult {

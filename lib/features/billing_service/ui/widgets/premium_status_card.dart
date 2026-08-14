@@ -58,10 +58,15 @@ class _PremiumStatusCardContentState extends State<_PremiumStatusCardContent>
   }
 
   void _openPlanDetails(BuildContext context, BillingState state) {
+    final billingCubit = context.read<BillingCubit>();
+
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
-      builder: (_) => _PlanDetailsSheet(state: state),
+      builder: (_) => BlocProvider.value(
+        value: billingCubit,
+        child: _PlanDetailsSheet(state: state),
+      ),
     );
   }
 
